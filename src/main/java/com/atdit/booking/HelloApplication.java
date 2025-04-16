@@ -1,4 +1,4 @@
-package com.group_2.booking;
+package com.atdit.booking;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

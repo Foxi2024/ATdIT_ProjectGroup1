@@ -1,4 +1,4 @@
-package com.group_2.booking;
+package com.atdit.booking;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -1,8 +1,8 @@
-module com.group_2.booking {
+module com.atdit.booking {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.group_2.booking to javafx.fxml;
-    exports com.group_2.booking;
+    opens com.atdit.booking to javafx.fxml;
+    exports com.atdit.booking;
 }
