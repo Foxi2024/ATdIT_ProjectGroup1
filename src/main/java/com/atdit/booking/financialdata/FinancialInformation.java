@@ -143,6 +143,8 @@ public final class FinancialInformation {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //INSERT INTO "main"."financialinformation" ("avgNetIncome", "rent", "monthlyFixCost", "fixedAssets", "liquidAssets", "minCostOfLiving", "debt", "monthlyAvailableMoney") VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
 }
