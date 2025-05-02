@@ -1,4 +1,4 @@
-package com.atdit.booking;
+package com.atdit.booking.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -8,7 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 
-public class ControllerPage2 extends Controller{
+public class ControllerPage2 extends Controller {
 
     @FXML
     private RadioButton acceptButton;

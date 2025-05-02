@@ -10,137 +10,129 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public final class FinancialInformation {
+public class FinancialInformation {
 
+    private int avgNetIncome;
+    private int rent;
+    private int monthlyFixCost;
+    private int fixedAssets;
+    private int liquidAssets;
+    private int minCostOfLiving;
+    private Schufaauskunft schufaauskunft;
+    private int debt;
+    private int monthlyAvailableMoney;
+    private int currentNetWorth;
+    private int summedMonthlyRates;
 
-    private final int avgNetIncome;
-    private final int rent;
-    private final int monthlyFixCost;
-    private final int fixedAssets;
-    private final int liquidAssets;
-    private final int minCostOfLiving;
-    private final Schufaauskunft schufaauskunft;
-    private final int debt;
-    private final int monthlyAvailableMoney;
-    private final int currentNetWorth;
-    private final int summedMonthlyRates;
+    // Constructor remains the same
 
-
-    public FinancialInformation(int avgNetIncome,
-                                int rent,
-                                int monthlyFixCost,
-                                ArrayList<FixedAsset> fixedAssets,
-                                ArrayList<LiquidAsset> liquidAssets,
-                                int minCostOfLiving,
-                                Schufaauskunft schufaauskunft,
-                                int monthlyAvailableMoney) {
-
+    public void setAvgNetIncome(int avgNetIncome) {
         if (avgNetIncome < 0) {
             throw new IllegalArgumentException("Average net income cannot be negative");
         }
+        this.avgNetIncome = avgNetIncome;
+        updateDerivedValues();
+    }
 
+    public void setRent(int rent) {
         if (rent < 0) {
             throw new IllegalArgumentException("Rent cannot be negative");
         }
+        this.rent = rent;
+        updateDerivedValues();
+    }
 
+    public void setMonthlyFixCost(int monthlyFixCost) {
         if (monthlyFixCost < 0) {
             throw new IllegalArgumentException("Monthly fixed cost cannot be negative");
         }
+        if (monthlyFixCost < rent + summedMonthlyRates) {
+            throw new IllegalArgumentException("Monthly fixed cost cannot be less than rent and minimum cost of living");
+        }
+        this.monthlyFixCost = monthlyFixCost;
+        updateDerivedValues();
+    }
 
+    public void setFixedAssets(int fixedAssets) {
+        this.fixedAssets = fixedAssets;
+        updateNetWorth();
+    }
+
+    public void setLiquidAssets(int liquidAssets) {
+        this.liquidAssets = liquidAssets;
+        updateNetWorth();
+    }
+
+    public void setMinCostOfLiving(int minCostOfLiving) {
         if (minCostOfLiving < 0) {
             throw new IllegalArgumentException("Minimum cost of living cannot be negative");
         }
+        this.minCostOfLiving = minCostOfLiving;
+        updateDerivedValues();
+    }
 
-        if (fixedAssets == null) {
-            throw new IllegalArgumentException("Fixed assets cannot be null");
-        }
-
-        if (liquidAssets == null) {
-            throw new IllegalArgumentException("Liquid assets cannot be null");
-        }
-
+    public void setSchufaauskunft(Schufaauskunft schufaauskunft) {
         if (schufaauskunft == null) {
             throw new IllegalArgumentException("Schufaauskunft cannot be null");
         }
-
-        if (monthlyAvailableMoney < 0) {
-            throw new IllegalArgumentException("Monthly available money cannot be negative");
-        }
-
-
-        this.summedMonthlyRates = schufaauskunft.creditList().stream().mapToInt(Credit::monthlyPayment).sum();
-
-        if(monthlyFixCost < rent + summedMonthlyRates){
-            throw new IllegalArgumentException("Monthly fixed cost cannot be less than rent and minimum cost of living");
-        }
-
-        this.avgNetIncome = avgNetIncome;
-        this.rent = rent;
-        this.monthlyFixCost = monthlyFixCost;
-        this.minCostOfLiving = minCostOfLiving;
         this.schufaauskunft = schufaauskunft;
+        this.summedMonthlyRates = schufaauskunft.creditList().stream().mapToInt(Credit::monthlyPayment).sum();
+        this.debt = schufaauskunft.creditList().isEmpty() ? 0 :
+                schufaauskunft.creditList().stream().mapToInt(Credit::amountOwed).sum();
+        updateDerivedValues();
+    }
 
-        if(fixedAssets.isEmpty()){
-            this.fixedAssets = 0;
-        } else {
-            this.fixedAssets = fixedAssets.stream().mapToInt(FixedAsset::value).sum();
-        }
-
-        if(liquidAssets.isEmpty()){
-            this.liquidAssets = 0;
-        } else {
-            this.liquidAssets = liquidAssets.stream().mapToInt(LiquidAsset::balance).sum();
-        }
-
-        if(schufaauskunft.creditList().isEmpty()){
-            this.debt = 0;
-        } else {
-            this.debt = schufaauskunft.creditList().stream().mapToInt(Credit::amountOwed).sum();
-        }
-
+    private void updateDerivedValues() {
         this.monthlyAvailableMoney = avgNetIncome - monthlyFixCost - minCostOfLiving;
-        this.currentNetWorth = this.fixedAssets + this.liquidAssets - debt;
+        updateNetWorth();
     }
 
-
-    public int getCurrentNetWorth() {
-        return fixedAssets + liquidAssets - debt;
+    private void updateNetWorth() {
+        this.currentNetWorth = this.fixedAssets + this.liquidAssets - this.debt;
     }
 
-    public int avgNetIncome() {
+    public int getAvgNetIncome() {
         return avgNetIncome;
     }
 
-    public int rent() {
+    public int getRent() {
         return rent;
     }
 
-    public int monthlyFixCost() {
+    public int getMonthlyFixCost() {
         return monthlyFixCost;
     }
 
-    public int fixedAssets() {
+    public int getFixedAssets() {
         return fixedAssets;
     }
 
-    public int liquidAssets() {
+    public int getLiquidAssets() {
         return liquidAssets;
     }
 
-    public int minCostOfLiving() {
+    public int getMinCostOfLiving() {
         return minCostOfLiving;
     }
 
-    public Schufaauskunft schufaauskunft() {
+    public Schufaauskunft getSchufaauskunft() {
         return schufaauskunft;
     }
 
-    public int debt() {
+    public int getDebt() {
         return debt;
     }
 
-    public int monthlyAvailableMoney() {
+    public int getMonthlyAvailableMoney() {
         return monthlyAvailableMoney;
+    }
+
+    public int getCurrentNetWorth() {
+        return currentNetWorth;
+    }
+
+    public int getSummedMonthlyRates() {
+        return summedMonthlyRates;
     }
 
     @Override

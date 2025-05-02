@@ -21,19 +21,96 @@ public class Customer {
     private String streetname;
     private int houseNumber;
     private int hash;
+    private String email;
 
     private FinancialInformation financialInformation;
 
-    public Customer(String firstName, String name, String country, FinancialInformation financialInformation){
-
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
-        this.name = name;
-        this.country = country;
-        this.hash = this.hashCode();
-        this.financialInformation = financialInformation;
-
-        this.addCustomerToDatabase();
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public void setPostalCode(int postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setStreetname(String streetname) {
+        this.streetname = streetname;
+    }
+
+    public void setHouseNumber(int houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public void setHash(int hash) {
+        this.hash = hash;
+    }
+
+    public void setFinancialInformation(FinancialInformation financialInformation) {
+        this.financialInformation = financialInformation;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public int getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getStreetname() {
+        return streetname;
+    }
+
+    public int getHouseNumber() {
+        return houseNumber;
+    }
+
+    public int getHash() {
+        return hash;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+
 
     private void addCustomerToDatabase() {
         Connection conn = CustomerDatabase.getConn();

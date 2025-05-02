@@ -1,5 +1,7 @@
-package com.atdit.booking;
+package com.atdit.booking.Controller;
 
+import com.atdit.booking.Main;
+import com.atdit.booking.customer.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -76,12 +78,35 @@ public class ControllerPage3 extends Controller implements Initializable {
 
     @FXML
     public void nextPage(MouseEvent e) {
+
+
+
         if (validateForm()) {
             saveFormData();
+
+            Customer currenCostumer = Main.customer;
+
+            // set all the data to the customer object
+            currenCostumer.setFirstName(firstNameField.getText());
+            currenCostumer.setName(nameField.getText());
+            currenCostumer.setCountry(countryField.getText());
+            currenCostumer.setBirthdate(birthDatePicker.getValue().toString());
+            currenCostumer.setPostalCode(Integer.parseInt(postalCodeField.getText()));
+            currenCostumer.setCity(cityField.getText());
+            currenCostumer.setStreetname(streetField.getText());
+            currenCostumer.setHouseNumber(Integer.parseInt(houseNumberField.getText()));
+            currenCostumer.setHash(emailField.getText().hashCode());
+            currenCostumer.setEmail(emailField.getText());
+
+
             Stage stage = (Stage) continueButton.getScene().getWindow();
             Scene scene = getScene("page_4.fxml");
             stage.setTitle("Financial Information");
             stage.setScene(scene);
+
+
+
+
         }
     }
 

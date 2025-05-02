@@ -8,4 +8,6 @@ module com.atdit.booking {
     exports com.atdit.booking;
     exports com.atdit.booking.customer;
     opens com.atdit.booking.customer to javafx.fxml;
+    exports com.atdit.booking.Controller;
+    opens com.atdit.booking.Controller to javafx.fxml;
 }

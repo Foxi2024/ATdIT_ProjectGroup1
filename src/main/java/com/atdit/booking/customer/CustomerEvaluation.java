@@ -18,13 +18,13 @@ public class CustomerEvaluation {
 
     public boolean hasOptimalSchufaScore(){
 
-        return this.financialInformation.schufaauskunft().score() > 0.975;
+        return this.financialInformation.getSchufaauskunft().score() > 0.975;
     }
 
     public boolean evalCustomer1(int journeyPrice){
 
         return this.financialInformation.getCurrentNetWorth() * 0.2 > journeyPrice &&
-                financialInformation.monthlyAvailableMoney() > Main.MIN_MONTHLY_MONEY &&
+                financialInformation.getMonthlyAvailableMoney() > Main.MIN_MONTHLY_MONEY &&
                 hasOptimalSchufaScore();
     }
 

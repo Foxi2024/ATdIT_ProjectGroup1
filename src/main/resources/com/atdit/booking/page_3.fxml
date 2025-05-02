@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.ControllerPage3" prefHeight="700.0" prefWidth="800.0">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.ControllerPage3" prefHeight="700.0" prefWidth="800.0">
     <GridPane alignment="CENTER" hgap="10" vgap="10" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0">
         <padding>
             <Insets top="20" right="20" bottom="20" left="20"/>
