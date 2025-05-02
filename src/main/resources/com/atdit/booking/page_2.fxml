@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.ControllerPage2">
+   <children>
+      <Text layoutX="132.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hallo Test" wrappingWidth="336.666015625" />
+      <GridPane alignment="CENTER" layoutX="157.0" layoutY="257.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <RadioButton fx:id="acceptButton" mnemonicParsing="false" onMouseClicked="#acceptAgreement" text="Akzeptieren" />
+            <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#previousPage" prefHeight="26.0" prefWidth="111.0" text="Zurück" GridPane.columnIndex="1" />
+            <Button fx:id="continueButton" disable="true" mnemonicParsing="false" onMouseClicked="#nextPage" prefHeight="26.0" prefWidth="112.0" text="Weiter" GridPane.columnIndex="2" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

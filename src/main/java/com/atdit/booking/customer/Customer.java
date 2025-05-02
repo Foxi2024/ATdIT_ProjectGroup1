@@ -12,56 +12,34 @@ import java.sql.Statement;
 
 public class Customer {
 
-    private final String firstName;
-    private final String name;
-    private final String nationality;
-    private final String country;
-    private final int hash;
+    private String firstName;
+    private String name;
+    private String country;
+    private String birthdate;
+    private int postalCode;
+    private String city;
+    private String streetname;
+    private int houseNumber;
+    private int hash;
 
     private FinancialInformation financialInformation;
 
-    public Customer(String firstName, String name, String nationality, String country, int avgNetIncome, int monthlyFixCost, int minCostOfLiving, int netWorth, FinancialInformation financialInformation){
+    public Customer(String firstName, String name, String country, FinancialInformation financialInformation){
 
         this.firstName = firstName;
         this.name = name;
-        this.nationality = nationality;
         this.country = country;
         this.hash = this.hashCode();
         this.financialInformation = financialInformation;
 
-        addCustomerToDatabase(this);
+        this.addCustomerToDatabase();
     }
 
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public int getHash() {
-        return hash;
-    }
-
-    public FinancialInformation getFinancialInformation() {
-        return financialInformation;
-    }
-
-    private static void addCustomerToDatabase(Customer customer){
+    private void addCustomerToDatabase() {
         Connection conn = CustomerDatabase.getConn();
 
-       // check if hash is already in the database
-        String checkQuery = "SELECT COUNT(*) FROM customers WHERE hash = " + customer.hash;
+        // check if hash is already in the database
+        String checkQuery = "SELECT COUNT(*) FROM customers WHERE hash = " + this.hash;
 
         try (Statement statement = conn.createStatement()) {
             ResultSet result = statement.executeQuery(checkQuery);
@@ -71,45 +49,47 @@ public class Customer {
             if (count > 0) {
                 return;
             }
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        //first part of the query
+        // first part of the query
         String query = """
         INSERT INTO customers (
         first_name,
         name,
-        nationality,
+        birthdate,
         country,
-        avg_net_income,
-        monthly_fix_cost,
-        net_worth,
-        monthly_available_money,
+        postal_code,
+        city,
+        street_name,
+        house_number,
         hash)
-        VALUES(?, ?, ?, ?, ?, ?);
+        VALUES(?,?,?,?,?,?,?,?,?,?);
         """;
 
-
-        //concat the customer details to a one string for the values part of the query
+        // concat the customer details to a one string for the values part of the query
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-
-            preparedStatement.setString(1, customer.firstName);
-            preparedStatement.setString(2, customer.name);
-            preparedStatement.setString(3, customer.nationality);
-            preparedStatement.setString(4, customer.country);
-            preparedStatement.setInt(9, customer.hash);
+            preparedStatement.setString(1, this.firstName);
+            preparedStatement.setString(2, this.name);
+            preparedStatement.setString(3, this.birthdate);
+            preparedStatement.setString(4, this.country);
+            preparedStatement.setInt(5, this.postalCode);
+            preparedStatement.setString(6, this.city);
+            preparedStatement.setString(7, this.streetname);
+            preparedStatement.setInt(8, this.houseNumber);
+            preparedStatement.setInt(9, this.hash);
 
             preparedStatement.executeUpdate();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // Insert Customer data into the database
         CustomerDatabase.executeUpdate(conn, query);
+    }
+
+    public FinancialInformation getFinancialInformation() {
+        return financialInformation;
     }
 }
