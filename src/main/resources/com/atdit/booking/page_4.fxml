@@ -26,7 +26,7 @@
         <TextField fx:id="minLivingCostField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
         <Label text="Total Net Worth Estimate (€):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <TextField fx:id="netWorthField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        <TextField fx:id="liquidAssetsField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
         <!-- Navigation Buttons -->
         <Button text="Back" fx:id="backButton" onMouseClicked="#previousPage" GridPane.rowIndex="5" GridPane.columnIndex="0"/>

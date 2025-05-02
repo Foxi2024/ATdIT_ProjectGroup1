@@ -18,9 +18,6 @@ public class Main {
     public static void main(String[] args) {
 
         customer = new Customer();
-        //financialInformation = new FinancialInformation();
-
-        customer.setFinancialInformation(financialInformation);
 
         MainWindow.main(null);
     }

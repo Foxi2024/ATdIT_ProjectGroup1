@@ -12,18 +12,39 @@ import java.sql.Statement;
 
 public class Customer {
 
+    private String title;
     private String firstName;
     private String name;
     private String country;
     private String birthdate;
-    private int postalCode;
+    private String postalCode;
     private String city;
     private String streetname;
-    private int houseNumber;
+    private String houseNumber;
     private int hash;
     private String email;
 
     private FinancialInformation financialInformation;
+
+    public Customer(){
+        this.financialInformation = new FinancialInformation();
+
+        this.title = "";
+        this.firstName = "";
+        this.name = "";
+        this.country = "";
+        this.birthdate = "";
+        this.postalCode = "";
+        this.city = "";
+        this.streetname = "";
+        this.houseNumber = "";
+        this.email = "";
+    }
+
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -41,7 +62,7 @@ public class Customer {
         this.birthdate = birthdate;
     }
 
-    public void setPostalCode(int postalCode) {
+    public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 
@@ -53,7 +74,7 @@ public class Customer {
         this.streetname = streetname;
     }
 
-    public void setHouseNumber(int houseNumber) {
+    public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
     }
 
@@ -69,6 +90,10 @@ public class Customer {
         this.email = email;
     }
 
+
+    public String getTitle() {
+        return title;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -86,7 +111,7 @@ public class Customer {
         return birthdate;
     }
 
-    public int getPostalCode() {
+    public String getPostalCode() {
         return postalCode;
     }
 
@@ -98,7 +123,7 @@ public class Customer {
         return streetname;
     }
 
-    public int getHouseNumber() {
+    public String getHouseNumber() {
         return houseNumber;
     }
 
@@ -151,10 +176,10 @@ public class Customer {
             preparedStatement.setString(2, this.name);
             preparedStatement.setString(3, this.birthdate);
             preparedStatement.setString(4, this.country);
-            preparedStatement.setInt(5, this.postalCode);
+            preparedStatement.setString(5, this.postalCode);
             preparedStatement.setString(6, this.city);
             preparedStatement.setString(7, this.streetname);
-            preparedStatement.setInt(8, this.houseNumber);
+            preparedStatement.setString(8, this.houseNumber);
             preparedStatement.setInt(9, this.hash);
 
             preparedStatement.executeUpdate();

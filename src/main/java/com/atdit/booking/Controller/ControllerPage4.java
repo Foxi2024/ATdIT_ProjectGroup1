@@ -1,5 +1,6 @@
 package com.atdit.booking.Controller;
 
+import com.atdit.booking.Main;
 import com.atdit.booking.financialdata.FinancialInformation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,11 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ControllerPage4 extends Controller implements Initializable {
@@ -19,61 +16,20 @@ public class ControllerPage4 extends Controller implements Initializable {
     @FXML private TextField netIncomeField;
     @FXML private TextField fixedCostsField;
     @FXML private TextField minLivingCostField;
-    @FXML private TextField netWorthField;
+    @FXML private TextField liquidAssetsField;
     @FXML private Button continueButton;
     @FXML private Button backButton;
 
-    private static Map<String, Integer> savedData = new HashMap<>();
-    private static boolean hasData = false;
-
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (hasData) {
-            restoreFormData();
-        }
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) { restoreFormData(); }
 
-    private void saveFormData() {
-        try {
-            savedData.put("netIncome", Integer.parseInt(netIncomeField.getText().trim()));
-            savedData.put("fixedCosts", Integer.parseInt(fixedCostsField.getText().trim()));
-            savedData.put("minLivingCost", Integer.parseInt(minLivingCostField.getText().trim()));
-            savedData.put("netWorth", Integer.parseInt(netWorthField.getText().trim()));
-            hasData = true;
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid Input");
-            alert.setHeaderText("Please enter valid numbers");
-            alert.setContentText("All fields must contain valid integer values");
-            alert.showAndWait();
-        }
-    }
-
-    private void restoreFormData() {
-        netIncomeField.setText(String.valueOf(savedData.get("netIncome")));
-        fixedCostsField.setText(String.valueOf(savedData.get("fixedCosts")));
-        minLivingCostField.setText(String.valueOf(savedData.get("minLivingCost")));
-        netWorthField.setText(String.valueOf(savedData.get("netWorth")));
-    }
 
     @FXML
     public void nextPage(MouseEvent e) {
-        if (validateForm()) {
-            saveFormData();
-            // Create FinancialInformation object using setters
-            FinancialInformation financialInfo = new FinancialInformation();
 
+        if (validateForm()) {
             try {
-                financialInfo.setAvgNetIncome(savedData.get("netIncome"));
-                financialInfo.setMonthlyFixCost(savedData.get("fixedCosts"));
-                financialInfo.setMinCostOfLiving(savedData.get("minLivingCost"));
-                // Set fixed and liquid assets from netWorth
-                int netWorth = savedData.get("netWorth");
-                // Assuming netWorth is split equally between fixed and liquid assets
-                financialInfo.setFixedAssets(netWorth / 2);
-                financialInfo.setLiquidAssets(netWorth / 2);
-                // Default rent to 0 for now
-                financialInfo.setRent(0);
+                cacheData();
 
                 Stage stage = (Stage) continueButton.getScene().getWindow();
                 Scene scene = getScene("page_5.fxml");
@@ -83,7 +39,7 @@ public class ControllerPage4 extends Controller implements Initializable {
             } catch (IllegalArgumentException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Invalid Data");
-                alert.setHeaderText("Could not create financial information");
+                alert.setHeaderText("Could not save financial information");
                 alert.setContentText(ex.getMessage());
                 alert.showAndWait();
             }
@@ -92,12 +48,32 @@ public class ControllerPage4 extends Controller implements Initializable {
 
     @FXML
     public void previousPage(MouseEvent e) {
-        saveFormData();
+        cacheData();
+
         Stage stage = (Stage) backButton.getScene().getWindow();
         Scene scene = getScene("page_3.fxml");
         stage.setTitle("Personal Information");
         stage.setScene(scene);
     }
+
+    public void cacheData() throws IllegalArgumentException {
+        FinancialInformation financialInfo = Main.customer.getFinancialInformation();
+
+        financialInfo.setAvgNetIncome(Integer.parseInt(netIncomeField.getText().trim()));
+        financialInfo.setMonthlyFixCost(Integer.parseInt(fixedCostsField.getText().trim()));
+        financialInfo.setMinCostOfLiving(Integer.parseInt(minLivingCostField.getText().trim()));
+        financialInfo.setLiquidAssets(Integer.parseInt(liquidAssetsField.getText().trim()));
+    }
+
+    private void restoreFormData() {
+        FinancialInformation financialInfo = Main.customer.getFinancialInformation();
+
+        netIncomeField.setText(String.valueOf(financialInfo.getAvgNetIncome()));
+        fixedCostsField.setText(String.valueOf(financialInfo.getMonthlyFixCost()));
+        minLivingCostField.setText(String.valueOf(financialInfo.getMinCostOfLiving()));
+        liquidAssetsField.setText(String.valueOf(financialInfo.getLiquidAssets()));
+    }
+
 
     private boolean validateForm() {
         StringBuilder errorMessage = new StringBuilder("Please fix the following issues:\n");
@@ -137,13 +113,13 @@ public class ControllerPage4 extends Controller implements Initializable {
         }
 
         try {
-            int netWorth = Integer.parseInt(netWorthField.getText().trim());
-            if (netWorth < 0) {
-                errorMessage.append("- Net worth cannot be negative\n");
+            int liquidAssets = Integer.parseInt(liquidAssetsField.getText().trim());
+            if (liquidAssets < 0) {
+                errorMessage.append("- Liquid assets cannot be negative\n");
                 isValid = false;
             }
         } catch (NumberFormatException e) {
-            errorMessage.append("- Invalid net worth value\n");
+            errorMessage.append("- Invalid liquid assets value\n");
             isValid = false;
         }
 

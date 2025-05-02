@@ -24,7 +24,6 @@ public class FinancialInformation {
     private int currentNetWorth;
     private int summedMonthlyRates;
 
-    // Constructor remains the same
 
     public void setAvgNetIncome(int avgNetIncome) {
         if (avgNetIncome < 0) {

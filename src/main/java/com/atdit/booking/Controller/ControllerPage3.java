@@ -29,95 +29,70 @@ public class ControllerPage3 extends Controller implements Initializable {
     @FXML private Button continueButton;
     @FXML private Button backButton;
 
-    private static Map<String, String> savedData = new HashMap<>();
-    private static boolean hasData = false;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        if (hasData) {
-            restoreFormData();
-        }
-    }
-
-    private void saveFormData() {
-
-        savedData.put("title", titleField.getText());
-        savedData.put("name", nameField.getText());
-        savedData.put("firstName", firstNameField.getText());
-        savedData.put("nationality", nationalityField.getText());
-        savedData.put("birthDate", birthDatePicker.getValue() != null ? birthDatePicker.getValue().toString() : "");
-        savedData.put("street", streetField.getText());
-        savedData.put("houseNumber", houseNumberField.getText());
-        savedData.put("postalCode", postalCodeField.getText());
-        savedData.put("city", cityField.getText());
-        savedData.put("country", countryField.getText());
-        savedData.put("email", emailField.getText());
-        hasData = true;
-    }
-
-    private void restoreFormData() {
-
-        titleField.setText(savedData.get("title"));
-        nameField.setText(savedData.get("name"));
-        firstNameField.setText(savedData.get("firstName"));
-        nationalityField.setText(savedData.get("nationality"));
-
-        if (!savedData.get("birthDate").isEmpty()) {
-            birthDatePicker.setValue(java.time.LocalDate.parse(savedData.get("birthDate")));
-        }
-
-        streetField.setText(savedData.get("street"));
-        houseNumberField.setText(savedData.get("houseNumber"));
-        postalCodeField.setText(savedData.get("postalCode"));
-        cityField.setText(savedData.get("city"));
-        countryField.setText(savedData.get("country"));
-        emailField.setText(savedData.get("email"));
-
+        restoreFormData();
     }
 
     @FXML
     public void nextPage(MouseEvent e) {
 
-
-
         if (validateForm()) {
-            saveFormData();
-
-            Customer currenCostumer = Main.customer;
-
-            // set all the data to the customer object
-            currenCostumer.setFirstName(firstNameField.getText());
-            currenCostumer.setName(nameField.getText());
-            currenCostumer.setCountry(countryField.getText());
-            currenCostumer.setBirthdate(birthDatePicker.getValue().toString());
-            currenCostumer.setPostalCode(Integer.parseInt(postalCodeField.getText()));
-            currenCostumer.setCity(cityField.getText());
-            currenCostumer.setStreetname(streetField.getText());
-            currenCostumer.setHouseNumber(Integer.parseInt(houseNumberField.getText()));
-            currenCostumer.setHash(emailField.getText().hashCode());
-            currenCostumer.setEmail(emailField.getText());
-
-
+            cacheData();
             Stage stage = (Stage) continueButton.getScene().getWindow();
             Scene scene = getScene("page_4.fxml");
             stage.setTitle("Financial Information");
             stage.setScene(scene);
-
-
-
-
         }
     }
 
     @FXML
     public void previousPage(MouseEvent e) {
-        saveFormData();
+        cacheData();
         Stage stage = (Stage) backButton.getScene().getWindow();
         Scene scene = getScene("page_2.fxml");
         stage.setTitle("Terms and Conditions");
         stage.setScene(scene);
     }
+
+    private void cacheData(){
+
+        Customer currentCostumer = Main.customer;
+        currentCostumer.setTitle(titleField.getText());
+        currentCostumer.setFirstName(firstNameField.getText());
+        currentCostumer.setName(nameField.getText());
+        currentCostumer.setCountry(countryField.getText());
+        currentCostumer.setPostalCode(postalCodeField.getText());
+        currentCostumer.setCity(cityField.getText());
+        currentCostumer.setStreetname(streetField.getText());
+        currentCostumer.setHouseNumber(houseNumberField.getText());
+        currentCostumer.setEmail(emailField.getText());
+
+        if(birthDatePicker.getValue() == null){
+            currentCostumer.setBirthdate(null);
+        } else {
+            currentCostumer.setBirthdate(birthDatePicker.getValue().toString());
+        }
+    }
+
+    private void restoreFormData() {
+
+        titleField.setText(Main.customer.getTitle());
+        nameField.setText(Main.customer.getName());
+        firstNameField.setText(Main.customer.getFirstName());
+        nationalityField.setText(Main.customer.getCountry());
+        streetField.setText(Main.customer.getStreetname());
+        houseNumberField.setText(String.valueOf(Main.customer.getHouseNumber()));
+        postalCodeField.setText(String.valueOf(Main.customer.getPostalCode()));
+        cityField.setText(Main.customer.getCity());
+        countryField.setText(Main.customer.getCountry());
+        emailField.setText(Main.customer.getEmail());
+
+        if (Main.customer.getBirthdate() != null && !Main.customer.getBirthdate().isEmpty()) {
+            birthDatePicker.setValue(java.time.LocalDate.parse(Main.customer.getBirthdate()));
+        }
+    }
+
 
     private boolean validateForm() {
         StringBuilder errorMessage = new StringBuilder("Please fill out the following fields:\n");
