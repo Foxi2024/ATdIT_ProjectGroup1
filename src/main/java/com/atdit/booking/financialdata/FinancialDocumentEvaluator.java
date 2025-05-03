@@ -4,11 +4,23 @@ import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class FinancialDocumentEvaluator {
-
     private final Map<String, String> parsedValues = new HashMap<>();
     private StringBuilder errorLog = new StringBuilder();
+
+    public FinancialInformation evaluateDocuments(Map<String, String> documents) {
+        FinancialInformation financialInfo = new FinancialInformation();
+
+        documents.forEach((type, content) -> {
+            if (evaluateDocument(type, content)) {
+                updateFinancialInfo(financialInfo, type);
+            }
+        });
+
+        return financialInfo;
+    }
 
     public boolean evaluateDocument(String documentType, String content) {
         parsedValues.clear();
@@ -18,111 +30,67 @@ public class FinancialDocumentEvaluator {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (!line.trim().isEmpty()) {
-                    if (!processLine(line)) {
-                        return false;
-                    }
+                    processLine(line);
                 }
             }
-
-            return validateDocument(documentType);
+            return true;
         } catch (Exception e) {
             errorLog.append("Error reading document: ").append(e.getMessage());
             return false;
         }
     }
 
-    private boolean processLine(String line) {
-        if (!line.contains(":")) {
-            errorLog.append("Invalid line format: ").append(line).append("\n");
-            return false;
+    private void processLine(String line) {
+        if (line.contains(":")) {
+            String[] parts = line.split(":", 2);
+            String key = parts[0].trim();
+            String value = parts.length > 1 ? parts[1].trim() : "";
+            parsedValues.put(key, value);
         }
-
-        String[] parts = line.split(":", 2);
-        if (parts.length != 2) {
-            errorLog.append("Invalid line format: ").append(line).append("\n");
-            return false;
-        }
-
-        String attribute = parts[0].trim();
-        String value = parts[1].trim();
-
-        if (value.isEmpty()) {
-            errorLog.append("Empty amount for attribute: ").append(attribute).append("\n");
-            return false;
-        }
-
-        parsedValues.put(attribute, value);
-        return true;
     }
 
-    private boolean validateDocument(String documentType) {
+    private void updateFinancialInfo(FinancialInformation info, String documentType) {
         switch (documentType) {
-            case "income":
-                return validateIncomeDocument();
-            case "liquidAssets":
-                return validateLiquidAssetsDocument();
-            case "fixedAssets":
-                return validateFixedAssetsDocument();
-            case "schufa":
-                return validateSchufaDocument();
-            default:
-                errorLog.append("Unknown document type: ").append(documentType);
-                return false;
+            case "income" -> processIncomeDocument(info);
+            case "liquidAssets" -> processLiquidAssetsDocument(info);
+            case "schufa" -> processSchufaDocument(info);
         }
     }
 
-    private boolean validateIncomeDocument() {
-        String[] requiredFields = {
-                "Monthly Net Income",
-                "Employer",
-                "Employment Duration",
-                "Employment Type"
-        };
-        return checkRequiredFields(requiredFields);
-    }
-
-    private boolean validateLiquidAssetsDocument() {
-        String[] requiredFields = {
-                "Bank Balance",
-                "Savings Account Balance",
-                "Investment Portfolio Value",
-                "Bank Name"
-        };
-        return checkRequiredFields(requiredFields);
-    }
-
-    private boolean validateFixedAssetsDocument() {
-        String[] requiredFields = {
-                "Real Estate Value",
-                "Vehicle Value",
-                "Other Assets Value",
-                "Total Fixed Assets"
-        };
-        return checkRequiredFields(requiredFields);
-    }
-
-    private boolean validateSchufaDocument() {
-        String[] requiredFields = {
-                "Schufa Score",
-                "Credit Rating",
-                "Payment History",
-                "Issue Date"
-        };
-        return checkRequiredFields(requiredFields);
-    }
-
-    private boolean checkRequiredFields(String[] requiredFields) {
-        for (String field : requiredFields) {
-            if (!parsedValues.containsKey(field)) {
-                errorLog.append("Missing required field: ").append(field).append("\n");
-                return false;
-            }
+    private void processIncomeDocument(FinancialInformation info) {
+        if (parsedValues.containsKey("Monthly Net Income")) {
+            int income = Integer.parseInt(parsedValues.get("Monthly Net Income"));
+            info.setAvgNetIncome(income);
         }
-        return true;
     }
 
-    public Map<String, String> getParsedValues() {
-        return new HashMap<>(parsedValues);
+    private void processLiquidAssetsDocument(FinancialInformation info) {
+        if (parsedValues.containsKey("Bank Account Balance")) {
+            int balance = Integer.parseInt(parsedValues.get("Bank Account Balance"));
+            info.setLiquidAssets(balance);
+
+            LiquidAsset asset = new LiquidAsset(
+                    parsedValues.getOrDefault("IBAN", ""),
+                    parsedValues.getOrDefault("Description", ""),
+                    balance,
+                    parsedValues.getOrDefault("Date Issued", "")
+            );
+            info.setLiquidAssets(balance);
+        }
+    }
+
+    private void processSchufaDocument(FinancialInformation info) {
+        if (parsedValues.containsKey("Schufa Score")) {
+            float score = Float.parseFloat(parsedValues.get("Schufa Score"));
+            ArrayList<Credit> credits = new ArrayList<>();
+            String issueDate = parsedValues.getOrDefault("Issue Date", "");
+
+            info.setSchufaauskunft(new Schufaauskunft(
+                    score,
+                    credits,
+                    issueDate
+            ));
+        }
     }
 
     public String getErrorLog() {

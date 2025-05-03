@@ -130,7 +130,7 @@ public class ControllerPage3 extends Controller implements Initializable {
         }
 
         if (!isValid) {
-            showError("Missing Information", "Please fill out all required fields", errorMessage.toString()););
+            showError("Missing Information", "Please fill out all required fields", errorMessage.toString());
         }
 
         return isValid;

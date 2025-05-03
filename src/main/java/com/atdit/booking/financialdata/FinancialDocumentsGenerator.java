@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class FinancialDocumentsGenerator {
 
@@ -31,13 +32,14 @@ public class FinancialDocumentsGenerator {
     public void generateProofOfLiquidAssets(LiquidAsset liquidAsset) throws IOException {
 
         String content = "Bank Account Balance: " + liquidAsset.balance() + "\n" +
-                         "IBAN: " + liquidAsset.iban();
+                         "IBAN: " + liquidAsset.iban() + "\n" +
+                            "Description: " + liquidAsset.description() + "\n" +
+                            "Date Issued: " + liquidAsset.dateIssued();
 
         generateDocumentFile(content, "LiquidAssetsProof", "financial_documents");
     }
 
     public void generateSchufa(Schufaauskunft schufa) throws IOException {
-
 
         String content = "Schufa Score: " + schufa.score() + "\n" +
                          "Total Credits: " + schufa.creditList().size() + "\n" +
@@ -49,5 +51,20 @@ public class FinancialDocumentsGenerator {
 
         generateDocumentFile(content, "Schufa", "financial_documents");
 
+    }
+
+    public static void main(String[] args) {
+        FinancialDocumentsGenerator generator = new FinancialDocumentsGenerator();
+
+        Credit c1 = new Credit("Car Loan", 20000, 5.0f, 500, 10000);
+        Credit c2 = new Credit("Home Loan", 150000, 3.5f, 1500, 50000);
+
+        try {
+            generator.generateProofOfIncome(new IncomeProof(30000, "ABC Corp", "Full-time", 24));
+            generator.generateProofOfLiquidAssets(new LiquidAsset("DE12345678901234567890", "Savings Account", 1000000, "2023-01-01"));
+            generator.generateSchufa(new Schufaauskunft(0.75f, new ArrayList<Credit>(), "2023-01-01"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
