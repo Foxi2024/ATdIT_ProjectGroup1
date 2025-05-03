@@ -10,14 +10,9 @@ import javafx.stage.Stage;
 
 public class ControllerPage2 extends Controller {
 
-    @FXML
-    private RadioButton acceptButton;
-
-    @FXML
-    private Button backButton;
-
-    @FXML
-    private Button continueButton;
+    @FXML private RadioButton acceptButton;
+    @FXML private Button backButton;
+    @FXML private Button continueButton;
 
 
     @FXML

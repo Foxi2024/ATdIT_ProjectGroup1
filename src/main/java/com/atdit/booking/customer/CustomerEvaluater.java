@@ -3,15 +3,13 @@ package com.atdit.booking.customer;
 import com.atdit.booking.Main;
 import com.atdit.booking.financialdata.FinancialInformation;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-public class CustomerEvaluation {
+public class CustomerEvaluater {
 
     public final FinancialInformation financialInformation;
     public final Customer customer;
 
 
-    public CustomerEvaluation(Customer customer) {
+    public CustomerEvaluater(Customer customer) {
         this.customer = customer;
         this.financialInformation = customer.getFinancialInformation();
     }

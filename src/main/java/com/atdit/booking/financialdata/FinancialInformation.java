@@ -1,13 +1,9 @@
 package com.atdit.booking.financialdata;
 
-import com.atdit.booking.customer.Customer;
 import com.atdit.booking.customer.CustomerDatabase;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class FinancialInformation {
@@ -17,6 +13,7 @@ public class FinancialInformation {
     private int monthlyFixCost;
     private int fixedAssets;
     private int liquidAssets;
+    private int proofOfIncome;
     private int minCostOfLiving;
     private Schufaauskunft schufaauskunft;
     private int debt;
@@ -30,7 +27,7 @@ public class FinancialInformation {
             throw new IllegalArgumentException("Average net income cannot be negative");
         }
         this.avgNetIncome = avgNetIncome;
-        updateDerivedValues();
+        updateMonthlyAvailableMoney();
     }
 
     public void setRent(int rent) {
@@ -38,7 +35,7 @@ public class FinancialInformation {
             throw new IllegalArgumentException("Rent cannot be negative");
         }
         this.rent = rent;
-        updateDerivedValues();
+        updateMonthlyAvailableMoney();
     }
 
     public void setMonthlyFixCost(int monthlyFixCost) {
@@ -49,7 +46,7 @@ public class FinancialInformation {
             throw new IllegalArgumentException("Monthly fixed cost cannot be less than rent and minimum cost of living");
         }
         this.monthlyFixCost = monthlyFixCost;
-        updateDerivedValues();
+        updateMonthlyAvailableMoney();
     }
 
     public void setFixedAssets(int fixedAssets) {
@@ -67,7 +64,7 @@ public class FinancialInformation {
             throw new IllegalArgumentException("Minimum cost of living cannot be negative");
         }
         this.minCostOfLiving = minCostOfLiving;
-        updateDerivedValues();
+        updateMonthlyAvailableMoney();
     }
 
     public void setSchufaauskunft(Schufaauskunft schufaauskunft) {
@@ -76,14 +73,12 @@ public class FinancialInformation {
         }
         this.schufaauskunft = schufaauskunft;
         this.summedMonthlyRates = schufaauskunft.creditList().stream().mapToInt(Credit::monthlyPayment).sum();
-        this.debt = schufaauskunft.creditList().isEmpty() ? 0 :
-                schufaauskunft.creditList().stream().mapToInt(Credit::amountOwed).sum();
-        updateDerivedValues();
+        this.debt = schufaauskunft.creditList().isEmpty() ? 0 : schufaauskunft.creditList().stream().mapToInt(Credit::amountOwed).sum();
+        updateMonthlyAvailableMoney();
     }
 
-    private void updateDerivedValues() {
-        this.monthlyAvailableMoney = avgNetIncome - monthlyFixCost - minCostOfLiving;
-        updateNetWorth();
+    private void updateMonthlyAvailableMoney() {
+        this.monthlyAvailableMoney = this.avgNetIncome - this.monthlyFixCost - this.minCostOfLiving;
     }
 
     private void updateNetWorth() {
@@ -134,40 +129,6 @@ public class FinancialInformation {
         return summedMonthlyRates;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (FinancialInformation) obj;
-        return this.avgNetIncome == that.avgNetIncome &&
-                this.rent == that.rent &&
-                this.monthlyFixCost == that.monthlyFixCost &&
-                this.fixedAssets == that.fixedAssets &&
-                this.liquidAssets == that.liquidAssets &&
-                this.minCostOfLiving == that.minCostOfLiving &&
-                Objects.equals(this.schufaauskunft, that.schufaauskunft) &&
-                this.debt == that.debt &&
-                this.monthlyAvailableMoney == that.monthlyAvailableMoney;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(avgNetIncome, rent, monthlyFixCost, fixedAssets, liquidAssets, minCostOfLiving, schufaauskunft, debt, monthlyAvailableMoney);
-    }
-
-    @Override
-    public String toString() {
-        return "FinancialInformation[" +
-                "avgNetIncome=" + avgNetIncome + ", " +
-                "rent=" + rent + ", " +
-                "monthlyFixCost=" + monthlyFixCost + ", " +
-                "fixedAssets=" + fixedAssets + ", " +
-                "liquidAssets=" + liquidAssets + ", " +
-                "minCostOfLiving=" + minCostOfLiving + ", " +
-                "schufaauskunft=" + schufaauskunft + ", " +
-                "debt=" + debt + ", " +
-                "monthlyAvailableMoney=" + monthlyAvailableMoney + ']';
-    }
 
     public void addFinancialInformationToDatabase(){
         Connection conn = CustomerDatabase.getConn();

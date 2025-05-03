@@ -2,6 +2,7 @@ package com.atdit.booking.Controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
 
@@ -18,5 +19,13 @@ public abstract class Controller {
         }
 
         return scene;
+    }
+
+    void showError(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

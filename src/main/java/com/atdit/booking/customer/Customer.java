@@ -41,6 +41,59 @@ public class Customer {
         this.email = "";
     }
 
+    private void addCustomerToDatabase() {
+        Connection conn = CustomerDatabase.getConn();
+
+        // check if hash is already in the database
+        String checkQuery = "SELECT COUNT(*) FROM customers WHERE hash = " + this.hash;
+
+        try (Statement statement = conn.createStatement()) {
+            ResultSet result = statement.executeQuery(checkQuery);
+            System.out.println("Query executed!");
+            result.next();
+            int count = result.getInt(1);
+            if (count > 0) {
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // first part of the query
+        String query = """
+        INSERT INTO customers (
+        first_name,
+        name,
+        birthdate,
+        country,
+        postal_code,
+        city,
+        street_name,
+        house_number,
+        hash)
+        VALUES(?,?,?,?,?,?,?,?,?,?);
+        """;
+
+        // concat the customer details to a one string for the values part of the query
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            preparedStatement.setString(1, this.firstName);
+            preparedStatement.setString(2, this.name);
+            preparedStatement.setString(3, this.birthdate);
+            preparedStatement.setString(4, this.country);
+            preparedStatement.setString(5, this.postalCode);
+            preparedStatement.setString(6, this.city);
+            preparedStatement.setString(7, this.streetname);
+            preparedStatement.setString(8, this.houseNumber);
+            preparedStatement.setInt(9, this.hash);
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert Customer data into the database
+        CustomerDatabase.executeUpdate(conn, query);
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -133,62 +186,6 @@ public class Customer {
 
     public String getEmail() {
         return email;
-    }
-
-
-
-    private void addCustomerToDatabase() {
-        Connection conn = CustomerDatabase.getConn();
-
-        // check if hash is already in the database
-        String checkQuery = "SELECT COUNT(*) FROM customers WHERE hash = " + this.hash;
-
-        try (Statement statement = conn.createStatement()) {
-            ResultSet result = statement.executeQuery(checkQuery);
-            System.out.println("Query executed!");
-            result.next();
-            int count = result.getInt(1);
-            if (count > 0) {
-                return;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // first part of the query
-        String query = """
-        INSERT INTO customers (
-        first_name,
-        name,
-        birthdate,
-        country,
-        postal_code,
-        city,
-        street_name,
-        house_number,
-        hash)
-        VALUES(?,?,?,?,?,?,?,?,?,?);
-        """;
-
-        // concat the customer details to a one string for the values part of the query
-        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-            preparedStatement.setString(1, this.firstName);
-            preparedStatement.setString(2, this.name);
-            preparedStatement.setString(3, this.birthdate);
-            preparedStatement.setString(4, this.country);
-            preparedStatement.setString(5, this.postalCode);
-            preparedStatement.setString(6, this.city);
-            preparedStatement.setString(7, this.streetname);
-            preparedStatement.setString(8, this.houseNumber);
-            preparedStatement.setInt(9, this.hash);
-
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Insert Customer data into the database
-        CustomerDatabase.executeUpdate(conn, query);
     }
 
     public FinancialInformation getFinancialInformation() {

@@ -1,6 +1,7 @@
 package com.atdit.booking.Controller;
 
 import com.atdit.booking.Main;
+import com.atdit.booking.customer.CustomerEvaluater;
 import com.atdit.booking.financialdata.FinancialInformation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 public class ControllerPage4 extends Controller implements Initializable {
 
     @FXML private TextField netIncomeField;
@@ -19,6 +21,8 @@ public class ControllerPage4 extends Controller implements Initializable {
     @FXML private TextField liquidAssetsField;
     @FXML private Button continueButton;
     @FXML private Button backButton;
+
+    private static CustomerEvaluater ce = new CustomerEvaluater(Main.customer);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { restoreFormData(); }
@@ -30,18 +34,19 @@ public class ControllerPage4 extends Controller implements Initializable {
         if (validateForm()) {
             try {
                 cacheData();
+            } catch (IllegalArgumentException ex) {
+                showError("Invalid Data", "Could not save financial information", ex.getMessage());
+            }
+
+            if (ce.evalCustomer1(1000)) {
 
                 Stage stage = (Stage) continueButton.getScene().getWindow();
                 Scene scene = getScene("page_5.fxml");
                 stage.setTitle("Next Step");
                 stage.setScene(scene);
-
-            } catch (IllegalArgumentException ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Invalid Data");
-                alert.setHeaderText("Could not save financial information");
-                alert.setContentText(ex.getMessage());
-                alert.showAndWait();
+            }
+            else {
+                showError("Evaluation Failed", "Customer evaluation failed", "Please check your financial information.");
             }
         }
     }
@@ -86,7 +91,7 @@ public class ControllerPage4 extends Controller implements Initializable {
                 isValid = false;
             }
         } catch (NumberFormatException e) {
-            errorMessage.append("- Invalid net income value\n");
+            errorMessage.append("- Invalid net income amount\n");
             isValid = false;
         }
 
@@ -97,7 +102,7 @@ public class ControllerPage4 extends Controller implements Initializable {
                 isValid = false;
             }
         } catch (NumberFormatException e) {
-            errorMessage.append("- Invalid fixed costs value\n");
+            errorMessage.append("- Invalid fixed costs amount\n");
             isValid = false;
         }
 
@@ -108,7 +113,7 @@ public class ControllerPage4 extends Controller implements Initializable {
                 isValid = false;
             }
         } catch (NumberFormatException e) {
-            errorMessage.append("- Invalid minimum living cost value\n");
+            errorMessage.append("- Invalid minimum living cost amount\n");
             isValid = false;
         }
 
@@ -119,16 +124,14 @@ public class ControllerPage4 extends Controller implements Initializable {
                 isValid = false;
             }
         } catch (NumberFormatException e) {
-            errorMessage.append("- Invalid liquid assets value\n");
+            errorMessage.append("- Invalid liquid assets amount\n");
             isValid = false;
         }
 
         if (!isValid) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Invalid Information");
-            alert.setHeaderText("Please correct the input");
-            alert.setContentText(errorMessage.toString());
-            alert.showAndWait();
+
+            showError("Invalid Information", "Please correct the input", errorMessage.toString());
+
         }
 
         return isValid;

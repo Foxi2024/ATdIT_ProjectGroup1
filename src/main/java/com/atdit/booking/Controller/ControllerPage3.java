@@ -30,9 +30,7 @@ public class ControllerPage3 extends Controller implements Initializable {
     @FXML private Button backButton;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        restoreFormData();
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) { restoreFormData(); }
 
     @FXML
     public void nextPage(MouseEvent e) {
@@ -132,11 +130,7 @@ public class ControllerPage3 extends Controller implements Initializable {
         }
 
         if (!isValid) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Missing Information");
-            alert.setHeaderText("Required Fields Empty");
-            alert.setContentText(errorMessage.toString());
-            alert.showAndWait();
+            showError("Missing Information", "Please fill out all required fields", errorMessage.toString()););
         }
 
         return isValid;

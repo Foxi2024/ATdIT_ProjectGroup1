@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.atdit.booking.Controller.ControllerPage5"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox spacing="20" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.atdit.booking.Controller.ControllerPage5"
+      prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Document Upload" style="-fx-font-size: 24px;"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="incomeProofButton" text="Upload Income Proof"/>
+        <Label fx:id="incomeStatusLabel" text="Not uploaded"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="liquidAssetsProofButton" text="Upload Liquid Assets Proof"/>
+        <Label fx:id="liquidAssetsStatusLabel" text="Not uploaded"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="fixedAssetsProofButton" text="Upload Fixed Assets Proof"/>
+        <Label fx:id="fixedAssetsStatusLabel" text="Not uploaded"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="schufaButton" text="Upload Schufa Information"/>
+        <Label fx:id="schufaStatusLabel" text="Not uploaded"/>
+    </HBox>
+
+    <HBox spacing="20" alignment="CENTER">
+        <Button fx:id="backButton" text="Back" onMouseClicked="#previousPage"/>
+        <Button fx:id="continueButton" text="Continue" onMouseClicked="#nextPage"/>
+    </HBox>
+
+</VBox>

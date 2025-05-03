@@ -1,8 +1,8 @@
 package com.atdit.booking.financialdata;
 
-public record Credit(String description, int value, float interestRate, int monthlyPayment, int remainingSum) {
+public record Credit(String description, int amount, float interestRate, int monthlyPayment, int remainingSum) {
 
     public int amountOwed() {
-        return value - remainingSum;
+        return amount - remainingSum;
     }
 }
