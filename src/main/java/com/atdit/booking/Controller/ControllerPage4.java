@@ -42,7 +42,7 @@ public class ControllerPage4 extends Controller implements Initializable {
 
                 Stage stage = (Stage) continueButton.getScene().getWindow();
                 Scene scene = getScene("page_5.fxml");
-                stage.setTitle("Next Step");
+                stage.setTitle("Financial Proof");
                 stage.setScene(scene);
             }
             else {
@@ -129,9 +129,7 @@ public class ControllerPage4 extends Controller implements Initializable {
         }
 
         if (!isValid) {
-
             showError("Invalid Information", "Please correct the input", errorMessage.toString());
-
         }
 
         return isValid;

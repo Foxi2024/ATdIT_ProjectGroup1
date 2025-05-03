@@ -19,7 +19,7 @@ public class Main {
 
         customer = new Customer();
 
-        FinancialDocumentsGenerator.main(null);
-        //MainWindow.main(null);
+        //FinancialDocumentsGenerator.main(null);
+        MainWindow.main(null);
     }
 }

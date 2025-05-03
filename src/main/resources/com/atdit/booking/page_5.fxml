@@ -26,11 +26,6 @@
     </HBox>
 
     <HBox spacing="10" alignment="CENTER">
-        <Button fx:id="fixedAssetsProofButton" text="Upload Fixed Assets Proof"/>
-        <Label fx:id="fixedAssetsStatusLabel" text="Not uploaded"/>
-    </HBox>
-
-    <HBox spacing="10" alignment="CENTER">
         <Button fx:id="schufaButton" text="Upload Schufa Information"/>
         <Label fx:id="schufaStatusLabel" text="Not uploaded"/>
     </HBox>

@@ -1,11 +1,9 @@
 package com.atdit.booking.Controller;
 
 import com.atdit.booking.Main;
-import com.atdit.booking.financialdata.FinancialDocumentEvaluator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -24,60 +22,63 @@ public class ControllerPage5 extends Controller implements Initializable {
 
     @FXML private Button incomeProofButton;
     @FXML private Button liquidAssetsProofButton;
-    @FXML private Button fixedAssetsProofButton;
     @FXML private Button schufaButton;
     @FXML private Button continueButton;
     @FXML private Button backButton;
-
     @FXML private Label incomeStatusLabel;
     @FXML private Label liquidAssetsStatusLabel;
-    @FXML private Label fixedAssetsStatusLabel;
     @FXML private Label schufaStatusLabel;
 
     private final Map<String, String> uploadedDocuments = new HashMap<>();
     private final FileChooser fileChooser = new FileChooser();
-    private final FinancialDocumentEvaluator evaluator = new FinancialDocumentEvaluator();
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt")
         );
-        setupButtons();
+
+        setupUploadButton(incomeProofButton, "income", incomeStatusLabel);
+        setupUploadButton(liquidAssetsProofButton, "liquidAssets", liquidAssetsStatusLabel);
+        setupUploadButton(schufaButton, "schufa", schufaStatusLabel);
+
+        setupStatusLabel(incomeStatusLabel, "income");
+        setupStatusLabel(liquidAssetsStatusLabel, "liquidAssets");
+        setupStatusLabel(schufaStatusLabel, "schufa");
     }
 
 
-    private void setupButtons() {
-        setupUploadButton(incomeProofButton, incomeStatusLabel, "income");
-        setupUploadButton(liquidAssetsProofButton, liquidAssetsStatusLabel, "liquidAssets");
-        setupUploadButton(fixedAssetsProofButton, fixedAssetsStatusLabel, "fixedAssets");
-        setupUploadButton(schufaButton, schufaStatusLabel, "schufa");
+    private void setupStatusLabel(Label label, String documentType) {
+        label.setOnMouseClicked(e -> {
+            if (uploadedDocuments.containsKey(documentType)) {
+                uploadedDocuments.remove(documentType);
+                label.setText("Not uploaded");
+                label.setStyle("-fx-text-fill: black;");
+            }
+        });
     }
 
-    private void setupUploadButton(Button button, Label statusLabel, String documentType) {
+    private void setupUploadButton(Button button, String documentType, Label statusLabel) {
         button.setOnAction(e -> uploadDocument(documentType, statusLabel));
     }
 
     private void uploadDocument(String documentType, Label statusLabel) {
-        Stage stage = (Stage) continueButton.getScene().getWindow();
-        fileChooser.setTitle("Select " + documentType + " proof document");
 
-        File file = fileChooser.showOpenDialog(stage);
+        File file = fileChooser.showOpenDialog((Stage) continueButton.getScene().getWindow());
+
         if (file != null) {
             try {
                 String content = Files.readString(file.toPath());
+                uploadedDocuments.put(documentType, content);
 
-                // Evaluate document before accepting it
-                if (evaluator.evaluateDocument(documentType, content)) {
-                    uploadedDocuments.put(documentType, content);
-                    statusLabel.setText("Validated & Uploaded");
-                    statusLabel.setStyle("-fx-text-fill: green;");
+                if (!validateDocumentFormat(content, documentType)) {
+                    statusLabel.setText("Invalid format (click to remove)");
+                    statusLabel.setStyle("-fx-text-fill: red;");
                 } else {
-                    showError("Validation Error",
-                            "Document format invalid",
-                            evaluator.getErrorLog());
+                    statusLabel.setText(file.getName() + " (click to remove)");
+                    statusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
                 }
+
             } catch (IOException ex) {
                 showError("File Error", "Could not read file", ex.getMessage());
             }
@@ -86,11 +87,11 @@ public class ControllerPage5 extends Controller implements Initializable {
 
     @FXML
     public void nextPage(MouseEvent e) {
+
         if (validateUploads()) {
             saveDocuments();
             Stage stage = (Stage) continueButton.getScene().getWindow();
             Scene scene = getScene("page_6.fxml");
-            stage.setTitle("Next Step");
             stage.setScene(scene);
         }
     }
@@ -99,35 +100,67 @@ public class ControllerPage5 extends Controller implements Initializable {
     public void previousPage(MouseEvent e) {
         Stage stage = (Stage) backButton.getScene().getWindow();
         Scene scene = getScene("page_4.fxml");
-        stage.setTitle("Financial Information");
         stage.setScene(scene);
     }
 
     private boolean validateUploads() {
-        if (uploadedDocuments.size() < 4) {
-            showError(
-                    "Missing Documents",
-                    "Please upload all required documents",
-                    "You need to upload proof of income, assets, and Schufa information."
-            );
-            return false;
+
+        if (uploadedDocuments.containsKey("liquidAssets") && uploadedDocuments.containsKey("schufa")) {
+            return true;
         }
-        return true;
+
+        showError("Missing Documents", "Please upload required documents", "You need to upload proof of liquid assets and Schufa information.");
+        return false;
     }
 
     private void saveDocuments() {
         try {
-            // Create a directory for the customer's documents if it doesn't exist
             String customerDir = "documents/" + Main.customer.getHash();
             Files.createDirectories(new File(customerDir).toPath());
-
-            // Save each document
             for (Map.Entry<String, String> entry : uploadedDocuments.entrySet()) {
-                String filePath = customerDir + "/" + entry.getKey() + ".txt";
-                Files.writeString(new File(filePath).toPath(), entry.getValue());
+                Files.writeString(new File(customerDir + "/" + entry.getKey() + ".txt").toPath(),
+                        entry.getValue());
             }
         } catch (IOException ex) {
             showError("Save Error", "Could not save documents", ex.getMessage());
         }
+    }
+
+    private boolean validateDocumentFormat(String content, String documentType) {
+        String[] lines = content.split("\n");
+        boolean hasRequiredFields = false;
+
+        switch(documentType) {
+
+            case "income":
+                hasRequiredFields = lines.length == 4
+                                    && content.contains("Monthly Net Income:")
+                                    && content.contains("Employment Type:")
+                                    && content.contains("Employer:")
+                                    && content.contains("Employment Duration:");
+                break;
+
+            case "liquidAssets":
+                hasRequiredFields = lines.length == 4
+                                    && content.contains("Bank Account Balance:")
+                                    && content.contains("IBAN:")
+                                    && content.contains("Date Issued:")
+                                    && content.contains("Description:");
+                break;
+
+            case "schufa":
+                hasRequiredFields = lines.length == 7
+                                    && content.contains("Schufa Score:")
+                                    && content.contains("Total Credits:")
+                                    && content.contains("Total Credit Sum:")
+                                    && content.contains("Total Amount Payed:")
+                                    && content.contains("Total Amount Owed:")
+                                    && content.contains("Total Interest Rate:")
+                                    && content.contains("Date Issued:");
+
+                break;
+        }
+
+        return hasRequiredFields;
     }
 }

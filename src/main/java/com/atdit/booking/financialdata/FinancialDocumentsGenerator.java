@@ -10,7 +10,6 @@ public class FinancialDocumentsGenerator {
 
     public void generateDocumentFile(String content, String fileName, String directory) throws IOException {
 
-
         Path dirPath = Paths.get(directory);
         if (!Files.exists(dirPath)) {
             Files.createDirectories(dirPath);
@@ -21,6 +20,7 @@ public class FinancialDocumentsGenerator {
     }
 
     public void generateProofOfIncome(IncomeProof incomeProof) throws IOException {
+
         String content = "Monthly Net Income: " + incomeProof.monthlyNetIncome() + "\n" +
                          "Employer: " + incomeProof.employer() + "\n" +
                          "Employment Type: " + incomeProof.employmentType() + "\n" +
@@ -33,8 +33,8 @@ public class FinancialDocumentsGenerator {
 
         String content = "Bank Account Balance: " + liquidAsset.balance() + "\n" +
                          "IBAN: " + liquidAsset.iban() + "\n" +
-                            "Description: " + liquidAsset.description() + "\n" +
-                            "Date Issued: " + liquidAsset.dateIssued();
+                         "Description: " + liquidAsset.description() + "\n" +
+                         "Date Issued: " + liquidAsset.dateIssued();
 
         generateDocumentFile(content, "LiquidAssetsProof", "financial_documents");
     }

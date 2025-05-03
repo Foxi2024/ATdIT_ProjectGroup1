@@ -7,8 +7,11 @@ import java.util.Map;
 import java.util.ArrayList;
 
 public class FinancialDocumentEvaluator {
+
+
     private final Map<String, String> parsedValues = new HashMap<>();
     private StringBuilder errorLog = new StringBuilder();
+
 
     public FinancialInformation evaluateDocuments(Map<String, String> documents) {
         FinancialInformation financialInfo = new FinancialInformation();
