@@ -1,0 +1,81 @@
+package com.atdit.booking.financialdata;
+
+public class SchufaOverview {
+    private double score;
+    private int totalCredits;
+    private int totalCreditSum;
+    private int totalAmountPayed;
+    private int totalAmountOwed;
+    private int totalMonthlyRate;
+    private String dateIssued;
+
+    public SchufaOverview(Schufaauskunft schufa){
+
+        this.score = schufa.score();
+        this.totalCredits = schufa.creditList().size();
+        this.totalCreditSum = schufa.creditList().stream().mapToInt(Credit::amount).sum();
+        this.totalAmountPayed = schufa.creditList().stream().mapToInt(Credit::remainingSum).sum();
+        this.totalAmountOwed = schufa.creditList().stream().mapToInt(Credit::amountOwed).sum();
+        this.totalMonthlyRate = schufa.creditList().stream().mapToInt(Credit::monthlyPayment).sum();
+        this.dateIssued = schufa.issueDate();
+
+    }
+
+    public SchufaOverview() {}
+
+    public double getScore() {
+        return score;
+    }
+
+    public int getTotalCredits() {
+        return totalCredits;
+    }
+
+    public int getTotalCreditSum() {
+        return totalCreditSum;
+    }
+
+    public int getTotalAmountPayed() {
+        return totalAmountPayed;
+    }
+
+    public int getTotalAmountOwed() {
+        return totalAmountOwed;
+    }
+
+    public int getTotalMonthlyRate() {
+        return totalMonthlyRate;
+    }
+
+    public String getDateIssued() {
+        return dateIssued;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public void setTotalCredits(int totalCredits) {
+        this.totalCredits = totalCredits;
+    }
+
+    public void setTotalCreditSum(int totalCreditSum) {
+        this.totalCreditSum = totalCreditSum;
+    }
+
+    public void setTotalAmountPayed(int totalAmountPayed) {
+        this.totalAmountPayed = totalAmountPayed;
+    }
+
+    public void setTotalAmountOwed(int totalAmountOwed) {
+        this.totalAmountOwed = totalAmountOwed;
+    }
+
+    public void setTotalMonthlyRate(int totalMonthlyRate) {
+        this.totalMonthlyRate = totalMonthlyRate;
+    }
+
+    public void setDateIssued(String dateIssued) {
+        this.dateIssued = dateIssued;
+    }
+}

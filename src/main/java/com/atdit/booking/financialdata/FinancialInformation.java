@@ -9,17 +9,16 @@ import java.util.Objects;
 public class FinancialInformation {
 
     private int avgNetIncome;
+    private int proofOfIncome;
+    private int liquidAssets;
+    private int proofOfLiquidAssets;
     private int rent;
     private int monthlyFixCost;
-    private int fixedAssets;
-    private int liquidAssets;
-    private int proofOfIncome;
     private int minCostOfLiving;
-    private Schufaauskunft schufaauskunft;
     private int debt;
     private int monthlyAvailableMoney;
-    private int currentNetWorth;
     private int summedMonthlyRates;
+    private Schufaauskunft schufaauskunft;
 
 
     public void setAvgNetIncome(int avgNetIncome) {
@@ -49,14 +48,8 @@ public class FinancialInformation {
         updateMonthlyAvailableMoney();
     }
 
-    public void setFixedAssets(int fixedAssets) {
-        this.fixedAssets = fixedAssets;
-        updateNetWorth();
-    }
-
     public void setLiquidAssets(int liquidAssets) {
         this.liquidAssets = liquidAssets;
-        updateNetWorth();
     }
 
     public void setMinCostOfLiving(int minCostOfLiving) {
@@ -81,9 +74,7 @@ public class FinancialInformation {
         this.monthlyAvailableMoney = this.avgNetIncome - this.monthlyFixCost - this.minCostOfLiving;
     }
 
-    private void updateNetWorth() {
-        this.currentNetWorth = this.fixedAssets + this.liquidAssets - this.debt;
-    }
+
 
     public int getAvgNetIncome() {
         return avgNetIncome;
@@ -95,10 +86,6 @@ public class FinancialInformation {
 
     public int getMonthlyFixCost() {
         return monthlyFixCost;
-    }
-
-    public int getFixedAssets() {
-        return fixedAssets;
     }
 
     public int getLiquidAssets() {
@@ -121,10 +108,6 @@ public class FinancialInformation {
         return monthlyAvailableMoney;
     }
 
-    public int getCurrentNetWorth() {
-        return currentNetWorth;
-    }
-
     public int getSummedMonthlyRates() {
         return summedMonthlyRates;
     }
@@ -141,7 +124,6 @@ public class FinancialInformation {
             preparedStatement.setInt(1, this.avgNetIncome);
             preparedStatement.setInt(2, this.rent);
             preparedStatement.setInt(3, this.monthlyFixCost);
-            preparedStatement.setInt(4, this.fixedAssets);
             preparedStatement.setInt(5, this.liquidAssets);
             preparedStatement.setInt(6, this.minCostOfLiving);
             preparedStatement.setInt(7, this.debt);

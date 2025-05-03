@@ -1,6 +1,7 @@
 package com.atdit.booking.Controller;
 
 import com.atdit.booking.Main;
+import com.atdit.booking.customer.Customer;
 import com.atdit.booking.customer.CustomerEvaluater;
 import com.atdit.booking.financialdata.FinancialInformation;
 import javafx.fxml.FXML;
@@ -13,6 +14,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
+
+
 public class ControllerPage4 extends Controller implements Initializable {
 
     @FXML private TextField netIncomeField;
@@ -22,7 +25,9 @@ public class ControllerPage4 extends Controller implements Initializable {
     @FXML private Button continueButton;
     @FXML private Button backButton;
 
-    private static CustomerEvaluater ce = new CustomerEvaluater(Main.customer);
+    private static final Customer currentCustomer = Main.customer;
+    private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
+    private static final CustomerEvaluater ce = new CustomerEvaluater(currentCustomer);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { restoreFormData(); }
@@ -62,7 +67,6 @@ public class ControllerPage4 extends Controller implements Initializable {
     }
 
     public void cacheData() throws IllegalArgumentException {
-        FinancialInformation financialInfo = Main.customer.getFinancialInformation();
 
         financialInfo.setAvgNetIncome(Integer.parseInt(netIncomeField.getText().trim()));
         financialInfo.setMonthlyFixCost(Integer.parseInt(fixedCostsField.getText().trim()));
@@ -71,7 +75,6 @@ public class ControllerPage4 extends Controller implements Initializable {
     }
 
     private void restoreFormData() {
-        FinancialInformation financialInfo = Main.customer.getFinancialInformation();
 
         netIncomeField.setText(String.valueOf(financialInfo.getAvgNetIncome()));
         fixedCostsField.setText(String.valueOf(financialInfo.getMonthlyFixCost()));

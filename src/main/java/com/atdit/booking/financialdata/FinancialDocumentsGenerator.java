@@ -41,13 +41,15 @@ public class FinancialDocumentsGenerator {
 
     public void generateSchufa(Schufaauskunft schufa) throws IOException {
 
-        String content = "Schufa Score: " + schufa.score() + "\n" +
-                         "Total Credits: " + schufa.creditList().size() + "\n" +
-                         "Total Credit Sum: " + schufa.creditList().stream().mapToDouble(Credit::amount).sum() + "\n" +
-                         "Total Amount Payed: "  + schufa.creditList().stream().mapToDouble(Credit::remainingSum).sum() + "\n"+
-                         "Total Amount Owed: " + schufa.creditList().stream().mapToDouble(Credit::amountOwed).sum() + "\n" +
-                         "Total Interest Rate: " + schufa.creditList().stream().mapToDouble(Credit::interestRate).sum() + "\n" +
-                         "Issue Date: " + schufa.issueDate();
+        SchufaOverview schufaOverview = new SchufaOverview(schufa);
+
+        String content = "Schufa Score: " + schufaOverview.getScore() + "\n" +
+                         "Total Credits: " + schufaOverview.getTotalCredits() + "\n" +
+                         "Total Credit Sum: " + schufaOverview.getTotalCreditSum() + "\n" +
+                         "Total Amount Payed: "  + schufaOverview.getTotalAmountPayed() + "\n"+
+                         "Total Amount Owed: " + schufaOverview.getTotalAmountOwed() + "\n" +
+                         "Total Monthly Rate: " + schufaOverview.getTotalMonthlyRate() + "\n" +
+                         "Date Issued: " + schufaOverview.getDateIssued();
 
         generateDocumentFile(content, "Schufa", "financial_documents");
 

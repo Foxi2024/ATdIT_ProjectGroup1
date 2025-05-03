@@ -1,6 +1,9 @@
 package com.atdit.booking.Controller;
 
 import com.atdit.booking.Main;
+import com.atdit.booking.customer.Customer;
+import com.atdit.booking.financialdata.FinancialInformation;
+import com.atdit.booking.financialdata.FinancialInformationEvaluator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -29,11 +32,17 @@ public class ControllerPage5 extends Controller implements Initializable {
     @FXML private Label liquidAssetsStatusLabel;
     @FXML private Label schufaStatusLabel;
 
+
+    private static final Customer currentCustomer = Main.customer;
+    private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
+    private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator();
     private final Map<String, String> uploadedDocuments = new HashMap<>();
     private final FileChooser fileChooser = new FileChooser();
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt")
         );
@@ -47,8 +56,28 @@ public class ControllerPage5 extends Controller implements Initializable {
         setupStatusLabel(schufaStatusLabel, "schufa");
     }
 
+    @FXML
+    public void nextPage(MouseEvent e) {
+
+        if (validateUploads()) {
+            saveDocuments();
+            Stage stage = (Stage) continueButton.getScene().getWindow();
+            Scene scene = getScene("page_6.fxml");
+            stage.setScene(scene);
+        }
+    }
+
+    @FXML
+    public void previousPage(MouseEvent e) {
+
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        Scene scene = getScene("page_4.fxml");
+        stage.setScene(scene);
+    }
+
 
     private void setupStatusLabel(Label label, String documentType) {
+
         label.setOnMouseClicked(e -> {
             if (uploadedDocuments.containsKey(documentType)) {
                 uploadedDocuments.remove(documentType);
@@ -59,8 +88,10 @@ public class ControllerPage5 extends Controller implements Initializable {
     }
 
     private void setupUploadButton(Button button, String documentType, Label statusLabel) {
+
         button.setOnAction(e -> uploadDocument(documentType, statusLabel));
     }
+
 
     private void uploadDocument(String documentType, Label statusLabel) {
 
@@ -85,23 +116,6 @@ public class ControllerPage5 extends Controller implements Initializable {
         }
     }
 
-    @FXML
-    public void nextPage(MouseEvent e) {
-
-        if (validateUploads()) {
-            saveDocuments();
-            Stage stage = (Stage) continueButton.getScene().getWindow();
-            Scene scene = getScene("page_6.fxml");
-            stage.setScene(scene);
-        }
-    }
-
-    @FXML
-    public void previousPage(MouseEvent e) {
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        Scene scene = getScene("page_4.fxml");
-        stage.setScene(scene);
-    }
 
     private boolean validateUploads() {
 
@@ -115,7 +129,7 @@ public class ControllerPage5 extends Controller implements Initializable {
 
     private void saveDocuments() {
         try {
-            String customerDir = "documents/" + Main.customer.getHash();
+            String customerDir = "financial_customer_documents/" + Main.customer.hashCode();
             Files.createDirectories(new File(customerDir).toPath());
             for (Map.Entry<String, String> entry : uploadedDocuments.entrySet()) {
                 Files.writeString(new File(customerDir + "/" + entry.getKey() + ".txt").toPath(),
@@ -155,12 +169,22 @@ public class ControllerPage5 extends Controller implements Initializable {
                                     && content.contains("Total Credit Sum:")
                                     && content.contains("Total Amount Payed:")
                                     && content.contains("Total Amount Owed:")
-                                    && content.contains("Total Interest Rate:")
+                                    && content.contains("Total Monthly Rate:")
                                     && content.contains("Date Issued:");
 
                 break;
         }
 
         return hasRequiredFields;
+    }
+
+    public void cacheData() {
+
+        evaluator.parseIncomeDocument(uploadedDocuments.get("income"));
+        evaluator.parseLiquidAssetsDocument(uploadedDocuments.get("liquidAssets"));
+        evaluator.parseSchufaDocument(uploadedDocuments.get("schufa"));
+
+
+
     }
 }
