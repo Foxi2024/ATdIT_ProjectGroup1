@@ -56,6 +56,8 @@ public class ControllerPage3 extends Controller implements Initializable {
     private void cacheData(){
 
         Customer currentCostumer = Main.customer;
+
+
         currentCostumer.setTitle(titleField.getText());
         currentCostumer.setFirstName(firstNameField.getText());
         currentCostumer.setName(nameField.getText());
@@ -66,11 +68,13 @@ public class ControllerPage3 extends Controller implements Initializable {
         currentCostumer.setHouseNumber(houseNumberField.getText());
         currentCostumer.setEmail(emailField.getText());
 
-        if(birthDatePicker.getValue() == null){
+        if (birthDatePicker.getValue() == null) {
             currentCostumer.setBirthdate(null);
         } else {
             currentCostumer.setBirthdate(birthDatePicker.getValue().toString());
         }
+
+
     }
 
     private void restoreFormData() {
@@ -124,8 +128,8 @@ public class ControllerPage3 extends Controller implements Initializable {
             errorMessage.append("- Country\n");
             isValid = false;
         }
-        if (emailField.getText().trim().isEmpty()) {
-            errorMessage.append("- Email\n");
+        if (!emailField.getText().trim().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            errorMessage.append("- Email (wrong format)\n");
             isValid = false;
         }
 
