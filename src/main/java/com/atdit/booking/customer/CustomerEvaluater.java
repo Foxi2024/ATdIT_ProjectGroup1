@@ -15,7 +15,7 @@ public class CustomerEvaluater {
     }
 
     public boolean hasOptimalSchufaScore(){
-        return this.financialInformation.getSchufaauskunft().score() > 0.975;
+        return this.financialInformation.getSchufa().getScore() > 0.975;
     }
 
     public boolean evalCustomer1(int journeyPrice){

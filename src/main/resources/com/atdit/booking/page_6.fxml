@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.atdit.booking.Controller.ControllerPage6">
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+    </padding>
+
+    <Text text="Thank you for providing your information" style="-fx-font-size: 24;"/>
+
+    <HBox alignment="CENTER">
+        <Text text="We will validate declared information and send an email to " style="-fx-font-size: 16;"/>
+        <Label fx:id="emailLabel" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <Text text="once we validated all of your information." style="-fx-font-size: 16;"/>
+</VBox>

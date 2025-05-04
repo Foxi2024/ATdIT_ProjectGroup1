@@ -1,85 +1,106 @@
 package com.atdit.booking.financialdata;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+
 public class FinancialInformationEvaluator {
 
-    public IncomeProof parseIncomeDocument(String content) {
+    private final double MAX_DEVIATION = 0.10;
+    public static final int MAX_DOCUMENT_AGE_DAYS = 365;
+
+    private final FinancialInformation financialInfo;
+
+    public FinancialInformationEvaluator(FinancialInformation financialInfo){
+        this.financialInfo = financialInfo;
+    }
+
+    public void validateIncome() {
+
+        if ((double) financialInfo.getProofOfIncome().monthlyNetIncome() / financialInfo.getAvgNetIncome() < 1-MAX_DEVIATION) {
+            throw new IllegalArgumentException(String.format(
+                    "Declared monthly income (" +
+                            financialInfo.getProofOfIncome().monthlyNetIncome()  +
+                            "€) significantly from proof of income (" +
+                            financialInfo.getAvgNetIncome() +
+                            "€). "
+            ));
+        }
+    }
+
+    public void validateLiquidAssets() throws IllegalArgumentException {
+
+        if ((double) financialInfo.getProofOfLiquidAssets().balance() / financialInfo.getLiquidAssets() < 1-MAX_DEVIATION) {
+            throw new IllegalArgumentException(
+                    "Declared liquid assets (" +
+                            financialInfo.getLiquidAssets() +
+                            "€) differs significantly from proof of assets (" +
+                            financialInfo.getProofOfLiquidAssets().balance() +
+                            "€). "
+            );
+        }
+    }
+
+
+    public boolean validateDocumentFormat(String content, String documentType) throws IllegalArgumentException {
         String[] lines = content.split("\n");
-        int monthlyIncome = 0;
-        String employmentType = "";
-        String employer = "";
-        int duration = 0;
+        boolean hasRequiredFields = false;
+
+        switch(documentType) {
+
+            case "income":
+                hasRequiredFields = lines.length == 5
+                        && content.contains("Monthly Net Income:")
+                        && content.contains("Employment Type:")
+                        && content.contains("Employer:")
+                        && content.contains("Employment Duration:")
+                        && content.contains("Date Issued:");
+                break;
+
+            case "liquidAssets":
+                hasRequiredFields = lines.length == 4
+                        && content.contains("Bank Account Balance:")
+                        && content.contains("IBAN:")
+                        && content.contains("Description:")
+                        && content.contains("Date Issued:");
+                break;
+
+            case "schufa":
+                hasRequiredFields = lines.length == 7
+                        && content.contains("Schufa Score:")
+                        && content.contains("Total Credits:")
+                        && content.contains("Total Credit Sum:")
+                        && content.contains("Total Amount Payed:")
+                        && content.contains("Total Amount Owed:")
+                        && content.contains("Total Monthly Rate:")
+                        && content.contains("Date Issued:");
+
+                break;
+        }
+
+        return hasRequiredFields;
+    }
+
+    public boolean validateDocumentDate(String content) {
+        String[] lines = content.split("\n");
 
         for (String line : lines) {
+            if (line.startsWith("Date Issued:")) {
+                String dateStr = line.split(":")[1].trim();
 
-            switch (line.split(":")[0]) {
-                case "Monthly Net Income:" -> monthlyIncome = extractIntValue(line);
-                case "Employment Type:" -> employmentType = extractStringValue(line);
-                case "Employer:" -> employer = extractStringValue(line);
-                case "Employment Duration:" -> duration = extractIntValue(line);
+                try {
+                    LocalDate docDate = LocalDate.parse(dateStr);
+                    LocalDate now = LocalDate.now();
+                    long daysBetween = ChronoUnit.DAYS.between(docDate, now);
+                    return daysBetween <= MAX_DOCUMENT_AGE_DAYS;
+
+                } catch (DateTimeParseException e) {
+                    throw new IllegalArgumentException("Invalid date format in document: " + dateStr);
+                }
             }
         }
 
-        return new IncomeProof(monthlyIncome, employmentType, employer, duration);
-    }
-
-    public LiquidAsset parseLiquidAssetsDocument(String content) {
-
-        String[] lines = content.split("\n");
-        int balance = 0;
-        String iban = "";
-        String dateIssued = "";
-        String description = "";
-
-        for (String line : lines) {
-            switch (line.split(":")[0]) {
-                case "Bank Account Balance:" -> balance = extractIntValue(line);
-                case "IBAN:" -> iban = extractStringValue(line);
-                case "Date Issued:" -> dateIssued = extractStringValue(line);
-                case "Description:" -> description = extractStringValue(line);
-            }
-        }
-
-        return new LiquidAsset(iban, description, balance,  dateIssued);
-    }
-
-    public SchufaOverview parseSchufaDocument(String content) {
-
-        SchufaOverview schufaOverview = new SchufaOverview();
-        String[] lines = content.split("\n");
-        double score = 0;
-        String dateIssued = "";
-        int totalCredits = 0;
-        int totalCreditSum = 0;
-        int totalAmountPayed = 0;
-        int totalAmountOwed = 0;
-        int totalMonthlyRate = 0;
-
-        for (String line : lines) {
-            switch (line.split(":")[0]) {
-                case "Schufa Score:" -> schufaOverview.setScore(extractDoubleValue(line));
-                case "Total Credits:" -> schufaOverview.setTotalCredits(extractIntValue(line));
-                case "Total Credit Sum:" -> schufaOverview.setTotalCreditSum(extractIntValue(line));
-                case "Total Amount Payed:" -> schufaOverview.setTotalAmountPayed(extractIntValue(line));
-                case "Total Amount Owed:" -> schufaOverview.setTotalAmountOwed(extractIntValue(line));
-                case "Total Monthly Rate:" -> schufaOverview.setTotalMonthlyRate(extractIntValue(line));
-                case "Date Issued:" -> schufaOverview.setDateIssued(extractStringValue(line));
-            }
-        }
-
-        return schufaOverview;
-    }
-
-
-    private int extractIntValue(String line) {
-        return Integer.parseInt(line.split(":")[1].trim());
-    }
-
-    private double extractDoubleValue(String line) {
-        return Double.parseDouble(line.split(":")[1].trim());
-    }
-
-    private String extractStringValue(String line) {
-        return line.split(":")[1].trim();
+        throw new IllegalArgumentException("No date information found in document");
     }
 
 

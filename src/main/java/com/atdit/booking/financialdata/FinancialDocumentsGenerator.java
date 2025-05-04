@@ -24,7 +24,8 @@ public class FinancialDocumentsGenerator {
         String content = "Monthly Net Income: " + incomeProof.monthlyNetIncome() + "\n" +
                          "Employer: " + incomeProof.employer() + "\n" +
                          "Employment Type: " + incomeProof.employmentType() + "\n" +
-                         "Employment Duration: " + incomeProof.employmentDurationMonths() + " months";
+                         "Employment Duration: " + incomeProof.employmentDurationMonths() + "\n" +
+                         "Date Issued: " + incomeProof.dateIssued();
 
         generateDocumentFile(content, "IncomeProof", "financial_documents");
     }
@@ -56,13 +57,14 @@ public class FinancialDocumentsGenerator {
     }
 
     public static void main(String[] args) {
+
         FinancialDocumentsGenerator generator = new FinancialDocumentsGenerator();
 
         Credit c1 = new Credit("Car Loan", 20000, 5.0f, 500, 10000);
         Credit c2 = new Credit("Home Loan", 150000, 3.5f, 1500, 50000);
 
         try {
-            generator.generateProofOfIncome(new IncomeProof(30000, "ABC Corp", "Full-time", 24));
+            generator.generateProofOfIncome(new IncomeProof(30000, "ABC Corp", "Full-time", 24, "2023-01-01"));
             generator.generateProofOfLiquidAssets(new LiquidAsset("DE12345678901234567890", "Savings Account", 1000000, "2023-01-01"));
             generator.generateSchufa(new Schufaauskunft(0.75f, new ArrayList<Credit>(), "2023-01-01"));
         } catch (IOException e) {

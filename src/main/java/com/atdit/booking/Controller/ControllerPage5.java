@@ -2,8 +2,7 @@ package com.atdit.booking.Controller;
 
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
-import com.atdit.booking.financialdata.FinancialInformation;
-import com.atdit.booking.financialdata.FinancialInformationEvaluator;
+import com.atdit.booking.financialdata.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -35,8 +34,9 @@ public class ControllerPage5 extends Controller implements Initializable {
 
     private static final Customer currentCustomer = Main.customer;
     private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
-    private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator();
-    private final Map<String, String> uploadedDocuments = new HashMap<>();
+    private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator(financialInfo);
+    private static final FinancialInformationParser parser = new FinancialInformationParser();
+    private final Map<String, Boolean> uploadedDocuments = new HashMap<>();
     private final FileChooser fileChooser = new FileChooser();
 
 
@@ -47,6 +47,8 @@ public class ControllerPage5 extends Controller implements Initializable {
                 new FileChooser.ExtensionFilter("Text Files", "*.txt")
         );
 
+        restoreFormData();
+
         setupUploadButton(incomeProofButton, "income", incomeStatusLabel);
         setupUploadButton(liquidAssetsProofButton, "liquidAssets", liquidAssetsStatusLabel);
         setupUploadButton(schufaButton, "schufa", schufaStatusLabel);
@@ -54,15 +56,23 @@ public class ControllerPage5 extends Controller implements Initializable {
         setupStatusLabel(incomeStatusLabel, "income");
         setupStatusLabel(liquidAssetsStatusLabel, "liquidAssets");
         setupStatusLabel(schufaStatusLabel, "schufa");
+
     }
 
     @FXML
     public void nextPage(MouseEvent e) {
 
         if (validateUploads()) {
-            saveDocuments();
+            try {
+                evaluator.validateIncome();
+                evaluator.validateLiquidAssets();
+            } catch(IllegalArgumentException ex) {
+                showError("Validation Error", "Validation Error in your declarations", ex.getMessage());
+                return;
+            }
+
             Stage stage = (Stage) continueButton.getScene().getWindow();
-            Scene scene = getScene("page_6.fxml");
+            Scene scene = getScene("page_7.fxml");
             stage.setScene(scene);
         }
     }
@@ -79,112 +89,109 @@ public class ControllerPage5 extends Controller implements Initializable {
     private void setupStatusLabel(Label label, String documentType) {
 
         label.setOnMouseClicked(e -> {
-            if (uploadedDocuments.containsKey(documentType)) {
-                uploadedDocuments.remove(documentType);
+               switch (documentType) {
+                    case "income" -> financialInfo.setProofOfIncome(null);
+                    case "liquidAssets" -> financialInfo.setProofOfLiquidAssets(null);
+                    case "schufa" -> financialInfo.setSchufa(null);
+                }
+
                 label.setText("Not uploaded");
                 label.setStyle("-fx-text-fill: black;");
             }
-        });
+        );
     }
 
     private void setupUploadButton(Button button, String documentType, Label statusLabel) {
 
-        button.setOnAction(e -> uploadDocument(documentType, statusLabel));
+        button.setOnAction(e -> uploadDocument(documentType, statusLabel, getDocumentContent()));
     }
 
 
-    private void uploadDocument(String documentType, Label statusLabel) {
+    private String getDocumentContent(){
 
         File file = fileChooser.showOpenDialog((Stage) continueButton.getScene().getWindow());
-
         if (file != null) {
             try {
-                String content = Files.readString(file.toPath());
-                uploadedDocuments.put(documentType, content);
-
-                if (!validateDocumentFormat(content, documentType)) {
-                    statusLabel.setText("Invalid format (click to remove)");
-                    statusLabel.setStyle("-fx-text-fill: red;");
-                } else {
-                    statusLabel.setText(file.getName() + " (click to remove)");
-                    statusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
-                }
-
+                return Files.readString(file.toPath());
             } catch (IOException ex) {
-                showError("File Error", "Could not read file", ex.getMessage());
+                showError("File Error", "Cannot read file", ex.getMessage());
             }
         }
+        return null;
+    }
+
+    private void uploadDocument(String documentType, Label statusLabel, String content) {
+
+        try {
+            if (!evaluator.validateDocumentFormat(content, documentType)) {
+                statusLabel.setText("Invalid format (click to remove)");
+                statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
+                uploadedDocuments.put(documentType, false);
+            } else if (!evaluator.validateDocumentDate(content)) {
+                statusLabel.setText("Document too old (max "+ FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " days) (click to remove)");
+                statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
+                uploadedDocuments.put(documentType, false);
+            } else {
+                statusLabel.setText("Valid File (click to remove)");
+                statusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
+
+                switch (documentType){
+                    case "income" -> financialInfo.setProofOfIncome(parser.parseIncomeDocument(content));
+                    case "liquidAssets" -> financialInfo.setProofOfLiquidAssets(parser.parseLiquidAssetsDocument(content));
+                    case "schufa" -> financialInfo.setSchufa(parser.parseSchufaDocument(content));
+                }
+
+                uploadedDocuments.put(documentType, true);
+            }
+
+        } catch (IllegalArgumentException ex) {
+            showError("File Error", "Error with file content", ex.getMessage());
+            statusLabel.setText("Error with file content (click to remove)");
+            statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
+        }
+
     }
 
 
     private boolean validateUploads() {
 
-        if (uploadedDocuments.containsKey("liquidAssets") && uploadedDocuments.containsKey("schufa")) {
-            return true;
+        System.out.println(uploadedDocuments);
+
+        if (!uploadedDocuments.containsKey("liquidAssets") || !uploadedDocuments.containsKey("schufa")) {
+            showError("Missing Documents", "Please upload required documents", "You need to upload proof of liquid assets and Schufa information.");
+            return false;
         }
 
-        showError("Missing Documents", "Please upload required documents", "You need to upload proof of liquid assets and Schufa information.");
-        return false;
+        if(!uploadedDocuments.get("liquidAssets") || !uploadedDocuments.get("schufa")) {
+            showError("Invalid Documents", "Please check your documents", "One or more documents are invalid.");
+            return false;
+        }
+
+        if (!uploadedDocuments.containsKey("income") || !uploadedDocuments.get("income")) {
+            showError("Invalid Documents", "Please check your documents", "One or more documents are invalid.");
+        }
+
+        return true;
+
     }
 
-    private void saveDocuments() {
-        try {
-            String customerDir = "financial_customer_documents/" + Main.customer.hashCode();
-            Files.createDirectories(new File(customerDir).toPath());
-            for (Map.Entry<String, String> entry : uploadedDocuments.entrySet()) {
-                Files.writeString(new File(customerDir + "/" + entry.getKey() + ".txt").toPath(),
-                        entry.getValue());
-            }
-        } catch (IOException ex) {
-            showError("Save Error", "Could not save documents", ex.getMessage());
+    private void restoreFormData() {
+
+        if(financialInfo.getProofOfIncome() != null) {
+            incomeStatusLabel.setText("Valid File (click to remove)");
+            incomeStatusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
+        }
+
+        if(financialInfo.getProofOfLiquidAssets() != null) {
+            liquidAssetsStatusLabel.setText("Valid File (click to remove");
+            liquidAssetsStatusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
+        }
+
+        if(financialInfo.getSchufa() != null) {
+            schufaStatusLabel.setText("Valid File (click to remove)");
+            schufaStatusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
         }
     }
 
-    private boolean validateDocumentFormat(String content, String documentType) {
-        String[] lines = content.split("\n");
-        boolean hasRequiredFields = false;
 
-        switch(documentType) {
-
-            case "income":
-                hasRequiredFields = lines.length == 4
-                                    && content.contains("Monthly Net Income:")
-                                    && content.contains("Employment Type:")
-                                    && content.contains("Employer:")
-                                    && content.contains("Employment Duration:");
-                break;
-
-            case "liquidAssets":
-                hasRequiredFields = lines.length == 4
-                                    && content.contains("Bank Account Balance:")
-                                    && content.contains("IBAN:")
-                                    && content.contains("Date Issued:")
-                                    && content.contains("Description:");
-                break;
-
-            case "schufa":
-                hasRequiredFields = lines.length == 7
-                                    && content.contains("Schufa Score:")
-                                    && content.contains("Total Credits:")
-                                    && content.contains("Total Credit Sum:")
-                                    && content.contains("Total Amount Payed:")
-                                    && content.contains("Total Amount Owed:")
-                                    && content.contains("Total Monthly Rate:")
-                                    && content.contains("Date Issued:");
-
-                break;
-        }
-
-        return hasRequiredFields;
-    }
-
-    public void cacheData() {
-
-        evaluator.parseIncomeDocument(uploadedDocuments.get("income"));
-        evaluator.parseLiquidAssetsDocument(uploadedDocuments.get("liquidAssets"));
-        evaluator.parseSchufaDocument(uploadedDocuments.get("schufa"));
-
-
-
-    }
 }

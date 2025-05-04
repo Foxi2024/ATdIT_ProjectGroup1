@@ -4,7 +4,8 @@ public record IncomeProof(
         int monthlyNetIncome,
         String employer,
         String employmentType,
-        int employmentDurationMonths
+        int employmentDurationMonths,
+        String dateIssued
 ) {
     public IncomeProof {
         if (monthlyNetIncome < 0) {
