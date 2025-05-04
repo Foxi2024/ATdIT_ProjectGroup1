@@ -13,7 +13,7 @@ public class ControllerPage1 extends Controller {
     public void start_payment_process(javafx.scene.input.MouseEvent mouseEvent) {
 
         Stage stage = (Stage) start_process_button.getScene().getWindow();
-        Scene scene = getScene("page_7.fxml");
+        Scene scene = getScene("page_2.fxml");
         stage.setTitle("Datenschutzerklärung");
         stage.setScene(scene);
     }
