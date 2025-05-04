@@ -21,7 +21,7 @@ public class FinancialInformationEvaluator {
             throw new IllegalArgumentException(String.format(
                     "Declared monthly income (" +
                             financialInfo.getProofOfIncome().monthlyNetIncome()  +
-                            "€) significantly from proof of income (" +
+                            "€) differs significantly from proof of income (" +
                             financialInfo.getAvgNetIncome() +
                             "€). "
             ));

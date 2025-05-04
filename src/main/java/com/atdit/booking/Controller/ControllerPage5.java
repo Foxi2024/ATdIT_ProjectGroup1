@@ -157,18 +157,14 @@ public class ControllerPage5 extends Controller implements Initializable {
 
         System.out.println(uploadedDocuments);
 
-        if (!uploadedDocuments.containsKey("liquidAssets") || !uploadedDocuments.containsKey("schufa")) {
-            showError("Missing Documents", "Please upload required documents", "You need to upload proof of liquid assets and Schufa information.");
+        if(financialInfo.getProofOfLiquidAssets() == null) {
+            showError("Missing Documents", "Please upload required documents", "You need to upload proof of liquid assets.");
             return false;
         }
 
-        if(!uploadedDocuments.get("liquidAssets") || !uploadedDocuments.get("schufa")) {
-            showError("Invalid Documents", "Please check your documents", "One or more documents are invalid.");
+        if(financialInfo.getSchufa() == null) {
+            showError("Missing Documents", "Please upload required documents", "You need to upload Schufa information.");
             return false;
-        }
-
-        if (!uploadedDocuments.containsKey("income") || !uploadedDocuments.get("income")) {
-            showError("Invalid Documents", "Please check your documents", "One or more documents are invalid.");
         }
 
         return true;

@@ -8,9 +8,15 @@ import java.util.ArrayList;
 
 public class FinancialDocumentsGenerator {
 
-    public void generateDocumentFile(String content, String fileName, String directory) throws IOException {
+    private String directory;
 
-        Path dirPath = Paths.get(directory);
+    public FinancialDocumentsGenerator(String dir) {
+        this.directory = dir;
+    }
+
+    public void generateDocumentFile(String content, String fileName) throws IOException {
+
+        Path dirPath = Paths.get(this.directory);
         if (!Files.exists(dirPath)) {
             Files.createDirectories(dirPath);
         }
@@ -19,7 +25,7 @@ public class FinancialDocumentsGenerator {
         Files.writeString(filePath, content);
     }
 
-    public void generateProofOfIncome(IncomeProof incomeProof) throws IOException {
+    public void generateProofOfIncome(IncomeProof incomeProof, String filename) throws IOException {
 
         String content = "Monthly Net Income: " + incomeProof.monthlyNetIncome() + "\n" +
                          "Employer: " + incomeProof.employer() + "\n" +
@@ -27,24 +33,26 @@ public class FinancialDocumentsGenerator {
                          "Employment Duration: " + incomeProof.employmentDurationMonths() + "\n" +
                          "Date Issued: " + incomeProof.dateIssued();
 
-        generateDocumentFile(content, "IncomeProof", "financial_documents");
+        generateDocumentFile(content, filename);
     }
 
-    public void generateProofOfLiquidAssets(LiquidAsset liquidAsset) throws IOException {
+    public void generateProofOfLiquidAssets(LiquidAsset liquidAsset, String filename) throws IOException {
 
         String content = "Bank Account Balance: " + liquidAsset.balance() + "\n" +
                          "IBAN: " + liquidAsset.iban() + "\n" +
                          "Description: " + liquidAsset.description() + "\n" +
                          "Date Issued: " + liquidAsset.dateIssued();
 
-        generateDocumentFile(content, "LiquidAssetsProof", "financial_documents");
+        generateDocumentFile(content, filename);
     }
 
-    public void generateSchufa(Schufaauskunft schufa) throws IOException {
+    public void generateSchufa(Schufaauskunft schufa, String filename) throws IOException {
 
         SchufaOverview schufaOverview = new SchufaOverview(schufa);
 
-        String content = "Schufa Score: " + schufaOverview.getScore() + "\n" +
+        String content = "First Name: " + schufaOverview.getFirstName() + "\n" +
+                         "Last Name: " + schufaOverview.getLastName() + "\n" +
+                         "Schufa Score: " + schufaOverview.getScore() + "\n" +
                          "Total Credits: " + schufaOverview.getTotalCredits() + "\n" +
                          "Total Credit Sum: " + schufaOverview.getTotalCreditSum() + "\n" +
                          "Total Amount Payed: "  + schufaOverview.getTotalAmountPayed() + "\n"+
@@ -52,21 +60,29 @@ public class FinancialDocumentsGenerator {
                          "Total Monthly Rate: " + schufaOverview.getTotalMonthlyRate() + "\n" +
                          "Date Issued: " + schufaOverview.getDateIssued();
 
-        generateDocumentFile(content, "Schufa", "financial_documents");
+        generateDocumentFile(content, filename);
 
+    }
+
+    public void setDirectory(String directory) {
+        this.directory = directory;
+    }
+
+    public String getDirectory() {
+        return directory;
     }
 
     public static void main(String[] args) {
 
-        FinancialDocumentsGenerator generator = new FinancialDocumentsGenerator();
+        FinancialDocumentsGenerator generator = new FinancialDocumentsGenerator("financial_documents");
 
         Credit c1 = new Credit("Car Loan", 20000, 5.0f, 500, 10000);
         Credit c2 = new Credit("Home Loan", 150000, 3.5f, 1500, 50000);
 
         try {
-            generator.generateProofOfIncome(new IncomeProof(30000, "ABC Corp", "Full-time", 24, "2023-01-01"));
-            generator.generateProofOfLiquidAssets(new LiquidAsset("DE12345678901234567890", "Savings Account", 1000000, "2023-01-01"));
-            generator.generateSchufa(new Schufaauskunft(0.75f, new ArrayList<Credit>(), "2023-01-01"));
+            generator.generateProofOfIncome(new IncomeProof(30000, "ABC Corp", "Full-time", 24, "2023-01-01"), "proof_of_income");
+            generator.generateProofOfLiquidAssets(new LiquidAsset("DE12345678901234567890", "Savings Account", 1000000, "2023-01-01"), "proof_of_liquid_assets");
+            generator.generateSchufa(new Schufaauskunft("Anton", "Beton", 0.75f, new ArrayList<Credit>(), "2023-01-01"), "schufa_report");
         } catch (IOException e) {
             e.printStackTrace();
         }

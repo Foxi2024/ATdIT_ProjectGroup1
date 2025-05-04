@@ -56,16 +56,11 @@ public class FinancialInformationParser {
 
         SchufaOverview schufaOverview = new SchufaOverview();
         String[] lines = content.split("\n");
-        double score = 0;
-        String dateIssued = "";
-        int totalCredits = 0;
-        int totalCreditSum = 0;
-        int totalAmountPayed = 0;
-        int totalAmountOwed = 0;
-        int totalMonthlyRate = 0;
 
         for (String line : lines) {
             switch (line.split(":")[0]) {
+                case "First Name:" -> schufaOverview.setFirstName(extractStringValue(line));
+                case "Last Name:" -> schufaOverview.setLastName(extractStringValue(line));
                 case "Schufa Score:" -> schufaOverview.setScore(extractDoubleValue(line));
                 case "Total Credits:" -> schufaOverview.setTotalCredits(extractIntValue(line));
                 case "Total Credit Sum:" -> schufaOverview.setTotalCreditSum(extractIntValue(line));
@@ -90,6 +85,7 @@ public class FinancialInformationParser {
     }
 
     private double extractDoubleValue(String line) {
+
         try {
             String value = line.split(":")[1].trim();
             return Double.parseDouble(value);

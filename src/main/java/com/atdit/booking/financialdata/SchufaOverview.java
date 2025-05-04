@@ -1,6 +1,9 @@
 package com.atdit.booking.financialdata;
 
 public class SchufaOverview {
+
+    private String firstName;
+    private String lastName;
     private double score;
     private int totalCredits;
     private int totalCreditSum;
@@ -11,6 +14,8 @@ public class SchufaOverview {
 
     public SchufaOverview(Schufaauskunft schufa){
 
+        this.firstName = schufa.firstName();
+        this.lastName = schufa.lastName();
         this.score = schufa.score();
         this.totalCredits = schufa.creditList().size();
         this.totalCreditSum = schufa.creditList().stream().mapToInt(Credit::amount).sum();
@@ -22,6 +27,14 @@ public class SchufaOverview {
     }
 
     public SchufaOverview() {}
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
 
     public double getScore() {
         return score;
@@ -49,6 +62,15 @@ public class SchufaOverview {
 
     public String getDateIssued() {
         return dateIssued;
+    }
+
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setScore(double score) {
