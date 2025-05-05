@@ -22,29 +22,38 @@ public class FinancialInformationEvaluator {
                 financialInfo.getMonthlyAvailableMoney() > Main.MIN_MONTHLY_MONEY;
     }
 
-    public void validateIncome() {
+    public boolean evaluateIncome() {
 
-        if ((double) financialInfo.getProofOfIncome().monthlyNetIncome() / financialInfo.getAvgNetIncome() < 1-MAX_DEVIATION) {
-            throw new IllegalArgumentException(String.format(
-                    "Declared monthly income (" +
-                            financialInfo.getProofOfIncome().monthlyNetIncome()  +
-                            "€) differs significantly from proof of income (" +
-                            financialInfo.getAvgNetIncome() +
-                            "€). "
-            ));
-        }
+        return ((double) (financialInfo.getProofOfIncome().monthlyNetIncome() / financialInfo.getAvgNetIncome()) > (1-MAX_DEVIATION));
     }
 
-    public void validateLiquidAssets() throws IllegalArgumentException {
+    private boolean evaluateLiquidAssets() {
+        System.out.println(financialInfo.getProofOfLiquidAssets().balance());
+        System.out.println();
+        System.out.println(financialInfo.getLiquidAssets());
 
-        if ((double) financialInfo.getProofOfLiquidAssets().balance() / financialInfo.getLiquidAssets() < 1-MAX_DEVIATION) {
-            throw new IllegalArgumentException(
-                    "Declared liquid assets (" +
-                            financialInfo.getLiquidAssets() +
-                            "€) differs significantly from proof of assets (" +
-                            financialInfo.getProofOfLiquidAssets().balance() +
-                            "€). "
-            );
+        return ((double) (financialInfo.getProofOfLiquidAssets().balance() / financialInfo.getLiquidAssets()) > (1-MAX_DEVIATION));
+
+    }
+
+    public void evaluateUploads() {
+
+        String errorMessage = "Please fix the following issues:\n";
+        boolean isValid = true;
+
+        if(!evaluateLiquidAssets()){
+            errorMessage += "- Declared liquid assets differ significantly from proof of assets\n";
+            isValid = false;
+
+        }
+
+        if(!evaluateIncome()){
+            errorMessage += "- Declared income differs significantly from proof of income\n";
+            isValid = false;
+        }
+
+        if(!isValid){
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 
@@ -110,5 +119,63 @@ public class FinancialInformationEvaluator {
         throw new IllegalArgumentException("No date information found in document");
     }
 
+    public void validateDeclaredFinancialInfo() {
+
+        String errorMessage = "Please fix the following issues:\n";
+        boolean isValid = true;
+
+            if (this.financialInfo.getAvgNetIncome() < 0) {
+                errorMessage += "- Net income cannot be negative\n";
+                isValid = false;
+            }
+
+
+            if (this.financialInfo.getMonthlyFixCost() < 0) {
+                errorMessage += "- Fixed costs cannot be negative\n";
+                isValid = false;
+            }
+
+
+            if (this.financialInfo.getMinCostOfLiving() < 0) {
+                errorMessage += "- Minimum living cost cannot be negative\n";
+                isValid = false;
+            }
+
+
+            if (this.financialInfo.getLiquidAssets() < 0) {
+                errorMessage += "- Liquid assets cannot be negative\n";
+                isValid = false;
+            }
+
+
+        if (!isValid) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+    }
+
+    public void validateUploads() {
+
+        String errorMessage = "Please upload the following documents:\n";
+        boolean isValid = true;
+
+        if(financialInfo.getProofOfLiquidAssets() == null) {
+
+            errorMessage += "- Proof of liquid assets\n";
+            isValid = false;
+        }
+
+        if(financialInfo.getSchufa() == null) {
+
+            errorMessage += "- Schufa information\n";
+            isValid = false;
+        }
+
+        if(!isValid){
+            throw new IllegalArgumentException(errorMessage);
+        }
+
+
+
+    }
 
 }

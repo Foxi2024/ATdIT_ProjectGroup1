@@ -11,16 +11,8 @@ public class FinancialInformationParser {
         String dateIssued = "";
 
         for (String line : lines) {
-            // Trim the line to remove any whitespace
-            line = line.trim();
-            if (line.isEmpty()) continue;
 
-            String[] parts = line.split(":");
-            if (parts.length < 2) continue;
-
-            String key = parts[0].trim();
-
-            switch (key) {
+            switch (line.split(":")[0].trim()) {
                 case "Monthly Net Income" -> monthlyIncome = extractIntValue(line);
                 case "Employer" -> employer = extractStringValue(line);
                 case "Employment Type" -> employmentType = extractStringValue(line);
@@ -34,6 +26,8 @@ public class FinancialInformationParser {
 
     public LiquidAsset parseLiquidAssetsDocument(String content) throws IllegalArgumentException {
 
+        System.out.println(1);
+
         String[] lines = content.split("\n");
         int balance = 0;
         String iban = "";
@@ -41,11 +35,12 @@ public class FinancialInformationParser {
         String description = "";
 
         for (String line : lines) {
-            switch (line.split(":")[0]) {
-                case "Bank Account Balance:" -> balance = extractIntValue(line);
-                case "IBAN:" -> iban = extractStringValue(line);
-                case "Date Issued:" -> dateIssued = extractStringValue(line);
-                case "Description:" -> description = extractStringValue(line);
+
+            switch (line.split(":")[0].trim()) {
+                case "Bank Account Balance" -> balance = extractIntValue(line);
+                case "IBAN" -> iban = extractStringValue(line);
+                case "Date Issued" -> dateIssued = extractStringValue(line);
+                case "Description" -> description = extractStringValue(line);
             }
         }
 
@@ -58,16 +53,17 @@ public class FinancialInformationParser {
         String[] lines = content.split("\n");
 
         for (String line : lines) {
-            switch (line.split(":")[0]) {
-                case "First Name:" -> schufaOverview.setFirstName(extractStringValue(line));
-                case "Last Name:" -> schufaOverview.setLastName(extractStringValue(line));
-                case "Schufa Score:" -> schufaOverview.setScore(extractDoubleValue(line));
-                case "Total Credits:" -> schufaOverview.setTotalCredits(extractIntValue(line));
-                case "Total Credit Sum:" -> schufaOverview.setTotalCreditSum(extractIntValue(line));
-                case "Total Amount Payed:" -> schufaOverview.setTotalAmountPayed(extractIntValue(line));
-                case "Total Amount Owed:" -> schufaOverview.setTotalAmountOwed(extractIntValue(line));
-                case "Total Monthly Rate:" -> schufaOverview.setTotalMonthlyRate(extractIntValue(line));
-                case "Date Issued:" -> schufaOverview.setDateIssued(extractStringValue(line));
+
+            switch (line.split(":")[0].trim()) {
+                case "First Name" -> schufaOverview.setFirstName(extractStringValue(line));
+                case "Last Name" -> schufaOverview.setLastName(extractStringValue(line));
+                case "Schufa Score" -> schufaOverview.setScore(extractDoubleValue(line));
+                case "Total Credits" -> schufaOverview.setTotalCredits(extractIntValue(line));
+                case "Total Credit Sum" -> schufaOverview.setTotalCreditSum(extractIntValue(line));
+                case "Total Amount Payed" -> schufaOverview.setTotalAmountPayed(extractIntValue(line));
+                case "Total Amount Owed" -> schufaOverview.setTotalAmountOwed(extractIntValue(line));
+                case "Total Monthly Rate" -> schufaOverview.setTotalMonthlyRate(extractIntValue(line));
+                case "Date Issued" -> schufaOverview.setDateIssued(extractStringValue(line));
             }
         }
 

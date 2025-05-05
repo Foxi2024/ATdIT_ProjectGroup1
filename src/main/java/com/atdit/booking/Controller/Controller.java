@@ -22,7 +22,7 @@ public abstract class Controller {
             stage.show();
         }
         catch (IOException e) {
-            showPageLoadingError();
+            showPageLoadingError(e.getMessage());
         }
     }
 
@@ -34,8 +34,8 @@ public abstract class Controller {
         alert.showAndWait();
     }
 
-    public void showPageLoadingError() {
-        showError("Error", "Error loading page", "Could not load the next page. Try again or close the application.");
+    public void showPageLoadingError(String errorMessage) {
+        showError("Error", "Error loading page", "Could not load the next page. Try again or close the application. \n" + errorMessage);
     }
 
 }

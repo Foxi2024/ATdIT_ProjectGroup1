@@ -92,25 +92,4 @@ public class FinancialInformation {
         return monthlyAvailableMoney;
     }
 
-
-    public void addFinancialInformationToDatabase(){
-        Connection conn = CustomerDatabase.getConn();
-
-        String query = "INSERT INTO financialinformation ('avgNetIncome', 'rent', 'monthlyFixCost', 'fixedAssets', 'liquidAssets', 'minCostOfLiving', 'debt', 'monthlyAvailableMoney') VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-
-        //concat the customer details to a one string for the values part of the query
-        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, this.avgNetIncome);
-            preparedStatement.setInt(3, this.monthlyFixCost);
-            preparedStatement.setInt(5, this.liquidAssets);
-            preparedStatement.setInt(6, this.minCostOfLiving);
-            preparedStatement.setInt(8, this.monthlyAvailableMoney);
-
-            preparedStatement.executeUpdate();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

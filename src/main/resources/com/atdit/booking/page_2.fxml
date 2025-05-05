@@ -8,183 +8,51 @@
     <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <Label text="Datenschutzerklärung" style="-fx-font-size: 18px; -fx-font-weight: bold"/>
         <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true" styleClass="privacy-scroll-pane">
-            <VBox spacing="10" style="-fx-padding: 10;">
-                <TextFlow>
-                    <Text styleClass="privacy-text">
-                        Datenschutzerklärung /n
-                        für NEXSTAR TRAVEL – Raumfahrttourismus
-                        Stand: Mai 2025
+            <VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+                <Text text="Datenschutzerklärung für NEXSTAR TRAVEL – Raumfahrttourismus"/>
+                <Text text="Stand: Mai 2025"/>
 
-                        1. Allgemeine Hinweise
-                        Der Schutz Ihrer personenbezogenen Daten hat für NEXSTAR TRAVEL oberste Priorität. Wir behandeln Ihre Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften, insbesondere der Datenschutz-Grundverordnung (DSGVO), sowie dieser Datenschutzerklärung.
+                <Text text="1. Allgemeine Hinweise"/>
+                <Text text="Der Schutz Ihrer personenbezogenen Daten hat für NEXSTAR TRAVEL oberste Priorität. Wir behandeln Ihre Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften, insbesondere der Datenschutz-Grundverordnung (DSGVO), sowie dieser Datenschutzerklärung."/>
+                <Text text="Diese Erklärung informiert Sie darüber, welche personenbezogenen Daten wir im Rahmen unserer Geschäftsprozesse (z. B. bei der Buchung einer Raumfahrtreise) erheben, zu welchen Zwecken wir sie verarbeiten, welche Rechte Sie haben und wie Sie diese geltend machen können."/>
 
-                        Diese Erklärung informiert Sie darüber, welche personenbezogenen Daten wir im Rahmen unserer Geschäftsprozesse (z. B. bei der Buchung einer Raumfahrtreise) erheben, zu welchen Zwecken wir sie verarbeiten, welche Rechte Sie haben und wie Sie diese geltend machen können.
+                <Text text="2. Verantwortlicher im Sinne der DSGVO"/>
+                <Text text="NEXSTAR TRAVEL GmbH&#10;Galaxisweg 42&#10;12345 Orbit City&#10;Telefon: +49 123 456789&#10;E-Mail: datenschutz@nexstar-travel.com&#10;Verantwortliche Ansprechperson für Datenschutz: Data Protection Officer (DPO)"/>
 
-                        2. Verantwortlicher im Sinne der DSGVO
-                        NEXSTAR TRAVEL GmbH
-                        Galaxisweg 42
-                        12345 Orbit City
-                        Telefon: +49 123 456789
-                        E-Mail: datenschutz@nexstar-travel.com
+                <Text text="3. Kategorien verarbeiteter Daten"/>
+                <Text text="3.1 Stammdaten: Vor- und Nachname, Geburtsdatum, Staatsangehörigkeit, Ausweisdaten (Pass, Visum, Raumflugzulassung)"/>
+                <Text text="3.2 Kontaktdaten: Adresse, Telefonnummer, E-Mail-Adresse"/>
+                <Text text="3.3 Buchungs- und Reisedaten: Reiseziel, gewünschter Flugzeitraum, Tickettyp, Sonderwünsche, Sprache, medizinisch relevante Informationen, Notfallkontakte"/>
+                <Text text="3.4 Zahlungsdaten: Bankverbindung, Kreditkartendaten (via Payment Provider), Rechnungsadresse"/>
+                <Text text="3.5 Kommunikationsdaten: E-Mail-Korrespondenz, Supportanfragen, Chatverläufe"/>
+                <Text text="3.6 Websitedaten: IP-Adresse, Datum/Uhrzeit des Zugriffs, Gerätetyp, Betriebssystem, Browsertyp, besuchte Seiten, Klickverhalten, Referrer-URL, Cookies und Tracking-IDs"/>
 
-                        Verantwortliche Ansprechperson für Datenschutz: Data Protection Officer (DPO)
+                <Text text="4. Zwecke und Rechtsgrundlagen der Verarbeitung"/>
+                <Text text="Verarbeitung erfolgt zur Vertragserfüllung, zur medizinischen Prüfung, zur Zahlungsabwicklung, Kundenbetreuung, für Werbung mit Einwilligung, sowie zur Verbesserung unserer Angebote."/>
 
-                        3. Kategorien verarbeiteter Daten
-                        Je nach Art der Interaktion (z. B. Anfrage, Buchung, Nutzung unserer Website) verarbeiten wir insbesondere folgende Datenkategorien:
+                <Text text="5. Empfänger Ihrer Daten"/>
+                <Text text="Empfänger: Raumfahrtagenturen, Zahlungsdienste, IT-Provider, Behörden. Alle unterliegen Auftragsverarbeitungsverträgen nach Art. 28 DSGVO."/>
 
-                        3.1 Stammdaten
-                        Vor- und Nachname
+                <Text text="6. Datenübermittlung in Drittländer"/>
+                <Text text="Nur bei Vorliegen eines Angemessenheitsbeschlusses, geeigneter Garantien oder ausdrücklicher Einwilligung."/>
 
-                        Geburtsdatum
+                <Text text="7. Speicherdauer"/>
+                <Text text="Speicherung erfolgt je nach Kategorie (z. B. Buchungsdaten 10 Jahre, Gesundheitsdaten max. 12 Monate)."/>
 
-                        Staatsangehörigkeit
+                <Text text="8. Cookies und Tracking-Technologien"/>
+                <Text text="Nutzung nur mit Einwilligung. Cookie-Banner informiert beim ersten Besuch. Tools z. B. Google Analytics, Facebook Pixel."/>
 
-                        Ausweisdaten (Pass, Visum, Raumflugzulassung)
+                <Text text="9. Ihre Datenschutzrechte"/>
+                <Text text="Rechte: Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch, Widerruf."/>
 
-                        3.2 Kontaktdaten
-                        Adresse
+                <Text text="10. Beschwerderecht bei der Aufsichtsbehörde"/>
+                <Text text="Zuständig ist der Landesdatenschutzbeauftragte Ihres Bundeslandes."/>
 
-                        Telefonnummer
+                <Text text="11. Datensicherheit"/>
+                <Text text="Technische Maßnahmen: SSL-Verschlüsselung, Zugriffssteuerung, Backups, Zwei-Faktor-Authentifizierung."/>
 
-                        E-Mail-Adresse
-
-                        3.3 Buchungs- und Reisedaten
-                        Reiseziel, gewünschter Flugzeitraum
-
-                        Tickettyp, Sonderwünsche, Sprache
-
-                        medizinisch relevante Informationen (bei Raumflugtauglichkeitsprüfung)
-
-                        Notfallkontakte
-
-                        3.4 Zahlungsdaten
-                        Bankverbindung
-
-                        Kreditkartendaten (via Payment Provider)
-
-                        Rechnungsadresse
-
-                        3.5 Kommunikationsdaten
-                        E-Mail-Korrespondenz
-
-                        Supportanfragen
-
-                        Chatverläufe (sofern genutzt)
-
-                        3.6 Websitedaten (automatisch erhoben)
-                        IP-Adresse
-
-                        Datum/Uhrzeit des Zugriffs
-
-                        Gerätetyp, Betriebssystem, Browsertyp
-
-                        besuchte Seiten, Klickverhalten, Referrer-URL
-
-                        Cookies und Tracking-IDs (siehe Abschnitt 8)
-
-                        4. Zwecke und Rechtsgrundlagen der Verarbeitung
-                        Zweck	Rechtsgrundlage
-                        Anbahnung, Abschluss und Durchführung von Reiseverträgen	Art. 6 Abs. 1 lit. b DSGVO
-                        Durchführung medizinischer Vorabprüfungen zur Raumflugtauglichkeit	Art. 9 Abs. 2 lit. a DSGVO (Einwilligung)
-                        Abwicklung von Zahlungen und Abrechnung	Art. 6 Abs. 1 lit. b und c DSGVO
-                        Erfüllung gesetzlicher Pflichten (z. B. Luftsicherheitsgesetz, Steuerrecht)	Art. 6 Abs. 1 lit. c DSGVO
-                        Kundenbetreuung, Reklamationsmanagement	Art. 6 Abs. 1 lit. b und f DSGVO
-                        Direktwerbung per E-Mail (für Bestandskunden)	Art. 6 Abs. 1 lit. f DSGVO i. V. m. § 7 UWG
-                        Newsletter-Versand (nur mit Einwilligung)	Art. 6 Abs. 1 lit. a DSGVO
-                        Verbesserung unseres Angebots (Websiteanalyse, Nutzertracking)	Art. 6 Abs. 1 lit. a DSGVO (Cookie-Einwilligung)
-
-                        5. Empfänger Ihrer Daten
-                        Ihre Daten werden nur dann an Dritte weitergegeben, wenn dies zur Vertragserfüllung, gesetzlich vorgeschrieben oder von Ihrer Einwilligung gedeckt ist. Mögliche Empfänger sind:
-
-                        Raumfahrtagenturen und Raumfluggesellschaften (z. B. Startdienstleister, medizinische Prüfzentren)
-
-                        Zahlungsdienstleister (z. B. Stripe, PayPal)
-
-                        Hosting- und IT-Dienstleister (inkl. Buchungssystem)
-
-                        Rechtsanwälte, Steuerberater und Behörden (z. B. Luftfahrtbehörden, Zoll)
-
-                        Versanddienstleister (bei physischen Reisedokumenten)
-
-                        Alle externen Partner sind über Verträge zur Auftragsverarbeitung (Art. 28 DSGVO) zur Vertraulichkeit und zur Einhaltung der Datenschutzvorgaben verpflichtet.
-
-                        6. Datenübermittlung in Drittländer
-                        Eine Übermittlung in Länder außerhalb des Europäischen Wirtschaftsraums (EWR) erfolgt nur, wenn:
-
-                        ein Angemessenheitsbeschluss der EU-Kommission vorliegt oder
-
-                        geeignete Garantien (z. B. EU-Standardvertragsklauseln) vereinbart wurden oder
-
-                        Sie ausdrücklich eingewilligt haben (Art. 49 DSGVO).
-
-                        Dies betrifft ggf. Partnerunternehmen oder Cloud-Dienste in den USA oder anderen Drittstaaten.
-
-                        7. Speicherdauer
-                        Wir speichern Ihre personenbezogenen Daten grundsätzlich nur so lange, wie es für die jeweiligen Verarbeitungszwecke erforderlich ist. Konkret gilt:
-
-                        Buchungsdaten: 10 Jahre (steuerrechtliche Aufbewahrungspflichten)
-
-                        Kommunikationsdaten: 3 Jahre (Verjährungsfristen)
-
-                        Gesundheitsdaten: max. 12 Monate nach Durchführung des Raumfluges (sofern nicht gesetzlich anders vorgeschrieben)
-
-                        Newsletter-Daten: bis zum Widerruf der Einwilligung
-
-                        8. Cookies und Tracking-Technologien
-                        Unsere Website verwendet Cookies und ähnliche Technologien zur Analyse, Personalisierung und Funktionalität. Dies umfasst:
-
-                        Essenzielle Cookies (für Login, Buchung etc.)
-
-                        Analyse-Tools wie Google Analytics oder Matomo
-
-                        Marketing-Cookies (z. B. Facebook Pixel, sofern aktiv)
-
-                        Diese Cookies werden nur mit Ihrer ausdrücklichen Zustimmung gemäß Art. 6 Abs. 1 lit. a DSGVO gesetzt. Beim ersten Besuch unserer Website erscheint ein Cookie-Banner, über das Sie Ihre Einwilligung verwalten können.
-
-                        Weitere Informationen finden Sie in unserer Cookie-Richtlinie.
-
-                        9. Ihre Datenschutzrechte
-                        Sie haben jederzeit folgende Rechte:
-
-                        Auskunft nach Art. 15 DSGVO
-
-                        Berichtigung unrichtiger Daten nach Art. 16 DSGVO
-
-                        Löschung („Recht auf Vergessenwerden“) nach Art. 17 DSGVO
-
-                        Einschränkung der Verarbeitung nach Art. 18 DSGVO
-
-                        Datenübertragbarkeit nach Art. 20 DSGVO
-
-                        Widerspruch gegen die Verarbeitung aus berechtigtem Interesse (Art. 21 DSGVO)
-
-                        Widerruf Ihrer Einwilligung (Art. 7 Abs. 3 DSGVO)
-
-                        Bitte richten Sie Anfragen oder Widersprüche per E-Mail an:
-                        📧 datenschutz@nexstar-travel.com
-
-                        10. Beschwerderecht bei der Aufsichtsbehörde
-                        Wenn Sie der Ansicht sind, dass wir bei der Verarbeitung Ihrer personenbezogenen Daten gegen geltendes Datenschutzrecht verstoßen, haben Sie das Recht auf Beschwerde bei einer Aufsichtsbehörde nach Art. 77 DSGVO.
-
-                        Zuständig ist z. B. der:
-                        Landesbeauftragte für Datenschutz und Informationsfreiheit [Ihr Bundesland]
-
-                        11. Datensicherheit
-                        Wir setzen moderne Sicherheitsmaßnahmen ein, um Ihre Daten gegen Verlust, Zerstörung, Manipulation und unbefugten Zugriff zu schützen:
-
-                        SSL-Verschlüsselung auf allen Buchungs- und Kundenportalen
-
-                        Zugriffsbeschränkungen (Role-Based Access Control)
-
-                        regelmäßige Backups
-
-                        Zwei-Faktor-Authentifizierung für interne Systeme
-
-                        12. Änderungen dieser Datenschutzerklärung
-                        Wir behalten uns vor, diese Datenschutzerklärung bei Änderungen gesetzlicher Vorgaben oder technischer Entwicklungen anzupassen. Die jeweils aktuelle Version finden Sie jederzeit auf unserer Website unter:
-                        🌐 www.nexstar-travel.com/datenschutz
-                    </Text>
-                </TextFlow>
+                <Text text="12. Änderungen dieser Datenschutzerklärung"/>
+                <Text text="Aktuelle Fassung unter: www.nexstar-travel.com/datenschutz"/>
             </VBox>
         </ScrollPane>
         <VBox spacing="10" alignment="CENTER">

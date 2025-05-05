@@ -2,6 +2,7 @@ package com.atdit.booking.Controller;
 
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
+import com.atdit.booking.customer.CustomerDatabase;
 import com.atdit.booking.financialdata.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,13 +32,12 @@ public class ControllerPage5 extends Controller implements Initializable {
     @FXML private Label schufaStatusLabel;
 
 
-    //private static HashMap<String, String> documentMap = new HashMap<>();
     private static final Customer currentCustomer = Main.customer;
     private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
     private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator(financialInfo);
-    private static final FinancialInformationParser parser = new FinancialInformationParser();;
+    private static final FinancialInformationParser parser = new FinancialInformationParser();
+    private static final CustomerDatabase db = new CustomerDatabase(currentCustomer);
     private final FileChooser fileChooser = new FileChooser();
-
 
 
     @Override
@@ -62,38 +62,45 @@ public class ControllerPage5 extends Controller implements Initializable {
     @FXML
     public void nextPage(MouseEvent e) {
 
-        if (validateUploads()) {
-            try {
-                evaluator.validateIncome();
-                evaluator.validateLiquidAssets();
-            } catch(IllegalArgumentException ex) {
-                showError("Validation Error", "Validation Error in your declarations", ex.getMessage());
-                return;
-            }
-
-            loadScene(e,"page_7.fxml","Placeholder");
+        try {
+            evaluator.validateUploads();
+        } catch (IllegalArgumentException ex) {
+            showError("Validation Error", "Validation Error in your declarations", ex.getMessage());
+            return;
         }
+
+        try {
+            evaluator.evaluateUploads();
+        } catch (IllegalArgumentException ex) {
+            showError("Evaluation Error", "Evaluation Error in your declarations", ex.getMessage());
+            return;
+        }
+
+        //db.saveCustomerInDatabase();
+
+        loadScene(e, "page_7.fxml", "Placeholder");
     }
+
 
     @FXML
     public void previousPage(MouseEvent e) {
 
-        loadScene(e,"page_4.fxml","Financial Information");
+        loadScene(e, "page_4.fxml", "Financial Information");
     }
 
 
     private void setupStatusLabel(Label label, String documentType) {
 
         label.setOnMouseClicked(e -> {
-               switch (documentType) {
-                    case "income" -> financialInfo.setProofOfIncome(null);
-                    case "liquidAssets" -> financialInfo.setProofOfLiquidAssets(null);
-                    case "schufa" -> financialInfo.setSchufa(null);
-                }
+                    switch (documentType) {
+                        case "income" -> financialInfo.setProofOfIncome(null);
+                        case "liquidAssets" -> financialInfo.setProofOfLiquidAssets(null);
+                        case "schufa" -> financialInfo.setSchufa(null);
+                    }
 
-                label.setText("Not uploaded");
-                label.setStyle("-fx-text-fill: black;");
-            }
+                    label.setText("Not uploaded");
+                    label.setStyle("-fx-text-fill: black;");
+                }
         );
     }
 
@@ -103,7 +110,7 @@ public class ControllerPage5 extends Controller implements Initializable {
     }
 
 
-    private String getDocumentContent(){
+    private String getDocumentContent() {
 
         File file = fileChooser.showOpenDialog((Stage) continueButton.getScene().getWindow());
         if (file != null) {
@@ -125,14 +132,14 @@ public class ControllerPage5 extends Controller implements Initializable {
 
             } else if (!evaluator.validateDocumentDate(content)) {
 
-                statusLabel.setText("Document too old (max "+ FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " days) (click to remove)");
+                statusLabel.setText("Document too old (max " + FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " days) (click to remove)");
                 statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
 
             } else {
                 statusLabel.setText("Valid File (click to remove)");
                 statusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
 
-                switch (documentType){
+                switch (documentType) {
                     case "income" -> financialInfo.setProofOfIncome(parser.parseIncomeDocument(content));
                     case "liquidAssets" -> financialInfo.setProofOfLiquidAssets(parser.parseLiquidAssetsDocument(content));
                     case "schufa" -> financialInfo.setSchufa(parser.parseSchufaDocument(content));
@@ -149,36 +156,19 @@ public class ControllerPage5 extends Controller implements Initializable {
     }
 
 
-    private boolean validateUploads() {
-
-
-        if(financialInfo.getProofOfLiquidAssets() == null) {
-            showError("Missing Documents", "Please upload required documents", "You need to upload proof of liquid assets.");
-            return false;
-        }
-
-        if(financialInfo.getSchufa() == null) {
-            showError("Missing Documents", "Please upload required documents", "You need to upload Schufa information.");
-            return false;
-        }
-
-        return true;
-
-    }
-
     private void restoreFormData() {
 
-        if(financialInfo.getProofOfIncome() != null) {
+        if (financialInfo.getProofOfIncome() != null) {
             incomeStatusLabel.setText("Valid File (click to remove)");
             incomeStatusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
         }
 
-        if(financialInfo.getProofOfLiquidAssets() != null) {
+        if (financialInfo.getProofOfLiquidAssets() != null) {
             liquidAssetsStatusLabel.setText("Valid File (click to remove");
             liquidAssetsStatusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
         }
 
-        if(financialInfo.getSchufa() != null) {
+        if (financialInfo.getSchufa() != null) {
             schufaStatusLabel.setText("Valid File (click to remove)");
             schufaStatusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
         }

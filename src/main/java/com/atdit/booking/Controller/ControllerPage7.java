@@ -21,7 +21,7 @@ public class ControllerPage7 extends Controller {
 
         if (oneTimePaymentRadio.isSelected()) {
             //scene = loadScene("page_8a.fxml");
-            stage.setTitle("One-Time Payment");
+            stage.setTitle("One-Time Payment ");
         } else {
             //scene = loadScene("page_8b.fxml");
             stage.setTitle("Financing");

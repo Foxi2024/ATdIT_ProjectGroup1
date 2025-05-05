@@ -13,8 +13,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-
-
 public class ControllerPage4 extends Controller implements Initializable {
 
     @FXML private TextField netIncomeField;
@@ -35,7 +33,18 @@ public class ControllerPage4 extends Controller implements Initializable {
     @FXML
     public void nextPage(MouseEvent e) {
 
-        if(!validateForm()) {
+        try {
+            cacheData();
+        } catch (IllegalArgumentException ex) {
+            showError("Invalid Input", "Please correct the input", ex.getMessage());
+            return;
+        }
+
+        try {
+            financialInformationEvaluator.validateDeclaredFinancialInfo();
+        }
+        catch (IllegalArgumentException ex) {
+            showError("Evaluation Failed", "Evaluation of financial information failed", ex.getMessage());
             return;
         }
 
@@ -44,7 +53,6 @@ public class ControllerPage4 extends Controller implements Initializable {
             return;
         }
 
-        cacheData();
         loadScene(e, "page_5.fxml", "Financial Proof");
     }
 
@@ -74,59 +82,4 @@ public class ControllerPage4 extends Controller implements Initializable {
         liquidAssetsField.setText(String.valueOf(financialInfo.getLiquidAssets()));
     }
 
-
-    private boolean validateForm() {
-        StringBuilder errorMessage = new StringBuilder("Please fix the following issues:\n");
-        boolean isValid = true;
-
-        try {
-            int netIncome = Integer.parseInt(netIncomeField.getText().trim());
-            if (netIncome < 0) {
-                errorMessage.append("- Net income cannot be negative\n");
-                isValid = false;
-            }
-        } catch (NumberFormatException e) {
-            errorMessage.append("- Invalid net income amount\n");
-            isValid = false;
-        }
-
-        try {
-            int fixedCosts = Integer.parseInt(fixedCostsField.getText().trim());
-            if (fixedCosts < 0) {
-                errorMessage.append("- Fixed costs cannot be negative\n");
-                isValid = false;
-            }
-        } catch (NumberFormatException e) {
-            errorMessage.append("- Invalid fixed costs amount\n");
-            isValid = false;
-        }
-
-        try {
-            int minLiving = Integer.parseInt(minLivingCostField.getText().trim());
-            if (minLiving < 0) {
-                errorMessage.append("- Minimum living cost cannot be negative\n");
-                isValid = false;
-            }
-        } catch (NumberFormatException e) {
-            errorMessage.append("- Invalid minimum living cost amount\n");
-            isValid = false;
-        }
-
-        try {
-            int liquidAssets = Integer.parseInt(liquidAssetsField.getText().trim());
-            if (liquidAssets < 0) {
-                errorMessage.append("- Liquid assets cannot be negative\n");
-                isValid = false;
-            }
-        } catch (NumberFormatException e) {
-            errorMessage.append("- Invalid liquid assets amount\n");
-            isValid = false;
-        }
-
-        if (!isValid) {
-            showError("Invalid Information", "Please correct the input", errorMessage.toString());
-        }
-
-        return isValid;
-    }
 }

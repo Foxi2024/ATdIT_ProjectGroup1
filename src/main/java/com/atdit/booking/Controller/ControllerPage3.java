@@ -3,18 +3,17 @@ package com.atdit.booking.Controller;
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
 import com.atdit.booking.customer.CustomerEvaluater;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ControllerPage3 extends Controller implements Initializable {
 
-    @FXML private TextField titleField;
+    @FXML private ComboBox<String> titleField;
     @FXML private TextField nameField;
     @FXML private TextField firstNameField;
     @FXML private DatePicker birthDatePicker;
@@ -29,13 +28,24 @@ public class ControllerPage3 extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         restoreFormData();
+        titleField.setItems(FXCollections.observableArrayList("Mr", "Ms"));
+        titleField.setValue("Mr");
     }
 
     @FXML
     public void nextPage(MouseEvent e) {
 
         cacheData();
+
+        try {
+            evaluater.evaluateCustomerInfo();
+        } catch (IllegalArgumentException ex) {
+            showError("Evaluation Failed", "Evaluation of personal Information failed", ex.getMessage());
+            return;
+        }
+
         loadScene(e, "page_4.fxml", "Financial Information");
     }
 
@@ -48,7 +58,7 @@ public class ControllerPage3 extends Controller implements Initializable {
 
     private void cacheData() throws IllegalArgumentException {
 
-        currentCustomer.setTitle(titleField.getText());
+        currentCustomer.setTitle(titleField.getValue());
         currentCustomer.setName(nameField.getText());
         currentCustomer.setFirstName(firstNameField.getText());
         currentCustomer.setCountry(countryField.getText());
@@ -60,12 +70,11 @@ public class ControllerPage3 extends Controller implements Initializable {
         } else {
             currentCustomer.setBirthdate("");
         }
-
     }
 
     private void restoreFormData() {
 
-        titleField.setText(currentCustomer.getTitle());
+        titleField.setValue(currentCustomer.getTitle());
         nameField.setText(currentCustomer.getName());
         firstNameField.setText(currentCustomer.getFirstName());
         countryField.setText(currentCustomer.getCountry());
