@@ -1,5 +1,7 @@
 package com.atdit.booking.financialdata;
 
+import com.atdit.booking.Main;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
@@ -13,6 +15,11 @@ public class FinancialInformationEvaluator {
 
     public FinancialInformationEvaluator(FinancialInformation financialInfo){
         this.financialInfo = financialInfo;
+    }
+
+    public boolean valDeclaredFinancialInfo(int journeyPrice){
+        return this.financialInfo.getLiquidAssets() > journeyPrice * 0.2 &&
+                financialInfo.getMonthlyAvailableMoney() > Main.MIN_MONTHLY_MONEY;
     }
 
     public void validateIncome() {

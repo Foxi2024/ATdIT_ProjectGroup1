@@ -42,9 +42,9 @@ public class ControllerPage8b extends Controller {
     @FXML
     private void handleBack() {
         Stage stage = (Stage) totalAmountLabel.getScene().getWindow();
-        Scene scene = getScene("page_7.fxml");
+        //Scene scene = loadScene("page_7.fxml");
         stage.setTitle("Payment Selection");
-        stage.setScene(scene);
+        //stage.setScene(scene);
     }
 
     @FXML

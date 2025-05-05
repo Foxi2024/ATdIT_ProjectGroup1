@@ -4,12 +4,11 @@ import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
 import com.atdit.booking.customer.CustomerEvaluater;
 import com.atdit.booking.financialdata.FinancialInformation;
+import com.atdit.booking.financialdata.FinancialInformationEvaluator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,7 +26,7 @@ public class ControllerPage4 extends Controller implements Initializable {
 
     private static final Customer currentCustomer = Main.customer;
     private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
-    private static final CustomerEvaluater ce = new CustomerEvaluater(currentCustomer);
+    private static final FinancialInformationEvaluator financialInformationEvaluator = new FinancialInformationEvaluator(financialInfo);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { restoreFormData(); }
@@ -36,35 +35,27 @@ public class ControllerPage4 extends Controller implements Initializable {
     @FXML
     public void nextPage(MouseEvent e) {
 
-        if (validateForm()) {
-            try {
-                cacheData();
-            } catch (IllegalArgumentException ex) {
-                showError("Invalid Data", "Could not save financial information", ex.getMessage());
-            }
-
-            if (ce.evalCustomer1(1000)) {
-
-                Stage stage = (Stage) continueButton.getScene().getWindow();
-                Scene scene = getScene("page_5.fxml");
-                stage.setTitle("Financial Proof");
-                stage.setScene(scene);
-            }
-            else {
-                showError("Evaluation Failed", "Customer evaluation failed", "Please check your financial information.");
-            }
+        if(!validateForm()) {
+            return;
         }
+
+        if(!financialInformationEvaluator.valDeclaredFinancialInfo(1000)){
+            showError("Evaluation Failed", "Customer evaluation failed", "Please check your financial information.");
+            return;
+        }
+
+        cacheData();
+        loadScene(e, "page_5.fxml", "Financial Proof");
     }
+
 
     @FXML
     public void previousPage(MouseEvent e) {
-        cacheData();
 
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        Scene scene = getScene("page_3.fxml");
-        stage.setTitle("Personal Information");
-        stage.setScene(scene);
+        cacheData();
+        loadScene(e, "page_3.fxml", "Personal Information");
     }
+
 
     public void cacheData() throws IllegalArgumentException {
 
@@ -73,6 +64,7 @@ public class ControllerPage4 extends Controller implements Initializable {
         financialInfo.setMinCostOfLiving(Integer.parseInt(minLivingCostField.getText().trim()));
         financialInfo.setLiquidAssets(Integer.parseInt(liquidAssetsField.getText().trim()));
     }
+
 
     private void restoreFormData() {
 

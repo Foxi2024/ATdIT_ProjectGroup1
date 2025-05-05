@@ -20,12 +20,12 @@ public class ControllerPage7 extends Controller {
         Scene scene;
 
         if (oneTimePaymentRadio.isSelected()) {
-            scene = getScene("page_8a.fxml");
+            //scene = loadScene("page_8a.fxml");
             stage.setTitle("One-Time Payment");
         } else {
-            scene = getScene("page_8b.fxml");
+            //scene = loadScene("page_8b.fxml");
             stage.setTitle("Financing");
         }
-        stage.setScene(scene);
+        //stage.setScene(scene);
     }
 }

@@ -1,21 +1,14 @@
 package com.atdit.booking.Controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
-
+import javafx.scene.input.MouseEvent;
 
 public class ControllerPage1 extends Controller {
 
-    @FXML private Button start_process_button;
 
-    public void start_payment_process(javafx.scene.input.MouseEvent mouseEvent) {
+    public void start_payment_process(MouseEvent e) {
 
-        Stage stage = (Stage) start_process_button.getScene().getWindow();
-        Scene scene = getScene("page_2.fxml");
-        stage.setTitle("Datenschutzerklärung");
-        stage.setScene(scene);
+        loadScene(e,"page_2.fxml", "Datenschutzerklärung");
+
     }
 
 }

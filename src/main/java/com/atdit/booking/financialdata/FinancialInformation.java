@@ -33,9 +33,6 @@ public class FinancialInformation {
 
 
     public void setMonthlyFixCost(int monthlyFixCost) {
-        if (monthlyFixCost < 0) {
-            throw new IllegalArgumentException("Monthly fixed cost cannot be negative");
-        }
         this.monthlyFixCost = monthlyFixCost;
         updateMonthlyAvailableMoney();
     }
@@ -45,9 +42,6 @@ public class FinancialInformation {
     }
 
     public void setMinCostOfLiving(int minCostOfLiving) {
-        if (minCostOfLiving < 0) {
-            throw new IllegalArgumentException("Minimum cost of living cannot be negative");
-        }
         this.minCostOfLiving = minCostOfLiving;
         updateMonthlyAvailableMoney();
     }

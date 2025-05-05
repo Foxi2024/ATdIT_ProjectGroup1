@@ -26,32 +26,21 @@
         <Label text="First Name:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         <TextField fx:id="firstNameField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-        <Label text="Nationality:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <TextField fx:id="nationalityField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        <Label text="Birth Date:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="birthDatePicker" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-        <Label text="Birth Date:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="birthDatePicker" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        <Label text="Country:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="countryField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-        <Label text="Street:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-        <TextField fx:id="streetField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+        <Label text="Address:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <TextField fx:id="addressField"
+                   GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-        <Label text="House Number:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-        <TextField fx:id="houseNumberField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-        <Label text="Postal Code:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-        <TextField fx:id="postalCodeField" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-
-        <Label text="City:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
-        <TextField fx:id="cityField" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
-
-        <Label text="Country:" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
-        <TextField fx:id="countryField" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
-
-        <Label text="Email:" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
-        <TextField fx:id="emailField" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+        <Label text="Email:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <TextField fx:id="emailField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 
         <!-- Navigation Buttons -->
-        <Button text="Back" fx:id="backButton" onMouseClicked="#previousPage" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
-        <Button text="Continue" fx:id="continueButton" onMouseClicked="#nextPage" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
+        <Button text="Back" fx:id="backButton" onMouseClicked="#previousPage" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+        <Button text="Continue" fx:id="continueButton" onMouseClicked="#nextPage" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
     </GridPane>
 </AnchorPane>

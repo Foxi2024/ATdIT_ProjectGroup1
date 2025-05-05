@@ -1,31 +1,41 @@
 package com.atdit.booking.Controller;
 
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Control;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public abstract class Controller {
 
-    public static Scene getScene(String fxml) {
+    public void loadScene(Event event, String fxml, String title) {
 
-        FXMLLoader loader = new FXMLLoader(Controller.class.getResource("/com/atdit/booking/" + fxml));
-        Scene scene = null;
         try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
+            Stage stage = (Stage) ((Control) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(Controller.class.getResource("/com/atdit/booking/" + fxml));
+            Scene scene = new Scene(loader.load());
+            stage.setTitle("Main");
+            stage.setScene(scene);
+            stage.show();
         }
-
-        return scene;
+        catch (IOException e) {
+            showPageLoadingError();
+        }
     }
 
-    void showError(String title, String header, String content) {
+    public void showError(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    public void showPageLoadingError() {
+        showError("Error", "Error loading page", "Could not load the next page. Try again or close the application.");
+    }
+
 }

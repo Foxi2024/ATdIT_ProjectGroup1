@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ControllerPage5 extends Controller implements Initializable {
@@ -32,12 +31,13 @@ public class ControllerPage5 extends Controller implements Initializable {
     @FXML private Label schufaStatusLabel;
 
 
+    //private static HashMap<String, String> documentMap = new HashMap<>();
     private static final Customer currentCustomer = Main.customer;
     private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
     private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator(financialInfo);
-    private static final FinancialInformationParser parser = new FinancialInformationParser();
-    private final Map<String, Boolean> uploadedDocuments = new HashMap<>();
+    private static final FinancialInformationParser parser = new FinancialInformationParser();;
     private final FileChooser fileChooser = new FileChooser();
+
 
 
     @Override
@@ -71,18 +71,14 @@ public class ControllerPage5 extends Controller implements Initializable {
                 return;
             }
 
-            Stage stage = (Stage) continueButton.getScene().getWindow();
-            Scene scene = getScene("page_7.fxml");
-            stage.setScene(scene);
+            loadScene(e,"page_7.fxml","Placeholder");
         }
     }
 
     @FXML
     public void previousPage(MouseEvent e) {
 
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        Scene scene = getScene("page_4.fxml");
-        stage.setScene(scene);
+        loadScene(e,"page_4.fxml","Financial Information");
     }
 
 
@@ -126,11 +122,12 @@ public class ControllerPage5 extends Controller implements Initializable {
             if (!evaluator.validateDocumentFormat(content, documentType)) {
                 statusLabel.setText("Invalid format (click to remove)");
                 statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
-                uploadedDocuments.put(documentType, false);
+
             } else if (!evaluator.validateDocumentDate(content)) {
+
                 statusLabel.setText("Document too old (max "+ FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " days) (click to remove)");
                 statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
-                uploadedDocuments.put(documentType, false);
+
             } else {
                 statusLabel.setText("Valid File (click to remove)");
                 statusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
@@ -141,7 +138,6 @@ public class ControllerPage5 extends Controller implements Initializable {
                     case "schufa" -> financialInfo.setSchufa(parser.parseSchufaDocument(content));
                 }
 
-                uploadedDocuments.put(documentType, true);
             }
 
         } catch (IllegalArgumentException ex) {
@@ -155,7 +151,6 @@ public class ControllerPage5 extends Controller implements Initializable {
 
     private boolean validateUploads() {
 
-        System.out.println(uploadedDocuments);
 
         if(financialInfo.getProofOfLiquidAssets() == null) {
             showError("Missing Documents", "Please upload required documents", "You need to upload proof of liquid assets.");
