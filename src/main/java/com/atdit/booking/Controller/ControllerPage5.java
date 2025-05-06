@@ -1,5 +1,9 @@
 package com.atdit.booking.Controller;
 
+import com.atdit.booking.Excpetions.EvaluationFailedError;
+import com.atdit.booking.Excpetions.FileCannotReadError;
+import com.atdit.booking.Excpetions.FileContentError;
+import com.atdit.booking.Excpetions.ValidationError;
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
 import com.atdit.booking.customer.CustomerDatabase;
@@ -62,14 +66,14 @@ public class ControllerPage5 extends Controller implements Initializable {
         try {
             evaluator.validateUploads();
         } catch (IllegalArgumentException ex) {
-            showError("Validation Error", "Validation Error in your declarations", ex.getMessage());
+            ValidationError.showValidationError(ex.getMessage());
             return;
         }
 
         try {
             evaluator.evaluateUploads();
         } catch (IllegalArgumentException ex) {
-            showError("Evaluation Error", "Evaluation Error in your declarations", ex.getMessage());
+            EvaluationFailedError.showEvaluationDeclarationFailedError(ex.getMessage());
             return;
         }
 
@@ -112,7 +116,7 @@ public class ControllerPage5 extends Controller implements Initializable {
             try {
                 return Files.readString(file.toPath());
             } catch (IOException ex) {
-                showError("File Error", "Cannot read file", ex.getMessage());
+                FileCannotReadError.showFileCannotReadError(ex.getMessage());
             }
         }
         return null;
@@ -143,7 +147,7 @@ public class ControllerPage5 extends Controller implements Initializable {
             }
 
         } catch (IllegalArgumentException ex) {
-            showError("File Error", "Error with file content", ex.getMessage());
+            FileContentError.showFileContentError(ex.getMessage());
             statusLabel.setText("Error with file content (click to remove)");
             statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
         }

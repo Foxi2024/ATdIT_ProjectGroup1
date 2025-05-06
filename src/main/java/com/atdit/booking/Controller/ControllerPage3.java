@@ -1,5 +1,7 @@
 package com.atdit.booking.Controller;
 
+
+import com.atdit.booking.Excpetions.EvaluationFailedError;
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
 import com.atdit.booking.customer.CustomerEvaluater;
@@ -42,7 +44,7 @@ public class ControllerPage3 extends Controller implements Initializable {
         try {
             evaluater.evaluateCustomerInfo();
         } catch (IllegalArgumentException ex) {
-            showError("Evaluation Failed", "Evaluation of personal Information failed", ex.getMessage());
+            EvaluationFailedError.showEvaluationPersonalInformationFailedError(ex.getMessage());
             return;
         }
 
