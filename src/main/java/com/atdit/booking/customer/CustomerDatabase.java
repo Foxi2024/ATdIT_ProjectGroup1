@@ -1,48 +1,34 @@
 package com.atdit.booking.customer;
 
-import com.atdit.booking.Main;
 import com.atdit.booking.financialdata.FinancialInformation;
 import com.atdit.booking.financialdata.IncomeProof;
 import com.atdit.booking.financialdata.LiquidAsset;
 import com.atdit.booking.financialdata.SchufaOverview;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.KeySpec;
 import java.sql.*;
-import java.util.Arrays;
-import java.util.Base64;
+
 
 
 public class CustomerDatabase {
 
     private static final String DB_URL = "jdbc:sqlite:database/customers.db";
+    private static final Encrypter encrypter = new Encrypter();
     private Connection connection;
     private  Customer currentCustomer;
 
 
-    public CustomerDatabase(Customer customer) {
-        initializeDatabase();
-        this.currentCustomer = customer;
-    }
+    public CustomerDatabase(Customer customer) throws SQLException {
 
-
-    private void initializeDatabase() {
-        try {
-            connection = DriverManager.getConnection(DB_URL);
-            createTables();
+        try{
+            this.connection = DriverManager.getConnection(DB_URL);
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to initialize database", e);
+            throw new SQLException("Failed to establish a connection to the database", e);
         }
+
+        this.currentCustomer = customer;
     }
 
 
@@ -76,7 +62,7 @@ public class CustomerDatabase {
             return rs.getLong(1);
         }
 
-        throw new SQLException("Failed to get income proof ID");
+        throw new SQLException("Failed to save proof of income");
 
     }
 
@@ -103,7 +89,7 @@ public class CustomerDatabase {
             return rs.getLong(1);
         }
 
-        throw new SQLException("Failed to get assets proof ID");
+        throw new SQLException("Failed to save proof of liquid assets");
 
     }
 
@@ -136,46 +122,11 @@ public class CustomerDatabase {
         if (rs.next()) {
             return rs.getLong(1);
         }
-        throw new SQLException("Failed to get schufa ID");
+        throw new SQLException("Failed to save schufa overview");
     }
 
 
-    private static class Encryption {
-        private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
-        private static final int KEY_SIZE = 256;
-
-        private static SecretKey deriveKey(String email, String password) throws Exception {
-            String salt = "1. FC Kaiserslautern";
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, KEY_SIZE);
-            return new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
-        }
-
-        public static String encrypt(String value, String email, String password) throws Exception {
-            SecretKey key = deriveKey(email, password);
-            Cipher cipher = Cipher.getInstance(ALGORITHM);
-            byte[] iv = new byte[16];
-            new SecureRandom().nextBytes(iv);
-            cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(iv));
-            byte[] encrypted = cipher.doFinal(value.getBytes());
-            byte[] combined = new byte[iv.length + encrypted.length];
-            System.arraycopy(iv, 0, combined, 0, iv.length);
-            System.arraycopy(encrypted, 0, combined, iv.length, encrypted.length);
-            return Base64.getEncoder().encodeToString(combined);
-        }
-
-        public static String decrypt(String encrypted, String email, String password) throws Exception {
-            SecretKey key = deriveKey(email, password);
-            Cipher cipher = Cipher.getInstance(ALGORITHM);
-            byte[] decoded = Base64.getDecoder().decode(encrypted);
-            byte[] iv = Arrays.copyOfRange(decoded, 0, 16);
-            byte[] data = Arrays.copyOfRange(decoded, 16, decoded.length);
-            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
-            return new String(cipher.doFinal(data));
-        }
-    }
-
-    private void insertCustomerData(long financialInfoId, String password) throws SQLException {
+    private void insertCustomerData(long financialInfoId, String password) throws SQLException, EncryptionException, HashingException {
 
         String email = this.currentCustomer.getEmail();
 
@@ -184,54 +135,20 @@ public class CustomerDatabase {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """;
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-
-            pstmt.setString(1, hashString(email));
-            pstmt.setString(2, Encryption.encrypt(email, email, password));
-            pstmt.setString(3, Encryption.encrypt(this.currentCustomer.getTitle(), email, password));
-            pstmt.setString(4, Encryption.encrypt(this.currentCustomer.getFirstName(), email, password));
-            pstmt.setString(5, Encryption.encrypt(this.currentCustomer.getName(), email, password));
-            pstmt.setString(6, Encryption.encrypt(this.currentCustomer.getCountry(), email, password));
-            pstmt.setString(7, Encryption.encrypt(this.currentCustomer.getBirthdate(), email, password));
-            pstmt.setString(8, Encryption.encrypt(this.currentCustomer.getAddress(), email, password));
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, encrypter.hashString(email));
+            pstmt.setString(2, encrypter.encrypt(email, email, password));
+            pstmt.setString(3, encrypter.encrypt(this.currentCustomer.getTitle(), email, password));
+            pstmt.setString(4, encrypter.encrypt(this.currentCustomer.getFirstName(), email, password));
+            pstmt.setString(5, encrypter.encrypt(this.currentCustomer.getName(), email, password));
+            pstmt.setString(6, encrypter.encrypt(this.currentCustomer.getCountry(), email, password));
+            pstmt.setString(7, encrypter.encrypt(this.currentCustomer.getBirthdate(), email, password));
+            pstmt.setString(8, encrypter.encrypt(this.currentCustomer.getAddress(), email, password));
             pstmt.setLong(9, financialInfoId);
             pstmt.executeUpdate();
 
 
-        } catch (Exception e) {
-            throw new SQLException("Failed to encrypt and save customer data", e);
-        }
-    }
-
-    public Customer getCustomerByEmail(String email, String password) throws SQLException, NoSuchAlgorithmException {
-
-
-        String sql = "SELECT * FROM customers WHERE email_hashed = ?";
-
-
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, hashString(email));
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                Customer customer = new Customer();
-                try {
-                    customer.setEmail(Encryption.decrypt(rs.getString("email"), email, password));
-                    customer.setTitle(Encryption.decrypt(rs.getString("title"), email, password));
-                    customer.setFirstName(Encryption.decrypt(rs.getString("firstName"), email, password));
-                    customer.setName(Encryption.decrypt(rs.getString("name"), email, password));
-                    customer.setCountry(Encryption.decrypt(rs.getString("country"), email, password));
-                    customer.setBirthdate(Encryption.decrypt(rs.getString("birthdate"), email, password));
-                    customer.setAddress(Encryption.decrypt(rs.getString("address"), email, password));
-                    return customer;
-
-                } catch (Exception e) {
-                    throw new SQLException("Failed to decrypt customer data", e);
-                }
-            }
-            return null;
-        }
     }
 
     private long insertFinancialData(long incomeProofId, long assetsProofId, long schufaId) throws SQLException {
@@ -269,32 +186,29 @@ public class CustomerDatabase {
             return id;
         }
 
-        System.out.println("Failed to insert financial data");
-        throw new SQLException("Failed to get customer ID");
+        throw new SQLException("Failed to save financial information");
     }
 
 
-    public void saveCustomerInDatabase(String password) {
+    public void saveCustomerInDatabase(String password) throws SQLException, RuntimeException {
 
-        try {
+        long incomeProofId = insertIncomeProof();
+        long assetsProofId = insertAssetsProof();
+        long schufaId = insertSchufaRecord();
+        long financialInfoId = insertFinancialData(incomeProofId, assetsProofId, schufaId);
 
-            long incomeProofId = insertIncomeProof();
-            long assetsProofId = insertAssetsProof();
-            long schufaId = insertSchufaRecord();
-            long financialInfoId = insertFinancialData(incomeProofId, assetsProofId, schufaId);
-
-            System.out.println("Financial Info ID: " + financialInfoId);
-
+        try{
             insertCustomerData(financialInfoId, password);
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to save customer data:", e);
-        } finally {
-            closeConnection();
         }
+        catch(EncryptionException | HashingException e){
+            throw new RuntimeException("Failed to encrypt customer data", e);
+        }
+
+        closeConnection();
     }
 
-    public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws SQLException, NoSuchAlgorithmException {
+    public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws SQLException, RuntimeException {
+
         String sql = "SELECT c.*, fi.*, ip.*, la.*, so.* " +
                 "FROM customers c " +
                 "JOIN financial_information fi ON c.financial_info_id = fi.id " +
@@ -303,8 +217,9 @@ public class CustomerDatabase {
                 "LEFT JOIN schufa_overview so ON fi.schufa_id = so.id " +
                 "WHERE c.email_hashed = ?";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, hashString(email));
+        try{
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, encrypter.hashString(email));
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -326,36 +241,48 @@ public class CustomerDatabase {
             }
             return null;
         }
+        catch (SQLException e) {
+            throw new SQLException("Failed to retrieve customer data", e);
+        }
+        catch (DecryptionException | HashingException e){
+            throw new RuntimeException("Failed to decrypt customer data", e);
+
+        }
+
     }
 
-    private Customer extractCustomerFromResultSet(ResultSet rs, String email, String password) throws SQLException {
+    private Customer extractCustomerFromResultSet(ResultSet rs, String email, String password) throws SQLException, DecryptionException {
+
         Customer customer = new Customer();
+
         customer.setEmail(email);
-        try {
-            customer.setTitle(Encryption.decrypt(rs.getString("title"), email, password));
-            customer.setFirstName(Encryption.decrypt(rs.getString("firstName"), email, password));
-            customer.setName(Encryption.decrypt(rs.getString("name"), email, password));
-            customer.setCountry(Encryption.decrypt(rs.getString("country"), email, password));
-            customer.setBirthdate(Encryption.decrypt(rs.getString("birthdate"), email, password));
-            customer.setAddress(Encryption.decrypt(rs.getString("address"), email, password));
-            return customer;
-        } catch (Exception e) {
-            throw new SQLException("Failed to decrypt customer data", e);
-        }
+        customer.setTitle(encrypter.decrypt(rs.getString("title"), email, password));
+        customer.setFirstName(encrypter.decrypt(rs.getString("firstName"), email, password));
+        customer.setName(encrypter.decrypt(rs.getString("name"), email, password));
+        customer.setCountry(encrypter.decrypt(rs.getString("country"), email, password));
+        customer.setBirthdate(encrypter.decrypt(rs.getString("birthdate"), email, password));
+        customer.setAddress(encrypter.decrypt(rs.getString("address"), email, password));
+
+        return customer;
     }
+
 
     private FinancialInformation extractFinancialInfoFromResultSet(ResultSet rs) throws SQLException {
+
         FinancialInformation financialInfo = new FinancialInformation();
+
         financialInfo.setAvgNetIncome(rs.getInt("avgNetIncome"));
         financialInfo.setLiquidAssets(rs.getInt("liquidAssets"));
         financialInfo.setMonthlyFixCost(rs.getInt("monthlyFixCost"));
         financialInfo.setMinCostOfLiving(rs.getInt("minCostOfLiving"));
         financialInfo.setMonthlyAvailableMoney(rs.getInt("monthlyAvailableMoney"));
+
         return financialInfo;
     }
 
+
     private IncomeProof extractIncomeProofFromResultSet(ResultSet rs) throws SQLException {
-        int incomeProofId = rs.getInt("proof_of_income_id");
+
         if (rs.wasNull()) {
             return null;
         }
@@ -368,8 +295,9 @@ public class CustomerDatabase {
         );
     }
 
+
     private LiquidAsset extractLiquidAssetFromResultSet(ResultSet rs) throws SQLException {
-        int liquidAssetsId = rs.getInt("proof_of_liquid_assets_id");
+
         if (rs.wasNull()) {
             return null;
         }
@@ -381,8 +309,9 @@ public class CustomerDatabase {
         );
     }
 
+
     private SchufaOverview extractSchufaOverviewFromResultSet(ResultSet rs) throws SQLException {
-        int schufaId = rs.getInt("schufa_id");
+
         if (rs.wasNull()) {
             return null;
         }
@@ -396,8 +325,6 @@ public class CustomerDatabase {
                 rs.getString("dateIssued")
         );
     }
-
-
 
 
     public void closeConnection() {
@@ -486,12 +413,4 @@ public class CustomerDatabase {
         }
     }
 
-
-    public String hashString(String stringToHash) throws NoSuchAlgorithmException {
-
-        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-        messageDigest.update(stringToHash.getBytes());
-        byte[] someByteArray = messageDigest.digest();
-        return new BigInteger(1, someByteArray).toString(16);
-    }
 }

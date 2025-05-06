@@ -6,7 +6,7 @@ public class ControllerPage1 extends Controller {
 
     public void start_payment_process(MouseEvent e) {
 
-        loadScene(e,"page_2.fxml", "Datenschutzerklärung");
+        loadScene(e,"page_7.fxml", "Datenschutzerklärung");
     }
 
 }

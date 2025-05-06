@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ControllerPage6 extends Controller implements Initializable {
@@ -23,22 +24,21 @@ public class ControllerPage6 extends Controller implements Initializable {
 
 
     private static final Customer currentCustomer = Main.customer;
-    private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
-    private static final CustomerDatabase db = new CustomerDatabase(currentCustomer);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String email = Main.customer.getEmail();
-        emailLabel.setText(email);
 
-        // Enable create account button only when passwords match and meet requirements
+        emailLabel.setText(currentCustomer.getEmail());
         passwordField.textProperty().addListener((obs, old, newValue) -> validatePasswords());
         confirmPasswordField.textProperty().addListener((obs, old, newValue) -> validatePasswords());
     }
 
     private void validatePasswords() {
+
+
         String password = passwordField.getText();
         String confirm = confirmPasswordField.getText();
+
         boolean isValid = password.equals(confirm) &&
                 password.length() >= 8 &&
                 password.matches(".*[A-Z].*") &&
@@ -59,9 +59,14 @@ public class ControllerPage6 extends Controller implements Initializable {
 
         String password = passwordField.getText();
 
-        db.saveCustomerInDatabase(password);
-
-        System.out.println("Account created successfully! Password: " + password);
+        try {
+            CustomerDatabase db = new CustomerDatabase(currentCustomer);
+            db.saveCustomerInDatabase(password);
+        }
+        catch (SQLException | RuntimeException ex) {
+            showError("Database Error", "There was an error while saving your data.", ex.getMessage());
+            return;
+        }
 
         loadScene(e, "page_7.fxml", "Payment Selection");
 

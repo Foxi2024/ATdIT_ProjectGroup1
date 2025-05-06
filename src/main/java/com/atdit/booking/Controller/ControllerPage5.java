@@ -34,7 +34,6 @@ public class ControllerPage5 extends Controller implements Initializable {
     private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
     private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator(financialInfo);
     private static final FinancialInformationParser parser = new FinancialInformationParser();
-    private static final CustomerDatabase db = new CustomerDatabase(currentCustomer);
     private final FileChooser fileChooser = new FileChooser();
 
 
