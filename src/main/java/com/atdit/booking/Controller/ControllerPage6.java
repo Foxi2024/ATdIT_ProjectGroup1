@@ -1,5 +1,6 @@
 package com.atdit.booking.Controller;
 
+import com.atdit.booking.Excpetions.DatabaseSavingError;
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
 import com.atdit.booking.customer.CustomerDatabase;
@@ -64,7 +65,7 @@ public class ControllerPage6 extends Controller implements Initializable {
             db.saveCustomerInDatabase(password);
         }
         catch (SQLException | RuntimeException ex) {
-            showError("Database Error", "There was an error while saving your data.", ex.getMessage());
+            DatabaseSavingError.showDatabaseSavingError(ex.getMessage());
             return;
         }
 
