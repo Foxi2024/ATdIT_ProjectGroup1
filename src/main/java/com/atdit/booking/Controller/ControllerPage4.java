@@ -1,8 +1,9 @@
 package com.atdit.booking.Controller;
 
+import com.atdit.booking.Excpetions.EvaluationFailedError;
+import com.atdit.booking.Excpetions.InvalidInputError;
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
-import com.atdit.booking.customer.CustomerEvaluater;
 import com.atdit.booking.financialdata.FinancialInformation;
 import com.atdit.booking.financialdata.FinancialInformationEvaluator;
 import javafx.fxml.FXML;
@@ -36,7 +37,7 @@ public class ControllerPage4 extends Controller implements Initializable {
         try {
             cacheData();
         } catch (IllegalArgumentException ex) {
-            showError("Invalid Input", "Please correct the input", ex.getMessage());
+            InvalidInputError.showInvalidInputError(ex.getMessage());
             return;
         }
 
@@ -44,12 +45,12 @@ public class ControllerPage4 extends Controller implements Initializable {
             financialInformationEvaluator.validateDeclaredFinancialInfo();
         }
         catch (IllegalArgumentException ex) {
-            showError("Evaluation Failed", "Evaluation of financial information failed", ex.getMessage());
+            EvaluationFailedError.showEvaluationPersonalInformationFailedError(ex.getMessage());
             return;
         }
 
         if(!financialInformationEvaluator.valDeclaredFinancialInfo(1000)){
-            showError("Evaluation Failed", "Customer evaluation failed", "Please check your financial information.");
+            EvaluationFailedError.showEvaluationFailedExtendedError();
             return;
         }
 

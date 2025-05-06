@@ -3,7 +3,6 @@ package com.atdit.booking.Controller;
 import com.atdit.booking.Excpetions.PageLoadingError;
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
-import com.atdit.booking.excpetions.PageLoadException;
 import com.atdit.booking.financialdata.FinancialInformation;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -32,17 +31,4 @@ public abstract class Controller {
             PageLoadingError.showPageLoadingError(e.getMessage());
         }
     }
-
-    public void showError(String title, String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-
-    public void showPageLoadingError(String errorMessage) {
-        showError("Error", "Error loading page", "Could not load the next page. Try again or close the application. \n" + errorMessage);
-    }
-
 }
