@@ -1,7 +1,9 @@
 package com.atdit.booking.Controller;
 
+import com.atdit.booking.Excpetions.PageLoadingError;
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
+import com.atdit.booking.excpetions.PageLoadException;
 import com.atdit.booking.financialdata.FinancialInformation;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +29,7 @@ public abstract class Controller {
             stage.show();
         }
         catch (IOException e) {
-            showPageLoadingError(e.getMessage());
+            PageLoadingError.showPageLoadingError(e.getMessage());
         }
     }
 
