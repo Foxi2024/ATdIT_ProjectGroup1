@@ -24,13 +24,14 @@ public class FinancialInformationEvaluator {
 
     public boolean evaluateIncome() {
 
+        if (financialInfo.getProofOfIncome() == null) {
+            return true;
+        }
+
         return ((double) (financialInfo.getProofOfIncome().monthlyNetIncome() / financialInfo.getAvgNetIncome()) > (1-MAX_DEVIATION));
     }
 
     private boolean evaluateLiquidAssets() {
-        System.out.println(financialInfo.getProofOfLiquidAssets().balance());
-        System.out.println();
-        System.out.println(financialInfo.getLiquidAssets());
 
         return ((double) (financialInfo.getProofOfLiquidAssets().balance() / financialInfo.getLiquidAssets()) > (1-MAX_DEVIATION));
 

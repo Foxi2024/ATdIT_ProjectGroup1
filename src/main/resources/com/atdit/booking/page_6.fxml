@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.atdit.booking.Controller.ControllerPage6">
-    <padding>
-        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
-    </padding>
+<AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.ControllerPage6">
+    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <Label text="Create Your Account" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
 
-    <Text text="Thank you for providing your information" style="-fx-font-size: 24;"/>
+        <VBox spacing="15" style="-fx-border-color: #999999; -fx-border-radius: 5; -fx-padding: 15;">
+            <GridPane hgap="10" vgap="10">
+                <Label text="Email:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label fx:id="emailLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-    <HBox alignment="CENTER">
-        <Text text="We will validate declared information and send an email to " style="-fx-font-size: 16;"/>
-        <Label fx:id="emailLabel" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
-    </HBox>
+                <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="passwordField" promptText="Enter your password" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-    <Text text="once we validated all of your information." style="-fx-font-size: 16;"/>
-</VBox>
+                <Label text="Confirm Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="confirmPasswordField" promptText="Confirm your password" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <VBox spacing="5" style="-fx-padding: 10 0 0 0;">
+                <Label text="Password Requirements:" style="-fx-font-weight: bold"/>
+                <Label text="• Minimum 8 characters" style="-fx-text-fill: #666666"/>
+                <Label text="• At least one uppercase letter" style="-fx-text-fill: #666666"/>
+                <Label text="• At least one lowercase letter" style="-fx-text-fill: #666666"/>
+                <Label text="• At least one number" style="-fx-text-fill: #666666"/>
+                <Label text="• At least one special character" style="-fx-text-fill: #666666"/>
+            </VBox>
+        </VBox>
+
+        <VBox spacing="10" VBox.vgrow="ALWAYS"/>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="backButton" text="Back" onMouseClicked="#previousPage"/>
+            <Button fx:id="createAccountButton" text="Create Account" onMouseClicked="#handleCreateAccount"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

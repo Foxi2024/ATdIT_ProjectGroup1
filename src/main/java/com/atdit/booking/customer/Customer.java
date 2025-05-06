@@ -16,7 +16,7 @@ public class Customer {
     private String address;
     private String email;
 
-    private final FinancialInformation financialInformation;
+    private FinancialInformation financialInformation;
 
     public Customer(){
         this.financialInformation = new FinancialInformation();
@@ -59,6 +59,10 @@ public class Customer {
         this.email = email;
     }
 
+    public void setFinancialInformation(FinancialInformation financialInformation) {
+        this.financialInformation = financialInformation;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -89,5 +93,19 @@ public class Customer {
 
     public FinancialInformation getFinancialInformation() {
         return financialInformation;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "financialInformation=" + financialInformation +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", birthdate='" + birthdate + '\'' +
+                ", country='" + country + '\'' +
+                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", title='" + title + '\'' +
+                '}';
     }
 }

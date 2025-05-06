@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class ControllerPage7 extends Controller {
@@ -15,17 +16,19 @@ public class ControllerPage7 extends Controller {
     private ToggleGroup paymentMethodGroup;
 
     @FXML
-    private void handleContinue() {
-        Stage stage = (Stage) oneTimePaymentRadio.getScene().getWindow();
-        Scene scene;
+    private void handleContinue(MouseEvent e) {
 
         if (oneTimePaymentRadio.isSelected()) {
-            //scene = loadScene("page_8a.fxml");
-            stage.setTitle("One-Time Payment ");
+            loadScene(e, "page_8a.fxml", "One-Time Payment");
         } else {
-            //scene = loadScene("page_8b.fxml");
-            stage.setTitle("Financing");
+            loadScene(e, "page_8b.fxml", "Financing");
         }
+
         //stage.setScene(scene);
+    }
+
+    @FXML
+    public void previousPage(MouseEvent e) {
+        loadScene(e, "page_6.fxml", "Page 6");
     }
 }

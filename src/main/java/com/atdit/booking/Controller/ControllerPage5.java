@@ -6,7 +6,6 @@ import com.atdit.booking.customer.CustomerDatabase;
 import com.atdit.booking.financialdata.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -17,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class ControllerPage5 extends Controller implements Initializable {
@@ -76,9 +74,7 @@ public class ControllerPage5 extends Controller implements Initializable {
             return;
         }
 
-        //db.saveCustomerInDatabase();
-
-        loadScene(e, "page_7.fxml", "Placeholder");
+        loadScene(e, "page_6.fxml", "Placeholder");
     }
 
 

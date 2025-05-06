@@ -26,6 +26,18 @@ public class SchufaOverview {
 
     }
 
+    public SchufaOverview(double score, int totalCredits, int totalCreditSum, int totalAmountPayed, int totalAmountOwed, int totalMonthlyRate, String dateIssued) {
+        this.firstName = "";
+        this.lastName = "";
+        this.score = score;
+        this.totalCredits = totalCredits;
+        this.totalCreditSum = totalCreditSum;
+        this.totalAmountPayed = totalAmountPayed;
+        this.totalAmountOwed = totalAmountOwed;
+        this.totalMonthlyRate = totalMonthlyRate;
+        this.dateIssued = dateIssued;
+    }
+
     public SchufaOverview() {}
 
     public String getLastName() {

@@ -2,21 +2,68 @@ package com.atdit.booking.Controller;
 
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
+import com.atdit.booking.customer.CustomerDatabase;
+import com.atdit.booking.financialdata.FinancialInformation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ControllerPage6 extends Controller implements Initializable {
 
-    @FXML
-    private Label emailLabel;
+
+    @FXML private Label emailLabel;
+    @FXML private PasswordField passwordField;
+    @FXML private PasswordField confirmPasswordField;
+    @FXML private Button createAccountButton;
+
 
     private static final Customer currentCustomer = Main.customer;
+    private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
+    private static final CustomerDatabase db = new CustomerDatabase(currentCustomer);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        emailLabel.setText(currentCustomer.getEmail());
+        String email = Main.customer.getEmail();
+        emailLabel.setText(email);
+
+        // Enable create account button only when passwords match and meet requirements
+        passwordField.textProperty().addListener((obs, old, newValue) -> validatePasswords());
+        confirmPasswordField.textProperty().addListener((obs, old, newValue) -> validatePasswords());
+    }
+
+    private void validatePasswords() {
+        String password = passwordField.getText();
+        String confirm = confirmPasswordField.getText();
+        boolean isValid = password.equals(confirm) &&
+                password.length() >= 8 &&
+                password.matches(".*[A-Z].*") &&
+                password.matches(".*[a-z].*") &&
+                password.matches(".*\\d.*") &&
+                password.matches(".*[!@#$%^&*()\\-_=+\\\\|\\[{\\]};:'\",<.>/?].*");
+
+        createAccountButton.setDisable(!isValid);
+    }
+
+    @FXML
+    public void previousPage(MouseEvent e) {
+        loadScene(e, "page_5.fxml", "Document Upload");
+    }
+
+    @FXML
+    public void handleCreateAccount(MouseEvent e) {
+
+        String password = passwordField.getText();
+
+        db.saveCustomerInDatabase(password);
+
+        System.out.println("Account created successfully! Password: " + password);
+
+        loadScene(e, "page_7.fxml", "Payment Selection");
+
     }
 }

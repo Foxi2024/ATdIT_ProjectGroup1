@@ -1,9 +1,12 @@
 package com.atdit.booking;
 
 import com.atdit.booking.customer.Customer;
+import com.atdit.booking.customer.CustomerDatabase;
 import com.atdit.booking.financialdata.*;
 
 import java.net.MalformedURLException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -19,7 +22,6 @@ public class Main {
 
         customer = new Customer();
 
-        //FinancialDocumentsGenerator.main(null);
         MainWindow.main(null);
     }
 }

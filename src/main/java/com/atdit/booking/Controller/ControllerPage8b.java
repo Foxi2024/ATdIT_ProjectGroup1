@@ -1,23 +1,25 @@
 package com.atdit.booking.Controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ControllerPage8b extends Controller {
+public class ControllerPage8b extends Controller implements Initializable {
     @FXML private Label totalAmountLabel;
     @FXML private ComboBox<Integer> monthsCombo;
     @FXML private Label monthlyPaymentLabel;
     @FXML private Label interestRateLabel;
     @FXML private Label totalCostLabel;
 
-    private final double TOTAL_AMOUNT = 5000.00;
-    private final double INTEREST_RATE = 5.9;
+    private static final double TOTAL_AMOUNT = 5000.00;
+    private static final double INTEREST_RATE = 5.9;
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         totalAmountLabel.setText(String.format("€%.2f", TOTAL_AMOUNT));
         interestRateLabel.setText(String.format("%.1f%%", INTEREST_RATE));
 
@@ -40,15 +42,12 @@ public class ControllerPage8b extends Controller {
     }
 
     @FXML
-    private void handleBack() {
-        Stage stage = (Stage) totalAmountLabel.getScene().getWindow();
-        //Scene scene = loadScene("page_7.fxml");
-        stage.setTitle("Payment Selection");
-        //stage.setScene(scene);
+    public void previousPage(MouseEvent e) {
+        loadScene(e, "page_7.fxml", "Payment Selection");
     }
 
     @FXML
-    private void handleApply() {
-        // Implement financing application logic
+    public void handleApply(MouseEvent e) {
+        loadScene(e, "page_9.fxml", "Contract Details");
     }
 }

@@ -54,6 +54,10 @@ public class FinancialInformation {
         this.proofOfIncome = proofOfIncome;
     }
 
+    public void setMonthlyAvailableMoney(int monthlyAvailableMoney) {
+        this.monthlyAvailableMoney = monthlyAvailableMoney;
+    }
+
     private void updateMonthlyAvailableMoney() {
         this.monthlyAvailableMoney = this.avgNetIncome - this.monthlyFixCost - this.minCostOfLiving;
     }
