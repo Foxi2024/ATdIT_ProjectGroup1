@@ -4,10 +4,13 @@ import com.atdit.booking.FinancingContract;
 import com.atdit.booking.customer.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
+import java.nio.Buffer;
 import java.util.ResourceBundle;
 
 public class FinancingContractController extends Controller implements Initializable {
@@ -18,6 +21,8 @@ public class FinancingContractController extends Controller implements Initializ
     @FXML private Label monthlyPaymentLabel;
     @FXML private TextArea contractTextArea;
     @FXML private Label paymentMethodLabel;
+    @FXML private RadioButton signatureCheckbox;
+    @FXML private Button continueButton;
 
     private static final int TOTAL_AMOUNT = 5000;
     public static FinancingContract financingContract = (FinancingContract) SelectPaymentController.contract;
@@ -37,6 +42,16 @@ public class FinancingContractController extends Controller implements Initializ
         contractTextArea.setText(financingContract.getContractText());
     }
 
+
+    public void signContract(MouseEvent e) {
+
+        if (signatureCheckbox.isSelected()) {
+            continueButton.setDisable(false);
+            return;
+        }
+
+        continueButton.setDisable(true);
+    }
 
     @FXML
     public void previousPage(MouseEvent e) {

@@ -4,7 +4,9 @@ import com.atdit.booking.OneTimePaymentContract;
 import com.atdit.booking.customer.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
@@ -17,6 +19,8 @@ public class OneTimePaymentContractController extends Controller implements Init
     @FXML private Label totalAmountLabel;
     @FXML private Label paymentMethodLabel;
     @FXML private TextArea contractTextArea;
+    @FXML private RadioButton signatureCheckbox;
+    @FXML private Button continueButton;
 
     private static final int TOTAL_AMOUNT = 5000;
     public static OneTimePaymentContract contract = (OneTimePaymentContract) SelectPaymentController.contract;
@@ -32,6 +36,17 @@ public class OneTimePaymentContractController extends Controller implements Init
         totalAmountLabel.setText(String.format("€%.2f", (double) TOTAL_AMOUNT));
 
         contractTextArea.setText(contract.getContractText());
+    }
+
+    @FXML
+    public void signContract(MouseEvent e) {
+
+        if (signatureCheckbox.isSelected()) {
+            continueButton.setDisable(false);
+            return;
+        }
+
+        continueButton.setDisable(true);
     }
 
 

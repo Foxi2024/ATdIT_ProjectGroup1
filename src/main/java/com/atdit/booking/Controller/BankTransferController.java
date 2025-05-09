@@ -32,7 +32,6 @@ public class BankTransferController extends Controller implements Initializable 
         contract.setPaymentMethod("Bank Transfer");
 
         setupPaymentMethodListener();
-        setupInputMasks();
     }
 
     private void setupPaymentMethodListener() {
@@ -48,42 +47,6 @@ public class BankTransferController extends Controller implements Initializable 
     }
 
 
-
-    private void setupInputMasks() {
-        // IBAN formatting
-        ibanField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 34) {
-                ibanField.setText(oldValue);
-            }
-            if (!newValue.matches("[A-Z0-9 ]*")) {
-                ibanField.setText(newValue.toUpperCase().replaceAll("[^A-Z0-9 ]", ""));
-            }
-        });
-
-        // BIC/SWIFT formatting
-        bicField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 11) {
-                bicField.setText(oldValue);
-            }
-            if (!newValue.matches("[A-Z0-9]*")) {
-                bicField.setText(newValue.toUpperCase().replaceAll("[^A-Z0-9]", ""));
-            }
-        });
-
-        // Account holder name formatting
-        accountHolderField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 70) {
-                accountHolderField.setText(oldValue);
-            }
-        });
-
-        // Bank name formatting
-        bankNameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 70) {
-                bankNameField.setText(oldValue);
-            }
-        });
-    }
 
 
     @FXML

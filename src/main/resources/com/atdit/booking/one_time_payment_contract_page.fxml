@@ -8,7 +8,6 @@
     <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <Label text="Contract Details" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
 
-        <!-- Customer and Payment Summary Box -->
         <VBox spacing="15" style="-fx-border-color: #cccccc; -fx-border-radius: 5; -fx-padding: 20;">
             <Label text="Contract Summary" style="-fx-font-size: 18px; -fx-font-weight: bold"/>
 
@@ -32,18 +31,20 @@
             </GridPane>
         </VBox>
 
-        <!-- Terms Box -->
         <VBox spacing="15" VBox.vgrow="ALWAYS" style="-fx-border-color: #cccccc; -fx-border-radius: 5; -fx-padding: 20;">
             <Label text="Contract Text" style="-fx-font-size: 18px; -fx-font-weight: bold"/>
             <TextArea fx:id="contractTextArea" wrapText="true" editable="false" VBox.vgrow="ALWAYS"
                       style="-fx-font-family: monospace;"/>
         </VBox>
 
-        <!-- Navigation Buttons -->
+        <VBox spacing="10">
+            <RadioButton fx:id="signatureCheckbox" onMouseClicked="#signContract" text="I have read and agree to the terms and conditions"/>
+        </VBox>
+
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button text="Back" onMouseClicked="#previousPage"
                     style="-fx-min-width: 100; -fx-background-color: #e0e0e0;"/>
-            <Button text="Sign Contract" onMouseClicked="#handleSign"
+            <Button fx:id="continueButton" text="Sign Contract and Pay Now" onMouseClicked="#handleSign" disable="true"
                     style="-fx-min-width: 100; -fx-background-color: #4CAF50; -fx-text-fill: white;"/>
         </HBox>
     </VBox>

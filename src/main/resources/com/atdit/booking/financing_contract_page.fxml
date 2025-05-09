@@ -35,14 +35,18 @@
             </GridPane>
         </VBox>
 
-        <TextArea fx:id="contractTextArea" wrapText="true" editable="false" VBox.vgrow="ALWAYS"
+        <TextArea fx:id="contractTextArea"  onMouseClicked="#signContract" wrapText="true" editable="false" VBox.vgrow="ALWAYS"
                   style="-fx-font-family: monospace; -fx-border-color: #cccccc; -fx-border-radius: 5;"/>
+
+        <VBox spacing="10">
+            <RadioButton fx:id="signatureCheckbox" text="I have read and agree to the terms and conditions"/>
+        </VBox>
 
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button text="Back" onMouseClicked="#previousPage"
                     style="-fx-min-width: 100; -fx-background-color: #e0e0e0;"/>
-            <Button text="Sign Contract" onMouseClicked="#handleSign"
-                    style="-fx-min-width: 100; -fx-background-color: #2196F3; -fx-text-fill: white;"/>
+            <Button fx:id="continueButton" text="Sign Contract and Pay Now" onMouseClicked="#handleSign" disable="true"
+                    style="-fx-min-width: 100; -fx-background-color: #4CAF50; -fx-text-fill: white;"/>
         </HBox>
     </VBox>
 </AnchorPane>
