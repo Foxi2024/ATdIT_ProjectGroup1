@@ -1,7 +1,7 @@
 package com.atdit.booking.Controller;
 
 
-import com.atdit.booking.Excpetions.EvaluationFailedError;
+
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
 import com.atdit.booking.customer.CustomerEvaluater;
@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerPage3 extends Controller implements Initializable {
+public class PersonalInformationController extends Controller implements Initializable {
 
     @FXML private ComboBox<String> titleField;
     @FXML private TextField nameField;
@@ -44,7 +44,7 @@ public class ControllerPage3 extends Controller implements Initializable {
         try {
             evaluater.evaluateCustomerInfo();
         } catch (IllegalArgumentException ex) {
-            EvaluationFailedError.showEvaluationPersonalInformationFailedError(ex.getMessage());
+            showError("Evaluation Failed", "Evaluation of personal Information failed", ex.getMessage());
             return;
         }
 
@@ -58,7 +58,7 @@ public class ControllerPage3 extends Controller implements Initializable {
         loadScene(e, "page_2.fxml", "Terms and Conditions");
     }
 
-    private void cacheData() throws IllegalArgumentException {
+    private void cacheData() {
 
         currentCustomer.setTitle(titleField.getValue());
         currentCustomer.setName(nameField.getText());

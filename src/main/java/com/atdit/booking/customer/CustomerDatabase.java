@@ -5,9 +5,6 @@ import com.atdit.booking.financialdata.IncomeProof;
 import com.atdit.booking.financialdata.LiquidAsset;
 import com.atdit.booking.financialdata.SchufaOverview;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 
@@ -16,19 +13,21 @@ public class CustomerDatabase {
 
     private static final String DB_URL = "jdbc:sqlite:database/customers.db";
     private static final Encrypter encrypter = new Encrypter();
-    private Connection connection;
+    private final Connection connection;
     private  Customer currentCustomer;
 
 
-    public CustomerDatabase(Customer customer) throws SQLException {
+    public CustomerDatabase() throws SQLException {
 
         try{
             this.connection = DriverManager.getConnection(DB_URL);
         } catch (SQLException e) {
             throw new SQLException("Failed to establish a connection to the database", e);
         }
+    }
 
-        this.currentCustomer = customer;
+    public void setCurrentCustomer(Customer currentCustomer) {
+        this.currentCustomer = currentCustomer;
     }
 
 
@@ -217,14 +216,12 @@ public class CustomerDatabase {
                 "LEFT JOIN schufa_overview so ON fi.schufa_id = so.id " +
                 "WHERE c.email_hashed = ?";
 
-        try{
+        try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, encrypter.hashString(email));
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-
-                System.out.println("success");
 
                 Customer customer = extractCustomerFromResultSet(rs, email, password);
                 FinancialInformation financialInfo = extractFinancialInfoFromResultSet(rs);
@@ -246,12 +243,14 @@ public class CustomerDatabase {
         }
         catch (DecryptionException | HashingException e){
             throw new RuntimeException("Failed to decrypt customer data", e);
-
+        }
+        catch (Exception e){
+            throw new RuntimeException("Failed to retrieve customer data " + e.getMessage(), e);
         }
 
     }
 
-    private Customer extractCustomerFromResultSet(ResultSet rs, String email, String password) throws SQLException, DecryptionException {
+    private Customer extractCustomerFromResultSet(ResultSet rs, String email, String password) throws SQLException, DecryptionException, HashingException, Exception {
 
         Customer customer = new Customer();
 
@@ -403,7 +402,15 @@ public class CustomerDatabase {
             FOREIGN KEY (proof_of_income_id) REFERENCES income_proofs(id),
             FOREIGN KEY (proof_of_liquid_assets_id) REFERENCES liquid_assets(id),
             FOREIGN KEY (schufa_id) REFERENCES schufa_overview(id)
-        )"""
+        )""",
+
+        """
+        CREATE TABLE IF NOT EXISTS customer_progress (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            FOREIGN KEY (customer_id) REFERENCES customers(id),
+            current_step TEXT
+        )
+        """
         };
 
         try (Statement stmt = connection.createStatement()) {

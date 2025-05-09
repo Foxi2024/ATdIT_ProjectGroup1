@@ -1,12 +1,8 @@
 package com.atdit.booking.Controller;
 
-import com.atdit.booking.Excpetions.EvaluationFailedError;
-import com.atdit.booking.Excpetions.FileCannotReadError;
-import com.atdit.booking.Excpetions.FileContentError;
-import com.atdit.booking.Excpetions.ValidationError;
+
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
-import com.atdit.booking.customer.CustomerDatabase;
 import com.atdit.booking.financialdata.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +18,7 @@ import java.nio.file.Files;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerPage5 extends Controller implements Initializable {
+public class ProofFIController extends Controller implements Initializable {
 
     @FXML private Button incomeProofButton;
     @FXML private Button liquidAssetsProofButton;
@@ -66,14 +62,14 @@ public class ControllerPage5 extends Controller implements Initializable {
         try {
             evaluator.validateUploads();
         } catch (IllegalArgumentException ex) {
-            ValidationError.showValidationError(ex.getMessage());
+            showError("Validation Error", "Validation Error in your declarations", ex.getMessage());
             return;
         }
 
         try {
             evaluator.evaluateUploads();
         } catch (IllegalArgumentException ex) {
-            EvaluationFailedError.showEvaluationDeclarationFailedError(ex.getMessage());
+            showError("Evaluation Error", "Evaluation Error in your declarations", ex.getMessage());
             return;
         }
 
@@ -105,51 +101,49 @@ public class ControllerPage5 extends Controller implements Initializable {
 
     private void setupUploadButton(Button button, String documentType, Label statusLabel) {
 
-        button.setOnAction(e -> uploadDocument(documentType, statusLabel, getDocumentContent()));
+        button.setOnAction(e -> {
+            try{
+                uploadDocument(documentType, statusLabel, getDocumentContent());
+            } catch (IOException ex) {
+                showError("Upload Error", "Error uploading file. File cannot be read", ex.getMessage());
+                statusLabel.setText("Error with file content (click to remove)");
+                statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
+            }
+        });
     }
 
 
-    private String getDocumentContent() {
+    private String getDocumentContent() throws IOException{
 
         File file = fileChooser.showOpenDialog((Stage) continueButton.getScene().getWindow());
         if (file != null) {
-            try {
-                return Files.readString(file.toPath());
-            } catch (IOException ex) {
-                FileCannotReadError.showFileCannotReadError(ex.getMessage());
-            }
+            return Files.readString(file.toPath());
         }
         return null;
     }
 
-    private void uploadDocument(String documentType, Label statusLabel, String content) {
+    private void uploadDocument(String documentType, Label statusLabel, String content) throws IllegalArgumentException{
 
-        try {
-            if (!evaluator.validateDocumentFormat(content, documentType)) {
-                statusLabel.setText("Invalid format (click to remove)");
-                statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
 
-            } else if (!evaluator.validateDocumentDate(content)) {
-
-                statusLabel.setText("Document too old (max " + FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " days) (click to remove)");
-                statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
-
-            } else {
-                statusLabel.setText("Valid File (click to remove)");
-                statusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
-
-                switch (documentType) {
-                    case "income" -> financialInfo.setProofOfIncome(parser.parseIncomeDocument(content));
-                    case "liquidAssets" -> financialInfo.setProofOfLiquidAssets(parser.parseLiquidAssetsDocument(content));
-                    case "schufa" -> financialInfo.setSchufa(parser.parseSchufaDocument(content));
-                }
-
-            }
-
-        } catch (IllegalArgumentException ex) {
-            FileContentError.showFileContentError(ex.getMessage());
-            statusLabel.setText("Error with file content (click to remove)");
+        if (!evaluator.validateDocumentFormat(content, documentType)) {
+            statusLabel.setText("Invalid format (click to remove)");
             statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
+            return;
+        }
+
+        if (!evaluator.validateDocumentDate(content)) {
+            statusLabel.setText("Document too old (max " + FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " days) (click to remove)");
+            statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
+
+        } else {
+            statusLabel.setText("Valid File (click to remove)");
+            statusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
+
+            switch (documentType) {
+                case "income" -> financialInfo.setProofOfIncome(parser.parseIncomeDocument(content));
+                case "liquidAssets" -> financialInfo.setProofOfLiquidAssets(parser.parseLiquidAssetsDocument(content));
+                case "schufa" -> financialInfo.setSchufa(parser.parseSchufaDocument(content));
+            }
         }
 
     }

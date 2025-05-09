@@ -1,10 +1,9 @@
 package com.atdit.booking.Controller;
 
-import com.atdit.booking.Excpetions.DatabaseSavingError;
+
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
 import com.atdit.booking.customer.CustomerDatabase;
-import com.atdit.booking.financialdata.FinancialInformation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,14 +14,13 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ControllerPage6 extends Controller implements Initializable {
+public class CreateAccountController extends Controller implements Initializable {
 
 
     @FXML private Label emailLabel;
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
     @FXML private Button createAccountButton;
-
 
     private static final Customer currentCustomer = Main.customer;
 
@@ -35,7 +33,6 @@ public class ControllerPage6 extends Controller implements Initializable {
     }
 
     private void validatePasswords() {
-
 
         String password = passwordField.getText();
         String confirm = confirmPasswordField.getText();
@@ -52,6 +49,7 @@ public class ControllerPage6 extends Controller implements Initializable {
 
     @FXML
     public void previousPage(MouseEvent e) {
+
         loadScene(e, "page_5.fxml", "Document Upload");
     }
 
@@ -61,15 +59,16 @@ public class ControllerPage6 extends Controller implements Initializable {
         String password = passwordField.getText();
 
         try {
-            CustomerDatabase db = new CustomerDatabase(currentCustomer);
+            CustomerDatabase db = new CustomerDatabase();
+            db.setCurrentCustomer(currentCustomer);
             db.saveCustomerInDatabase(password);
         }
         catch (SQLException | RuntimeException ex) {
-            DatabaseSavingError.showDatabaseSavingError(ex.getMessage());
+            showError("Database Error", "There was an error while saving your data.", ex.getMessage());
             return;
         }
 
-        loadScene(e, "page_7.fxml", "Payment Selection");
+        loadScene(e, "customer_login.fxml", "Payment Selection");
 
     }
 }

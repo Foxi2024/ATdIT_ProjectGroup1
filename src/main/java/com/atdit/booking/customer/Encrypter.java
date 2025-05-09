@@ -1,15 +1,14 @@
 package com.atdit.booking.customer;
 
 import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
@@ -22,7 +21,8 @@ public class Encrypter {
     private SecretKey deriveKey(String email, String password) throws EncryptionException {
 
         try{
-            String salt = hashString(email);
+            String salt = "1.FC Kaiserslautern";
+            password = hashString(password);
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, KEY_SIZE);
             return new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
@@ -52,19 +52,17 @@ public class Encrypter {
 
     }
 
-    public String decrypt(String encrypted, String email, String password) throws DecryptionException {
+    public String decrypt(String encrypted, String email, String password) throws Exception {
 
-        try{
-            SecretKey key = deriveKey(email, password);
-            Cipher cipher = Cipher.getInstance(ALGORITHM);
-            byte[] decoded = Base64.getDecoder().decode(encrypted);
-            byte[] iv = Arrays.copyOfRange(decoded, 0, 16);
-            byte[] data = Arrays.copyOfRange(decoded, 16, decoded.length);
-            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
-            return new String(cipher.doFinal(data));
-        } catch (Exception e) {
-            throw new DecryptionException("Error decrypting value.", e);
-        }
+
+        SecretKey key = deriveKey(email, password);
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        byte[] decoded = Base64.getDecoder().decode(encrypted);
+        byte[] iv = Arrays.copyOfRange(decoded, 0, 16);
+        byte[] data = Arrays.copyOfRange(decoded, 16, decoded.length);
+        cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
+        return new String(cipher.doFinal(data));
+
 
     }
 

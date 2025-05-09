@@ -2,11 +2,11 @@ package com.atdit.booking.Controller;
 
 import javafx.scene.input.MouseEvent;
 
-public class ControllerPage1 extends Controller {
+public class PaymentProcessStartController extends Controller {
 
     public void start_payment_process(MouseEvent e) {
 
-        loadScene(e,"page_7.fxml", "Datenschutzerklärung");
+        loadScene(e,"page_3.fxml", "Datenschutzerklärung");
     }
 
 }

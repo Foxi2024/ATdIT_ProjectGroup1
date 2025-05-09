@@ -70,7 +70,7 @@ public class ControllerPage10 extends Controller {
 
     @FXML
     public void previousPage(MouseEvent e) {
-        Stage stage = (Stage) totalAmountLabel.getScene().getWindow();
-        //loadScene(stage, "page_9.fxml", "Contract and Signature");
+
+        loadScene(e, "financing_contract_page.fxml", "Contract and Signature");
     }
 }

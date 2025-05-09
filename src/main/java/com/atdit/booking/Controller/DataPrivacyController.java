@@ -6,7 +6,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 
 
-public class ControllerPage2 extends Controller {
+public class DataPrivacyController extends Controller {
 
     @FXML private RadioButton acceptButton;
     @FXML private Button continueButton;
