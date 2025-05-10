@@ -23,8 +23,8 @@ public class Page10bFinancingContractController extends Controller implements In
     @FXML private RadioButton signatureCheckbox;
     @FXML private Button continueButton;
     @FXML private ProcessStepBarController processStepBarController;
+    @FXML private Label downPaymentLabel;
 
-    private static final int TOTAL_AMOUNT = 5000;
     public static FinancingContract financingContract = (FinancingContract) Page8aSelectPaymentController.contract;
     public static Customer currentCustomer = Page7ControllerPageLogin.currentCustomer;
 
@@ -37,8 +37,9 @@ public class Page10bFinancingContractController extends Controller implements In
         emailLabel.setText(currentCustomer.getEmail());
 
         paymentMethodLabel.setText(financingContract.getPaymentMethod());
+        downPaymentLabel.setText(String.format("€%.2f", financingContract.getDownPayment()));
         totalAmountLabel.setText(String.format("€%.2f", financingContract.getAmountWithInterest()));
-        paymentPlanLabel.setText(String.format("%d months", financingContract.getMonths()));
+        paymentPlanLabel.setText(String.format("%d Monate", financingContract.getMonths()));
         monthlyPaymentLabel.setText(String.format("€%.2f", financingContract.getMonthlyPayment()));
 
         contractTextArea.setText(financingContract.getContractText());

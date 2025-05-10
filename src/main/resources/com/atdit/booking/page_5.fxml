@@ -1,41 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
 <AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.Page5ProofFIController">
     <VBox spacing="20" alignment="TOP_CENTER" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <fx:include source="process_step_bar_1.fxml" fx:id="processStepBar1"/>
-        <Label text="Document Upload" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
-
+        <Label text="Lade Nachweise über deine finanziellen Angaben hoch" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
 
         <VBox spacing="30" alignment="CENTER" VBox.vgrow="ALWAYS">
             <HBox spacing="15" alignment="CENTER">
                 <VBox spacing="10" alignment="CENTER" minWidth="300">
-                    <Button fx:id="incomeProofButton" text="Upload Income Proof" minWidth="200"/>
-                    <Label fx:id="incomeStatusLabel" text="Not uploaded"/>
+                    <Button fx:id="incomeProofButton" text="Einkommensnachweis hochladen" minWidth="200"/>
+                    <Label fx:id="incomeStatusLabel" text="Nicht hochgeladen"/>
                 </VBox>
+                <Text wrappingWidth="250" style="-fx-font-size: 14px">
+                    Gehaltsabrechnung (optional): Diese hilft uns, Ihre Einkommenssituation besser einzuschätzen.
+                </Text>
             </HBox>
 
             <HBox spacing="15" alignment="CENTER">
                 <VBox spacing="10" alignment="CENTER" minWidth="300">
-                    <Button fx:id="liquidAssetsProofButton" text="Upload Liquid Assets Proof" minWidth="200"/>
-                    <Label fx:id="liquidAssetsStatusLabel" text="Not uploaded"/>
+                    <Button fx:id="liquidAssetsProofButton" text="Liquiditätsnachweis hochladen" minWidth="200"/>
+                    <Label fx:id="liquidAssetsStatusLabel" text="Nicht hochgeladen"/>
                 </VBox>
+                <Text wrappingWidth="250" style="-fx-font-size: 14px">
+                    Bankauszug oder Liquiditätsnachweis (Pflicht): Ein aktueller Bankauszug ist erforderlich, um Ihre finanzielle Stabilität zu bestätigen.
+                </Text>
             </HBox>
 
             <HBox spacing="15" alignment="CENTER">
                 <VBox spacing="10" alignment="CENTER" minWidth="300">
-                    <Button fx:id="schufaButton" text="Upload Schufa Information" minWidth="200"/>
-                    <Label fx:id="schufaStatusLabel" text="Not uploaded"/>
+                    <Button fx:id="schufaButton" text="Schufaauskunft hochladen" minWidth="200"/>
+                    <Label fx:id="schufaStatusLabel" text="Nicht hochladen"/>
                 </VBox>
+                <Text wrappingWidth="250" style="-fx-font-size: 14px">
+                    Schufa-Auskunft (Pflicht): Diese ist notwendig, um Ihre Bonität zu überprüfen.
+                </Text>
             </HBox>
         </VBox>
 
-        <!-- Navigation buttons -->
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button fx:id="backButton" text="Back" onMouseClicked="#previousPage"/>
-            <Button fx:id="continueButton" text="Continue" onMouseClicked="#nextPage"/>
+            <Button fx:id="backButton" text="Zurück" onMouseClicked="#previousPage"/>
+            <Button fx:id="continueButton" text="Weiter" onMouseClicked="#nextPage"/>
         </HBox>
     </VBox>
 </AnchorPane>

@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ProcessStepBarController extends Controller implements Initializable {
+
     @FXML private HBox processStepBar;
     @FXML private Label paymentSelectionLabel;
     @FXML private Label paymentMethodLabel;
@@ -36,6 +37,5 @@ public class ProcessStepBarController extends Controller implements Initializabl
             case "contract" -> contractLabel.setStyle(activeStyle);
         }
     }
-
 
 }

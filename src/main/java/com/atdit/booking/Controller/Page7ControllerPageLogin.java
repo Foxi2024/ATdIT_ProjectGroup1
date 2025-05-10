@@ -63,8 +63,4 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
         }
     }
 
-    @FXML
-    public void previousPage(MouseEvent e) {
-        loadScene(e, "page_6.fxml", "Account Creation");
-    }
 }

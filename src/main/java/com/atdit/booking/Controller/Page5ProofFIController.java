@@ -30,7 +30,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
     @FXML private Label incomeStatusLabel;
     @FXML private Label liquidAssetsStatusLabel;
     @FXML private Label schufaStatusLabel;
-    @FXML private ProcessStepBarController1 processStepBarController;
+    @FXML private ProcessStepBarController_1 processStepBarController;
 
 
 
@@ -39,7 +39,6 @@ public class Page5ProofFIController extends Controller implements Initializable,
     private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator(financialInfo);
     private static final FinancialInformationParser parser = new FinancialInformationParser();
     private final FileChooser fileChooser = new FileChooser();
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,19 +65,21 @@ public class Page5ProofFIController extends Controller implements Initializable,
 
         try {
             evaluator.validateUploads();
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             showError("Validation Error", "Validation Error in your declarations", ex.getMessage());
             return;
         }
 
         try {
             evaluator.evaluateUploads();
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             showError("Evaluation Error", "Evaluation Error in your declarations", ex.getMessage());
             return;
         }
 
-        loadScene(e, "page_6.fxml", "Create Account");
+        loadScene(e, "page_6.fxml", "Account erstellen");
     }
 
 
@@ -98,7 +99,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
                         case "schufa" -> financialInfo.setSchufa(null);
                     }
 
-                    label.setText("Not uploaded");
+                    label.setText("Nicht hochgeladen");
                     label.setStyle("-fx-text-fill: black;");
                 }
         );
@@ -131,17 +132,17 @@ public class Page5ProofFIController extends Controller implements Initializable,
 
 
         if (!evaluator.validateDocumentFormat(content, documentType)) {
-            statusLabel.setText("Invalid format (click to remove)");
+            statusLabel.setText("Invalides Format (klicken zum entfernen)");
             statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
             return;
         }
 
         if (!evaluator.validateDocumentDate(content)) {
-            statusLabel.setText("Document too old (max " + FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " days) (click to remove)");
+            statusLabel.setText("Dokument zu alt (maximal " + FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " Tage alt) (klicken zum entfernen)");
             statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
 
         } else {
-            statusLabel.setText("Valid File (click to remove)");
+            statusLabel.setText("Valides Dokument (klicken zu entfernen)");
             statusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
 
             switch (documentType) {
@@ -157,17 +158,17 @@ public class Page5ProofFIController extends Controller implements Initializable,
     public void restoreData() {
 
         if (financialInfo.getProofOfIncome() != null) {
-            incomeStatusLabel.setText("Valid File (click to remove)");
+            incomeStatusLabel.setText("Valides Dokument (klicken zu entfernen)");
             incomeStatusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
         }
 
         if (financialInfo.getProofOfLiquidAssets() != null) {
-            liquidAssetsStatusLabel.setText("Valid File (click to remove");
+            liquidAssetsStatusLabel.setText("Valides Dokument (klicken zu entfernen)");
             liquidAssetsStatusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
         }
 
         if (financialInfo.getSchufa() != null) {
-            schufaStatusLabel.setText("Valid File (click to remove)");
+            schufaStatusLabel.setText("Valides Dokument (klicken zu entfernen)");
             schufaStatusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
         }
     }

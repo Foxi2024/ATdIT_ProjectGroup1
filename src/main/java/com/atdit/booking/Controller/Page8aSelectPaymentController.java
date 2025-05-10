@@ -20,7 +20,6 @@ public class Page8aSelectPaymentController extends Controller implements Initial
     public static String selectedPayment;
     @FXML private ProcessStepBarController processStepBarController;
 
-    private static final int TOTAL_AMOUNT = 5000;
     public static Contract contract;
 
 
@@ -48,7 +47,7 @@ public class Page8aSelectPaymentController extends Controller implements Initial
 
     @FXML
     public void previousPage(MouseEvent e) {
-        loadScene(e, "page_6.fxml", "Page 6");
+        loadScene(e, "customer_login.fxml", "Page 6");
     }
 
 }

@@ -3,11 +3,14 @@ package com.atdit.booking.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProcessStepBarController1 extends Controller implements Initializable {
+public class ProcessStepBarController_1 extends Controller implements Initializable {
+
+    @FXML private HBox processStepBar1;
     @FXML private Label step1Label;
     @FXML private Label step2Label;
     @FXML private Label step3Label;
@@ -26,11 +29,16 @@ public class ProcessStepBarController1 extends Controller implements Initializab
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //setCurrentStep("privacy");
+        setCurrentStep("privacy");
     }
 
     public void setCurrentStep(String step) {
-        resetAllStyles();
+
+        step1Label.setStyle(defaultStyle);
+        step2Label.setStyle(defaultStyle);
+        step3Label.setStyle(defaultStyle);
+        step4Label.setStyle(defaultStyle);
+        step5Label.setStyle(defaultStyle);
 
         switch (step) {
             case "privacy" -> step1Label.setStyle(activeStyle);

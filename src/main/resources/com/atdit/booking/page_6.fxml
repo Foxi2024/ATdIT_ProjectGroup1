@@ -8,35 +8,49 @@
     <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <fx:include source="process_step_bar_1.fxml" fx:id="processStepBar1"/>
 
-        <Label text="Create Your Account" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
+        <Label text="Erstelle deinen Account" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
 
-        <VBox spacing="15" style="-fx-border-color: #999999; -fx-border-radius: 5; -fx-padding: 15;">
-            <GridPane hgap="10" vgap="10">
-                <Label text="Email:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <Label fx:id="emailLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <HBox spacing="20">
+            <VBox spacing="15" style="-fx-border-color: #999999; -fx-border-radius: 5; -fx-padding: 15;" maxWidth="400">
+                <GridPane hgap="10" vgap="10">
+                    <Label text="Email:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="emailLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="passwordField" promptText="Enter your password" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Passwort:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <PasswordField fx:id="passwordField" promptText="Enter your password" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                <Label text="Confirm Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="confirmPasswordField" promptText="Confirm your password" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-            </GridPane>
+                    <Label text="Passwort bestätigen:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <PasswordField fx:id="confirmPasswordField" promptText="Bestätige dein Passwort" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                </GridPane>
 
-            <VBox spacing="5" style="-fx-padding: 10 0 0 0;">
-                <Label text="Password Requirements:" style="-fx-font-weight: bold"/>
-                <Label text="• Minimum 8 characters" style="-fx-text-fill: #666666"/>
-                <Label text="• At least one uppercase letter" style="-fx-text-fill: #666666"/>
-                <Label text="• At least one lowercase letter" style="-fx-text-fill: #666666"/>
-                <Label text="• At least one number" style="-fx-text-fill: #666666"/>
-                <Label text="• At least one special character" style="-fx-text-fill: #666666"/>
+                <VBox spacing="5" style="-fx-padding: 10 0 0 0;">
+                    <Label text="Passwort Voraussetzungen:" style="-fx-font-weight: bold"/>
+                    <Label text="• Mindestens 8 Zeichen" style="-fx-text-fill: #666666"/>
+                    <Label text="• Mindestens Großbuchstabe" style="-fx-text-fill: #666666"/>
+                    <Label text="• Mindestens ein Kleinbuchstabe" style="-fx-text-fill: #666666"/>
+                    <Label text="• Mindestens eine Ziffer" style="-fx-text-fill: #666666"/>
+                    <Label text="• Mindestens ein Sonderzeichen" style="-fx-text-fill: #666666"/>
+                </VBox>
             </VBox>
-        </VBox>
+
+            <VBox spacing="15" style="-fx-padding: 15;">
+                <Text wrappingWidth="300" style="-fx-font-size: 14px">
+                    Ihre Daten wurden erfolgreich vom System überprüft. Der nächste Schritt ist die Erstellung eines persönlichen Accounts, um den Finanzierungsprozess weiter fortzuführen.
+
+                    Warum jetzt die Registrierung erforderlich ist:
+
+                    Ab diesem Punkt werden Ihre Daten sicher in unserer Datenbank gespeichert und für die finale Überprüfung durch unser Accounting-Team vorbereitet. Erst nach der Validierung durch Accounting erhalten Sie vollen Zugriff auf Ihre Buchungsoptionen, wie zum Beispiel Ratenzahlung oder andere Zahlungspläne.
+
+                    Bitte registrieren Sie sich jetzt, um den nächsten Schritt in Ihrer Reiseplanung zu gehen.
+                </Text>
+            </VBox>
+        </HBox>
 
         <VBox spacing="10" VBox.vgrow="ALWAYS"/>
 
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button fx:id="backButton" text="Back" onMouseClicked="#previousPage"/>
-            <Button fx:id="createAccountButton" text="Create Account" onMouseClicked="#handleCreateAccount"/>
+            <Button fx:id="createAccountButton" text="Account erstellen" onMouseClicked="#handleCreateAccount"/>
         </HBox>
     </VBox>
 </AnchorPane>

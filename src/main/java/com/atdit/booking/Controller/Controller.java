@@ -1,10 +1,6 @@
 package com.atdit.booking.Controller;
 
-import com.atdit.booking.Excpetions.PageLoadingError;
-import com.atdit.booking.Excpetions.StandardException;
-import com.atdit.booking.Main;
-import com.atdit.booking.customer.Customer;
-import com.atdit.booking.financialdata.FinancialInformation;
+
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

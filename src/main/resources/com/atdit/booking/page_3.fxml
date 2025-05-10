@@ -18,19 +18,19 @@
                     <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                     <ComboBox fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-                    <Label text="Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label text="Nachname:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                     <TextField fx:id="nameField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                    <Label text="First Name:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label text="Vorname:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                     <TextField fx:id="firstNameField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                    <Label text="Birth Date:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label text="Geburtstag:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
                     <DatePicker fx:id="birthDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                    <Label text="Country:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Label text="Land:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
                     <TextField fx:id="countryField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-                    <Label text="Address:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <Label text="Addresse:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
                     <TextField fx:id="addressField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
                     <Label text="Email:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
@@ -42,8 +42,8 @@
             </HBox>
         </VBox>
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button fx:id="backButton" text="Back" onMouseClicked="#previousPage"/>
-            <Button fx:id="continueButton" text="Continue" onMouseClicked="#nextPage"/>
+            <Button fx:id="backButton" text="Zurück" onMouseClicked="#previousPage"/>
+            <Button fx:id="continueButton" text="Weiter" onMouseClicked="#nextPage"/>
         </HBox>
     </VBox>
 </AnchorPane>

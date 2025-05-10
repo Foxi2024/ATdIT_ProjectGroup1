@@ -22,7 +22,7 @@ public class Page4DeclarationFIController extends Controller implements Initiali
     @FXML private TextField liquidAssetsField;
     @FXML private Button continueButton;
     @FXML private Button backButton;
-    @FXML private ProcessStepBarController1 processStepBarController;
+    @FXML private ProcessStepBarController_1 processStepBarController;
 
 
     private static final Customer currentCustomer = Main.customer;

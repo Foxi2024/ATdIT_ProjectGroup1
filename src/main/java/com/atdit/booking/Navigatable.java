@@ -5,11 +5,7 @@ import javafx.scene.input.MouseEvent;
 
 public interface Navigatable {
 
-    @FXML
-    void nextPage(MouseEvent e);
-
-    @FXML
-    void previousPage(MouseEvent e);
-
+    @FXML void nextPage(MouseEvent e);
+    @FXML void previousPage(MouseEvent e);
 
 }

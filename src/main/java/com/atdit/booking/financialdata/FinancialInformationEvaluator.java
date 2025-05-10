@@ -20,8 +20,9 @@ public class FinancialInformationEvaluator {
     }
 
     public boolean valDeclaredFinancialInfo(int journeyPrice){
-        return this.financialInfo.getLiquidAssets() > journeyPrice * 0.3 &&
-                financialInfo.getMonthlyAvailableMoney() > Main.MIN_MONTHLY_MONEY;
+        return  this.financialInfo.getLiquidAssets() > journeyPrice
+                || (this.financialInfo.getLiquidAssets() > journeyPrice * 0.3
+                && financialInfo.getMonthlyAvailableMoney() > Main.MIN_MONTHLY_MONEY);
     }
 
     public boolean evaluateIncome() {
@@ -41,27 +42,27 @@ public class FinancialInformationEvaluator {
 
     public void evaluateUploads() {
 
-        String errorMessage = "Please fix the following issues:\n";
+        String errorMessage = "Folgende Probleme sind aufgetaucht:\n";
         boolean isValid = true;
 
         if(!evaluateLiquidAssets()) {
-            errorMessage += "- Declared liquid assets differ significantly from proof of assets\n";
+            errorMessage += "- Ihre angegebenen liquiden Mittel weichen zu stark von Ihren tatsächlichen liquiden Mitteln ab.\n";
             isValid = false;
 
         }
 
         if(!evaluateIncome()) {
-            errorMessage += "- Declared income differs significantly from proof of income\n";
+            errorMessage += "- Ihre angegebenes Einkommen weicht zu stark von Ihrem tatsächlichen Einkommen ab.\n";
             isValid = false;
         }
 
         if(financialInfo.getSchufa().getScore() < 0.975) {
-            errorMessage += "- Schufa score is too low\n";
+            errorMessage += "- Ihre Schufapunktzahl ist zu niedrig.\n";
             isValid = false;
         }
 
         if(financialInfo.getSchufa().getTotalMonthlyRate() > financialInfo.getMonthlyFixCost()) {
-            errorMessage += "- Monthly rate of all credits is higher than your declared monthly fixed cost\n";
+            errorMessage += "- Die Monatliche Rate aller Kredite ist größer als ihre monatlichen Fixkosten.\n";
             isValid = false;
         }
 
@@ -101,7 +102,9 @@ public class FinancialInformationEvaluator {
                 break;
 
             case "schufa":
-                hasRequiredFields = lines.length == 7
+                hasRequiredFields = lines.length == 9
+                        && content.contains("First Name:")
+                        && content.contains("Last Name:")
                         && content.contains("Schufa Score:")
                         && content.contains("Total Credits:")
                         && content.contains("Total Credit Sum:")

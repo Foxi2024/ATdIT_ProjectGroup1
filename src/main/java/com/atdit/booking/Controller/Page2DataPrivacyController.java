@@ -13,15 +13,15 @@ import java.util.ResourceBundle;
 
 public class Page2DataPrivacyController extends Controller implements Initializable, Navigatable {
 
+
     @FXML private RadioButton acceptButton;
     @FXML private Button continueButton;
-    @FXML private ProcessStepBarController1 processStepBarController;
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //processStepBarController.setCurrentStep("privacy");
     }
 
     @FXML

@@ -15,36 +15,36 @@
         <Label style="-fx-font-size: 24px; -fx-font-weight: bold" text="Payment Details" />
 
         <VBox spacing="15" style="-fx-border-color: #cccccc; -fx-border-radius: 5; -fx-padding: 20;">
-            <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Bank Transfer" />
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Überweisung" />
 
             <VBox spacing="10">
-                <Label text="Selected Payment Method:" />
+                <Label text="Zahlungsmethoden auswählen" />
                 <ComboBox fx:id="paymentMethodCombo" onAction="#selectPaymentMethod" prefWidth="200" />
             </VBox>
 
             <VBox spacing="10">
                 <Label fx:id="ibanLabel" text="IBAN:" />
-                <TextField fx:id="ibanField" maxWidth="300" promptText="Enter IBAN" />
-                <Label style="-fx-text-fill: #666666; -fx-font-size: 12px;" text="Example: DE89 3704 0044 0532 0130 00" />
+                <TextField fx:id="ibanField" maxWidth="300" promptText="IBAN eingeben" />
+                <Label style="-fx-text-fill: #666666; -fx-font-size: 12px;" text="Beispiel: DE89 3704 0044 0532 0130 00" />
             </VBox>
 
             <VBox spacing="10">
-                <Label text="Account Holder:" />
-                <TextField fx:id="accountHolderField" maxWidth="300" promptText="Enter account holder name" />
+                <Label text="Kontoinhaber" />
+                <TextField fx:id="accountHolderField" maxWidth="300" promptText="Geben sie den Kontoinhaber an" />
             </VBox>
         </VBox>
 
         <VBox spacing="15" style="-fx-border-color: #cccccc; -fx-border-radius: 5; -fx-padding: 20;">
-            <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Bank Information" />
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Name der Bank" />
 
             <VBox spacing="10">
                 <Label text="Bank Name:" />
-                <TextField fx:id="bankNameField" maxWidth="300" promptText="Enter bank name" />
+                <TextField fx:id="bankNameField" maxWidth="300" promptText="Geben Sie den Namen der Bank an" />
             </VBox>
 
             <VBox spacing="10">
                 <Label text="BIC/SWIFT:" />
-                <TextField fx:id="bicField" maxWidth="300" promptText="Enter BIC/SWIFT code" />
+                <TextField fx:id="bicField" maxWidth="300" promptText="Geben Sie den BIC/SWIFT code an" />
             </VBox>
         </VBox>
 
@@ -54,8 +54,8 @@
             <padding>
                 <Insets bottom="20" right="20" />
             </padding>
-            <Button fx:id="backButton" onMouseClicked="#previousPage" style="-fx-min-width: 100; -fx-background-color: #e0e0e0;" text="Back" />
-            <Button fx:id="continueButton" onMouseClicked="#handlePay" style="-fx-min-width: 100; -fx-background-color: #2196F3; -fx-text-fill: white;" text="Continue" />
+            <Button fx:id="backButton" onMouseClicked="#previousPage" style="-fx-min-width: 100; -fx-background-color: #e0e0e0;" text="Zurück" />
+            <Button fx:id="continueButton" onMouseClicked="#handlePay" style="-fx-min-width: 100; -fx-background-color: #2196F3; -fx-text-fill: white;" text="Weiter" />
         </HBox>
     </VBox>
 </AnchorPane>
