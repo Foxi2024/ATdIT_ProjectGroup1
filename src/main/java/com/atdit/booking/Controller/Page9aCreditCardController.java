@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Page9aCreditCardController extends Controller implements Initializable {
+public class Page9aCreditCardController extends Controller implements Initializable{
 
     @FXML public ComboBox<String> paymentMethodCombo;
     @FXML public TextField cardNumberField;
@@ -24,8 +24,8 @@ public class Page9aCreditCardController extends Controller implements Initializa
     @FXML private Label cardLabel;
     @FXML private ProcessStepBarController processStepBarController;
 
-    public static String selectedPayment = Page8SelectPaymentController.selectedPayment;
-    public static Contract contract = Page8SelectPaymentController.contract;
+    public static String selectedPayment = Page8aSelectPaymentController.selectedPayment;
+    public static Contract contract = Page8aSelectPaymentController.contract;
     public static CreditCardDetails creditCardDetails = new CreditCardDetails();
 
 
@@ -79,7 +79,7 @@ public class Page9aCreditCardController extends Controller implements Initializa
     }
 
     @FXML
-    public void handlePay(MouseEvent e) {
+    public void nextPage(MouseEvent e) {
 
         cacheData();
 

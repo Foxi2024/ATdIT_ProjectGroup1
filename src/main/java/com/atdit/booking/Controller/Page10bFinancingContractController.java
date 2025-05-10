@@ -25,8 +25,8 @@ public class Page10bFinancingContractController extends Controller implements In
     @FXML private ProcessStepBarController processStepBarController;
 
     private static final int TOTAL_AMOUNT = 5000;
-    public static FinancingContract financingContract = (FinancingContract) Page8SelectPaymentController.contract;
-    public static Customer currentCustomer = Page8bControllerPageLogin.currentCustomer;
+    public static FinancingContract financingContract = (FinancingContract) Page8aSelectPaymentController.contract;
+    public static Customer currentCustomer = Page7ControllerPageLogin.currentCustomer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

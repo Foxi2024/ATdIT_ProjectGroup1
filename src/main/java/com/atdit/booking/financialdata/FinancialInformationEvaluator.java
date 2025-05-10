@@ -1,6 +1,7 @@
 package com.atdit.booking.financialdata;
 
 import com.atdit.booking.Main;
+import com.atdit.booking.customer.Customer;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -8,17 +9,18 @@ import java.time.temporal.ChronoUnit;
 
 public class FinancialInformationEvaluator {
 
-    private final double MAX_DEVIATION = 0.10;
+    private final double MAX_DEVIATION = 0.05;
     public static final int MAX_DOCUMENT_AGE_DAYS = 365;
 
     private final FinancialInformation financialInfo;
+    private final Customer currentCustomer = Main.customer;
 
     public FinancialInformationEvaluator(FinancialInformation financialInfo){
         this.financialInfo = financialInfo;
     }
 
     public boolean valDeclaredFinancialInfo(int journeyPrice){
-        return this.financialInfo.getLiquidAssets() > journeyPrice * 0.2 &&
+        return this.financialInfo.getLiquidAssets() > journeyPrice * 0.3 &&
                 financialInfo.getMonthlyAvailableMoney() > Main.MIN_MONTHLY_MONEY;
     }
 
@@ -42,14 +44,30 @@ public class FinancialInformationEvaluator {
         String errorMessage = "Please fix the following issues:\n";
         boolean isValid = true;
 
-        if(!evaluateLiquidAssets()){
+        if(!evaluateLiquidAssets()) {
             errorMessage += "- Declared liquid assets differ significantly from proof of assets\n";
             isValid = false;
 
         }
 
-        if(!evaluateIncome()){
+        if(!evaluateIncome()) {
             errorMessage += "- Declared income differs significantly from proof of income\n";
+            isValid = false;
+        }
+
+        if(financialInfo.getSchufa().getScore() < 0.975) {
+            errorMessage += "- Schufa score is too low\n";
+            isValid = false;
+        }
+
+        if(financialInfo.getSchufa().getTotalMonthlyRate() > financialInfo.getMonthlyFixCost()) {
+            errorMessage += "- Monthly rate of all credits is higher than your declared monthly fixed cost\n";
+            isValid = false;
+        }
+
+        if(!financialInfo.getSchufa().getFirstName().equals(currentCustomer.getFirstName()) ||
+                !financialInfo.getSchufa().getLastName().equals(currentCustomer.getName())) {
+            errorMessage += "- Name in Schufa information does not match your personal information\n";
             isValid = false;
         }
 
@@ -98,7 +116,7 @@ public class FinancialInformationEvaluator {
         return hasRequiredFields;
     }
 
-    public boolean validateDocumentDate(String content) {
+    public boolean validateDocumentDate(String content) throws IllegalArgumentException{
         String[] lines = content.split("\n");
 
         for (String line : lines) {
@@ -174,8 +192,6 @@ public class FinancialInformationEvaluator {
         if(!isValid){
             throw new IllegalArgumentException(errorMessage);
         }
-
-
 
     }
 

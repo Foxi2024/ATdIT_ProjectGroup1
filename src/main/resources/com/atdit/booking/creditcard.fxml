@@ -43,7 +43,7 @@
             </padding>
             <Button fx:id="backButton" text="Back" onMouseClicked="#previousPage"
                     style="-fx-min-width: 100;"/>
-            <Button fx:id="payButton" text="Continue" onMouseClicked="#handlePay"
+            <Button fx:id="payButton" text="Continue" onMouseClicked="#nextPage"
                     style="-fx-min-width: 100; -fx-default-button: true;"/>
         </HBox>
     </VBox>

@@ -1,6 +1,7 @@
 package com.atdit.booking.Controller;
 
 import com.atdit.booking.FinancingContract;
+import com.atdit.booking.Navigatable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -9,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Page7_5SelectPaymentPlanController extends Controller implements Initializable {
+public class Page8bSelectPaymentPlanController extends Controller implements Initializable, Navigatable {
 
     @FXML private Label totalAmountLabel;
     @FXML private ComboBox<Integer> monthsCombo;
@@ -22,7 +23,7 @@ public class Page7_5SelectPaymentPlanController extends Controller implements In
 
     private static final double INTEREST_RATE = 5.0;
     public static int months;
-    public static FinancingContract financingContract = (FinancingContract) Page8SelectPaymentController.contract;
+    public static FinancingContract financingContract = (FinancingContract) Page8aSelectPaymentController.contract;
 
 
 
@@ -61,7 +62,7 @@ public class Page7_5SelectPaymentPlanController extends Controller implements In
     }
 
     @FXML
-    public void handleApply(MouseEvent e) {
+    public void nextPage(MouseEvent e) {
         loadScene(e, "creditcard.fxml", "Contract Details");
     }
 }

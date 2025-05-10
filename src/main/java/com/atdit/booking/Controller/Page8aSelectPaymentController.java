@@ -2,6 +2,7 @@ package com.atdit.booking.Controller;
 
 import com.atdit.booking.Contract;
 import com.atdit.booking.FinancingContract;
+import com.atdit.booking.Navigatable;
 import com.atdit.booking.OneTimePaymentContract;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Page8SelectPaymentController extends Controller implements Initializable {
+public class Page8aSelectPaymentController extends Controller implements Initializable, Navigatable {
     @FXML private RadioButton oneTimePaymentRadio;
     @FXML private RadioButton financingRadio;
     @FXML private ToggleGroup paymentMethodGroup;
@@ -30,7 +31,7 @@ public class Page8SelectPaymentController extends Controller implements Initiali
     }
 
     @FXML
-    private void handleContinue(MouseEvent e) {
+    public void nextPage(MouseEvent e) {
 
         if (oneTimePaymentRadio.isSelected()) {
             selectedPayment = "One-Time";

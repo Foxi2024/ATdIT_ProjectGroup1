@@ -11,31 +11,35 @@
     <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <fx:include source="process_step_bar_1.fxml" fx:id="processStepBar1"/>
 
-        <Text text="Customer Information" style="-fx-font-size: 18px"/>
+        <Text text="Geben Sie Ihre persönlichen Daten ein" style="-fx-font-size: 18px"/>
         <VBox spacing="10" VBox.vgrow="ALWAYS">
-            <GridPane hgap="10" vgap="10">
+            <HBox spacing="20">
+                <GridPane hgap="10" vgap="10">
+                    <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-                <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                    <Label text="Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="nameField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                <Label text="Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="nameField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="First Name:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="firstNameField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                <Label text="First Name:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <TextField fx:id="firstNameField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <Label text="Birth Date:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <DatePicker fx:id="birthDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                <Label text="Birth Date:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <DatePicker fx:id="birthDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <Label text="Country:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="countryField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-                <Label text="Country:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <TextField fx:id="countryField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <Label text="Address:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <TextField fx:id="addressField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-                <Label text="Address:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                <TextField fx:id="addressField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-                <Label text="Email:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                <TextField fx:id="emailField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-            </GridPane>
+                    <Label text="Email:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <TextField fx:id="emailField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                </GridPane>
+                <Text wrappingWidth="250" style="-fx-font-size: 14px">
+                    Nur noch ein paar Details, bevor Ihr Weg zu den Sternen beginnen kann. Ihre Angaben helfen uns, Ihre Reise einzigartig zu gestalten – sicher und individuell.
+                </Text>
+            </HBox>
         </VBox>
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button fx:id="backButton" text="Back" onMouseClicked="#previousPage"/>
