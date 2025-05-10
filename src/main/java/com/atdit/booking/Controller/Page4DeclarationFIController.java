@@ -1,6 +1,8 @@
 package com.atdit.booking.Controller;
 
+import com.atdit.booking.Cacheable;
 import com.atdit.booking.Main;
+import com.atdit.booking.Navigatable;
 import com.atdit.booking.customer.Customer;
 import com.atdit.booking.financialdata.FinancialInformation;
 import com.atdit.booking.financialdata.FinancialInformationEvaluator;
@@ -12,7 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class DeclarationFIController extends Controller implements Initializable {
+public class Page4DeclarationFIController extends Controller implements Initializable, Navigatable, Cacheable {
 
     @FXML private TextField netIncomeField;
     @FXML private TextField fixedCostsField;
@@ -20,13 +22,18 @@ public class DeclarationFIController extends Controller implements Initializable
     @FXML private TextField liquidAssetsField;
     @FXML private Button continueButton;
     @FXML private Button backButton;
+    @FXML private ProcessStepBarController1 processStepBarController;
+
 
     private static final Customer currentCustomer = Main.customer;
     private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
     private static final FinancialInformationEvaluator financialInformationEvaluator = new FinancialInformationEvaluator(financialInfo);
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { restoreFormData(); }
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        //processStepBarController.setCurrentStep("financial");
+        restoreData();
+    }
 
 
     @FXML
@@ -73,7 +80,7 @@ public class DeclarationFIController extends Controller implements Initializable
     }
 
 
-    private void restoreFormData() {
+    public void restoreData() {
 
         netIncomeField.setText(String.valueOf(financialInfo.getAvgNetIncome()));
         fixedCostsField.setText(String.valueOf(financialInfo.getMonthlyFixCost()));

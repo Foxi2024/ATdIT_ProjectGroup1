@@ -9,18 +9,21 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SelectPaymentPlanController extends Controller implements Initializable {
+public class Page7_5SelectPaymentPlanController extends Controller implements Initializable {
 
     @FXML private Label totalAmountLabel;
     @FXML private ComboBox<Integer> monthsCombo;
     @FXML private Label monthlyPaymentLabel;
     @FXML private Label interestRateLabel;
     @FXML private Label totalCostLabel;
+    @FXML private ProcessStepBarController processStepBarController;
+
 
 
     private static final double INTEREST_RATE = 5.0;
     public static int months;
-    public static FinancingContract financingContract = (FinancingContract) SelectPaymentController.contract;
+    public static FinancingContract financingContract = (FinancingContract) Page8SelectPaymentController.contract;
+
 
 
     @Override

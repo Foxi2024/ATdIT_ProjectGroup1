@@ -14,18 +14,22 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class CreateAccountController extends Controller implements Initializable {
+public class Page6CreateAccountController extends Controller implements Initializable {
 
 
     @FXML private Label emailLabel;
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
     @FXML private Button createAccountButton;
+    @FXML private ProcessStepBarController1 processStepBarController;
+
 
     private static final Customer currentCustomer = Main.customer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //processStepBarController.setCurrentStep("account");
 
         emailLabel.setText(currentCustomer.getEmail());
         passwordField.textProperty().addListener((obs, old, newValue) -> validatePasswords());

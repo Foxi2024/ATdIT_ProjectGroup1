@@ -4,18 +4,30 @@ import com.atdit.booking.Contract;
 import com.atdit.booking.FinancingContract;
 import com.atdit.booking.OneTimePaymentContract;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 
-public class SelectPaymentController extends Controller {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class Page8SelectPaymentController extends Controller implements Initializable {
     @FXML private RadioButton oneTimePaymentRadio;
     @FXML private RadioButton financingRadio;
     @FXML private ToggleGroup paymentMethodGroup;
     public static String selectedPayment;
+    @FXML private ProcessStepBarController processStepBarController;
 
     private static final int TOTAL_AMOUNT = 5000;
     public static Contract contract;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        processStepBarController.setCurrentStep("payment_selection");
+    }
 
     @FXML
     private void handleContinue(MouseEvent e) {
@@ -37,4 +49,5 @@ public class SelectPaymentController extends Controller {
     public void previousPage(MouseEvent e) {
         loadScene(e, "page_6.fxml", "Page 6");
     }
+
 }

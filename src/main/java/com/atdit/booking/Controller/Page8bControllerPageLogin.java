@@ -11,7 +11,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ControllerPageLogin extends Controller implements Initializable {
+public class Page8bControllerPageLogin extends Controller implements Initializable {
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;

@@ -2,7 +2,9 @@ package com.atdit.booking.Controller;
 
 
 
+import com.atdit.booking.Cacheable;
 import com.atdit.booking.Main;
+import com.atdit.booking.Navigatable;
 import com.atdit.booking.customer.Customer;
 import com.atdit.booking.customer.CustomerEvaluater;
 import javafx.collections.FXCollections;
@@ -13,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PersonalInformationController extends Controller implements Initializable {
+public class Page3PersonalInformationController extends Controller implements Initializable, Navigatable, Cacheable {
 
     @FXML private ComboBox<String> titleField;
     @FXML private TextField nameField;
@@ -24,6 +26,8 @@ public class PersonalInformationController extends Controller implements Initial
     @FXML private TextField emailField;
     @FXML private Button continueButton;
     @FXML private Button backButton;
+    @FXML private ProcessStepBarController1 processStepBarController;
+
 
     private final Customer currentCustomer = Main.customer;
     private final CustomerEvaluater evaluater = new CustomerEvaluater(currentCustomer);
@@ -31,7 +35,9 @@ public class PersonalInformationController extends Controller implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        restoreFormData();
+        //processStepBarController.setCurrentStep("personal");
+
+        restoreData();
         titleField.setItems(FXCollections.observableArrayList("Mr", "Ms"));
         titleField.setValue("Mr");
     }
@@ -58,7 +64,7 @@ public class PersonalInformationController extends Controller implements Initial
         loadScene(e, "page_2.fxml", "Terms and Conditions");
     }
 
-    private void cacheData() {
+    public void cacheData() {
 
         currentCustomer.setTitle(titleField.getValue());
         currentCustomer.setName(nameField.getText());
@@ -74,7 +80,7 @@ public class PersonalInformationController extends Controller implements Initial
         }
     }
 
-    private void restoreFormData() {
+    public void restoreData() {
 
         titleField.setValue(currentCustomer.getTitle());
         nameField.setText(currentCustomer.getName());

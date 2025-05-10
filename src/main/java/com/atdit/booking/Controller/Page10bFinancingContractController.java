@@ -1,6 +1,6 @@
 package com.atdit.booking.Controller;
 
-import com.atdit.booking.OneTimePaymentContract;
+import com.atdit.booking.FinancingContract;
 import com.atdit.booking.customer.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,33 +12,39 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class OneTimePaymentContractController extends Controller implements Initializable {
-
+public class Page10bFinancingContractController extends Controller implements Initializable {
     @FXML private Label customerNameLabel;
     @FXML private Label emailLabel;
     @FXML private Label totalAmountLabel;
-    @FXML private Label paymentMethodLabel;
+    @FXML private Label paymentPlanLabel;
+    @FXML private Label monthlyPaymentLabel;
     @FXML private TextArea contractTextArea;
+    @FXML private Label paymentMethodLabel;
     @FXML private RadioButton signatureCheckbox;
     @FXML private Button continueButton;
+    @FXML private ProcessStepBarController processStepBarController;
 
     private static final int TOTAL_AMOUNT = 5000;
-    public static OneTimePaymentContract contract = (OneTimePaymentContract) SelectPaymentController.contract;
-    public static Customer currentCustomer = ControllerPageLogin.currentCustomer;
+    public static FinancingContract financingContract = (FinancingContract) Page8SelectPaymentController.contract;
+    public static Customer currentCustomer = Page8bControllerPageLogin.currentCustomer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        processStepBarController.setCurrentStep("contract");
+
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());
 
-        paymentMethodLabel.setText(contract.getPaymentMethod());
-        totalAmountLabel.setText(String.format("€%.2f", (double) TOTAL_AMOUNT));
+        paymentMethodLabel.setText(financingContract.getPaymentMethod());
+        totalAmountLabel.setText(String.format("€%.2f", financingContract.getAmountWithInterest()));
+        paymentPlanLabel.setText(String.format("%d months", financingContract.getMonths()));
+        monthlyPaymentLabel.setText(String.format("€%.2f", financingContract.getMonthlyPayment()));
 
-        contractTextArea.setText(contract.getContractText());
+        contractTextArea.setText(financingContract.getContractText());
     }
 
-    @FXML
+
     public void signContract(MouseEvent e) {
 
         if (signatureCheckbox.isSelected()) {
@@ -49,15 +55,17 @@ public class OneTimePaymentContractController extends Controller implements Init
         continueButton.setDisable(true);
     }
 
-
     @FXML
-
     public void previousPage(MouseEvent e) {
 
-        if(contract.getPaymentMethod().equals("Credit Card")) {
+        if(financingContract.getPaymentMethod().equals("Credit Card")) {
+
             loadScene(e, "creditcard.fxml", "Payment Method Selection");
+
         } else {
+
             loadScene(e, "banktransfer.fxml", "Payment Method Selection");
+
         }
     }
 

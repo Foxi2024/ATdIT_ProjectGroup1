@@ -3,12 +3,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.ProofFIController">
+<AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.Page5ProofFIController">
     <VBox spacing="20" alignment="TOP_CENTER" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-        <!-- Centered title -->
+        <fx:include source="process_step_bar_1.fxml" fx:id="processStepBar1"/>
         <Label text="Document Upload" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
 
-        <!-- Centered upload section -->
+
         <VBox spacing="30" alignment="CENTER" VBox.vgrow="ALWAYS">
             <HBox spacing="15" alignment="CENTER">
                 <VBox spacing="10" alignment="CENTER" minWidth="300">

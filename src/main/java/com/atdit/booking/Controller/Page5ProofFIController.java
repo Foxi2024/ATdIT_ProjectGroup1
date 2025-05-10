@@ -1,7 +1,9 @@
 package com.atdit.booking.Controller;
 
 
+import com.atdit.booking.Cacheable;
 import com.atdit.booking.Main;
+import com.atdit.booking.Navigatable;
 import com.atdit.booking.customer.Customer;
 import com.atdit.booking.financialdata.*;
 import javafx.fxml.FXML;
@@ -18,7 +20,7 @@ import java.nio.file.Files;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProofFIController extends Controller implements Initializable {
+public class Page5ProofFIController extends Controller implements Initializable, Navigatable, Cacheable {
 
     @FXML private Button incomeProofButton;
     @FXML private Button liquidAssetsProofButton;
@@ -28,6 +30,8 @@ public class ProofFIController extends Controller implements Initializable {
     @FXML private Label incomeStatusLabel;
     @FXML private Label liquidAssetsStatusLabel;
     @FXML private Label schufaStatusLabel;
+    @FXML private ProcessStepBarController1 processStepBarController;
+
 
 
     private static final Customer currentCustomer = Main.customer;
@@ -40,11 +44,12 @@ public class ProofFIController extends Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //processStepBarController.setCurrentStep("proof");
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt")
         );
 
-        restoreFormData();
+        restoreData();
 
         setupUploadButton(incomeProofButton, "income", incomeStatusLabel);
         setupUploadButton(liquidAssetsProofButton, "liquidAssets", liquidAssetsStatusLabel);
@@ -73,7 +78,7 @@ public class ProofFIController extends Controller implements Initializable {
             return;
         }
 
-        loadScene(e, "page_6.fxml", "Placeholder");
+        loadScene(e, "page_6.fxml", "Create Account");
     }
 
 
@@ -149,7 +154,7 @@ public class ProofFIController extends Controller implements Initializable {
     }
 
 
-    private void restoreFormData() {
+    public void restoreData() {
 
         if (financialInfo.getProofOfIncome() != null) {
             incomeStatusLabel.setText("Valid File (click to remove)");
@@ -165,6 +170,11 @@ public class ProofFIController extends Controller implements Initializable {
             schufaStatusLabel.setText("Valid File (click to remove)");
             schufaStatusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
         }
+    }
+
+    @Override
+    public void cacheData() {
+        // caching logic needed
     }
 
 

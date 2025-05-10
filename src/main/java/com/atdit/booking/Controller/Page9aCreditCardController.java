@@ -1,6 +1,8 @@
 package com.atdit.booking.Controller;
 
 import com.atdit.booking.Contract;
+import com.atdit.booking.financialdata.CreditCardDetails;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -11,7 +13,7 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CreditCardController extends Controller implements Initializable {
+public class Page9aCreditCardController extends Controller implements Initializable {
 
     @FXML public ComboBox<String> paymentMethodCombo;
     @FXML public TextField cardNumberField;
@@ -20,12 +22,17 @@ public class CreditCardController extends Controller implements Initializable {
     @FXML private VBox expiryBox;
     @FXML private VBox cvvBox;
     @FXML private Label cardLabel;
+    @FXML private ProcessStepBarController processStepBarController;
 
-    public static String selectedPayment = SelectPaymentController.selectedPayment;
-    public static Contract contract = SelectPaymentController.contract;
+    public static String selectedPayment = Page8SelectPaymentController.selectedPayment;
+    public static Contract contract = Page8SelectPaymentController.contract;
+    public static CreditCardDetails creditCardDetails = new CreditCardDetails();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        processStepBarController.setCurrentStep("payment_method");
 
         paymentMethodCombo.getItems().addAll(
                 "Credit Card",
@@ -35,21 +42,36 @@ public class CreditCardController extends Controller implements Initializable {
         paymentMethodCombo.setValue("Credit Card");
         contract.setPaymentMethod("Credit Card");
 
-        setupPaymentMethodListener();
+        restoreData();
     }
 
-    private void setupPaymentMethodListener() {
-        paymentMethodCombo.setOnAction(e -> {
+    @FXML
+    public void selectPaymentMethod(ActionEvent e) {
 
-            String selected = paymentMethodCombo.getValue();
+        String selected = paymentMethodCombo.getValue();
 
-            if (selected.equals("Bank Transfer")) {
+        if (selected.equals("Bank Transfer")) {
 
-                loadScene(e, "banktransfer.fxml", "Payment Method Selection");
-              }
-        });
+            loadScene(e, "banktransfer.fxml", "Payment Method Selection");
+        }
     }
 
+    private void cacheData() {
+
+        creditCardDetails.setCardNumber(cardNumberField.getText());
+        creditCardDetails.setExpiryDate(expiryField.getText());
+        creditCardDetails.setCvv(cvvField.getText());
+
+    }
+
+
+    private void restoreData() {
+
+        cardNumberField.setText(creditCardDetails.getCardNumber());
+        expiryField.setText(creditCardDetails.getExpiryDate());
+        cvvField.setText(creditCardDetails.getCvv());
+
+    }
 
     @FXML
     public void previousPage(MouseEvent e) {
@@ -58,6 +80,8 @@ public class CreditCardController extends Controller implements Initializable {
 
     @FXML
     public void handlePay(MouseEvent e) {
+
+        cacheData();
 
         switch (selectedPayment) {
             case "One-Time" -> loadScene(e, "one_time_payment_contract_page.fxml", "Contract Details");
