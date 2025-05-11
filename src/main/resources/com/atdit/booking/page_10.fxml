@@ -4,7 +4,8 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.ControllerPage10">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.atdit.booking.Controller.ControllerPage10"
+            stylesheets="@style.css" prefHeight="720.0" prefWidth="1280.0">
     <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <Label text="Payment Confirmation" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
 
