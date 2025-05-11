@@ -24,7 +24,7 @@ public class Page9aCreditCardController extends Controller implements Initializa
     @FXML private VBox expiryBox;
     @FXML private VBox cvvBox;
     @FXML private Label cardLabel;
-    @FXML private ProcessStepBarController processStepBarController;
+   
 
     public static String selectedPayment = Page8aSelectPaymentController.selectedPayment;
     public static Contract contract = Page8aSelectPaymentController.contract;

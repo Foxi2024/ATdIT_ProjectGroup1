@@ -4,84 +4,70 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.Page2DataPrivacyController">
-    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-        <HBox fx:id="processStepBar1" alignment="CENTER" spacing="15"
-              style="-fx-background-color: #f8f9fa; -fx-padding: 20; -fx-border-color: #e9ecef; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);"
-              xmlns:fx="http://javafx.com/fxml">
+<AnchorPane styleClass="root" prefWidth="800.0" prefHeight="600.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.Controller.Page2DataPrivacyController"
+            stylesheets="@style.css">
 
-            <Label fx:id="step1Label" text="Data Privacy Agreement"
-                   style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-            <Text text="→" style="-fx-font-size: 18; -fx-fill: #6c757d;"/>
+    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
-            <Label fx:id="step2Label" text="Personal Information"
-                   style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-            <Text text="→" style="-fx-font-size: 18; -fx-fill: #6c757d;"/>
-
-            <Label fx:id="step3Label" text="Financial Information"
-                   style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-            <Text text="→" style="-fx-font-size: 18; -fx-fill: #6c757d;"/>
-
-            <Label fx:id="step4Label" text="Financial Proof"
-                   style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-            <Text text="→" style="-fx-font-size: 18; -fx-fill: #6c757d;"/>
-
-            <Label fx:id="step5Label" text="Create Account"
-                   style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-
+        <HBox fx:id="processStepBar1" alignment="CENTER" spacing="15" styleClass="step-bar">
+            <Label fx:id="step1Label" text="Data Privacy Agreement" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step2Label" text="Personal Information" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step3Label" text="Financial Information" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step4Label" text="Financial Proof" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step5Label" text="Create Account" styleClass="step-label"/>
         </HBox>
-        <Label text="Datenschutzerklärung" style="-fx-font-size: 18px; -fx-font-weight: bold"/>
+
+        <Label text="Datenschutzerklärung" styleClass="sub-headline"/>
+
         <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true" styleClass="privacy-scroll-pane">
-            <VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+            <VBox spacing="10">
                 <Text text="Datenschutzerklärung für NEXSTAR TRAVEL – Raumfahrttourismus"/>
                 <Text text="Stand: Mai 2025"/>
-
                 <Text text="1. Allgemeine Hinweise"/>
-                <Text text="Der Schutz Ihrer personenbezogenen Daten hat für NEXSTAR TRAVEL oberste Priorität. Wir behandeln Ihre Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften, insbesondere der Datenschutz-Grundverordnung (DSGVO), sowie dieser Datenschutzerklärung."/>
-                <Text text="Diese Erklärung informiert Sie darüber, welche personenbezogenen Daten wir im Rahmen unserer Geschäftsprozesse (z. B. bei der Buchung einer Raumfahrtreise) erheben, zu welchen Zwecken wir sie verarbeiten, welche Rechte Sie haben und wie Sie diese geltend machen können."/>
-
+                <Text text="Der Schutz Ihrer personenbezogenen Daten hat für NEXSTAR TRAVEL oberste Priorität. ..."/>
+                <Text text="Diese Erklärung informiert Sie darüber, ..."/>
                 <Text text="2. Verantwortlicher im Sinne der DSGVO"/>
-                <Text text="NEXSTAR TRAVEL GmbH&#10;Galaxisweg 42&#10;12345 Orbit City&#10;Telefon: +49 123 456789&#10;E-Mail: datenschutz@nexstar-travel.com&#10;Verantwortliche Ansprechperson für Datenschutz: Data Protection Officer (DPO)"/>
-
+                <Text text="NEXSTAR TRAVEL GmbH&#10;Galaxisweg 42&#10;12345 Orbit City&#10;Telefon: ..."/>
                 <Text text="3. Kategorien verarbeiteter Daten"/>
-                <Text text="3.1 Stammdaten: Vor- und Nachname, Geburtsdatum, Staatsangehörigkeit, Ausweisdaten (Pass, Visum, Raumflugzulassung)"/>
-                <Text text="3.2 Kontaktdaten: Adresse, Telefonnummer, E-Mail-Adresse"/>
-                <Text text="3.3 Buchungs- und Reisedaten: Reiseziel, gewünschter Flugzeitraum, Tickettyp, Sonderwünsche, Sprache, medizinisch relevante Informationen, Notfallkontakte"/>
-                <Text text="3.4 Zahlungsdaten: Bankverbindung, Kreditkartendaten (via Payment Provider), Rechnungsadresse"/>
-                <Text text="3.5 Kommunikationsdaten: E-Mail-Korrespondenz, Supportanfragen, Chatverläufe"/>
-                <Text text="3.6 Websitedaten: IP-Adresse, Datum/Uhrzeit des Zugriffs, Gerätetyp, Betriebssystem, Browsertyp, besuchte Seiten, Klickverhalten, Referrer-URL, Cookies und Tracking-IDs"/>
-
+                <Text text="3.1 Stammdaten: ..."/>
+                <Text text="3.2 Kontaktdaten: ..."/>
+                <Text text="3.3 Buchungs- und Reisedaten: ..."/>
+                <Text text="3.4 Zahlungsdaten: ..."/>
+                <Text text="3.5 Kommunikationsdaten: ..."/>
+                <Text text="3.6 Websitedaten: ..."/>
                 <Text text="4. Zwecke und Rechtsgrundlagen der Verarbeitung"/>
-                <Text text="Verarbeitung erfolgt zur Vertragserfüllung, zur medizinischen Prüfung, zur Zahlungsabwicklung, Kundenbetreuung, für Werbung mit Einwilligung, sowie zur Verbesserung unserer Angebote."/>
-
+                <Text text="..."/>
                 <Text text="5. Empfänger Ihrer Daten"/>
-                <Text text="Empfänger: Raumfahrtagenturen, Zahlungsdienste, IT-Provider, Behörden. Alle unterliegen Auftragsverarbeitungsverträgen nach Art. 28 DSGVO."/>
-
+                <Text text="..."/>
                 <Text text="6. Datenübermittlung in Drittländer"/>
-                <Text text="Nur bei Vorliegen eines Angemessenheitsbeschlusses, geeigneter Garantien oder ausdrücklicher Einwilligung."/>
-
+                <Text text="..."/>
                 <Text text="7. Speicherdauer"/>
-                <Text text="Speicherung erfolgt je nach Kategorie (z. B. Buchungsdaten 10 Jahre, Gesundheitsdaten max. 12 Monate)."/>
-
+                <Text text="..."/>
                 <Text text="8. Cookies und Tracking-Technologien"/>
-                <Text text="Nutzung nur mit Einwilligung. Cookie-Banner informiert beim ersten Besuch. Tools z. B. Google Analytics, Facebook Pixel."/>
-
+                <Text text="..."/>
                 <Text text="9. Ihre Datenschutzrechte"/>
-                <Text text="Rechte: Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch, Widerruf."/>
-
+                <Text text="..."/>
                 <Text text="10. Beschwerderecht bei der Aufsichtsbehörde"/>
-                <Text text="Zuständig ist der Landesdatenschutzbeauftragte Ihres Bundeslandes."/>
-
+                <Text text="..."/>
                 <Text text="11. Datensicherheit"/>
-                <Text text="Technische Maßnahmen: SSL-Verschlüsselung, Zugriffssteuerung, Backups, Zwei-Faktor-Authentifizierung."/>
-
+                <Text text="..."/>
                 <Text text="12. Änderungen dieser Datenschutzerklärung"/>
-                <Text text="Aktuelle Fassung unter: www.nexstar-travel.com/datenschutz"/>
+                <Text text="..."/>
             </VBox>
         </ScrollPane>
+
         <VBox spacing="10" alignment="CENTER">
             <RadioButton fx:id="acceptButton" text="Akzeptieren" onMouseClicked="#acceptAgreement"/>
         </VBox>
+
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button fx:id="backButton" text="Zurück" onMouseClicked="#previousPage"/>
             <Button fx:id="continueButton" text="Weiter" disable="true" onMouseClicked="#nextPage"/>

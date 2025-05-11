@@ -4,64 +4,62 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.Page5ProofFIController">
-    <VBox spacing="20" alignment="TOP_CENTER" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-        <HBox fx:id="processStepBar1" alignment="CENTER" spacing="15"
-              style="-fx-background-color: #f8f9fa; -fx-padding: 20; -fx-border-color: #e9ecef; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);"
-              xmlns:fx="http://javafx.com/fxml">
+<AnchorPane styleClass="root" prefWidth="800.0" prefHeight="600.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.Controller.Page5ProofFIController"
+            stylesheets="@style.css">
 
-            <Label fx:id="step1Label" text="Data Privacy Agreement"
-                   style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-            <Text text="→" style="-fx-font-size: 18; -fx-fill: #6c757d;"/>
+    <VBox spacing="20" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
-            <Label fx:id="step2Label" text="Personal Information"
-                   style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-            <Text text="→" style="-fx-font-size: 18; -fx-fill: #6c757d;"/>
-
-            <Label fx:id="step3Label" text="Financial Information"
-                   style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-            <Text text="→" style="-fx-font-size: 18; -fx-fill: #6c757d;"/>
-
-            <Label fx:id="step4Label" text="Financial Proof"
-                   style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-            <Text text="→" style="-fx-font-size: 18; -fx-fill: #6c757d;"/>
-
-            <Label fx:id="step5Label" text="Create Account"
-                   style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-
+        <HBox fx:id="processStepBar1" alignment="CENTER" spacing="15" styleClass="step-bar">
+            <Label fx:id="step1Label" text="Data Privacy Agreement" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step2Label" text="Personal Information" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step3Label" text="Financial Information" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step4Label" text="Financial Proof" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step5Label" text="Create Account" styleClass="step-label"/>
         </HBox>
-        <Label text="Lade Nachweise über deine finanziellen Angaben hoch" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
+
+        <Label text="Lade Nachweise über deine finanziellen Angaben hoch" styleClass="headline"/>
 
         <VBox spacing="30" alignment="CENTER" VBox.vgrow="ALWAYS">
+
             <HBox spacing="15" alignment="CENTER">
                 <VBox spacing="10" alignment="CENTER" minWidth="300">
-                    <Button fx:id="incomeProofButton" text="Einkommensnachweis hochladen" minWidth="200"/>
+                    <Button fx:id="incomeProofButton" text="Einkommensnachweis hochladen"/>
                     <Label fx:id="incomeStatusLabel" text="Nicht hochgeladen"/>
                 </VBox>
-                <Text wrappingWidth="250" style="-fx-font-size: 14px">
+                <Text wrappingWidth="250" styleClass="info-text">
                     Gehaltsabrechnung (optional): Diese hilft uns, Ihre Einkommenssituation besser einzuschätzen.
                 </Text>
             </HBox>
 
             <HBox spacing="15" alignment="CENTER">
                 <VBox spacing="10" alignment="CENTER" minWidth="300">
-                    <Button fx:id="liquidAssetsProofButton" text="Liquiditätsnachweis hochladen" minWidth="200"/>
+                    <Button fx:id="liquidAssetsProofButton" text="Liquiditätsnachweis hochladen"/>
                     <Label fx:id="liquidAssetsStatusLabel" text="Nicht hochgeladen"/>
                 </VBox>
-                <Text wrappingWidth="250" style="-fx-font-size: 14px">
+                <Text wrappingWidth="250" styleClass="info-text">
                     Bankauszug oder Liquiditätsnachweis (Pflicht): Ein aktueller Bankauszug ist erforderlich, um Ihre finanzielle Stabilität zu bestätigen.
                 </Text>
             </HBox>
 
             <HBox spacing="15" alignment="CENTER">
                 <VBox spacing="10" alignment="CENTER" minWidth="300">
-                    <Button fx:id="schufaButton" text="Schufaauskunft hochladen" minWidth="200"/>
+                    <Button fx:id="schufaButton" text="Schufaauskunft hochladen"/>
                     <Label fx:id="schufaStatusLabel" text="Nicht hochladen"/>
                 </VBox>
-                <Text wrappingWidth="250" style="-fx-font-size: 14px">
+                <Text wrappingWidth="250" styleClass="info-text">
                     Schufa-Auskunft (Pflicht): Diese ist notwendig, um Ihre Bonität zu überprüfen.
                 </Text>
             </HBox>
+
         </VBox>
 
         <HBox spacing="10" alignment="CENTER_RIGHT">
