@@ -1,6 +1,8 @@
 package com.atdit.booking.Controller;
 
+import com.atdit.booking.Cacheable;
 import com.atdit.booking.Contract;
+import com.atdit.booking.Navigatable;
 import com.atdit.booking.financialdata.BankTransferDetails;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,10 +10,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+
+import java.lang.annotation.Native;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Page9bBankTransferController extends Controller implements Initializable {
+public class Page9bBankTransferController extends Controller implements Initializable, Navigatable, Cacheable {
 
     @FXML private ComboBox<String> paymentMethodCombo;
     @FXML private TextField ibanField;
@@ -52,7 +56,7 @@ public class Page9bBankTransferController extends Controller implements Initiali
     }
 
 
-    private void cacheData() {
+    public void cacheData() {
 
         bankTransferDetails.setIban(ibanField.getText());
         bankTransferDetails.setAccountHolder(accountHolderField.getText());
@@ -60,7 +64,7 @@ public class Page9bBankTransferController extends Controller implements Initiali
         bankTransferDetails.setBicSwift(bicField.getText());
     }
 
-    private void restoreData() {
+    public void restoreData() {
 
         ibanField.setText(bankTransferDetails.getIban());
         accountHolderField.setText(bankTransferDetails.getAccountHolder());
@@ -76,7 +80,7 @@ public class Page9bBankTransferController extends Controller implements Initiali
     }
 
     @FXML
-    public void handlePay(MouseEvent e) {
+    public void nextPage(MouseEvent e) {
 
         cacheData();
 

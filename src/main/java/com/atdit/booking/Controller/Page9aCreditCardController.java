@@ -1,6 +1,8 @@
 package com.atdit.booking.Controller;
 
+import com.atdit.booking.Cacheable;
 import com.atdit.booking.Contract;
+import com.atdit.booking.Navigatable;
 import com.atdit.booking.financialdata.CreditCardDetails;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +15,7 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Page9aCreditCardController extends Controller implements Initializable{
+public class Page9aCreditCardController extends Controller implements Initializable, Navigatable, Cacheable {
 
     @FXML public ComboBox<String> paymentMethodCombo;
     @FXML public TextField cardNumberField;
@@ -56,7 +58,7 @@ public class Page9aCreditCardController extends Controller implements Initializa
         }
     }
 
-    private void cacheData() {
+    public void cacheData() {
 
         creditCardDetails.setCardNumber(cardNumberField.getText());
         creditCardDetails.setExpiryDate(expiryField.getText());
@@ -65,7 +67,7 @@ public class Page9aCreditCardController extends Controller implements Initializa
     }
 
 
-    private void restoreData() {
+    public void restoreData() {
 
         cardNumberField.setText(creditCardDetails.getCardNumber());
         expiryField.setText(creditCardDetails.getExpiryDate());

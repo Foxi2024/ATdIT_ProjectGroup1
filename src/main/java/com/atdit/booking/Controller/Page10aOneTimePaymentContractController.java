@@ -1,5 +1,6 @@
 package com.atdit.booking.Controller;
 
+import com.atdit.booking.Navigatable;
 import com.atdit.booking.OneTimePaymentContract;
 import com.atdit.booking.customer.Customer;
 import javafx.fxml.FXML;
@@ -12,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Page10aOneTimePaymentContractController extends Controller implements Initializable {
+public class Page10aOneTimePaymentContractController extends Controller implements Initializable, Navigatable {
 
     @FXML private Label customerNameLabel;
     @FXML private Label emailLabel;
@@ -65,7 +66,7 @@ public class Page10aOneTimePaymentContractController extends Controller implemen
     }
 
     @FXML
-    public void handleSign(MouseEvent e) {
+    public void nextPage(MouseEvent e) {
         loadScene(e, "confirmation_page.fxml", "Confirmation");
     }
 }

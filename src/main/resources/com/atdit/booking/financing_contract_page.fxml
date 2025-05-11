@@ -51,7 +51,7 @@
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button text="Zurück" onMouseClicked="#previousPage"
                     style="-fx-min-width: 100; -fx-background-color: #e0e0e0;"/>
-            <Button fx:id="continueButton" text="Signieren und jetzt bezahlen" onMouseClicked="#handleSign" disable="true"
+            <Button fx:id="continueButton" text="Signieren und jetzt bezahlen" onMouseClicked="#nextPage" disable="true"
                     style="-fx-min-width: 100; -fx-background-color: #4CAF50; -fx-text-fill: white;"/>
         </HBox>
     </VBox>

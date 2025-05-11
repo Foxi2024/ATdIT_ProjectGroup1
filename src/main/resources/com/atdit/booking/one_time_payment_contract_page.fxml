@@ -32,7 +32,6 @@
         </VBox>
 
         <VBox spacing="15" VBox.vgrow="ALWAYS" style="-fx-border-color: #cccccc; -fx-border-radius: 5; -fx-padding: 20;">
-            <Label text="Contract Text" style="-fx-font-size: 18px; -fx-font-weight: bold"/>
             <TextArea fx:id="contractTextArea" wrapText="true" editable="false" VBox.vgrow="ALWAYS"
                       style="-fx-font-family: monospace; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-font-size: 14; -fx-pref-height: 300;"
                       prefRowCount="15"/>
