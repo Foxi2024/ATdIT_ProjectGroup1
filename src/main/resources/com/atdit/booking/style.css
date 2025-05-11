@@ -1,0 +1,62 @@
+
+
+.root {
+    -fx-background-image: url("background.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-color: rgba(0, 0, 0, 0.8); /* dunkler Overlay */
+}
+
+.label {
+    -fx-text-fill: #f9e79f;
+    -fx-font-size: 16px;
+}
+
+.headline {
+    -fx-fill: #f9e79f;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px; 
+}
+
+.button {
+    -fx-background-color: #1f2d33;
+    -fx-border-color: #f9e79f;
+    -fx-text-fill: #f9e79f;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.button:hover {
+    -fx-background-color: #1f2633;
+}
+
+.text-field {
+    -fx-background-color: #1f2633;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #bbbbbb;
+    -fx-border-color: #f9e79f;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 6;
+}
+
+.radio-button {
+    -fx-text-fill: white;
+}
+
+.radio-button .radio {
+    -fx-border-color: #f9e79f;
+    -fx-background-color: transparent;
+}
+
+.radio-button:selected .radio {
+    -fx-background-color: #f9e79f;
+}
+
+.vbox, .hbox {
+    -fx-spacing: 10px;
+}
+
