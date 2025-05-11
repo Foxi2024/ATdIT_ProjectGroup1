@@ -27,39 +27,38 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
             db = new CustomerDatabase();
         }
         catch (SQLException e) {
-            showError("Database Error", "Could not connect to database", e.getMessage());
+            showError("Datenbankfehler", "Verbindung zur Datenbank ist fehlgeschlagen.", e.getMessage());
         }
     }
 
     @FXML
     public void handleLogin(MouseEvent e) {
 
-        String email = "fsj.raffel@gmail.com";
-        String password = "Felix911.";
+        String email = emailField.getText();
+        String password = passwordField.getText();
 
         if (email.isEmpty() || password.isEmpty()) {
-            errorLabel.setText("Please enter both email and password");
+            errorLabel.setText("Bitte geben Sie Email und Passwort ein");
             return;
         }
 
         try {
 
             currentCustomer = db.getCustomerWithFinancialInfoByEmail(email, password);
-            System.out.println(currentCustomer);
 
             if (currentCustomer == null) {
-                errorLabel.setText("Wrong email or password");
+                errorLabel.setText("Falsche Email oder Passwort");
                 return;
             }
 
-            loadScene(e, "payment_selection_page.fxml", "Payment Selection");
+            loadScene(e, "payment_selection_page.fxml", "Zahlungsart auswählen");
 
         } catch (SQLException ex) {
-            showError("Login Error", "Could not verify credentials", ex.getMessage());
+            showError("Anmeldefehler", "Anmeldedaten konnten nicht überprüft werden.", ex.getMessage());
 
         } catch (RuntimeException ex) {
 
-            errorLabel.setText("Invalid email or password "+ ex.getMessage());
+            errorLabel.setText("E-Mail oder Password ist falsch"+ ex.getMessage());
         }
     }
 

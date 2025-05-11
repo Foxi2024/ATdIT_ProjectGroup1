@@ -35,11 +35,10 @@ public class Page3PersonalInformationController extends Controller implements In
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //processStepBarController.setCurrentStep("personal");
-
         restoreData();
-        titleField.setItems(FXCollections.observableArrayList("Mr", "Ms"));
-        titleField.setValue("Mr");
+
+        titleField.setItems(FXCollections.observableArrayList("Herr", "Frau"));
+        titleField.setValue("Herr");
     }
 
     @FXML
@@ -50,18 +49,18 @@ public class Page3PersonalInformationController extends Controller implements In
         try {
             evaluater.evaluateCustomerInfo();
         } catch (IllegalArgumentException ex) {
-            showError("Evaluation Failed", "Evaluation of personal Information failed", ex.getMessage());
+            showError("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 
-        loadScene(e, "page_4.fxml", "Financial Information");
+        loadScene(e, "page_4.fxml", "Finanzielle Angaben");
     }
 
     @FXML
     public void previousPage(MouseEvent e) {
 
         cacheData();
-        loadScene(e, "page_2.fxml", "Terms and Conditions");
+        loadScene(e, "page_2.fxml", "Datenschutzerklärung");
     }
 
     public void cacheData() {

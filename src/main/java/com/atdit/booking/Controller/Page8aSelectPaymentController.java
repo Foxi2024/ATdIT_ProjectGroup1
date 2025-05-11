@@ -26,7 +26,7 @@ public class Page8aSelectPaymentController extends Controller implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        processStepBarController.setCurrentStep("payment_selection");
+        //processStepBarController.setCurrentStep("payment_selection");
     }
 
     @FXML
@@ -35,12 +35,12 @@ public class Page8aSelectPaymentController extends Controller implements Initial
         if (oneTimePaymentRadio.isSelected()) {
             selectedPayment = "One-Time";
             contract = new OneTimePaymentContract();
-            loadScene(e, "creditcard.fxml", "One-Time Payment");
+            loadScene(e, "creditcard.fxml", "Zahlungsmethode auswählen");
 
         } else {
             selectedPayment = "Financing";
             contract = new FinancingContract();
-            loadScene(e, "financing_plan_selection_page.fxml", "Financing");
+            loadScene(e, "financing_plan_selection_page.fxml", "Finanzierung auswählen");
         }
 
     }

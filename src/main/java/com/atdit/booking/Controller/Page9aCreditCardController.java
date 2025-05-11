@@ -34,15 +34,15 @@ public class Page9aCreditCardController extends Controller implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        processStepBarController.setCurrentStep("payment_method");
+        //processStepBarController.setCurrentStep("payment_method");
 
         paymentMethodCombo.getItems().addAll(
-                "Credit Card",
-                "Bank Transfer"
+                "Kreditkarte",
+                "Überweisung"
         );
 
-        paymentMethodCombo.setValue("Credit Card");
-        contract.setPaymentMethod("Credit Card");
+        paymentMethodCombo.setValue("Kreditkarte");
+        contract.setPaymentMethod("Kreditkarte");
 
         restoreData();
     }
@@ -52,9 +52,9 @@ public class Page9aCreditCardController extends Controller implements Initializa
 
         String selected = paymentMethodCombo.getValue();
 
-        if (selected.equals("Bank Transfer")) {
+        if (selected.equals("Überweisung")) {
 
-            loadScene(e, "banktransfer.fxml", "Payment Method Selection");
+            loadScene(e, "banktransfer.fxml", "Zahlungsmethode auswählen");
         }
     }
 
@@ -77,28 +77,71 @@ public class Page9aCreditCardController extends Controller implements Initializa
 
     @FXML
     public void previousPage(MouseEvent e) {
-        loadScene(e, "payment_selection_page.fxml", "Payment Selection");
+        loadScene(e, "payment_selection_page.fxml", "Zahlungsart auswählen");
     }
 
     @FXML
     public void nextPage(MouseEvent e) {
 
+        if (!validatePaymentInfo()) {
+            return;
+        }
+
         cacheData();
 
         switch (selectedPayment) {
-            case "One-Time" -> loadScene(e, "one_time_payment_contract_page.fxml", "Contract Details");
-            case "Financing" -> loadScene(e, "financing_contract_page.fxml", "Contract Details");
+            case "One-Time" -> loadScene(e, "one_time_payment_contract_page.fxml", "Vertragsdetails");
+            case "Financing" -> loadScene(e, "financing_contract_page.fxml", "Vertragsdetails");
         }
     }
 
     private boolean validatePaymentInfo() {
-        String selected = paymentMethodCombo.getValue();
-        if (selected.equals("Bank Transfer")) {
-            return cardNumberField.getText().length() >= 15;
-        } else {
-            return cardNumberField.getText().replace(" ", "").length() == 16
-                    && expiryField.getText().length() == 5
-                    && cvvField.getText().length() == 3;
+        StringBuilder errorMessage = new StringBuilder("Bitte korrigieren Sie folgende Fehler:\n");
+        boolean hasError = false;
+
+        String cardNumber = cardNumberField.getText().replaceAll("\\s", "");
+        if (!cardNumber.matches("^\\d{16}$")) {
+            errorMessage.append("- Ungültige Kartennummer (16 Ziffern erforderlich)\n");
+            hasError = true;
         }
+
+        String expiry = expiryField.getText();
+        if (!expiry.matches("^(0[1-9]|1[0-2])/([0-9]{2})$")) {
+            errorMessage.append("- Ungültiges Ablaufdatum (Format: MM/YY)\n");
+            hasError = true;
+        } else {
+            // Check if card is not expired
+            try {
+                String[] parts = expiry.split("/");
+                int month = Integer.parseInt(parts[0]);
+                int year = Integer.parseInt(parts[1]) + 2000;
+
+                java.time.YearMonth cardDate = java.time.YearMonth.of(year, month);
+                java.time.YearMonth now = java.time.YearMonth.now();
+
+                if (cardDate.isBefore(now)) {
+                    errorMessage.append("- Kreditkarte ist abgelaufen\n");
+                    hasError = true;
+                }
+            } catch (Exception e) {
+                errorMessage.append("- Ungültiges Ablaufdatum\n");
+                hasError = true;
+            }
+        }
+
+        String cvv = cvvField.getText();
+        if (!cvv.matches("^\\d{3,4}$")) {
+            errorMessage.append("- Ungültiger CVV-Code (3-4 Ziffern erforderlich)\n");
+            hasError = true;
+        }
+
+        if (hasError) {
+            showError("Validierung fehlgeschlagen",
+                    "Validierung der Kreditkartendaten ist fehlgeschlagen.",
+                    errorMessage.toString());
+            return false;
+        }
+
+        return true;
     }
 }

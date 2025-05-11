@@ -67,7 +67,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
             evaluator.validateUploads();
         }
         catch (IllegalArgumentException ex) {
-            showError("Validation Error", "Validation Error in your declarations", ex.getMessage());
+            showError("Validierung fehlgeschlagen", "Die Validierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 
@@ -75,7 +75,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
             evaluator.evaluateUploads();
         }
         catch (IllegalArgumentException ex) {
-            showError("Evaluation Error", "Evaluation Error in your declarations", ex.getMessage());
+            showError("Evaluierung fehlgeschlagen", "Die Validierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 
@@ -86,7 +86,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
     @FXML
     public void previousPage(MouseEvent e) {
 
-        loadScene(e, "page_4.fxml", "Financial Information");
+        loadScene(e, "page_4.fxml", "Nachweis finanzieller Angaben");
     }
 
 
@@ -111,8 +111,8 @@ public class Page5ProofFIController extends Controller implements Initializable,
             try{
                 uploadDocument(documentType, statusLabel, getDocumentContent());
             } catch (IOException ex) {
-                showError("Upload Error", "Error uploading file. File cannot be read", ex.getMessage());
-                statusLabel.setText("Error with file content (click to remove)");
+                showError("Fehler beim hochladen", "Beim hochladen Ihrer Dokumente ist ein Fehler aufgetreten.", ex.getMessage());
+                statusLabel.setText("Fehler im Dateiinhalt (klicken zum entfernen)");
                 statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
             }
         });

@@ -15,15 +15,9 @@ public class CustomerEvaluater {
         this.customer = customer;
     }
 
-    public void evaluateCustomerInfo() {
-        StringBuilder errorMessage = new StringBuilder("Please fill out the following fields correctly:\n");
+    public void evaluateCustomerInfo() throws IllegalArgumentException {
+        StringBuilder errorMessage = new StringBuilder("Bitte korrigieren Sie folgende Fehler:\n");
         boolean hasError = false;
-
-        // Title validation
-        if (customer.getTitle() == null || (!customer.getTitle().equals("Mr") && !customer.getTitle().equals("Ms"))) {
-            errorMessage.append("Please select a valid title (Mr/Ms)\n");
-            hasError = true;
-        }
 
         try {
             checkFirstName(customer.getFirstName());
@@ -76,15 +70,22 @@ public class CustomerEvaluater {
 
     public void checkFirstName(String firstName) throws IllegalArgumentException {
         String nameRegex = "^[A-Za-z\\s-]+$";
-        if (firstName == null || !firstName.matches(nameRegex)) {
-            throw new IllegalArgumentException("- Invalid format for first name");
+
+        if (firstName == null || firstName.isEmpty()) {
+            throw new IllegalArgumentException("- Kein Vorname angegeben");
+        }
+        if(!firstName.matches(nameRegex)){
+            throw new IllegalArgumentException("- Vorname enthält ungültige Zeichen");
         }
     }
 
     public void checkName(String name) throws IllegalArgumentException {
         String nameRegex = "^[A-Za-z\\s-]+$";
-        if (name == null || !name.matches(nameRegex)) {
-            throw new IllegalArgumentException("- Invalid format for last name");
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("- Kein Nachname angegeben");
+        }
+        if(!name.matches(nameRegex)){
+            throw new IllegalArgumentException("- Nachname enthält ungültige Zeichen");
         }
     }
 
@@ -93,41 +94,52 @@ public class CustomerEvaluater {
 
         String dateRegex = "\\d{4}-\\d{2}-\\d{2}";
 
-        if (birthdate == null || !birthdate.matches(dateRegex)) {
-            throw new IllegalArgumentException("- Invalid birthdate format (use YYYY-MM-DD)");
+        if (birthdate == null || birthdate.isEmpty()) {
+            throw new IllegalArgumentException("- Kein Geburtsdatum angegeben");
+        }
+
+        if (!birthdate.matches(dateRegex) ) {
+            throw new IllegalArgumentException("- Nicht zulässiges Datumsformat (DD/MM/YYYY erforderlich)");
         }
 
         LocalDate date = LocalDate.parse(birthdate);
         LocalDate now = LocalDate.now();
 
         if (date.isAfter(now)) {
-            throw new IllegalArgumentException("- Birthdate cannot be in the future");
+            throw new IllegalArgumentException("- Geburtsdatum liegt in der Zukunft");
         }
+
         if (ChronoUnit.YEARS.between(date, now) < 18) {
-            throw new IllegalArgumentException("- Customer must be at least 18 years old");
+            throw new IllegalArgumentException("- Sie müssen mindestens 18 Jahre alt sein");
         }
 
     }
 
     public void checkCountry(String country) throws IllegalArgumentException {
         String countryRegex = "^[A-Za-z\\s-]+$";
-        if (country == null || !country.matches(countryRegex)) {
-            throw new IllegalArgumentException("- Invalid format for country");
+        if (country == null || country.isEmpty()) {
+            throw new IllegalArgumentException("- Kein Land angegeben");
+        }
+        if (!country.matches(countryRegex)) {
+            throw new IllegalArgumentException("- Land enthält ungültige Zeichen");
         }
     }
 
-    public void checkAddress(String address) {
+    public void checkAddress(String address) throws IllegalArgumentException{
 
-        String addressRegex = "^[A-Za-z0-9\\s,.-]+$";
-        if (address == null || !address.matches(addressRegex)) {
-            throw new IllegalArgumentException("- Address cannot be empty");
+        if (address == null || address.isEmpty()) {
+            throw new IllegalArgumentException("- Keine Adresse angegeben");
         }
+
     }
 
-    public void checkEmail(String email) {
+    public void checkEmail(String email) throws IllegalArgumentException{
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        if (email == null || !email.matches(emailRegex)) {
-            throw new IllegalArgumentException("- Invalid email format");
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("- Keine E-Mail-Adresse angegeben");
+        }
+        if (!email.matches(emailRegex)) {
+            throw new IllegalArgumentException("- E-Mail-Adresse ist ungültig");
         }
     }
 

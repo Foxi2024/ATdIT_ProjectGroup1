@@ -31,15 +31,15 @@ public class Page9bBankTransferController extends Controller implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        processStepBarController.setCurrentStep("payment_method");
+        //processStepBarController.setCurrentStep("payment_method");
 
         paymentMethodCombo.getItems().addAll(
-                "Credit Card",
-                "Bank Transfer"
+                "Kreditkarte",
+                "Überweisung"
         );
 
-        paymentMethodCombo.setValue("Bank Transfer");
-        contract.setPaymentMethod("Bank Transfer");
+        paymentMethodCombo.setValue("Überweisung");
+        contract.setPaymentMethod("Überweisung");
 
         restoreData();
     }
@@ -49,9 +49,9 @@ public class Page9bBankTransferController extends Controller implements Initiali
 
         String selected = paymentMethodCombo.getValue();
 
-        if (selected.equals("Credit Card")) {
+        if (selected.equals("Kreditkarte")) {
 
-            loadScene(e, "creditcard.fxml", "Payment Method Selection");
+            loadScene(e, "creditcard.fxml", "Zahlungsmethode auswählen");
         }
     }
 
@@ -70,23 +70,70 @@ public class Page9bBankTransferController extends Controller implements Initiali
         accountHolderField.setText(bankTransferDetails.getAccountHolder());
         bankNameField.setText(bankTransferDetails.getBankName());
         bicField.setText(bankTransferDetails.getBicSwift());
-
     }
 
 
     @FXML
     public void previousPage(MouseEvent e) {
-        loadScene(e, "payment_selection_page.fxml", "Payment Selection");
+        loadScene(e, "payment_selection_page.fxml", "Zahlungsart auswählen");
     }
 
     @FXML
     public void nextPage(MouseEvent e) {
 
+        if (!validateBankTransferInfo()) {
+            return;
+        }
+
         cacheData();
 
         switch (selectedPayment) {
-            case "One-Time" -> loadScene(e, "one_time_payment_contract_page.fxml", "Contract Details");
-            case "Financing" -> loadScene(e, "financing_contract_page.fxml", "Contract Details");
+            case "One-Time" -> loadScene(e, "one_time_payment_contract_page.fxml", "Vertragsdetails");
+            case "Financing" -> loadScene(e, "financing_contract_page.fxml", "Vertragsdetails");
         }
     }
+
+    private boolean validateBankTransferInfo() {
+        StringBuilder errorMessage = new StringBuilder("Bitte korrigieren Sie folgende Fehler:\n");
+        boolean hasError = false;
+
+        // Validate IBAN (simplified for German IBAN)
+        String iban = ibanField.getText().replaceAll("\\s", "").toUpperCase();
+        if (!iban.matches("^DE\\d{20}$")) {
+            errorMessage.append("- Ungültige IBAN (Format: DE + 20 Ziffern)\n");
+            hasError = true;
+        }
+
+        // Validate BIC/SWIFT (8 or 11 alphanumeric characters)
+        String bic = bicField.getText().replaceAll("\\s", "").toUpperCase();
+        if (!bic.matches("^[A-Z0-9]{8}(?:[A-Z0-9]{3})?$")) {
+            errorMessage.append("- Ungültiger BIC/SWIFT Code (8 oder 11 Zeichen)\n");
+            hasError = true;
+        }
+
+        // Validate account holder (not empty, only letters and spaces)
+        String accountHolder = accountHolderField.getText().trim();
+        if (accountHolder.isEmpty() || !accountHolder.matches("^[A-Za-zÄäÖöÜüß\\s-]{2,50}$")) {
+            errorMessage.append("- Ungültiger Kontoinhaber (2-50 Zeichen, nur Buchstaben erlaubt)\n");
+            hasError = true;
+        }
+
+        // Validate bank name (not empty)
+        String bankName = bankNameField.getText().trim();
+        if (bankName.isEmpty() || bankName.length() < 2) {
+            errorMessage.append("- Ungültiger Bankname (mindestens 2 Zeichen)\n");
+            hasError = true;
+        }
+
+        if (hasError) {
+            showError("Validierung fehlgeschlagen",
+                    "Validierung der Überweisungsdaten ist fehlgeschlagen.",
+                    errorMessage.toString());
+            return false;
+        }
+
+        return true;
+    }
+
+
 }

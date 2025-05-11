@@ -40,7 +40,7 @@
                     <Label text="Monatliche fix kosten (€):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                     <TextField fx:id="fixedCostsField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                    <Label text="Mindest Lebenserhaltungskosten (€):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label text="Min. Lebenserhaltungskosten (€):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                     <TextField fx:id="minLivingCostField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
                     <Label text="Verfügbare flüssige Mittel (€):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>

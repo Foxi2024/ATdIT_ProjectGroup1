@@ -19,10 +19,14 @@ public class FinancialInformationEvaluator {
         this.financialInfo = financialInfo;
     }
 
-    public boolean valDeclaredFinancialInfo(int journeyPrice){
-        return  this.financialInfo.getLiquidAssets() > journeyPrice
-                || (this.financialInfo.getLiquidAssets() > journeyPrice * 0.3
-                && financialInfo.getMonthlyAvailableMoney() > Main.MIN_MONTHLY_MONEY);
+    public void valDeclaredFinancialInfo(int journeyPrice) throws IllegalArgumentException {
+        if(this.financialInfo.getLiquidAssets() < journeyPrice * 0.3){
+            throw new IllegalArgumentException("Ihre liquiden Mittel sind zu niedrig. Sie benötigen mindestens 30% des Reisepreises.");
+        }
+
+        if(financialInfo.getMonthlyAvailableMoney() < Main.MIN_MONTHLY_MONEY){
+            throw new IllegalArgumentException("Ihr monatliches verfügbares Geld ist zu niedrig. Sie benötigen mindestens " + Main.MIN_MONTHLY_MONEY +"€.");
+        }
     }
 
     public boolean evaluateIncome() {
@@ -48,7 +52,6 @@ public class FinancialInformationEvaluator {
         if(!evaluateLiquidAssets()) {
             errorMessage += "- Ihre angegebenen liquiden Mittel weichen zu stark von Ihren tatsächlichen liquiden Mitteln ab.\n";
             isValid = false;
-
         }
 
         if(!evaluateIncome()) {
@@ -68,7 +71,7 @@ public class FinancialInformationEvaluator {
 
         if(!financialInfo.getSchufa().getFirstName().equals(currentCustomer.getFirstName()) ||
                 !financialInfo.getSchufa().getLastName().equals(currentCustomer.getName())) {
-            errorMessage += "- Name in Schufa information does not match your personal information\n";
+            errorMessage += "- Name im Schufa Dokument stimmt nicht mit Ihrem Namen überein\n";
             isValid = false;
         }
 
@@ -133,39 +136,39 @@ public class FinancialInformationEvaluator {
                     return daysBetween <= MAX_DOCUMENT_AGE_DAYS;
 
                 } catch (DateTimeParseException e) {
-                    throw new IllegalArgumentException("Invalid date format in document: " + dateStr);
+                    throw new IllegalArgumentException("Invalides Datumsformat im Dokument: " + dateStr);
                 }
             }
         }
 
-        throw new IllegalArgumentException("No date information found in document");
+        throw new IllegalArgumentException("Kein Datumsfeld im Dokument gefunden");
     }
 
     public void validateDeclaredFinancialInfo() {
 
-        String errorMessage = "Please fix the following issues:\n";
+        String errorMessage = "Folgende Probleme sind aufgetaucht:\n";
         boolean isValid = true;
 
             if (this.financialInfo.getAvgNetIncome() < 0) {
-                errorMessage += "- Net income cannot be negative\n";
+                errorMessage += "- Einkommen darf nicht negativ sein\n";
                 isValid = false;
             }
 
 
             if (this.financialInfo.getMonthlyFixCost() < 0) {
-                errorMessage += "- Fixed costs cannot be negative\n";
+                errorMessage += "- Fixkosten dürfen nicht negativ sein\n";
                 isValid = false;
             }
 
 
             if (this.financialInfo.getMinCostOfLiving() < 0) {
-                errorMessage += "- Minimum living cost cannot be negative\n";
+                errorMessage += "- Min. Lebenserhaltungskosten dürfen nicht negativ sein\n";
                 isValid = false;
             }
 
 
             if (this.financialInfo.getLiquidAssets() < 0) {
-                errorMessage += "- Liquid assets cannot be negative\n";
+                errorMessage += "- Liquide Mittel dürfen nicht negativ sein\n";
                 isValid = false;
             }
 
@@ -177,18 +180,18 @@ public class FinancialInformationEvaluator {
 
     public void validateUploads() {
 
-        String errorMessage = "Please upload the following documents:\n";
+        String errorMessage = "Bitte laden sie folgende Dokumente hoch:\n";
         boolean isValid = true;
 
         if(financialInfo.getProofOfLiquidAssets() == null) {
 
-            errorMessage += "- Proof of liquid assets\n";
+            errorMessage += "- Kontoauszug\n";
             isValid = false;
         }
 
         if(financialInfo.getSchufa() == null) {
 
-            errorMessage += "- Schufa information\n";
+            errorMessage += "- Schufaunterlagen\n";
             isValid = false;
         }
 

@@ -31,7 +31,7 @@ public class Page10aOneTimePaymentContractController extends Controller implemen
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        processStepBarController.setCurrentStep("contract");
+        //processStepBarController.setCurrentStep("contract");
 
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());
@@ -58,10 +58,10 @@ public class Page10aOneTimePaymentContractController extends Controller implemen
 
     public void previousPage(MouseEvent e) {
 
-        if(contract.getPaymentMethod().equals("Credit Card")) {
-            loadScene(e, "creditcard.fxml", "Payment Method Selection");
+        if(contract.getPaymentMethod().equals("Kreditkarte")) {
+            loadScene(e, "creditcard.fxml", "Zahlungsmethode auswählen");
         } else {
-            loadScene(e, "banktransfer.fxml", "Payment Method Selection");
+            loadScene(e, "banktransfer.fxml", "Zahlungsmethode auswählen");
         }
     }
 

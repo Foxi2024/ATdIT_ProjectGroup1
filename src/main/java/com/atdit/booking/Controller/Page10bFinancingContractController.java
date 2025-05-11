@@ -32,7 +32,7 @@ public class Page10bFinancingContractController extends Controller implements In
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        processStepBarController.setCurrentStep("contract");
+        //processStepBarController.setCurrentStep("contract");
 
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());
@@ -60,19 +60,19 @@ public class Page10bFinancingContractController extends Controller implements In
     @FXML
     public void previousPage(MouseEvent e) {
 
-        if(financingContract.getPaymentMethod().equals("Credit Card")) {
+        if(financingContract.getPaymentMethod().equals("Kreditkarte")) {
 
-            loadScene(e, "creditcard.fxml", "Payment Method Selection");
+            loadScene(e, "creditcard.fxml", "Zahlungsmethode auswählen");
 
         } else {
 
-            loadScene(e, "banktransfer.fxml", "Payment Method Selection");
+            loadScene(e, "banktransfer.fxml", "Zahlungsmethode auswählen");
 
         }
     }
 
     @FXML
     public void nextPage(MouseEvent e) {
-        loadScene(e, "confirmation_page.fxml", "Confirmation");
+        loadScene(e, "confirmation_page.fxml", "Bestätigung");
     }
 }

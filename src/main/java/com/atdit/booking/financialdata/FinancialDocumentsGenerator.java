@@ -76,12 +76,12 @@ public class FinancialDocumentsGenerator {
 
         FinancialDocumentsGenerator generator = new FinancialDocumentsGenerator("financial_documents");
 
-        Credit c1 = new Credit("Car Loan", 20000, 5.0f, 500, 10000);
-        Credit c2 = new Credit("Home Loan", 150000, 3.5f, 1500, 50000);
+        Credit c1 = new Credit("Car Loan", 50_000, 5.0f, 500, 10000);
+        Credit c2 = new Credit("Home Loan", 500_000, 3.5f, 1500, 250000);
 
         try {
-            generator.generateProofOfIncome(new IncomeProof(30000, "ABC Corp", "Full-time", 24, "2023-01-01"), "proof_of_income");
-            generator.generateProofOfLiquidAssets(new LiquidAsset("DE12345678901234567890", "Savings Account", 1000000, "2023-01-01"), "proof_of_liquid_assets");
+            generator.generateProofOfIncome(new IncomeProof(32_000, "ABC Corp", "Full-time", 24, "2025-01-01"), "proof_of_income");
+            generator.generateProofOfLiquidAssets(new LiquidAsset("DE12345678901234567890", "Savings Account", 1_000_000, "2025-01-01"), "proof_of_liquid_assets");
             generator.generateSchufa(new Schufaauskunft("Anton", "Beton", 0.75f, new ArrayList<Credit>(), "2023-01-01"), "schufa_report");
         } catch (IOException e) {
             e.printStackTrace();

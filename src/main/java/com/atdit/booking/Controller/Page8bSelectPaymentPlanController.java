@@ -52,11 +52,11 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
 
     @FXML
     public void previousPage(MouseEvent e) {
-        loadScene(e, "payment_selection_page.fxml", "Payment Selection");
+        loadScene(e, "payment_selection_page.fxml", "Zahlungsart auswählen");
     }
 
     @FXML
     public void nextPage(MouseEvent e) {
-        loadScene(e, "creditcard.fxml", "Contract Details");
+        loadScene(e, "creditcard.fxml", "Zahlungsmethode auswählen");
     }
 }

@@ -80,4 +80,58 @@ public class FinancingContract extends Contract {
     public double getDownPayment() {
         return downPayment;
     }
+
+    public String getContractText() {
+        return """
+                §1 Gegenstand der Vereinbarung
+                
+                Der Kunde beabsichtigt, eine kommerzielle Weltraumreise gemäß dem Angebot des Anbieters vom [Datum] in Anspruch zu nehmen. Der Gesamtpreis der Reise beträgt [z. B. 375.000 €].
+                
+                Diese Vereinbarung regelt die Finanzierung dieses Betrags über eine individuell vereinbarte Laufzeit.
+                
+                §2 Finanzierungssumme und Zahlungsmodalitäten
+                
+                Der zu finanzierende Gesamtbetrag beträgt [Betrag in €].
+                
+                Die Finanzierung erfolgt in [z. B. 24] monatlichen Raten à [z. B. 15.625 €], beginnend ab dem [Datum].
+                
+                Ein effektiver Jahreszins von [z. B. 3,5 %] wird berechnet.
+                
+                Der Gesamtbetrag inklusive Zinsen beläuft sich auf [Gesamtbetrag in €].
+                
+                §3 Zahlungsbedingungen
+                
+                Die monatliche Rate ist jeweils zum [z. B. 15.] eines Monats fällig.
+                
+                Zahlungen erfolgen per SEPA-Lastschrift oder Überweisung auf das Konto des Anbieters.
+                
+                Bei Zahlungsverzug fallen Verzugszinsen in gesetzlicher Höhe sowie ggf. Mahngebühren an.
+                
+                §4 Rücktritt und Stornierung
+                
+                Ein Rücktritt von der Reise ist bis [z. B. 60 Tage] vor Abflug gegen eine Gebühr von [z. B. 15 % des Reisepreises] möglich.
+                
+                Bei späterem Rücktritt oder Nichterscheinen ist der volle Reisepreis fällig.
+                
+                Bereits geleistete Raten werden bei Rücktritt mit etwaigen Stornokosten verrechnet.
+                
+                §5 Gesundheitsvoraussetzungen und Genehmigungen
+                
+                Der Kunde verpflichtet sich, alle medizinischen und regulatorischen Anforderungen für die Teilnahme an der Reise zu erfüllen.
+                
+                Sollte eine behördliche Freigabe oder ein medizinischer Check nicht bestanden werden, kann die Reise auf einen späteren Zeitpunkt verschoben werden – zusätzliche Kosten trägt der Kunde.
+                
+                §6 Datenschutz und Datenverarbeitung
+                
+                Der Kunde erklärt sich mit der Verarbeitung seiner personenbezogenen Daten zur Durchführung dieser Vereinbarung und zur Kommunikation mit Partnern im Rahmen der Weltraummission einverstanden.
+                
+                §7 Sonstiges
+                
+                Änderungen und Ergänzungen dieser Vereinbarung bedürfen der Schriftform.
+                
+                Sollte eine Bestimmung dieser Vereinbarung unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.
+                
+                Es gilt das Recht der Bundesrepublik Deutschland. Gerichtsstand ist [z. B. Berlin].
+                """;
+    }
 }

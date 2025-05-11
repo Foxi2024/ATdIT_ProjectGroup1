@@ -41,8 +41,9 @@ public class Page4DeclarationFIController extends Controller implements Initiali
 
         try {
             cacheData();
-        } catch (IllegalArgumentException ex) {
-            showError("Invalid Input", "Please correct the input", ex.getMessage());
+        }
+        catch (IllegalArgumentException ex) {
+            showError("Fehlerhafte Eingaben", "Ein paar Ihrer Eingaben sind fehlerhaft.", ex.getMessage());
             return;
         }
 
@@ -50,16 +51,19 @@ public class Page4DeclarationFIController extends Controller implements Initiali
             financialInformationEvaluator.validateDeclaredFinancialInfo();
         }
         catch (IllegalArgumentException ex) {
-            showError("Evaluation Failed", "Evaluation of personal Information failed", ex.getMessage());
+            showError("Validierung fehlgeschlagen", "Die Validierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 
-        if(!financialInformationEvaluator.valDeclaredFinancialInfo(1000)){
-            showError("Evaluation Failed", "Evaluation of personal Information failed", "Please check your financial information.");
+        try{
+            financialInformationEvaluator.valDeclaredFinancialInfo(1_000_000);
+        }
+        catch (IllegalArgumentException ex) {
+            showError("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 
-        loadScene(e, "page_5.fxml", "Financial Proof");
+        loadScene(e, "page_5.fxml", "Nachweis finanzieller Angaben");
     }
 
 
@@ -67,11 +71,11 @@ public class Page4DeclarationFIController extends Controller implements Initiali
     public void previousPage(MouseEvent e) {
 
         cacheData();
-        loadScene(e, "page_3.fxml", "Personal Information");
+        loadScene(e, "page_3.fxml", "Finanzielle Angaben");
     }
 
 
-    public void cacheData() throws IllegalArgumentException {
+    public void cacheData() throws IllegalArgumentException{
 
         financialInfo.setAvgNetIncome(Integer.parseInt(netIncomeField.getText().trim()));
         financialInfo.setMonthlyFixCost(Integer.parseInt(fixedCostsField.getText().trim()));

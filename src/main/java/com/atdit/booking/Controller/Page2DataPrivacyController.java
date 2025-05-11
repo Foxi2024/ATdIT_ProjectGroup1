@@ -29,14 +29,14 @@ public class Page2DataPrivacyController extends Controller implements Initializa
 
         if(acceptButton.isSelected()){
 
-            loadScene(e,"page_3.fxml", "Personal Information");
+            loadScene(e,"page_3.fxml", "Persönliche Informationen");
         }
     }
 
 
     public void previousPage(MouseEvent e){
 
-        loadScene(e,"page_1.fxml", "Welcome");
+        loadScene(e,"page_1.fxml", "Willkommen");
     }
 
     @FXML

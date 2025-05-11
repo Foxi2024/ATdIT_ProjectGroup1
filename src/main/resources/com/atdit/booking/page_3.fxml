@@ -48,7 +48,7 @@
                     <TextField fx:id="firstNameField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
                     <Label text="Geburtstag:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                    <DatePicker fx:id="birthDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <DatePicker fx:id="birthDatePicker" promptText="DD/MM/YYYY" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
                     <Label text="Land:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
                     <TextField fx:id="countryField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>

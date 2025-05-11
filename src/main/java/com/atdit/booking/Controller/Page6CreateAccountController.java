@@ -68,7 +68,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
     @FXML
     public void previousPage(MouseEvent e) {
 
-        loadScene(e, "page_5.fxml", "Document Upload");
+        loadScene(e, "page_5.fxml", "");
     }
 
     @FXML
@@ -82,7 +82,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
             db.saveCustomerInDatabase(password);
         }
         catch (SQLException | RuntimeException ex) {
-            showError("Database Error", "There was an error while saving your data.", ex.getMessage());
+            showError("Datenbankfehler", "Ein Fehler ist beim Speichern ihrer Daten aufgetreten.", ex.getMessage());
             return;
         }
 
