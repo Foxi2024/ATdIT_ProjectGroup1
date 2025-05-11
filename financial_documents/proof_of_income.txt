@@ -1,0 +1,5 @@
+Monthly Net Income: 32000
+Employer: ABC Corp
+Employment Type: Full-time
+Employment Duration: 24
+Date Issued: 2025-01-01

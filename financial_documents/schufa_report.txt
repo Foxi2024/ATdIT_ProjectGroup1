@@ -1,0 +1,9 @@
+First Name: Verena
+Last Name: Neumann
+Schufa Score: 0.99
+Total Credits: 0
+Total Credit Sum: 0
+Total Amount Payed: 0
+Total Amount Owed: 0
+Total Monthly Rate: 0
+Date Issued: 2025-01-01
