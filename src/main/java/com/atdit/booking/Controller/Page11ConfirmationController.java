@@ -21,9 +21,9 @@ public class Page11ConfirmationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        confirmationText.setText("Your booking has been successfully completed! We greatly appreciate your trust in our service.");
-        addressText.setText("Your tickets will be sent to: " + currentCustomer.getAddress());
-        emailText.setText("A confirmation email has been sent to: " + currentCustomer.getEmail());
+        confirmationText.setText("Ihre Buchung wurde erfolgreich abgeschlossen! Wir danken Ihnen für Ihr Vertrauen.");
+        addressText.setText("Ihre Tickets werden gesendet an: " + currentCustomer.getAddress());
+        emailText.setText("Eine Bestätigungsmail wurde gesendet an: " + currentCustomer.getEmail());
     }
 
     @FXML

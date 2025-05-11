@@ -4,12 +4,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
-<<<<<<< HEAD
-<?import javafx.scene.text.Text?>
-<AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.Page8aSelectPaymentController">
-    <VBox spacing="20" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-        <Label text="Wähle deine Zahlungsart aus" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
-=======
+
 <AnchorPane styleClass="root" prefWidth="800.0" prefHeight="600.0"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -20,7 +15,7 @@
           AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
         <HBox fx:id="processStepBar" alignment="CENTER" spacing="15" styleClass="step-bar">
-            <Label fx:id="paymentSelectionLabel" text="Payment Selection" styleClass="step-label"/>
+            <Label fx:id="paymentSelectionLabel" text="Payment Selection" styleClass="step-label-active"/>
             <Text text="→" styleClass="step-arrow"/>
             <Label fx:id="paymentMethodLabel" text="Payment Method" styleClass="step-label"/>
             <Text text="→" styleClass="step-arrow"/>
@@ -28,7 +23,6 @@
         </HBox>
 
         <Label text="Wähle deine Zahlungsart aus" styleClass="headline"/>
->>>>>>> tim_neu
 
         <fx:define>
             <ToggleGroup fx:id="paymentMethodGroup"/>

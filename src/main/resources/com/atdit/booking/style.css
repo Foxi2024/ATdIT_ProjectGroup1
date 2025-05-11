@@ -14,7 +14,7 @@
 .headline {
     -fx-fill: #f9e79f;
     -fx-font-weight: bold;
-    -fx-font-size: 20px; 
+    -fx-font-size: 28px;
 }
 
 .button {
@@ -76,6 +76,22 @@
     -fx-background-color: rgb(15, 34, 53);
     -fx-text-fill: #f9e79f;
 }
+
+.step-label-active {
+    -fx-min-width: 150;
+    -fx-alignment: center;
+    -fx-font-size: 14;
+    -fx-padding: 10 20;
+    -fx-border-color: #f9e79f;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: #2a3540;
+    -fx-text-fill: #f9e79f;
+    -fx-effect: dropshadow(gaussian, rgba(249, 231, 159, 0.3), 10, 0, 0, 0);
+    -fx-font-weight: bold;
+}
+
 
 .step-arrow {
     -fx-font-size: 18;
@@ -146,7 +162,7 @@
     -fx-font-size: 14;
     -fx-pref-height: 300;
     -fx-background-color: #1f2633;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .confirmation-box {

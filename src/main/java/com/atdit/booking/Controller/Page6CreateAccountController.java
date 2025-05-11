@@ -26,20 +26,6 @@ public class Page6CreateAccountController extends Controller implements Initiali
 
     private static final Customer currentCustomer = Main.customer;
 
-
-    /*
-
-
-    Ihre Daten wurden erfolgreich vom System überprüft. Der nächste Schritt ist die Erstellung eines persönlichen Accounts, um den Finanzierungsprozess weiter fortzuführen.
-
-    Warum jetzt die Registrierung erforderlich ist:
-    Ab diesem Punkt werden Ihre Daten sicher in unserer Datenbank gespeichert und für die finale Überprüfung durch unser Accounting-Team vorbereitet. Erst nach der Validierung durch Accounting erhalten Sie vollen Zugriff auf Ihre Buchungsoptionen, wie zum Beispiel Ratenzahlung oder andere Zahlungspläne.
-
-    Bitte registrieren Sie sich jetzt, um den nächsten Schritt in Ihrer Reiseplanung zu gehen.
-
-
-     */
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -86,7 +72,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
             return;
         }
 
-        loadScene(e, "customer_login.fxml", "Payment Selection");
+        loadScene(e, "account_crated", "Payment Selection");
 
     }
 }

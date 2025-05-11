@@ -3,7 +3,7 @@ package com.atdit.booking;
 public class Contract {
 
     private String paymentMethod;
-    public final int TOTAL_AMOUNT = 1_000_000;
+    public final double TOTAL_AMOUNT = 1_000_000;
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;

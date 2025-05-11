@@ -31,8 +31,6 @@ public class Page9bBankTransferController extends Controller implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //processStepBarController.setCurrentStep("payment_method");
-
         paymentMethodCombo.getItems().addAll(
                 "Kreditkarte",
                 "Überweisung"

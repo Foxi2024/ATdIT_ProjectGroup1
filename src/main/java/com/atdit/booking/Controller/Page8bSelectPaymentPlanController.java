@@ -9,6 +9,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Page8bSelectPaymentPlanController extends Controller implements Initializable, Navigatable {
@@ -27,6 +30,8 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
+
         monthsCombo.getItems().addAll(12, 24, 36, 48, 60);
         monthsCombo.setValue(12);
 
@@ -43,11 +48,17 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
 
         financingContract.setMonths(monthsCombo.getValue());
 
-        downPaymentLabel.setText(String.valueOf(financingContract.getDownPayment()));
-        totalAmountLabel.setText(String.valueOf(financingContract.getFinancedAmount()));
+        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+
+
+
+        downPaymentLabel.setText(nf.format(financingContract.getDownPayment()));
+        totalAmountLabel.setText(nf.format(financingContract.getFinancedAmount()));
         interestRateLabel.setText(String.format("%.2f", financingContract.getInterestRate()) + "%");
-        monthlyPaymentLabel.setText(String.format("€%.2f", financingContract.getMonthlyPayment()));
-        totalCostLabel.setText(String.format("€%.2f", financingContract.getAmountWithInterest()));
+        monthlyPaymentLabel.setText(nf.format(financingContract.getMonthlyPayment()));
+        totalCostLabel.setText(nf.format(financingContract.getAmountWithInterest()));
     }
 
     @FXML

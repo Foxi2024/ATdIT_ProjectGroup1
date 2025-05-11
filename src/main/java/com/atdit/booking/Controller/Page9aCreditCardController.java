@@ -34,8 +34,6 @@ public class Page9aCreditCardController extends Controller implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //processStepBarController.setCurrentStep("payment_method");
-
         paymentMethodCombo.getItems().addAll(
                 "Kreditkarte",
                 "Überweisung"
@@ -99,14 +97,14 @@ public class Page9aCreditCardController extends Controller implements Initializa
         StringBuilder errorMessage = new StringBuilder("Bitte korrigieren Sie folgende Fehler:\n");
         boolean hasError = false;
 
-        String cardNumber = cardNumberField.getText().replaceAll("\\s", "");
-        if (!cardNumber.matches("^\\d{16}$")) {
+        String cardNumber = cardNumberField.getText();
+        if (cardNumber == null || !cardNumber.matches("^\\d{16}$")) {
             errorMessage.append("- Ungültige Kartennummer (16 Ziffern erforderlich)\n");
             hasError = true;
         }
 
         String expiry = expiryField.getText();
-        if (!expiry.matches("^(0[1-9]|1[0-2])/([0-9]{2})$")) {
+        if (expiry == null || !expiry.matches("^(0[1-9]|1[0-2])/([0-9]{2})$")) {
             errorMessage.append("- Ungültiges Ablaufdatum (Format: MM/YY)\n");
             hasError = true;
         } else {
@@ -130,7 +128,7 @@ public class Page9aCreditCardController extends Controller implements Initializa
         }
 
         String cvv = cvvField.getText();
-        if (!cvv.matches("^\\d{3,4}$")) {
+        if (cvv == null || !cvv.matches("^\\d{3,4}$")) {
             errorMessage.append("- Ungültiger CVV-Code (3-4 Ziffern erforderlich)\n");
             hasError = true;
         }

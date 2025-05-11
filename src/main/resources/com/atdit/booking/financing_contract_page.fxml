@@ -13,7 +13,13 @@
     <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
           AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
-        <fx:include source="process_step_bar_2.fxml" fx:id="processStepBar"/>
+        <HBox fx:id="processStepBar" alignment="CENTER" spacing="15" styleClass="step-bar">
+            <Label fx:id="paymentSelectionLabel" text="Zahlungsart" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="paymentMethodLabel1" text="Zahlungsmethode" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="contractLabel" text="Kaufvertrag" styleClass="step-label-active"/>
+        </HBox>
 
         <Label text="Kaufvertrag" styleClass="headline"/>
 

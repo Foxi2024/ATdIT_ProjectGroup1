@@ -15,11 +15,11 @@
           AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
         <HBox fx:id="processStepBar" alignment="CENTER" spacing="15" styleClass="step-bar">
-            <Label fx:id="paymentSelectionLabel" text="Payment Selection" styleClass="step-label"/>
+            <Label fx:id="paymentSelectionLabel" text="Zahlungsart" styleClass="step-label"/>
             <Text text="→" styleClass="step-arrow"/>
-            <Label fx:id="paymentMethodLabel" text="Payment Method" styleClass="step-label"/>
+            <Label fx:id="paymentMethodLabel" text="Zahlungsmethode" styleClass="step-label-active"/>
             <Text text="→" styleClass="step-arrow"/>
-            <Label fx:id="contractLabel" text="Contract" styleClass="step-label"/>
+            <Label fx:id="contractLabel" text="Kaufvertrag" styleClass="step-label"/>
         </HBox>
 
         <Label text="Payment Details" styleClass="headline"/>
@@ -65,7 +65,7 @@
                 <Insets bottom="20" right="20"/>
             </padding>
             <Button fx:id="backButton" onMouseClicked="#previousPage" text="Zurück"/>
-            <Button fx:id="continueButton" onMouseClicked="#handlePay" text="Weiter"/>
+            <Button fx:id="continueButton" onMouseClicked="#nextPage" text="Weiter"/>
         </HBox>
     </VBox>
 </AnchorPane>

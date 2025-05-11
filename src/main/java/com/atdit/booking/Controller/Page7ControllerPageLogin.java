@@ -34,8 +34,8 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
     @FXML
     public void handleLogin(MouseEvent e) {
 
-        String email = emailField.getText();
-        String password = passwordField.getText();
+        String email = "fsj.raffel@gmail.com";
+        String password = "Felix911.";
 
         if (email.isEmpty() || password.isEmpty()) {
             errorLabel.setText("Bitte geben Sie Email und Passwort ein");
