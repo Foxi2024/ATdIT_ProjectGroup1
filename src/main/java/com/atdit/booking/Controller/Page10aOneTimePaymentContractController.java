@@ -31,7 +31,7 @@ public class Page10aOneTimePaymentContractController extends Controller implemen
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        processStepBarController.setCurrentStep("contract");
+        //processStepBarController.setCurrentStep("contract");
 
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());

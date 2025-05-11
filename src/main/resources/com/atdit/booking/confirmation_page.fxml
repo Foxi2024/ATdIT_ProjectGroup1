@@ -3,18 +3,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.Page11ConfirmationController">
-    <VBox spacing="30" alignment="CENTER" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
-        <children>
-            <Label text="✓" style="-fx-font-size: 48; -fx-text-fill: #4CAF50;"/>
-            <Label text="Thank you for your trust!" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
-            <VBox spacing="15" alignment="CENTER">
-                <Label fx:id="confirmationText" wrapText="true" style="-fx-font-size: 16;" textAlignment="CENTER"/>
-                <Label fx:id="addressText" wrapText="true" style="-fx-font-size: 14;"/>
-                <Label fx:id="emailText" wrapText="true" style="-fx-font-size: 14;"/>
-            </VBox>
-            <Button text="Close" onMouseClicked="#closeApplication" style="-fx-font-size: 14;" maxWidth="200"/>
-        </children>
+<AnchorPane styleClass="root" prefWidth="800.0" prefHeight="600.0"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.Controller.Page11ConfirmationController"
+            stylesheets="@style.css">
+
+    <VBox spacing="30" alignment="CENTER" styleClass="confirmation-box"
+          AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+
+        <Label text="✓" styleClass="confirmation-icon"/>
+        <Label text="Thank you for your trust!" styleClass="confirmation-headline"/>
+
+        <VBox spacing="15" alignment="CENTER">
+            <Label fx:id="confirmationText" wrapText="true" styleClass="confirmation-text" textAlignment="CENTER"/>
+            <Label fx:id="addressText" wrapText="true" styleClass="confirmation-subtext"/>
+            <Label fx:id="emailText" wrapText="true" styleClass="confirmation-subtext"/>
+        </VBox>
+
+        <Button text="Close" onMouseClicked="#closeApplication" maxWidth="200"/>
+        
         <padding>
             <Insets top="20" right="20" bottom="20" left="20"/>
         </padding>

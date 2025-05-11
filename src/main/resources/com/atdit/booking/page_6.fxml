@@ -4,37 +4,44 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.Page6CreateAccountController">
-    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+<AnchorPane styleClass="root" prefWidth="800.0" prefHeight="600.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.Controller.Page6CreateAccountController"
+            stylesheets="@style.css">
+
+    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
         <fx:include source="process_step_bar_1.fxml" fx:id="processStepBar1"/>
 
-        <Label text="Erstelle deinen Account" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
+        <Label text="Erstelle deinen Account" styleClass="headline"/>
 
         <HBox spacing="20">
-            <VBox spacing="15" style="-fx-border-color: #999999; -fx-border-radius: 5; -fx-padding: 15;" maxWidth="400">
+            <VBox spacing="15" styleClass="section-box" maxWidth="400">
                 <GridPane hgap="10" vgap="10">
                     <Label text="Email:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                     <Label fx:id="emailLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
                     <Label text="Passwort:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                    <PasswordField fx:id="passwordField" promptText="Enter your password" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <PasswordField fx:id="passwordField" promptText="Enter your password" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="text-field"/>
 
                     <Label text="Passwort bestätigen:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                    <PasswordField fx:id="confirmPasswordField" promptText="Bestätige dein Passwort" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <PasswordField fx:id="confirmPasswordField" promptText="Bestätige dein Passwort" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="text-field"/>
                 </GridPane>
 
-                <VBox spacing="5" style="-fx-padding: 10 0 0 0;">
-                    <Label text="Passwort Voraussetzungen:" style="-fx-font-weight: bold"/>
-                    <Label text="• Mindestens 8 Zeichen" style="-fx-text-fill: #666666"/>
-                    <Label text="• Mindestens Großbuchstabe" style="-fx-text-fill: #666666"/>
-                    <Label text="• Mindestens ein Kleinbuchstabe" style="-fx-text-fill: #666666"/>
-                    <Label text="• Mindestens eine Ziffer" style="-fx-text-fill: #666666"/>
-                    <Label text="• Mindestens ein Sonderzeichen" style="-fx-text-fill: #666666"/>
+                <VBox spacing="5" styleClass="info-box">
+                    <Label text="Passwort Voraussetzungen:" styleClass="label-bold"/>
+                    <Label text="• Mindestens 8 Zeichen" styleClass="info-text"/>
+                    <Label text="• Mindestens Großbuchstabe" styleClass="info-text"/>
+                    <Label text="• Mindestens ein Kleinbuchstabe" styleClass="info-text"/>
+                    <Label text="• Mindestens eine Ziffer" styleClass="info-text"/>
+                    <Label text="• Mindestens ein Sonderzeichen" styleClass="info-text"/>
                 </VBox>
             </VBox>
 
-            <VBox spacing="15" style="-fx-padding: 15;">
-                <Text wrappingWidth="300" style="-fx-font-size: 14px">
+            <VBox spacing="15" styleClass="info-box">
+                <Text wrappingWidth="300" styleClass="info-text">
                     Ihre Daten wurden erfolgreich vom System überprüft. Der nächste Schritt ist die Erstellung eines persönlichen Accounts, um den Finanzierungsprozess weiter fortzuführen.
 
                     Warum jetzt die Registrierung erforderlich ist:

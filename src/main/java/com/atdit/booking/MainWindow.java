@@ -3,6 +3,7 @@ package com.atdit.booking;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ public class MainWindow extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("page_2" + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("customer_login" + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Main");
         stage.setScene(scene);

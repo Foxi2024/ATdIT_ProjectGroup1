@@ -24,7 +24,7 @@ public class Page9aCreditCardController extends Controller implements Initializa
     @FXML private VBox expiryBox;
     @FXML private VBox cvvBox;
     @FXML private Label cardLabel;
-    @FXML private ProcessStepBarController processStepBarController;
+   
 
     public static String selectedPayment = Page8aSelectPaymentController.selectedPayment;
     public static Contract contract = Page8aSelectPaymentController.contract;
@@ -34,7 +34,7 @@ public class Page9aCreditCardController extends Controller implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        processStepBarController.setCurrentStep("payment_method");
+        //processStepBarController.setCurrentStep("payment_method");
 
         paymentMethodCombo.getItems().addAll(
                 "Credit Card",

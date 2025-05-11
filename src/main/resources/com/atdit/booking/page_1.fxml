@@ -2,11 +2,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<AnchorPane styleClass="root" prefWidth="800.0" prefHeight="600.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.Controller.Page1PaymentProcessStartController"
+            stylesheets="@style.css">
 
-<AnchorPane prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.atdit.booking.Controller.Page1PaymentProcessStartController">
-   <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-      <VBox spacing="15" VBox.vgrow="ALWAYS" alignment="CENTER">
-         <Button fx:id="startButton" text="Start Payment Process" onMouseClicked="#start_payment_process" maxWidth="200.0" minWidth="200.0" maxHeight="90.0" minHeight="90.0"/>
-      </VBox>
-   </VBox>
+    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+        <VBox spacing="15" VBox.vgrow="ALWAYS" alignment="CENTER">
+            <Button fx:id="startButton" text="Start Payment Process" onMouseClicked="#start_payment_process"/>
+        </VBox>
+
+    </VBox>
 </AnchorPane>

@@ -32,7 +32,7 @@ public class Page10bFinancingContractController extends Controller implements In
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        processStepBarController.setCurrentStep("contract");
+        //processStepBarController.setCurrentStep("contract");
 
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());

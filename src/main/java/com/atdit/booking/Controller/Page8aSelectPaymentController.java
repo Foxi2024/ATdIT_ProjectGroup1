@@ -26,7 +26,7 @@ public class Page8aSelectPaymentController extends Controller implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        processStepBarController.setCurrentStep("payment_selection");
+        //processStepBarController.setCurrentStep("payment_selection");
     }
 
     @FXML

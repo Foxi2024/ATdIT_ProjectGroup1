@@ -4,19 +4,14 @@
 <?import javafx.scene.text.Text?>
 
 <HBox fx:id="processStepBar" alignment="CENTER" spacing="15"
-      style="-fx-background-color: #f8f9fa; -fx-padding: 20; -fx-border-color: #e9ecef; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);"
+      styleClass="step-bar"
       xmlns:fx="http://javafx.com/fxml">
 
-    <Label fx:id="paymentSelectionLabel" text="Payment Selection"
-           style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
+    <Label fx:id="paymentSelectionLabel" text="Payment Selection" styleClass="step-label"/>
+    <Text text="→" styleClass="step-arrow"/>
 
-    <Text text="→" style="-fx-font-size: 18; -fx-fill: #6c757d;"/>
+    <Label fx:id="paymentMethodLabel" text="Payment Method" styleClass="step-label"/>
+    <Text text="→" styleClass="step-arrow"/>
 
-    <Label fx:id="paymentMethodLabel" text="Payment Method"
-           style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
-
-    <Text text="→" style="-fx-font-size: 18; -fx-fill: #6c757d;"/>
-
-    <Label fx:id="contractLabel" text="Contract"
-           style="-fx-min-width: 150; -fx-alignment: center; -fx-font-size: 14; -fx-padding: 10 20; -fx-border-color: #dee2e6; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: transparent;"/>
+    <Label fx:id="contractLabel" text="Contract" styleClass="step-label"/>
 </HBox>
