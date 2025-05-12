@@ -1,5 +1,7 @@
 package com.atdit.booking.backend.financialdata.processing;
 
+import com.atdit.booking.backend.exceptions.EvaluationException;
+import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
 import com.atdit.booking.Main;
 import com.atdit.booking.backend.customer.Customer;
@@ -26,7 +28,7 @@ public class FinancialInformationEvaluator {
         MIN_MONTHLY_MONEY = journeyDetails.getMonthlyPayment() * 0.8;
     }
 
-    public void valDeclaredFinancialInfo() throws IllegalArgumentException {
+    public void evaluateDeclaredFinancialInfo() throws IllegalArgumentException {
 
         if(financialInfo.getLiquidAssets() > 1.2 * journeyDetails.TOTAL_AMOUNT){
             return;
@@ -56,7 +58,9 @@ public class FinancialInformationEvaluator {
 
     }
 
-    public void evaluateUploads() {
+
+
+    public void evaluateUploads() throws EvaluationException{
 
         String errorMessage = "Folgende Probleme sind aufgetaucht:\n";
         boolean isValid = true;
@@ -88,12 +92,12 @@ public class FinancialInformationEvaluator {
         }
 
         if(!isValid){
-            throw new IllegalArgumentException(errorMessage);
+            throw new EvaluationException(errorMessage);
         }
     }
 
 
-    public boolean validateDocumentFormat(String content, String documentType) throws IllegalArgumentException {
+    public void validateDocumentFormat(String content, String documentType) {
         String[] lines = content.split("\n");
         boolean hasRequiredFields = false;
 
@@ -131,10 +135,13 @@ public class FinancialInformationEvaluator {
                 break;
         }
 
-        return hasRequiredFields;
+        if(!hasRequiredFields){
+            throw new ValidationException("Invalides Format");
+        }
+
     }
 
-    public boolean validateDocumentDate(String content) throws IllegalArgumentException{
+    public void validateDocumentDate(String content) throws ValidationException, EvaluationException{
         String[] lines = content.split("\n");
 
         for (String line : lines) {
@@ -145,18 +152,20 @@ public class FinancialInformationEvaluator {
                     LocalDate docDate = LocalDate.parse(dateStr);
                     LocalDate now = LocalDate.now();
                     long daysBetween = ChronoUnit.DAYS.between(docDate, now);
-                    return daysBetween <= MAX_DOCUMENT_AGE_DAYS;
+                    if(daysBetween <= MAX_DOCUMENT_AGE_DAYS) {
+                        throw new EvaluationException("Dokument zu alt (maximal " + FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " Tage alt)");
+                    }
 
                 } catch (DateTimeParseException e) {
-                    throw new IllegalArgumentException("Invalides Datumsformat im Dokument: " + dateStr);
+                    throw new ValidationException("Invalides Datumsformat " + dateStr);
                 }
             }
         }
 
-        throw new IllegalArgumentException("Kein Datumsfeld im Dokument gefunden");
+        throw new ValidationException("Kein Datumsfeld im Dokument gefunden");
     }
 
-    public void validateDeclaredFinancialInfo() {
+    public void validateDeclaredFinancialInfo() throws ValidationException{
 
         String errorMessage = "Folgende Probleme sind aufgetaucht:\n";
         boolean isValid = true;
@@ -186,7 +195,7 @@ public class FinancialInformationEvaluator {
 
 
         if (!isValid) {
-            throw new IllegalArgumentException(errorMessage);
+            throw new ValidationException(errorMessage);
         }
     }
 
@@ -208,7 +217,7 @@ public class FinancialInformationEvaluator {
         }
 
         if(!isValid){
-            throw new IllegalArgumentException(errorMessage);
+            throw new ValidationException(errorMessage);
         }
 
     }

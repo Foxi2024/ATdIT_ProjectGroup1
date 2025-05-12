@@ -3,6 +3,8 @@ package com.atdit.booking.frontend.Controller;
 
 import com.atdit.booking.Main;
 import com.atdit.booking.backend.customer.Customer;
+import com.atdit.booking.backend.exceptions.EvaluationException;
+import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationEvaluator;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationParser;
@@ -64,16 +66,13 @@ public class Page5ProofFIController extends Controller implements Initializable,
 
         try {
             evaluator.validateUploads();
+            evaluator.evaluateUploads();
         }
-        catch (IllegalArgumentException ex) {
+        catch (ValidationException ex) {
             showError("Validierung fehlgeschlagen", "Die Validierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
             return;
         }
-
-        try {
-            evaluator.evaluateUploads();
-        }
-        catch (IllegalArgumentException ex) {
+        catch (EvaluationException ex) {
             showError("Evaluierung fehlgeschlagen", "Die Validierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
             return;
         }
@@ -127,29 +126,27 @@ public class Page5ProofFIController extends Controller implements Initializable,
         return null;
     }
 
-    private void uploadDocument(String documentType, Label statusLabel, String content) throws IllegalArgumentException{
+    private void uploadDocument(String documentType, Label statusLabel, String content){
 
-
-        if (!evaluator.validateDocumentFormat(content, documentType)) {
-            statusLabel.setText("Invalides Format (klicken zum entfernen)");
+        try {
+            evaluator.validateDocumentFormat(content, documentType);
+            evaluator.validateDocumentDate(content);
+        }
+        catch(ValidationException | EvaluationException ex) {
+            statusLabel.setText(ex.getMessage() + " (klicken zum Entfernen");
             statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
             return;
         }
 
-        if (!evaluator.validateDocumentDate(content)) {
-            statusLabel.setText("Dokument zu alt (maximal " + FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " Tage alt) (klicken zum entfernen)");
-            statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
+        statusLabel.setText("Valides Dokument (klicken zum Entfernen)");
+        statusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
 
-        } else {
-            statusLabel.setText("Valides Dokument (klicken zu entfernen)");
-            statusLabel.setStyle("-fx-text-fill: green; -fx-cursor: hand;");
-
-            switch (documentType) {
-                case "income" -> financialInfo.setProofOfIncome(parser.parseIncomeDocument(content));
-                case "liquidAssets" -> financialInfo.setProofOfLiquidAssets(parser.parseLiquidAssetsDocument(content));
-                case "schufa" -> financialInfo.setSchufa(parser.parseSchufaDocument(content));
-            }
+        switch (documentType) {
+            case "income" -> financialInfo.setProofOfIncome(parser.parseIncomeDocument(content));
+            case "liquidAssets" -> financialInfo.setProofOfLiquidAssets(parser.parseLiquidAssetsDocument(content));
+            case "schufa" -> financialInfo.setSchufa(parser.parseSchufaDocument(content));
         }
+
 
     }
 

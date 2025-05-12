@@ -2,6 +2,8 @@ package com.atdit.booking.frontend.Controller;
 
 import com.atdit.booking.Main;
 import com.atdit.booking.backend.customer.Customer;
+import com.atdit.booking.backend.exceptions.EvaluationException;
+import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationEvaluator;
 import javafx.fxml.FXML;
@@ -30,7 +32,6 @@ public class Page4DeclarationFIController extends Controller implements Initiali
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //processStepBarController.setCurrentStep("financial");
         restoreData();
     }
 
@@ -40,24 +41,18 @@ public class Page4DeclarationFIController extends Controller implements Initiali
 
         try {
             cacheData();
+            financialInformationEvaluator.validateDeclaredFinancialInfo();
+            financialInformationEvaluator.evaluateDeclaredFinancialInfo();
         }
         catch (NumberFormatException ex) {
             showError("Fehlerhafte Eingaben", "Sie haben fehlerhafte Angaben gemacht.", ex.getMessage());
             return;
         }
-
-        try {
-            financialInformationEvaluator.validateDeclaredFinancialInfo();
-        }
-        catch (IllegalArgumentException ex) {
+        catch (ValidationException ex) {
             showError("Validierung fehlgeschlagen", "Die Validierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
-
-        try{
-            financialInformationEvaluator.valDeclaredFinancialInfo();
-        }
-        catch (IllegalArgumentException ex) {
+        catch (EvaluationException ex) {
             showError("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
