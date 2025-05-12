@@ -71,7 +71,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
             return;
         }
 
-        loadScene(e, "account_crated", "Payment Selection");
+        loadScene(e, "account_created.fxml", "Vielen Dank");
 
     }
 }

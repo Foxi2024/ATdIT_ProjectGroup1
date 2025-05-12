@@ -15,7 +15,7 @@ public class MainWindow extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("page_1" + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        //stage.getIcons().add(new Image(MainWindow.class.getResourceAsStream("icon.png")));
+        stage.getIcons().add(new Image(MainWindow.class.getResourceAsStream("icon.png")));
         stage.setTitle("Main");
         stage.setScene(scene);
         stage.show();

@@ -1,13 +1,14 @@
 package com.atdit.booking.Controller;
 
 
-import javafx.application.Platform;
+import com.atdit.booking.MainWindow;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Control;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -25,6 +26,7 @@ public abstract class Controller {
             Scene scene = new Scene(loader.load());
             stage.setTitle(title);
             stage.setScene(scene);
+            stage.getIcons().add(new Image(MainWindow.class.getResourceAsStream("icon.png")));
 
             stage.sizeToScene();
 

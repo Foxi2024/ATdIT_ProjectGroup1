@@ -26,11 +26,12 @@
         <HBox spacing="20">
             <VBox spacing="15" styleClass="section-box">
                 <GridPane hgap="10" vgap="10">
-                    <Label text="Gesamtbetrag:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                    <Label fx:id="totalAmountLabel" text="0,00 €" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                    <Label text="Anzahlung (20%):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                    <Label fx:id="downPaymentLabel" text="0,00 €" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Anzahlung (20%):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="downPaymentLabel" text="0,00 €" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Zu finanzierender Betrag:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label fx:id="totalAmountLabel" text="0,00 €" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
                     <Label text="Laufzeit in Monaten:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                     <ComboBox fx:id="monthsCombo" onAction="#chooseMonths" GridPane.rowIndex="2" GridPane.columnIndex="1"/>

@@ -12,7 +12,7 @@ public class Main {
 
         customer = new Customer();
 
-        MainWindow.main(null);
+        MainWindow.main(args);
     }
 }
 
