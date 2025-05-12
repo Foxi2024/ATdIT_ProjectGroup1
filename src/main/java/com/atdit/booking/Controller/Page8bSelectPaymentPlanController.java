@@ -22,7 +22,6 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
     @FXML private Label interestRateLabel;
     @FXML private Label totalCostLabel;
     @FXML private Label downPaymentLabel;
-    @FXML private ProcessStepBarController processStepBarController;
 
     public static FinancingContract financingContract = (FinancingContract) Page8aSelectPaymentController.contract;
 

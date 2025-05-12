@@ -2,6 +2,7 @@ module com.atdit.booking {
     requires javafx.controls;
     requires javafx.fxml;
     requires jakarta.persistence;
+    requires java.desktop;
 
 
     opens com.atdit.booking to javafx.fxml;

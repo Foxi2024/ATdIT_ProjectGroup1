@@ -22,7 +22,6 @@ public class Page10aOneTimePaymentContractController extends Controller implemen
     @FXML private TextArea contractTextArea;
     @FXML private RadioButton signatureCheckbox;
     @FXML private Button continueButton;
-    @FXML private ProcessStepBarController processStepBarController;
 
     private static final int TOTAL_AMOUNT = 5000;
     public static OneTimePaymentContract contract = (OneTimePaymentContract) Page8aSelectPaymentController.contract;

@@ -23,7 +23,6 @@ public class Page10bFinancingContractController extends Controller implements In
     @FXML private Label paymentMethodLabel;
     @FXML private RadioButton signatureCheckbox;
     @FXML private Button continueButton;
-    @FXML private ProcessStepBarController processStepBarController;
     @FXML private Label downPaymentLabel;
 
     public static FinancingContract financingContract = (FinancingContract) Page8aSelectPaymentController.contract;

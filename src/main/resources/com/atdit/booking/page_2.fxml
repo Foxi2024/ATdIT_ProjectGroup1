@@ -4,7 +4,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane styleClass="root" prefWidth="800.0" prefHeight="600.0"
+<AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.atdit.booking.Controller.Page2DataPrivacyController"
@@ -27,42 +27,10 @@
 
         <Label text="Datenschutzerklärung" styleClass="sub-headline"/>
 
-        <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true" styleClass="privacy-scroll-pane">
-            <VBox spacing="10">
-                <Text text="Datenschutzerklärung für NEXSTAR TRAVEL – Raumfahrttourismus"/>
-                <Text text="Stand: Mai 2025"/>
-                <Text text="1. Allgemeine Hinweise"/>
-                <Text text="Der Schutz Ihrer personenbezogenen Daten hat für NEXSTAR TRAVEL oberste Priorität. ..."/>
-                <Text text="Diese Erklärung informiert Sie darüber, ..."/>
-                <Text text="2. Verantwortlicher im Sinne der DSGVO"/>
-                <Text text="NEXSTAR TRAVEL GmbH&#10;Galaxisweg 42&#10;12345 Orbit City&#10;Telefon: ..."/>
-                <Text text="3. Kategorien verarbeiteter Daten"/>
-                <Text text="3.1 Stammdaten: ..."/>
-                <Text text="3.2 Kontaktdaten: ..."/>
-                <Text text="3.3 Buchungs- und Reisedaten: ..."/>
-                <Text text="3.4 Zahlungsdaten: ..."/>
-                <Text text="3.5 Kommunikationsdaten: ..."/>
-                <Text text="3.6 Websitedaten: ..."/>
-                <Text text="4. Zwecke und Rechtsgrundlagen der Verarbeitung"/>
-                <Text text="..."/>
-                <Text text="5. Empfänger Ihrer Daten"/>
-                <Text text="..."/>
-                <Text text="6. Datenübermittlung in Drittländer"/>
-                <Text text="..."/>
-                <Text text="7. Speicherdauer"/>
-                <Text text="..."/>
-                <Text text="8. Cookies und Tracking-Technologien"/>
-                <Text text="..."/>
-                <Text text="9. Ihre Datenschutzrechte"/>
-                <Text text="..."/>
-                <Text text="10. Beschwerderecht bei der Aufsichtsbehörde"/>
-                <Text text="..."/>
-                <Text text="11. Datensicherheit"/>
-                <Text text="..."/>
-                <Text text="12. Änderungen dieser Datenschutzerklärung"/>
-                <Text text="..."/>
-            </VBox>
-        </ScrollPane>
+        <VBox spacing="15" VBox.vgrow="ALWAYS" styleClass="section-box">
+            <TextArea fx:id="contractTextArea" wrapText="true" editable="false"
+                      VBox.vgrow="ALWAYS" styleClass="contract-text" prefRowCount="15"/>
+        </VBox>
 
         <VBox spacing="10" alignment="CENTER">
             <RadioButton fx:id="acceptButton" text="Akzeptieren" onMouseClicked="#acceptAgreement"/>

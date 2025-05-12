@@ -18,7 +18,6 @@ public class Page8aSelectPaymentController extends Controller implements Initial
     @FXML private RadioButton financingRadio;
     @FXML private ToggleGroup paymentMethodGroup;
     public static String selectedPayment;
-    @FXML private ProcessStepBarController processStepBarController;
 
     public static Contract contract;
 

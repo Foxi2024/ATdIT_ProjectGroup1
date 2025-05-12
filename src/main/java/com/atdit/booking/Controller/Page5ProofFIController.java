@@ -30,7 +30,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
     @FXML private Label incomeStatusLabel;
     @FXML private Label liquidAssetsStatusLabel;
     @FXML private Label schufaStatusLabel;
-    @FXML private ProcessStepBarController_1 processStepBarController;
+
 
 
 

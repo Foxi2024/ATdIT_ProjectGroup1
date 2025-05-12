@@ -26,7 +26,6 @@ public class Page3PersonalInformationController extends Controller implements In
     @FXML private TextField emailField;
     @FXML private Button continueButton;
     @FXML private Button backButton;
-    @FXML private ProcessStepBarController_1 processStepBarController;
 
 
     private final Customer currentCustomer = Main.customer;

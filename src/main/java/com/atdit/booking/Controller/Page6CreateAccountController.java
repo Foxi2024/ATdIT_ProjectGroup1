@@ -21,7 +21,6 @@ public class Page6CreateAccountController extends Controller implements Initiali
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
     @FXML private Button createAccountButton;
-    @FXML private ProcessStepBarController_1 processStepBarController;
 
 
     private static final Customer currentCustomer = Main.customer;

@@ -22,7 +22,6 @@ public class Page9bBankTransferController extends Controller implements Initiali
     @FXML private TextField accountHolderField;
     @FXML private TextField bankNameField;
     @FXML private TextField bicField;
-    @FXML private ProcessStepBarController processStepBarController;
 
     public static String selectedPayment = Page8aSelectPaymentController.selectedPayment;
     public static Contract contract = Page8aSelectPaymentController.contract;
