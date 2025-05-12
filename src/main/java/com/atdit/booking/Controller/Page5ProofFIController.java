@@ -121,7 +121,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
 
     private String getDocumentContent() throws IOException{
 
-        File file = fileChooser.showOpenDialog((Stage) continueButton.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(continueButton.getScene().getWindow());
         if (file != null) {
             return Files.readString(file.toPath());
         }

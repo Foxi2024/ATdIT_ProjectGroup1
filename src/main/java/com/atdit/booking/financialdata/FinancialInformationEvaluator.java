@@ -1,7 +1,9 @@
 package com.atdit.booking.financialdata;
 
+import com.atdit.booking.FinancingContract;
 import com.atdit.booking.Main;
 import com.atdit.booking.customer.Customer;
+import com.atdit.booking.Contract;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -11,21 +13,31 @@ public class FinancialInformationEvaluator {
 
     private final double MAX_DEVIATION = 0.05;
     public static final int MAX_DOCUMENT_AGE_DAYS = 365;
+    private final FinancingContract journeyDetails = new FinancingContract();
+    private final double MIN_MONTHLY_MONEY;
+
 
     private final FinancialInformation financialInfo;
     private final Customer currentCustomer = Main.customer;
 
     public FinancialInformationEvaluator(FinancialInformation financialInfo){
         this.financialInfo = financialInfo;
+        this.journeyDetails.setMonths(60);
+        MIN_MONTHLY_MONEY = journeyDetails.getMonthlyPayment() * 0.8;
     }
 
-    public void valDeclaredFinancialInfo(int journeyPrice) throws IllegalArgumentException {
-        if(this.financialInfo.getLiquidAssets() < journeyPrice * 0.3){
-            throw new IllegalArgumentException("Ihre liquiden Mittel sind zu niedrig. Sie benötigen mindestens 30% des Reisepreises.");
+    public void valDeclaredFinancialInfo() throws IllegalArgumentException {
+
+        if(financialInfo.getLiquidAssets() > 1.2 * journeyDetails.TOTAL_AMOUNT){
+            return;
         }
 
-        if(financialInfo.getMonthlyAvailableMoney() < Main.MIN_MONTHLY_MONEY){
-            throw new IllegalArgumentException("Ihr monatliches verfügbares Geld ist zu niedrig. Sie benötigen mindestens " + Main.MIN_MONTHLY_MONEY +"€.");
+        if(this.financialInfo.getLiquidAssets() < journeyDetails.getDownPayment()){
+            throw new IllegalArgumentException("Ihre liquiden Mittel sind zu niedrig. Sie benötigen mindestens 20% des Reisepreises.");
+        }
+
+        if(financialInfo.getMonthlyAvailableMoney() < MIN_MONTHLY_MONEY && financialInfo.getLiquidAssets() < 0.3 * journeyDetails.TOTAL_AMOUNT){
+            throw new IllegalArgumentException("Ihr monatliches verfügbares Geld ist zu niedrig. Sie benötigen mindestens " + MIN_MONTHLY_MONEY +"€.");
         }
     }
 

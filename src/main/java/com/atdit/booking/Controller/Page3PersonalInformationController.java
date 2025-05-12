@@ -6,6 +6,7 @@ import com.atdit.booking.Cacheable;
 import com.atdit.booking.Main;
 import com.atdit.booking.Navigatable;
 import com.atdit.booking.customer.Customer;
+import com.atdit.booking.customer.CustomerDatabase;
 import com.atdit.booking.customer.CustomerEvaluater;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class Page3PersonalInformationController extends Controller implements Initializable, Navigatable, Cacheable {
@@ -47,10 +49,24 @@ public class Page3PersonalInformationController extends Controller implements In
 
         try {
             evaluater.evaluateCustomerInfo();
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             showError("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
+
+        try {
+            CustomerDatabase db = new CustomerDatabase();
+            db.checkIfCustomerIsInDatabase(currentCustomer.getEmail());
+        }
+        catch (IllegalArgumentException ex) {
+            showError("Validierung fehlgeschlagen", "E-Mail-Adresse bereits verwendet.", ex.getMessage());
+        }
+        catch (RuntimeException | SQLException ex) {
+            showError("Datenbankfehler", "Ein Fehler ist bei der Verbindung mit der Datenbank aufgetreten.", ex.getMessage());
+            return;
+        }
+
 
         loadScene(e, "page_4.fxml", "Finanzielle Angaben");
     }

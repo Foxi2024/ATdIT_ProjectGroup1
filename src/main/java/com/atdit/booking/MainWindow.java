@@ -13,7 +13,7 @@ public class MainWindow extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("page_1" + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("customer_login" + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.getIcons().add(new Image(MainWindow.class.getResourceAsStream("icon.png")));
         stage.setTitle("Main");

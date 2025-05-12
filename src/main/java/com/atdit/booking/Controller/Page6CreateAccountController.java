@@ -75,3 +75,11 @@ public class Page6CreateAccountController extends Controller implements Initiali
 
     }
 }
+
+
+/*
+
+
+check if customer is already in database
+einkommensnachweis optimieren
+ */

@@ -104,11 +104,7 @@ public class Page2DataPrivacyController extends Controller implements Initializa
     @FXML
     public void acceptAgreement(MouseEvent e) {
 
-        if(acceptButton.isSelected()){
-            continueButton.setDisable(false);
-        } else {
-            continueButton.setDisable(true);
-        }
+        continueButton.setDisable(!acceptButton.isSelected());
     }
 
 }

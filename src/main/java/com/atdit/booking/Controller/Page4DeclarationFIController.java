@@ -55,7 +55,7 @@ public class Page4DeclarationFIController extends Controller implements Initiali
         }
 
         try{
-            financialInformationEvaluator.valDeclaredFinancialInfo(1_000_000);
+            financialInformationEvaluator.valDeclaredFinancialInfo();
         }
         catch (IllegalArgumentException ex) {
             showError("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());

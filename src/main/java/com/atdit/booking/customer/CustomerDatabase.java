@@ -206,6 +206,26 @@ public class CustomerDatabase {
         closeConnection();
     }
 
+    public void checkIfCustomerIsInDatabase(String email) throws RuntimeException {
+
+
+        String sql = "Select * FROM customers WHERE email_hashed = ?";
+
+        try{
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, encrypter.hashString(email));
+            ResultSet rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                throw new IllegalArgumentException("Es existiert bereits ein Konto mit der angegebenen E-Mail-Adresse.");
+            }
+        }
+        catch(SQLException | HashingException ex){
+            throw new RuntimeException("Fehler beim abrufen der Daten.");
+        }
+
+    }
+
     public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws SQLException, RuntimeException {
 
         String sql = "SELECT c.*, fi.*, ip.*, la.*, so.* " +
@@ -224,15 +244,17 @@ public class CustomerDatabase {
             if (rs.next()) {
 
                 Customer customer = extractCustomerFromResultSet(rs, email, password);
-                FinancialInformation financialInfo = extractFinancialInfoFromResultSet(rs);
-                IncomeProof incomeProof = extractIncomeProofFromResultSet(rs);
-                LiquidAsset liquidAsset = extractLiquidAssetFromResultSet(rs);
-                SchufaOverview schufaOverview = extractSchufaOverviewFromResultSet(rs);
+                //FinancialInformation financialInfo = extractFinancialInfoFromResultSet(rs);
+                //IncomeProof incomeProof = extractIncomeProofFromResultSet(rs);
+                //LiquidAsset liquidAsset = extractLiquidAssetFromResultSet(rs);
+                //SchufaOverview schufaOverview = extractSchufaOverviewFromResultSet(rs);
 
-                financialInfo.setProofOfIncome(incomeProof);
-                financialInfo.setProofOfLiquidAssets(liquidAsset);
-                financialInfo.setSchufa(schufaOverview);
-                customer.setFinancialInformation(financialInfo);
+                //financialInfo.setProofOfIncome(incomeProof);
+                //financialInfo.setProofOfLiquidAssets(liquidAsset);
+                //financialInfo.setSchufa(schufaOverview);
+
+                //customer.setFinancialInformation(financialInfo);
+                customer.setFinancialInformation(null);
 
                 return customer;
             }
@@ -250,7 +272,7 @@ public class CustomerDatabase {
 
     }
 
-    private Customer extractCustomerFromResultSet(ResultSet rs, String email, String password) throws SQLException, DecryptionException, HashingException, Exception {
+    private Customer extractCustomerFromResultSet(ResultSet rs, String email, String password) throws Exception {
 
         Customer customer = new Customer();
 

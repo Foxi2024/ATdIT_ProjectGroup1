@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class OneTimePaymentContract extends Contract{
 
 
-    private double totalAmount;
+    private final double totalAmount;
 
     public OneTimePaymentContract() {
         this.totalAmount = super.TOTAL_AMOUNT;

@@ -12,12 +12,12 @@ public class FinancingContract extends Contract {
 
     private int id;
     private int customerId;
-    private double financedAmount;
+    private final double financedAmount;
     private double monthlyPayment;
     private double interestRate;
     private double amountWithInterest;
     private int months;
-    private double downPayment;
+    private final double downPayment;
     private LocalDateTime signedDate;
     private String contractText;
 
