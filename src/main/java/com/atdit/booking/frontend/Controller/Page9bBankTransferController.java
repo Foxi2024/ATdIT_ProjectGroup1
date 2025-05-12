@@ -1,7 +1,9 @@
 package com.atdit.booking.frontend.Controller;
 
+import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.financialdata.financial_information.BankTransferDetails;
+import com.atdit.booking.backend.financialdata.financial_information.PaymentMethodEvaluator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,9 +25,13 @@ public class Page9bBankTransferController extends Controller implements Initiali
     public static String selectedPayment = Page8aSelectPaymentController.selectedPayment;
     public static Contract contract = Page8aSelectPaymentController.contract;
     public static BankTransferDetails bankTransferDetails = new BankTransferDetails();
+    public static PaymentMethodEvaluator evaluator;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        evaluator = new PaymentMethodEvaluator();
+        evaluator.setBankTransferDetails(bankTransferDetails);
 
         paymentMethodCombo.getItems().addAll(
                 "Kreditkarte",
@@ -75,11 +81,15 @@ public class Page9bBankTransferController extends Controller implements Initiali
     @FXML
     public void nextPage(MouseEvent e) {
 
-        if (!validateBankTransferInfo()) {
+        cacheData();
+
+        try {
+            evaluator.validateBankTransferInfo();
+        }
+        catch (ValidationException ex) {
+            showError("Validierungsfehler", "Fehler beim validieren Ihrer angegebenen Daten", ex.getMessage());
             return;
         }
-
-        cacheData();
 
         switch (selectedPayment) {
             case "One-Time" -> loadScene(e, "one_time_payment_contract_page.fxml", "Vertragsdetails");

@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class CustomerEvaluater {
+public class CustomerEvaluator {
 
     public final Customer customer;
 
 
-    public CustomerEvaluater(Customer customer) {
+    public CustomerEvaluator(Customer customer) {
         this.customer = customer;
     }
 

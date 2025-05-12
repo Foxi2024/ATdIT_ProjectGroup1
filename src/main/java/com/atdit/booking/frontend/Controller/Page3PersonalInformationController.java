@@ -2,7 +2,7 @@ package com.atdit.booking.frontend.Controller;
 
 import com.atdit.booking.Main;
 import com.atdit.booking.backend.customer.Customer;
-import com.atdit.booking.backend.customer.CustomerEvaluater;
+import com.atdit.booking.backend.customer.CustomerEvaluator;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -30,13 +30,13 @@ public class Page3PersonalInformationController extends Controller implements In
 
 
     private Customer currentCustomer ;
-    private CustomerEvaluater evaluater;
+    private CustomerEvaluator evaluator;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         this.currentCustomer = Main.customer;
-        this.evaluater = new CustomerEvaluater(currentCustomer);
+        this.evaluator = new CustomerEvaluator(currentCustomer);
 
         restoreData();
 
@@ -50,7 +50,7 @@ public class Page3PersonalInformationController extends Controller implements In
         cacheData();
 
         try {
-            evaluater.evaluateCustomerInfo();
+            evaluator.evaluateCustomerInfo();
         }
         catch (ValidationException ex) {
             showError("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());

@@ -1,7 +1,9 @@
 package com.atdit.booking.frontend.Controller;
 
+import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.financialdata.financial_information.CreditCardDetails;
+import com.atdit.booking.backend.financialdata.financial_information.PaymentMethodEvaluator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,10 +30,14 @@ public class Page9aCreditCardController extends Controller implements Initializa
     public static String selectedPayment = Page8aSelectPaymentController.selectedPayment;
     public static Contract contract = Page8aSelectPaymentController.contract;
     public static CreditCardDetails creditCardDetails = new CreditCardDetails();
+    public static PaymentMethodEvaluator evaluator;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        evaluator = new PaymentMethodEvaluator();
+        evaluator.setCreditCardDetails(creditCardDetails);
 
         paymentMethodCombo.getItems().addAll(
                 "Kreditkarte",
@@ -80,11 +86,15 @@ public class Page9aCreditCardController extends Controller implements Initializa
     @FXML
     public void nextPage(MouseEvent e) {
 
-        if (!validatePaymentInfo()) {
+        cacheData();
+
+        try {
+            evaluator.validateCreditCardInfo();
+        }
+        catch (ValidationException ex) {
+            showError("Validierungsfehler", "Fehler beim validieren Ihrer angegebenen Daten", ex.getMessage());
             return;
         }
-
-        cacheData();
 
         switch (selectedPayment) {
             case "One-Time" -> loadScene(e, "one_time_payment_contract_page.fxml", "Vertragsdetails");
@@ -92,53 +102,4 @@ public class Page9aCreditCardController extends Controller implements Initializa
         }
     }
 
-    private boolean validatePaymentInfo() {
-        StringBuilder errorMessage = new StringBuilder("Bitte korrigieren Sie folgende Fehler:\n");
-        boolean hasError = false;
-
-        String cardNumber = cardNumberField.getText();
-        if (cardNumber == null || !cardNumber.matches("^\\d{16}$")) {
-            errorMessage.append("- Ungültige Kartennummer (16 Ziffern erforderlich)\n");
-            hasError = true;
-        }
-
-        String expiry = expiryField.getText();
-        if (expiry == null || !expiry.matches("^(0[1-9]|1[0-2])/([0-9]{2})$")) {
-            errorMessage.append("- Ungültiges Ablaufdatum (Format: MM/YY)\n");
-            hasError = true;
-        } else {
-            // Check if card is not expired
-            try {
-                String[] parts = expiry.split("/");
-                int month = Integer.parseInt(parts[0]);
-                int year = Integer.parseInt(parts[1]) + 2000;
-
-                java.time.YearMonth cardDate = java.time.YearMonth.of(year, month);
-                java.time.YearMonth now = java.time.YearMonth.now();
-
-                if (cardDate.isBefore(now)) {
-                    errorMessage.append("- Kreditkarte ist abgelaufen\n");
-                    hasError = true;
-                }
-            } catch (Exception e) {
-                errorMessage.append("- Ungültiges Ablaufdatum\n");
-                hasError = true;
-            }
-        }
-
-        String cvv = cvvField.getText();
-        if (cvv == null || !cvv.matches("^\\d{3,4}$")) {
-            errorMessage.append("- Ungültiger CVV-Code (3-4 Ziffern erforderlich)\n");
-            hasError = true;
-        }
-
-        if (hasError) {
-            showError("Validierung fehlgeschlagen",
-                    "Validierung der Kreditkartendaten ist fehlgeschlagen.",
-                    errorMessage.toString());
-            return false;
-        }
-
-        return true;
-    }
 }
