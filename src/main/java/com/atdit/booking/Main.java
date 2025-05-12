@@ -1,6 +1,6 @@
 package com.atdit.booking;
 
-import com.atdit.booking.customer.Customer;
+import com.atdit.booking.backend.customer.Customer;
 
 public class Main {
 
@@ -12,7 +12,7 @@ public class Main {
 
         customer = new Customer();
 
-        MainWindow.main(args);
+        CustomerRegistrationProcess.main(args);
     }
 }
 

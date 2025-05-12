@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.frontend.Controller.Page11ConfirmationController"
+            stylesheets="@../style/style.css">
+
+    <VBox spacing="30" alignment="CENTER" styleClass="confirmation-box"
+          AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+
+        <Label text="✓" styleClass="confirmation-icon"/>
+        <Label text="Thank you for your trust!" styleClass="confirmation-headline"/>
+
+        <VBox spacing="15" alignment="CENTER">
+            <Label fx:id="confirmationText" wrapText="true" styleClass="confirmation-text" textAlignment="CENTER"/>
+            <Label fx:id="addressText" wrapText="true" styleClass="confirmation-subtext"/>
+            <Label fx:id="emailText" wrapText="true" styleClass="confirmation-subtext"/>
+        </VBox>
+
+        <Button text="Close" onMouseClicked="#closeApplication" maxWidth="200"/>
+        
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+    </VBox>
+</AnchorPane>

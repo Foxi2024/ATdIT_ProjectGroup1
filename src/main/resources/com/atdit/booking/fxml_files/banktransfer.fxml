@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.frontend.Controller.Page9bBankTransferController"
+            stylesheets="@../style/style.css">
+
+    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+        <HBox fx:id="processStepBar" alignment="CENTER" spacing="15" styleClass="step-bar">
+            <Label fx:id="paymentSelectionLabel" text="Zahlungsart" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="paymentMethodLabel" text="Zahlungsmethode" styleClass="step-label-active"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="contractLabel" text="Kaufvertrag" styleClass="step-label"/>
+        </HBox>
+
+        <Label text="Payment Details" styleClass="headline"/>
+
+        <VBox spacing="15" styleClass="section-box">
+            <Label text="Überweisung" styleClass="sub-headline"/>
+
+            <VBox spacing="10">
+                <Label text="Zahlungsmethoden auswählen"/>
+                <ComboBox fx:id="paymentMethodCombo" onAction="#selectPaymentMethod" prefWidth="200"/>
+            </VBox>
+
+            <VBox spacing="10">
+                <Label fx:id="ibanLabel" text="IBAN:"/>
+                <TextField fx:id="ibanField" maxWidth="300" promptText="IBAN eingeben" styleClass="text-field"/>
+                <Label text="Beispiel: DE89 3704 0044 0532 0130 00" styleClass="hint-label"/>
+            </VBox>
+
+            <VBox spacing="10">
+                <Label text="Kontoinhaber"/>
+                <TextField fx:id="accountHolderField" maxWidth="300" promptText="Geben sie den Kontoinhaber an" styleClass="text-field"/>
+            </VBox>
+        </VBox>
+
+        <VBox spacing="15" styleClass="section-box">
+            <Label text="Name der Bank" styleClass="sub-headline"/>
+
+            <VBox spacing="10">
+                <Label text="Bank Name:"/>
+                <TextField fx:id="bankNameField" maxWidth="300" promptText="Geben Sie den Namen der Bank an" styleClass="text-field"/>
+            </VBox>
+
+            <VBox spacing="10">
+                <Label text="BIC/SWIFT:"/>
+                <TextField fx:id="bicField" maxWidth="300" promptText="Geben Sie den BIC/SWIFT code an" styleClass="text-field"/>
+            </VBox>
+        </VBox>
+
+        <VBox spacing="10" VBox.vgrow="ALWAYS"/>
+
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets bottom="20" right="20"/>
+            </padding>
+            <Button fx:id="backButton" onMouseClicked="#previousPage" text="Zurück"/>
+            <Button fx:id="continueButton" onMouseClicked="#nextPage" text="Weiter"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

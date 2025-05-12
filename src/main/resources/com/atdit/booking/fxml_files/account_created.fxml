@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.frontend.Controller.AccountConfirmationController"
+            stylesheets="@../style/style.css">
+
+    <VBox spacing="30" alignment="CENTER" styleClass="confirmation-box"
+          AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+
+        <Label text="✓" styleClass="confirmation-icon"/>
+        <Label text="Account erfolgreich erstellt!" styleClass="confirmation-headline"/>
+
+        <VBox spacing="15" alignment="CENTER">
+            <Label text="Vielen Dank für Ihre Registrierung. Ihr Account wurde erfolgreich angelegt."
+                   wrapText="true" styleClass="confirmation-text" textAlignment="CENTER"/>
+
+            <Label text="Ihre Angaben werden nun von unserem Team überprüft. Sobald die Prüfung abgeschlossen ist, erhalten Sie eine Bestätigungs-E-Mail von uns mit den nächsten Schritten."
+                   wrapText="true" styleClass="confirmation-subtext" textAlignment="CENTER"/>
+
+            <Label fx:id="emailLabel" wrapText="true" styleClass="confirmation-subtext" />
+        </VBox>
+
+        <Button text="Schließen" onMouseClicked="#closeApplication" maxWidth="200"/>
+
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+    </VBox>
+</AnchorPane>

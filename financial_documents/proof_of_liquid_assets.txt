@@ -1,4 +1,0 @@
-Bank Account Balance: 1000000
-IBAN: DE12345678901234567890
-Description: Savings Account
-Date Issued: 2025-01-01

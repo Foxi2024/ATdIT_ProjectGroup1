@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.frontend.Controller.Page9aCreditCardController"
+            stylesheets="@../style/style.css">
+
+    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+        <HBox fx:id="processStepBar" alignment="CENTER" spacing="15" styleClass="step-bar">
+            <Label fx:id="paymentSelectionLabel" text="Zahlungsart" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="paymentMethodLabel" text="Zahlungsmethode" styleClass="step-label-active"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="contractLabel" text="Kaufvertrag" styleClass="step-label"/>
+        </HBox>
+
+        <Label text="Zahlungs Details" styleClass="headline"/>
+
+        <VBox spacing="15" styleClass="section-box">
+            <Label text="Karten Details" styleClass="sub-headline"/>
+
+            <VBox spacing="10">
+                <Label text="Zahlungsmethode:"/>
+                <ComboBox fx:id="paymentMethodCombo" onAction="#selectPaymentMethod" prefWidth="200"/>
+            </VBox>
+
+            <VBox spacing="10">
+                <Label fx:id="cardLabel" text="Kartennummer:"/>
+                <TextField fx:id="cardNumberField" promptText="XXXX XXXX XXXX XXXX" maxWidth="300" styleClass="text-field"/>
+            </VBox>
+
+            <HBox spacing="20">
+                <VBox fx:id="expiryBox" spacing="10">
+                    <Label text="Ablaufdatum:"/>
+                    <TextField fx:id="expiryField" promptText="MM/YY" maxWidth="100" styleClass="text-field"/>
+                </VBox>
+
+                <VBox fx:id="cvvBox" spacing="10">
+                    <Label text="CVV:"/>
+                    <TextField fx:id="cvvField" promptText="XXX" maxWidth="70" styleClass="text-field"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="10" VBox.vgrow="ALWAYS"/>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets bottom="20" right="20"/>
+            </padding>
+            <Button fx:id="backButton" text="Zurück" onMouseClicked="#previousPage"/>
+            <Button fx:id="payButton" text="Weiter" onMouseClicked="#nextPage"/>
+        </HBox>
+    </VBox>
+</AnchorPane>
