@@ -66,7 +66,6 @@ public class Encrypter {
         cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
         return new String(cipher.doFinal(data));
 
-
     }
 
     public String hashString(String stringToHash) throws HashingException {

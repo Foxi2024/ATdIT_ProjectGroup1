@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class Page7ControllerPageLogin extends Controller implements Initializable {
+
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
@@ -41,29 +42,22 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            errorLabel.setText("Bitte geben Sie Email und Passwort ein");
-            return;
-        }
 
         try {
-
             currentCustomer = db.getCustomerWithFinancialInfoByEmail(email, password);
-
-            if (currentCustomer == null) {
-                errorLabel.setText("Falsche Email oder Passwort");
-                return;
-            }
-
-            loadScene(e, "payment_selection_page.fxml", "Zahlungsart auswählen");
-
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             showError("Anmeldefehler", "Anmeldedaten konnten nicht überprüft werden.", ex.getMessage());
+            return;
 
-        } catch (RuntimeException ex) {
+        } catch (IllegalArgumentException ex) {
+            errorLabel.setText(ex.getMessage());
+        }
+        catch (RuntimeException ex) {
 
             errorLabel.setText("E-Mail oder Password ist falsch"+ ex.getMessage());
         }
+        loadScene(e, "payment_selection_page.fxml", "Zahlungsart auswählen");
     }
 
 }

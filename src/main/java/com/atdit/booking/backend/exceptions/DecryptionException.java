@@ -1,11 +1,7 @@
 package com.atdit.booking.backend.exceptions;
 
-public class DecryptionException extends Exception {
-    public DecryptionException(String message) {
-        super(message);
-    }
-
-    public DecryptionException(String message, Throwable cause) {
-        super(message, cause);
-    }
+public class DecryptionException extends CryptographyException {
+  public DecryptionException(String message) {
+    super(message);
+  }
 }

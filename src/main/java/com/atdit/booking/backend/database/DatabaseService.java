@@ -1,10 +1,7 @@
 package com.atdit.booking.backend.database;
 
 import com.atdit.booking.backend.customer.Customer;
-import com.atdit.booking.backend.exceptions.DecryptionException;
-import com.atdit.booking.backend.exceptions.EncryptionException;
-import com.atdit.booking.backend.exceptions.HashingException;
-import com.atdit.booking.backend.exceptions.ValidationException;
+import com.atdit.booking.backend.exceptions.*;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
 import com.atdit.booking.backend.financialdata.financial_information.IncomeProof;
 import com.atdit.booking.backend.financialdata.financial_information.LiquidAsset;
@@ -231,7 +228,12 @@ public class DatabaseService {
 
     }
 
-    public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws SQLException, RuntimeException {
+    public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws IllegalArgumentException, SQLException {
+
+        if (email.isEmpty() || password.isEmpty()) {
+            throw new IllegalArgumentException("Email- oder Passwortfeld ist leer.");
+        }
+
 
         String sql = "SELECT c.*, fi.*, ip.*, la.*, so.* " +
                 "FROM customers c " +
@@ -249,27 +251,16 @@ public class DatabaseService {
             if (rs.next()) {
 
                 Customer customer = extractCustomerFromResultSet(rs, email, password);
-                //FinancialInformation financialInfo = extractFinancialInfoFromResultSet(rs);
-                //IncomeProof incomeProof = extractIncomeProofFromResultSet(rs);
-                //LiquidAsset liquidAsset = extractLiquidAssetFromResultSet(rs);
-                //SchufaOverview schufaOverview = extractSchufaOverviewFromResultSet(rs);
-
-                //financialInfo.setProofOfIncome(incomeProof);
-                //financialInfo.setProofOfLiquidAssets(liquidAsset);
-                //financialInfo.setSchufa(schufaOverview);
-
-                //customer.setFinancialInformation(financialInfo);
                 customer.setFinancialInformation(null);
 
                 return customer;
             }
-            return null;
         }
         catch (SQLException e) {
-            throw new SQLException("Failed to retrieve customer data", e);
+            throw new SQLException("Fehler beim Verbindungsaufbau mit der Datenbank.");
         }
         catch (DecryptionException | HashingException e){
-            throw new RuntimeException("Failed to decrypt customer data", e);
+            throw new CryptographyException("Entschlüsslung der Daten ist fehlgeschlagen", e);
         }
         catch (Exception e){
             throw new RuntimeException("Failed to retrieve customer data " + e.getMessage(), e);

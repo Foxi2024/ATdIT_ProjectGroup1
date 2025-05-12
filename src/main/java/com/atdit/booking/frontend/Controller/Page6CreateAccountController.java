@@ -18,7 +18,6 @@ import java.util.ResourceBundle;
 
 public class Page6CreateAccountController extends Controller implements Initializable {
 
-
     @FXML private Label emailLabel;
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
@@ -38,14 +37,13 @@ public class Page6CreateAccountController extends Controller implements Initiali
 
         try {
             db = new DatabaseService();
-            passwordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton(password, confirm));
-            confirmPasswordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton(password, confirm));
         }
         catch (SQLException ex) {
             showError("Datenbankfehler", "Ein Fehler ist beim Speichern ihrer Daten aufgetreten.", ex.getMessage());
         }
 
-
+        passwordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton(password, confirm));
+        confirmPasswordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton(password, confirm));
     }
 
     private void toggleCreateButton(String password, String confirm) {
@@ -70,7 +68,6 @@ public class Page6CreateAccountController extends Controller implements Initiali
         String password = passwordField.getText();
 
         try {
-            DatabaseService db = new DatabaseService();
             db.setCurrentCustomer(currentCustomer);
             db.saveCustomerInDatabase(password);
         }
