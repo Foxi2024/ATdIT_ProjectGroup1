@@ -44,7 +44,6 @@ public class Page5ProofFIController extends Controller implements Initializable,
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //processStepBarController.setCurrentStep("proof");
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt")
         );
@@ -73,7 +72,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
             return;
         }
         catch (EvaluationException ex) {
-            showError("Evaluierung fehlgeschlagen", "Die Validierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
+            showError("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 

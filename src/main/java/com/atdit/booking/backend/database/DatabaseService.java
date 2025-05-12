@@ -4,6 +4,7 @@ import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.exceptions.DecryptionException;
 import com.atdit.booking.backend.exceptions.EncryptionException;
 import com.atdit.booking.backend.exceptions.HashingException;
+import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
 import com.atdit.booking.backend.financialdata.financial_information.IncomeProof;
 import com.atdit.booking.backend.financialdata.financial_information.LiquidAsset;
@@ -443,6 +444,20 @@ public class DatabaseService {
             for (String sql : tables) {
                 stmt.execute(sql);
             }
+        }
+    }
+
+    public void validatePasswords(String password, String confirm) throws ValidationException{
+
+        boolean isValid = password.equals(confirm) &&
+                password.length() >= 8 &&
+                password.matches(".*[A-Z].*") &&
+                password.matches(".*[a-z].*") &&
+                password.matches(".*\\d.*") &&
+                password.matches(".*[!@#$%^&*()\\-_=+\\\\|\\[{\\]};:'\",<.>/?].*");
+
+        if(!isValid){
+            throw new ValidationException("Passwort erfüllt nicht die Anforderungen");
         }
     }
 

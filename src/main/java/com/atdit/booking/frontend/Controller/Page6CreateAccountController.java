@@ -4,6 +4,7 @@ package com.atdit.booking.frontend.Controller;
 import com.atdit.booking.Main;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.database.DatabaseService;
+import com.atdit.booking.backend.exceptions.ValidationException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -29,26 +30,28 @@ public class Page6CreateAccountController extends Controller implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //processStepBarController.setCurrentStep("account");
-
         emailLabel.setText(currentCustomer.getEmail());
-        passwordField.textProperty().addListener((obs, old, newValue) -> validatePasswords());
-        confirmPasswordField.textProperty().addListener((obs, old, newValue) -> validatePasswords());
-    }
-
-    private void validatePasswords() {
 
         String password = passwordField.getText();
         String confirm = confirmPasswordField.getText();
 
-        boolean isValid = password.equals(confirm) &&
-                password.length() >= 8 &&
-                password.matches(".*[A-Z].*") &&
-                password.matches(".*[a-z].*") &&
-                password.matches(".*\\d.*") &&
-                password.matches(".*[!@#$%^&*()\\-_=+\\\\|\\[{\\]};:'\",<.>/?].*");
+        try {
+            DatabaseService db = new DatabaseService();
+            passwordField.textProperty().addListener((obs, old, newValue) -> db.validatePasswords(password, confirm));
+            confirmPasswordField.textProperty().addListener((obs, old, newValue) -> {
+                try{
+                    db.validatePasswords(password, confirm);
+                }
+                catch(ValidationException ex){
+                    createAccountButton.setDisable(true);
+                }
 
-        createAccountButton.setDisable(!isValid);
+            });
+        } catch (SQLException ex) {
+            showError("Datenbankfehler", "Ein Fehler ist beim Speichern ihrer Daten aufgetreten.", ex.getMessage());
+        }
+
+
     }
 
     @FXML
@@ -76,11 +79,3 @@ public class Page6CreateAccountController extends Controller implements Initiali
 
     }
 }
-
-
-/*
-
-
-check if customer is already in database
-einkommensnachweis optimieren
- */

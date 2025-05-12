@@ -75,7 +75,7 @@ public class FinancialInformationEvaluator {
             isValid = false;
         }
 
-        if(financialInfo.getSchufa().getScore() < 0.975) {
+        if(financialInfo.getSchufa().getScore() < 0.95) {
             errorMessage += "- Ihre Schufapunktzahl ist zu niedrig.\n";
             isValid = false;
         }
@@ -157,7 +157,7 @@ public class FinancialInformationEvaluator {
                     }
 
                 } catch (DateTimeParseException e) {
-                    throw new ValidationException("Invalides Datumsformat " + dateStr);
+                    throw new ValidationException("Invalides Datumsformat: " + dateStr);
                 }
             }
         }
