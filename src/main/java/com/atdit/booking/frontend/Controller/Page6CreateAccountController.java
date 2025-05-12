@@ -26,6 +26,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
 
 
     private static final Customer currentCustomer = Main.customer;
+    private DatabaseService db;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -36,22 +37,25 @@ public class Page6CreateAccountController extends Controller implements Initiali
         String confirm = confirmPasswordField.getText();
 
         try {
-            DatabaseService db = new DatabaseService();
-            passwordField.textProperty().addListener((obs, old, newValue) -> db.validatePasswords(password, confirm));
-            confirmPasswordField.textProperty().addListener((obs, old, newValue) -> {
-                try{
-                    db.validatePasswords(password, confirm);
-                }
-                catch(ValidationException ex){
-                    createAccountButton.setDisable(true);
-                }
-
-            });
-        } catch (SQLException ex) {
+            db = new DatabaseService();
+            passwordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton(password, confirm));
+            confirmPasswordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton(password, confirm));
+        }
+        catch (SQLException ex) {
             showError("Datenbankfehler", "Ein Fehler ist beim Speichern ihrer Daten aufgetreten.", ex.getMessage());
         }
 
 
+    }
+
+    private void toggleCreateButton(String password, String confirm) {
+
+        try{
+            db.validatePasswords(password, confirm);
+        }
+        catch(ValidationException ex){
+            createAccountButton.setDisable(true);
+        }
     }
 
     @FXML
