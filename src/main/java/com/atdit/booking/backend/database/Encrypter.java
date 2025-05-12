@@ -1,5 +1,7 @@
 package com.atdit.booking.backend.database;
 
+import com.atdit.booking.backend.exceptions.CryptographyException;
+import com.atdit.booking.backend.exceptions.DecryptionException;
 import com.atdit.booking.backend.exceptions.EncryptionException;
 import com.atdit.booking.backend.exceptions.HashingException;
 
@@ -21,7 +23,7 @@ public class Encrypter {
     private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
     private static final int KEY_SIZE = 256;
 
-    private SecretKey deriveKey(String email, String password) throws EncryptionException {
+    private SecretKey deriveKey(String email, String password) throws CryptographyException {
 
         try{
             String salt = "1.FC Kaiserslautern";
@@ -31,7 +33,7 @@ public class Encrypter {
             return new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
         }
         catch (Exception e) {
-            throw new EncryptionException("Error deriving key", e);
+            throw new CryptographyException("Fehler bei der Schlüsselermittlung");
         }
     }
 
@@ -50,21 +52,25 @@ public class Encrypter {
             return Base64.getEncoder().encodeToString(combined);
         }
         catch(Exception e){
-            throw new EncryptionException("Error encrypting value", e);
+            throw new EncryptionException("Fehler beim Verschlüsseln");
         }
 
     }
 
-    public String decrypt(String encrypted, String email, String password) throws Exception {
+    public String decrypt(String encrypted, String email, String password) throws DecryptionException {
 
+        try {
+            SecretKey key = deriveKey(email, password);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            byte[] decoded = Base64.getDecoder().decode(encrypted);
+            byte[] iv = Arrays.copyOfRange(decoded, 0, 16);
+            byte[] data = Arrays.copyOfRange(decoded, 16, decoded.length);
+            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
+            return new String(cipher.doFinal(data));
+        } catch (Exception e) {
+            throw new DecryptionException("Fehler beim Entschlüsseln");
+        }
 
-        SecretKey key = deriveKey(email, password);
-        Cipher cipher = Cipher.getInstance(ALGORITHM);
-        byte[] decoded = Base64.getDecoder().decode(encrypted);
-        byte[] iv = Arrays.copyOfRange(decoded, 0, 16);
-        byte[] data = Arrays.copyOfRange(decoded, 16, decoded.length);
-        cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
-        return new String(cipher.doFinal(data));
 
     }
 
@@ -76,8 +82,8 @@ public class Encrypter {
             byte[] someByteArray = messageDigest.digest();
             return new BigInteger(1, someByteArray).toString(16);
         }
-        catch (NoSuchAlgorithmException e) {
-            throw new HashingException("Error hashing string", e);
+        catch (Exception e) {
+            throw new HashingException("Error hashing string");
         }
 
 

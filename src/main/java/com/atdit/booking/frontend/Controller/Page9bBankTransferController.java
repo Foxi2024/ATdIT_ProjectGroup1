@@ -87,47 +87,7 @@ public class Page9bBankTransferController extends Controller implements Initiali
         }
     }
 
-    private boolean validateBankTransferInfo() {
-        StringBuilder errorMessage = new StringBuilder("Bitte korrigieren Sie folgende Fehler:\n");
-        boolean hasError = false;
 
-        // Validate IBAN (simplified for German IBAN)
-        String iban = ibanField.getText().replaceAll("\\s", "").toUpperCase();
-        if (!iban.matches("^DE\\d{20}$")) {
-            errorMessage.append("- Ungültige IBAN (Format: DE + 20 Ziffern)\n");
-            hasError = true;
-        }
-
-        // Validate BIC/SWIFT (8 or 11 alphanumeric characters)
-        String bic = bicField.getText().replaceAll("\\s", "").toUpperCase();
-        if (!bic.matches("^[A-Z0-9]{8}(?:[A-Z0-9]{3})?$")) {
-            errorMessage.append("- Ungültiger BIC/SWIFT Code (8 oder 11 Zeichen)\n");
-            hasError = true;
-        }
-
-        // Validate account holder (not empty, only letters and spaces)
-        String accountHolder = accountHolderField.getText().trim();
-        if (accountHolder.isEmpty() || !accountHolder.matches("^[A-Za-zÄäÖöÜüß\\s-]{2,50}$")) {
-            errorMessage.append("- Ungültiger Kontoinhaber (2-50 Zeichen, nur Buchstaben erlaubt)\n");
-            hasError = true;
-        }
-
-        // Validate bank name (not empty)
-        String bankName = bankNameField.getText().trim();
-        if (bankName.isEmpty() || bankName.length() < 2) {
-            errorMessage.append("- Ungültiger Bankname (mindestens 2 Zeichen)\n");
-            hasError = true;
-        }
-
-        if (hasError) {
-            showError("Validierung fehlgeschlagen",
-                    "Validierung der Überweisungsdaten ist fehlgeschlagen.",
-                    errorMessage.toString());
-            return false;
-        }
-
-        return true;
-    }
 
 
 }

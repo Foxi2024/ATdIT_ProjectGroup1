@@ -42,7 +42,6 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
         String email = emailField.getText();
         String password = passwordField.getText();
 
-
         try {
             currentCustomer = db.getCustomerWithFinancialInfoByEmail(email, password);
         }
@@ -53,10 +52,7 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
         } catch (IllegalArgumentException ex) {
             errorLabel.setText(ex.getMessage());
         }
-        catch (RuntimeException ex) {
 
-            errorLabel.setText("E-Mail oder Password ist falsch"+ ex.getMessage());
-        }
         loadScene(e, "payment_selection_page.fxml", "Zahlungsart auswählen");
     }
 

@@ -234,7 +234,6 @@ public class DatabaseService {
             throw new IllegalArgumentException("Email- oder Passwortfeld ist leer.");
         }
 
-
         String sql = "SELECT c.*, fi.*, ip.*, la.*, so.* " +
                 "FROM customers c " +
                 "JOIN financial_information fi ON c.financial_info_id = fi.id " +
@@ -255,20 +254,19 @@ public class DatabaseService {
 
                 return customer;
             }
+
+            throw new IllegalArgumentException("E-Mail oder Passwort falsch.");
         }
-        catch (SQLException e) {
+        catch (SQLException ex) {
             throw new SQLException("Fehler beim Verbindungsaufbau mit der Datenbank.");
         }
-        catch (DecryptionException | HashingException e){
-            throw new CryptographyException("Entschlüsslung der Daten ist fehlgeschlagen", e);
-        }
-        catch (Exception e){
-            throw new RuntimeException("Failed to retrieve customer data " + e.getMessage(), e);
+        catch (CryptographyException ex) {
+            throw new CryptographyException("Entschlüsslung der Daten ist fehlgeschlagen");
         }
 
     }
 
-    private Customer extractCustomerFromResultSet(ResultSet rs, String email, String password) throws Exception {
+    private Customer extractCustomerFromResultSet(ResultSet rs, String email, String password) throws SQLException, DecryptionException {
 
         Customer customer = new Customer();
 

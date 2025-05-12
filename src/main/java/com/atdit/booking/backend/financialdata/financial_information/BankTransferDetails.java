@@ -7,8 +7,11 @@ public class BankTransferDetails {
     private String bankName;
     private String bicSwift;
 
+
+
+
     public void setBicSwift(String bicSwift) {
-        this.bicSwift = bicSwift;
+        this.bicSwift = bicSwift.toUpperCase();
     }
 
     public void setBankName(String bankName) {
@@ -20,7 +23,7 @@ public class BankTransferDetails {
     }
 
     public void setIban(String iban) {
-        this.iban = iban;
+        this.iban = iban.toUpperCase();
     }
 
     public String getIban() {

@@ -28,8 +28,6 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
-
         monthsCombo.getItems().addAll(12, 24, 36, 48, 60);
         monthsCombo.setValue(12);
 
@@ -49,8 +47,6 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
-
-
 
         downPaymentLabel.setText(nf.format(financingContract.getDownPayment()));
         totalAmountLabel.setText(nf.format(financingContract.getFinancedAmount()));
