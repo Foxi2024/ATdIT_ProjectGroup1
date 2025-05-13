@@ -82,7 +82,7 @@ public class Page4DeclarationFIController extends Controller implements Initiali
             return;
         }
 
-        loadScene(e, "page_5.fxml", "Nachweis finanzieller Angaben");
+        loadScene(e, "page_5_proof_of_financial_info.fxml", "Nachweis finanzieller Angaben");
     }
 
     /**
@@ -93,7 +93,7 @@ public class Page4DeclarationFIController extends Controller implements Initiali
     public void previousPage(MouseEvent e) {
 
         cacheData();
-        loadScene(e, "page_3.fxml", "Finanzielle Angaben");
+        loadScene(e, "page_3_personal_info_form.fxml", "Finanzielle Angaben");
     }
 
     /**

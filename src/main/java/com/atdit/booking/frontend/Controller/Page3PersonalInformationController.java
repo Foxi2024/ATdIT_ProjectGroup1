@@ -97,7 +97,7 @@ public class Page3PersonalInformationController extends Controller implements In
             return;
         }
 
-        loadScene(e, "page_4.fxml", "Finanzielle Angaben");
+        loadScene(e, "page_4_financial_info_declaration.fxml", "Finanzielle Angaben");
     }
 
     /**
@@ -111,7 +111,7 @@ public class Page3PersonalInformationController extends Controller implements In
     public void previousPage(MouseEvent e) {
 
         cacheData();
-        loadScene(e, "page_2.fxml", "Datenschutzerklärung");
+        loadScene(e, "page_2_data_privacy_form.fxml", "Datenschutzerklärung");
     }
 
     @FXML
