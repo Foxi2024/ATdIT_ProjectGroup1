@@ -93,7 +93,7 @@ public class Page3PersonalInformationController extends Controller implements In
             evaluator.evaluateCustomerInfo();
         }
         catch (ValidationException ex) {
-            showError("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
+            showConfirmation("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 
@@ -105,6 +105,8 @@ public class Page3PersonalInformationController extends Controller implements In
      *
      * @param e The MouseEvent that triggered the action
      */
+
+
     @FXML
     public void previousPage(MouseEvent e) {
 
@@ -121,7 +123,7 @@ public class Page3PersonalInformationController extends Controller implements In
             evaluator.evaluateCustomerInfo();
         }
         catch (ValidationException ex) {
-            showError("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
+            showConfirmation("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 

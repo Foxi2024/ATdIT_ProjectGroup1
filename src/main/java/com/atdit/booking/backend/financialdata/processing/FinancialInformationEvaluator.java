@@ -34,7 +34,7 @@ public class FinancialInformationEvaluator {
     private final FinancialInformation financialInfo;
 
     /** Current customer object */
-    private final Customer currentCustomer = Main.customer;
+    private Customer currentCustomer;
 
     /**
      * Constructor initializes the evaluator with financial information
@@ -46,6 +46,10 @@ public class FinancialInformationEvaluator {
         this.financialInfo = financialInfo;
         this.journeyDetails.setMonths(60);
         MIN_MONTHLY_MONEY = journeyDetails.getMonthlyPayment() * 0.8;
+    }
+
+    public void setCurrentCustomer(Customer currentCustomer) {
+        this.currentCustomer = currentCustomer;
     }
 
     /**

@@ -71,11 +71,11 @@ public class Page4DeclarationFIController extends Controller implements Initiali
             return;
         }
         catch (ValidationException ex) {
-            showError("Validierung fehlgeschlagen", "Die Validierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());
+            showConfirmation("Validierung fehlgeschlagen", "Die Validierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
         catch (EvaluationException ex) {
-            showError("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());
+            showConfirmation("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 

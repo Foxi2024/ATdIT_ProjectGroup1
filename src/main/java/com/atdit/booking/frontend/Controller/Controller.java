@@ -2,11 +2,13 @@ package com.atdit.booking.frontend.Controller;
 
 
 import com.atdit.booking.CustomerRegistrationProcess;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
@@ -30,7 +32,7 @@ public abstract class Controller {
      * - Adding the application icon
      *
      * @param event The event that triggered the scene change
-     * @param fxml The name of the FXML file to load (without path)
+     * @param fxml  The name of the FXML file to load (without path)
      * @param title The title to be displayed in the window title bar
      */
     public void loadScene(Event event, String fxml, String title) {
@@ -50,8 +52,7 @@ public abstract class Controller {
             stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
 
             stage.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             showError("Error", "Error loading page", "Could not load the next page. Try again or close the application. \n" + e.getMessage());
         }
     }
@@ -60,8 +61,8 @@ public abstract class Controller {
      * Displays an error dialog with the specified information.
      * Creates and shows a JavaFX Alert dialog of type ERROR.
      *
-     * @param title The title of the error dialog window
-     * @param header The header text shown in the error dialog
+     * @param title   The title of the error dialog window
+     * @param header  The header text shown in the error dialog
      * @param content The detailed error message to be displayed
      */
     static public void showError(String title, String header, String content) {
@@ -70,5 +71,23 @@ public abstract class Controller {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    static public void showConfirmation(String title, String header, String content) {
+        ButtonType correctButton = new ButtonType("Korrigieren");
+        ButtonType cancelButton = new ButtonType("Prozess abbrechen");
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.getButtonTypes().setAll(correctButton, cancelButton);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == cancelButton) {
+                Platform.exit(); // Oder eine andere Abbruch-Logik
+            }
+
+        });
     }
 }
