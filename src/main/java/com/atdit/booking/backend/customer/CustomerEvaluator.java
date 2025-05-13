@@ -70,6 +70,9 @@ public class CustomerEvaluator {
      * Validates the customer's first name.
      * The first name must not be empty and must only contain letters, spaces, and hyphens.
      *
+     * Regex pattern used:
+     * - "^[A-Za-z\\s-]+$" - Matches letters (A-Z, a-z), spaces, and hyphens
+     *
      * @param firstName The first name to validate
      * @throws IllegalArgumentException If the first name is invalid
      */
@@ -88,6 +91,9 @@ public class CustomerEvaluator {
      * Validates the customer's last name.
      * The last name must not be empty and must only contain letters, spaces, and hyphens.
      *
+     * Regex pattern used:
+     * - "^[A-Za-z\\s-]+$" - Matches letters (A-Z, a-z), spaces, and hyphens
+     *
      * @param name The last name to validate
      * @throws IllegalArgumentException If the last name is invalid
      */
@@ -105,6 +111,9 @@ public class CustomerEvaluator {
      * Validates the customer's birthdate.
      * The date must be in YYYY-MM-DD format, must not be in the future,
      * and the customer must be at least 18 years old.
+     *
+     * Regex pattern used:
+     * - "\\d{4}-\\d{2}-\\d{2}" - Matches dates in YYYY-MM-DD format
      *
      * @param birthdate The birthdate to validate
      * @throws IllegalArgumentException If the birthdate is invalid
@@ -136,6 +145,9 @@ public class CustomerEvaluator {
      * Validates the customer's country.
      * The country must not be empty and must only contain letters, spaces, and hyphens.
      *
+     * Regex pattern used:
+     * - "^[A-Za-z\\s-]+$" - Matches letters (A-Z, a-z), spaces, and hyphens
+     *
      * @param country The country to validate
      * @throws IllegalArgumentException If the country is invalid
      */
@@ -165,6 +177,10 @@ public class CustomerEvaluator {
     /**
      * Validates the customer's email address and checks if it exists in the database.
      * The email must not be empty and must match a basic email format.
+     *
+     * Regex pattern used:
+     * - "^[A-Za-z0-9+_.-]+@(.+)$" - Matches valid email addresses with alphanumeric characters,
+     *   plus signs, dots, and hyphens before @, followed by any domain
      *
      * @param email The email address to validate
      * @throws IllegalArgumentException If the email is invalid

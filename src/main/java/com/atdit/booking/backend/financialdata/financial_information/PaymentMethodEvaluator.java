@@ -39,6 +39,10 @@ public class PaymentMethodEvaluator {
      * - Account holder name must be 2-50 characters, letters only
      * - Bank name must be at least 2 characters
      *
+     * Regex patterns used:
+     * - IBAN: "^DE\\d{20}$" - Matches exactly DE followed by 20 digits
+     * - BIC: "^[A-Z0-9]{8}$" or "^[A-Z0-9]{11}$" - Matches exactly 8 or 11 alphanumeric characters
+     * - Account holder: "^[A-Za-zÄäÖöÜüß\\s-]{2,50}$" - Matches 2-50 characters of letters, German umlauts, spaces and hyphens
      * @throws ValidationException If any of the validation criteria are not met
      */
     public void validateBankTransferInfo() {
@@ -87,6 +91,10 @@ public class PaymentMethodEvaluator {
      * - Expiry date must be in MM/YY format and not expired
      * - CVV must be 3-4 digits
      *
+     * Regex patterns used:
+     * - Card number: "^\\d{16}$" - Matches exactly 16 digits
+     * - Expiry date: "^(0[1-9]|1[0-2])/([0-9]{2})$" - Matches MM/YY format where MM is 01-12
+     * - CVV: "^\\d{3,4}$" - Matches 3 or 4 digits
      * @throws ValidationException If any of the validation criteria are not met or if the card is expired
      */
     public void validateCreditCardInfo() {
