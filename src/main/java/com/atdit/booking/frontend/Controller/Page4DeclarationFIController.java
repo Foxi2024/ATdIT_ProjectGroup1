@@ -15,27 +15,49 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller class for Page 4 of the application where users declare their financial information.
+ * This class handles the UI interactions and validation of financial data input.
+ * Extends the base Controller class and implements Initializable, Navigatable and Cacheable interfaces.
+ */
 public class Page4DeclarationFIController extends Controller implements Initializable, Navigatable, Cacheable {
 
+    /** TextField for entering net income */
     @FXML private TextField netIncomeField;
+    /** TextField for entering fixed costs */
     @FXML private TextField fixedCostsField;
+    /** TextField for entering minimum living costs */
     @FXML private TextField minLivingCostField;
+    /** TextField for entering liquid assets */
     @FXML private TextField liquidAssetsField;
+    /** Button to proceed to next page */
     @FXML private Button continueButton;
+    /** Button to return to previous page */
     @FXML private Button backButton;
 
-
+    /** Reference to the current customer */
     private static final Customer currentCustomer = Main.customer;
+    /** Reference to the customer's financial information */
     private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
+    /** Evaluator for validating financial information */
     private static final FinancialInformationEvaluator financialInformationEvaluator = new FinancialInformationEvaluator(financialInfo);
 
+    /**
+     * Initializes the controller by restoring previously saved data.
+     * @param url The location used to resolve relative paths
+     * @param resourceBundle The resource bundle containing localized data
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         restoreData();
     }
 
-
+    /**
+     * Handles navigation to the next page after validating financial information.
+     * Performs validation and evaluation of the declared financial data.
+     * Shows error messages if validation or evaluation fails.
+     * @param e MouseEvent triggered by clicking the continue button
+     */
     @FXML
     public void nextPage(MouseEvent e) {
 
@@ -60,7 +82,10 @@ public class Page4DeclarationFIController extends Controller implements Initiali
         loadScene(e, "page_5.fxml", "Nachweis finanzieller Angaben");
     }
 
-
+    /**
+     * Handles navigation to the previous page after caching current data.
+     * @param e MouseEvent triggered by clicking the back button
+     */
     @FXML
     public void previousPage(MouseEvent e) {
 
@@ -68,7 +93,11 @@ public class Page4DeclarationFIController extends Controller implements Initiali
         loadScene(e, "page_3.fxml", "Finanzielle Angaben");
     }
 
-
+    /**
+     * Saves the current financial data input by the user.
+     * Converts text field values to integers and stores them in the financial information object.
+     * @throws NumberFormatException if input values cannot be parsed as integers
+     */
     public void cacheData() throws NumberFormatException {
 
         financialInfo.setAvgNetIncome(Integer.parseInt(netIncomeField.getText().trim()));
@@ -77,7 +106,10 @@ public class Page4DeclarationFIController extends Controller implements Initiali
         financialInfo.setLiquidAssets(Integer.parseInt(liquidAssetsField.getText().trim()));
     }
 
-
+    /**
+     * Restores previously saved financial data to the text fields.
+     * Called during initialization to populate fields with existing data.
+     */
     public void restoreData() {
 
         netIncomeField.setText(String.valueOf(financialInfo.getAvgNetIncome()));

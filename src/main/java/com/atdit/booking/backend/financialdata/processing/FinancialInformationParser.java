@@ -4,8 +4,20 @@ import com.atdit.booking.backend.financialdata.financial_information.IncomeProof
 import com.atdit.booking.backend.financialdata.financial_information.LiquidAsset;
 import com.atdit.booking.backend.financialdata.financial_information.SchufaOverview;
 
+/**
+ * A parser class for processing various types of financial information documents.
+ * This class provides methods to parse income proofs, liquid assets, and Schufa documents
+ * from string content into structured objects.
+ */
 public class FinancialInformationParser {
 
+    /**
+     * Parses a document containing income information into an IncomeProof object.
+     *
+     * @param content The string content of the income document to be parsed
+     * @return An IncomeProof object containing the parsed information
+     * @throws IllegalArgumentException if the document format is invalid or contains incorrect data
+     */
     public IncomeProof parseIncomeDocument(String content) throws IllegalArgumentException {
         String[] lines = content.split("\n");
         int monthlyIncome = 0;
@@ -28,6 +40,13 @@ public class FinancialInformationParser {
         return new IncomeProof(monthlyIncome, employer, employmentType, duration, dateIssued);
     }
 
+    /**
+     * Parses a document containing liquid assets information into a LiquidAsset object.
+     *
+     * @param content The string content of the liquid assets document to be parsed
+     * @return A LiquidAsset object containing the parsed information
+     * @throws IllegalArgumentException if the document format is invalid or contains incorrect data
+     */
     public LiquidAsset parseLiquidAssetsDocument(String content) throws IllegalArgumentException {
 
         System.out.println(1);
@@ -51,6 +70,12 @@ public class FinancialInformationParser {
         return new LiquidAsset(iban, description, balance,  dateIssued);
     }
 
+    /**
+     * Parses a Schufa document into a SchufaOverview object.
+     *
+     * @param content The string content of the Schufa document to be parsed
+     * @return A SchufaOverview object containing the parsed information
+     */
     public SchufaOverview parseSchufaDocument(String content) {
 
         SchufaOverview schufaOverview = new SchufaOverview();
@@ -74,6 +99,13 @@ public class FinancialInformationParser {
         return schufaOverview;
     }
 
+    /**
+     * Extracts an integer value from a line of text.
+     *
+     * @param line The line of text containing the integer value after a colon
+     * @return The extracted integer value
+     * @throws IllegalArgumentException if the number format is invalid
+     */
     private int extractIntValue(String line) {
 
         try {
@@ -84,6 +116,13 @@ public class FinancialInformationParser {
         }
     }
 
+    /**
+     * Extracts a double value from a line of text.
+     *
+     * @param line The line of text containing the double value after a colon
+     * @return The extracted double value
+     * @throws IllegalArgumentException if the decimal format is invalid
+     */
     private double extractDoubleValue(String line) {
 
         try {
@@ -94,6 +133,12 @@ public class FinancialInformationParser {
         }
     }
 
+    /**
+     * Extracts a string value from a line of text.
+     *
+     * @param line The line of text containing the string value after a colon
+     * @return The extracted string value
+     */
     private String extractStringValue(String line) {
         return line.split(":")[1].trim();
     }

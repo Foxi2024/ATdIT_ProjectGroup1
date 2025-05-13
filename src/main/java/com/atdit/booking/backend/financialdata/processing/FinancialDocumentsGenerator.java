@@ -1,3 +1,8 @@
+/**
+ * A class for generating various financial documents in text format.
+ * This class handles the creation of documents such as proof of income, liquid assets proof,
+ * and Schufa (German credit score) reports.
+ */
 package com.atdit.booking.backend.financialdata.processing;
 
 import com.atdit.booking.backend.financialdata.financial_information.*;
@@ -8,14 +13,32 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * The FinancialDocumentsGenerator class provides functionality to generate and save
+ * different types of financial documents as text files.
+ */
 public class FinancialDocumentsGenerator {
 
+    /** The directory path where generated documents will be stored */
     private String directory;
 
+    /**
+     * Constructs a new FinancialDocumentsGenerator with the specified output directory.
+     *
+     * @param dir The directory path where documents should be saved
+     */
     public FinancialDocumentsGenerator(String dir) {
         this.directory = dir;
     }
 
+    /**
+     * Generates a text file with the provided content in the specified directory.
+     * Creates the directory if it doesn't exist.
+     *
+     * @param content The text content to write to the file
+     * @param fileName The name of the file (without extension)
+     * @throws IOException If an I/O error occurs while writing the file
+     */
     public void generateDocumentFile(String content, String fileName) throws IOException {
 
         Path dirPath = Paths.get(this.directory);
@@ -27,6 +50,13 @@ public class FinancialDocumentsGenerator {
         Files.writeString(filePath, content);
     }
 
+    /**
+     * Generates a proof of income document from the provided income information.
+     *
+     * @param incomeProof The income proof information
+     * @param filename The name of the output file (without extension)
+     * @throws IOException If an I/O error occurs while writing the file
+     */
     public void generateProofOfIncome(IncomeProof incomeProof, String filename) throws IOException {
 
         String content = "Monthly Net Income: " + incomeProof.monthlyNetIncome() + "\n" +
@@ -38,6 +68,13 @@ public class FinancialDocumentsGenerator {
         generateDocumentFile(content, filename);
     }
 
+    /**
+     * Generates a liquid assets proof document from the provided asset information.
+     *
+     * @param liquidAsset The liquid asset information
+     * @param filename The name of the output file (without extension)
+     * @throws IOException If an I/O error occurs while writing the file
+     */
     public void generateProofOfLiquidAssets(LiquidAsset liquidAsset, String filename) throws IOException {
 
         String content = "Bank Account Balance: " + liquidAsset.balance() + "\n" +
@@ -48,6 +85,13 @@ public class FinancialDocumentsGenerator {
         generateDocumentFile(content, filename);
     }
 
+    /**
+     * Generates a Schufa report document from the provided Schufa information.
+     *
+     * @param schufa The Schufa information
+     * @param filename The name of the output file (without extension)
+     * @throws IOException If an I/O error occurs while writing the file
+     */
     public void generateSchufa(Schufaauskunft schufa, String filename) throws IOException {
 
         SchufaOverview schufaOverview = new SchufaOverview(schufa);
@@ -66,14 +110,30 @@ public class FinancialDocumentsGenerator {
 
     }
 
+    /**
+     * Sets a new output directory for the document generator.
+     *
+     * @param directory The new directory path
+     */
     public void setDirectory(String directory) {
         this.directory = directory;
     }
 
+    /**
+     * Gets the current output directory of the document generator.
+     *
+     * @return The current directory path
+     */
     public String getDirectory() {
         return directory;
     }
 
+    /**
+     * Main method demonstrating the usage of the FinancialDocumentsGenerator.
+     * Creates example documents for income proof, liquid assets, and Schufa report.
+     *
+     * @param args Command line arguments (not used)
+     */
     public static void main(String[] args) {
 
         FinancialDocumentsGenerator generator = new FinancialDocumentsGenerator("financial_proofs");

@@ -15,9 +15,24 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-
+/**
+ * Abstract base controller class for handling JavaFX scene management and error display.
+ * This class provides common functionality for all controllers in the application.
+ */
 public abstract class Controller {
 
+    /**
+     * Loads and displays a new JavaFX scene.
+     * This method handles the complete scene transition process including:
+     * - Loading the FXML file
+     * - Setting up the stage
+     * - Positioning the window at the center of the screen
+     * - Adding the application icon
+     *
+     * @param event The event that triggered the scene change
+     * @param fxml The name of the FXML file to load (without path)
+     * @param title The title to be displayed in the window title bar
+     */
     public void loadScene(Event event, String fxml, String title) {
 
         try {
@@ -41,6 +56,14 @@ public abstract class Controller {
         }
     }
 
+    /**
+     * Displays an error dialog with the specified information.
+     * Creates and shows a JavaFX Alert dialog of type ERROR.
+     *
+     * @param title The title of the error dialog window
+     * @param header The header text shown in the error dialog
+     * @param content The detailed error message to be displayed
+     */
     static public void showError(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

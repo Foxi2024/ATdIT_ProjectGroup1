@@ -15,23 +15,53 @@ import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+/**
+ * Controller class for handling personal information input on page 3 of the booking application.
+ * This class manages the collection and validation of customer details including:
+ * - Title (Mr/Mrs)
+ * - First and last name
+ * - Birth date
+ * - Country and address
+ * - Email address
+ *
+ * The controller provides functionality for:
+ * - Initializing form fields
+ * - Data validation before proceeding
+ * - Navigation between pages
+ * - Caching and restoring form data
+ */
 public class Page3PersonalInformationController extends Controller implements Initializable, Navigatable, Cacheable {
 
+    /** ComboBox for selecting the customer's title (Mr/Mrs) */
     @FXML private ComboBox<String> titleField;
+    /** TextField for the customer's last name */
     @FXML private TextField nameField;
+    /** TextField for the customer's first name */
     @FXML private TextField firstNameField;
+    /** DatePicker for selecting the customer's birth date */
     @FXML private DatePicker birthDatePicker;
+    /** TextField for the customer's country */
     @FXML private TextField countryField;
+    /** TextField for the customer's address */
     @FXML private TextField addressField;
+    /** TextField for the customer's email address */
     @FXML private TextField emailField;
+    /** Button to proceed to the next page */
     @FXML private Button continueButton;
+    /** Button to return to the previous page */
     @FXML private Button backButton;
-
-
+    /** Reference to the current customer object */
     private Customer currentCustomer ;
+    /** Customer validator instance */
     private CustomerEvaluator evaluator;
 
+    /**
+     * Initializes the controller after FXML loading.
+     * Sets up the current customer, evaluator, and UI components.
+     *
+     * @param url The location used to resolve relative paths for the root object
+     * @param resourceBundle The resources used to localize the root object
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -44,6 +74,12 @@ public class Page3PersonalInformationController extends Controller implements In
         titleField.setValue("Herr");
     }
 
+    /**
+     * Handles navigation to the next page.
+     * Validates customer information before proceeding.
+     *
+     * @param e The MouseEvent that triggered the action
+     */
     @FXML
     public void nextPage(MouseEvent e) {
 
@@ -60,6 +96,11 @@ public class Page3PersonalInformationController extends Controller implements In
         loadScene(e, "page_4.fxml", "Finanzielle Angaben");
     }
 
+    /**
+     * Handles navigation to the previous page.
+     *
+     * @param e The MouseEvent that triggered the action
+     */
     @FXML
     public void previousPage(MouseEvent e) {
 
@@ -67,6 +108,10 @@ public class Page3PersonalInformationController extends Controller implements In
         loadScene(e, "page_2.fxml", "Datenschutzerklärung");
     }
 
+    /**
+     * Saves the current form data to the customer object.
+     * Implements the Cacheable interface.
+     */
     public void cacheData() {
 
         currentCustomer.setTitle(titleField.getValue());
@@ -84,6 +129,10 @@ public class Page3PersonalInformationController extends Controller implements In
         }
     }
 
+    /**
+     * Restores previously saved customer data to the form fields.
+     * Implements the Cacheable interface.
+     */
     public void restoreData() {
 
         titleField.setValue(currentCustomer.getTitle());

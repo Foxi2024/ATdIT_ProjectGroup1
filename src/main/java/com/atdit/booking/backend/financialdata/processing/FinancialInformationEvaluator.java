@@ -11,23 +11,49 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * This class evaluates financial information for a financing contract.
+ * It performs various validations and evaluations on the customer's financial data
+ * including income verification, liquid assets assessment, and document validation.
+ */
 public class FinancialInformationEvaluator {
 
+    /** Maximum allowed deviation between declared and actual financial values (5%) */
     private final double MAX_DEVIATION = 0.05;
+
+    /** Maximum age of submitted documents in days (1 year) */
     public static final int MAX_DOCUMENT_AGE_DAYS = 365;
+
+    /** Details of the financing contract */
     private final FinancingContract journeyDetails = new FinancingContract();
+
+    /** Minimum required monthly available money */
     private final double MIN_MONTHLY_MONEY;
 
-
+    /** Financial information object containing all relevant customer data */
     private final FinancialInformation financialInfo;
+
+    /** Current customer object */
     private final Customer currentCustomer = Main.customer;
 
+    /**
+     * Constructor initializes the evaluator with financial information
+     * and sets up basic contract parameters.
+     *
+     * @param financialInfo The financial information to be evaluated
+     */
     public FinancialInformationEvaluator(FinancialInformation financialInfo){
         this.financialInfo = financialInfo;
         this.journeyDetails.setMonths(60);
         MIN_MONTHLY_MONEY = journeyDetails.getMonthlyPayment() * 0.8;
     }
 
+    /**
+     * Evaluates the declared financial information against basic criteria.
+     * Checks if liquid assets are sufficient for down payment and if monthly available money meets minimum requirements.
+     *
+     * @throws IllegalArgumentException if the financial criteria are not met
+     */
     public void evaluateDeclaredFinancialInfo() throws IllegalArgumentException {
 
         if(financialInfo.getLiquidAssets() > 1.2 * journeyDetails.TOTAL_AMOUNT){
@@ -43,6 +69,11 @@ public class FinancialInformationEvaluator {
         }
     }
 
+    /**
+     * Evaluates if the declared income matches the proof of income within allowed deviation.
+     *
+     * @return true if income verification passes or if no proof is provided
+     */
     public boolean evaluateIncome() {
 
         if (financialInfo.getProofOfIncome() == null) {
@@ -52,14 +83,23 @@ public class FinancialInformationEvaluator {
         return ((double) (financialInfo.getProofOfIncome().monthlyNetIncome() / financialInfo.getAvgNetIncome()) > (1-MAX_DEVIATION));
     }
 
+    /**
+     * Evaluates if the declared liquid assets match the proof of assets within allowed deviation.
+     *
+     * @return true if liquid assets verification passes
+     */
     private boolean evaluateLiquidAssets() {
 
         return ((double) (financialInfo.getProofOfLiquidAssets().balance() / financialInfo.getLiquidAssets()) > (1-MAX_DEVIATION));
 
     }
 
-
-
+    /**
+     * Evaluates all uploaded documents including Schufa score, income verification,
+     * and liquid assets verification.
+     *
+     * @throws EvaluationException if any evaluation criteria are not met
+     */
     public void evaluateUploads() throws EvaluationException{
 
         String errorMessage = "Folgende Probleme sind aufgetaucht:\n";
@@ -96,7 +136,14 @@ public class FinancialInformationEvaluator {
         }
     }
 
-
+    /**
+     * Validates the format of uploaded documents based on document type.
+     * Checks for required fields in income proof, liquid assets proof, and Schufa document.
+     *
+     * @param content The document content to validate
+     * @param documentType The type of document ("income", "liquidAssets", or "schufa")
+     * @throws ValidationException if the document format is invalid
+     */
     public void validateDocumentFormat(String content, String documentType) {
         String[] lines = content.split("\n");
         boolean hasRequiredFields = false;
@@ -141,6 +188,13 @@ public class FinancialInformationEvaluator {
 
     }
 
+    /**
+     * Validates the issue date of documents to ensure they are not too old.
+     *
+     * @param content The document content containing the date
+     * @throws ValidationException if the date format is invalid or no date is found
+     * @throws EvaluationException if the document is older than the maximum allowed age
+     */
     public void validateDocumentDate(String content) throws ValidationException, EvaluationException{
         String[] lines = content.split("\n");
 
@@ -165,6 +219,12 @@ public class FinancialInformationEvaluator {
         throw new ValidationException("Kein Datumsfeld im Dokument gefunden");
     }
 
+    /**
+     * Validates the declared financial information for basic plausibility.
+     * Checks if values are non-negative.
+     *
+     * @throws ValidationException if any declared values are negative
+     */
     public void validateDeclaredFinancialInfo() throws ValidationException{
 
         String errorMessage = "Folgende Probleme sind aufgetaucht:\n";
@@ -199,6 +259,11 @@ public class FinancialInformationEvaluator {
         }
     }
 
+    /**
+     * Validates that all required documents have been uploaded.
+     *
+     * @throws ValidationException if any required documents are missing
+     */
     public void validateUploads() {
 
         String errorMessage = "Bitte laden sie folgende Dokumente hoch:\n";

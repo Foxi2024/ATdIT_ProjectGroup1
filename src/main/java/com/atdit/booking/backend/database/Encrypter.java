@@ -19,10 +19,24 @@ import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 
+/**
+ * Class for handling encryption, decryption and hashing operations.
+ * Uses AES encryption with CBC mode and PKCS5 padding.
+ */
 public class Encrypter {
+    /** Algorithm used for encryption/decryption */
     private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
+    /** Key size in bits for the encryption */
     private static final int KEY_SIZE = 256;
 
+    /**
+     * Derives an encryption key from email and password using PBKDF2.
+     *
+     * @param email User's email address
+     * @param password User's password
+     * @return SecretKey for encryption/decryption
+     * @throws CryptographyException if key derivation fails
+     */
     private SecretKey deriveKey(String email, String password) throws CryptographyException {
 
         try{
@@ -37,6 +51,16 @@ public class Encrypter {
         }
     }
 
+    /**
+     * Encrypts a string value using AES encryption.
+     * Uses a randomly generated IV for each encryption.
+     *
+     * @param value String to encrypt
+     * @param email User's email for key derivation
+     * @param password User's password for key derivation
+     * @return Base64 encoded encrypted string with IV prepended
+     * @throws EncryptionException if encryption fails
+     */
     public String encrypt(String value, String email, String password) throws EncryptionException {
 
         try{
@@ -57,6 +81,16 @@ public class Encrypter {
 
     }
 
+    /**
+     * Decrypts an encrypted string using AES decryption.
+     * Extracts the IV from the first 16 bytes of the decoded string.
+     *
+     * @param encrypted Base64 encoded encrypted string with IV
+     * @param email User's email for key derivation
+     * @param password User's password for key derivation
+     * @return Decrypted string
+     * @throws DecryptionException if decryption fails
+     */
     public String decrypt(String encrypted, String email, String password) throws DecryptionException {
 
         try {
@@ -74,6 +108,14 @@ public class Encrypter {
 
     }
 
+    /**
+     * Creates a SHA-256 hash of the input string.
+     * The hash is returned as a hexadecimal string.
+     *
+     * @param stringToHash String to be hashed
+     * @return Hexadecimal string representation of the hash
+     * @throws HashingException if hashing fails
+     */
     public String hashString(String stringToHash) throws HashingException {
 
         try{

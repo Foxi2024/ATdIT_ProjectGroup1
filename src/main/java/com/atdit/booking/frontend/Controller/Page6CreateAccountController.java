@@ -1,6 +1,5 @@
 package com.atdit.booking.frontend.Controller;
 
-
 import com.atdit.booking.Main;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.database.DatabaseService;
@@ -16,17 +15,39 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the account creation page (page 6).
+ * Handles the password creation and account finalization process.
+ * Extends the base Controller class and implements Initializable for JavaFX initialization.
+ */
 public class Page6CreateAccountController extends Controller implements Initializable {
 
+    /** Label displaying the customer's email address */
     @FXML private Label emailLabel;
+
+    /** Field for entering the password */
     @FXML private PasswordField passwordField;
+
+    /** Field for confirming the password */
     @FXML private PasswordField confirmPasswordField;
+
+    /** Button to create the account */
     @FXML private Button createAccountButton;
 
-
+    /** Reference to the current customer being created */
     private static final Customer currentCustomer = Main.customer;
+
+    /** Database service instance for handling database operations */
     private DatabaseService db;
 
+    /**
+     * Initializes the controller after FXML loading.
+     * Sets up the email display and password field listeners.
+     * Establishes database connection.
+     *
+     * @param url The location used to resolve relative paths for the root object
+     * @param resourceBundle The resources used to localize the root object
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -46,6 +67,13 @@ public class Page6CreateAccountController extends Controller implements Initiali
         confirmPasswordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton(password, confirm));
     }
 
+    /**
+     * Toggles the create account button based on password validation.
+     * Disables the button if passwords don't match validation criteria.
+     *
+     * @param password The entered password
+     * @param confirm The confirmation password
+     */
     private void toggleCreateButton(String password, String confirm) {
 
         try{
@@ -56,12 +84,24 @@ public class Page6CreateAccountController extends Controller implements Initiali
         }
     }
 
+    /**
+     * Handles navigation to the previous page.
+     *
+     * @param e The mouse event that triggered the action
+     */
     @FXML
     public void previousPage(MouseEvent e) {
 
         loadScene(e, "page_5.fxml", "");
     }
 
+    /**
+     * Handles the account creation process.
+     * Saves the customer data to the database and navigates to the confirmation page.
+     * Shows error message if database operation fails.
+     *
+     * @param e The mouse event that triggered the action
+     */
     @FXML
     public void handleCreateAccount(MouseEvent e) {
 

@@ -1,20 +1,46 @@
 package com.atdit.booking.backend.financialdata.financial_information;
 
 import com.atdit.booking.backend.exceptions.ValidationException;
-
+/**
+ * This class evaluates and validates payment method details for both bank transfers and credit cards.
+ * It contains validation logic for bank account information and credit card data.
+ */
 public class PaymentMethodEvaluator {
-
+    /** The bank transfer details to be validated */
     private BankTransferDetails bankTransferDetails;
+
+    /** The credit card details to be validated */
     private CreditCardDetails creditCardDetails;
 
+    /**
+     * Sets the bank transfer details for validation.
+     *
+     * @param bankTransferDetails The bank transfer details to be set
+     * @throws ValidationException If the provided details are invalid
+     */
     public void setBankTransferDetails(BankTransferDetails bankTransferDetails) throws ValidationException{
         this.bankTransferDetails = bankTransferDetails;
     }
 
+    /**
+     * Sets the credit card details for validation.
+     *
+     * @param creditCardDetails The credit card details to be set
+     */
     public void setCreditCardDetails(CreditCardDetails creditCardDetails) {
         this.creditCardDetails = creditCardDetails;
     }
 
+    /**
+     * Validates the bank transfer information according to German banking standards.
+     * Checks the following criteria:
+     * - IBAN must match German format (DE + 20 digits)
+     * - BIC/SWIFT code must be 8 or 11 characters
+     * - Account holder name must be 2-50 characters, letters only
+     * - Bank name must be at least 2 characters
+     *
+     * @throws ValidationException If any of the validation criteria are not met
+     */
     public void validateBankTransferInfo() {
             StringBuilder errorMessage = new StringBuilder("Bitte korrigieren Sie folgende Fehler:\n");
             boolean isValid = true;
@@ -54,7 +80,15 @@ public class PaymentMethodEvaluator {
             }
 
         }
-
+    /**
+     * Validates credit card information according to standard credit card requirements.
+     * Checks the following criteria:
+     * - Card number must be exactly 16 digits
+     * - Expiry date must be in MM/YY format and not expired
+     * - CVV must be 3-4 digits
+     *
+     * @throws ValidationException If any of the validation criteria are not met or if the card is expired
+     */
     public void validateCreditCardInfo() {
         StringBuilder errorMessage = new StringBuilder("Bitte korrigieren Sie folgende Fehler:\n");
         boolean isValid = true;

@@ -3,15 +3,38 @@ package com.atdit.booking.backend.financialdata.contracts;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a one-time payment contract for space travel bookings.
+ * This class extends the base Contract class and implements specific functionality
+ * for contracts where the total amount is paid in a single transaction.
+ */
 public class OneTimePaymentContract extends Contract {
 
-
+    /** The total amount to be paid for the space travel */
     private final double totalAmount;
 
+    /**
+     * Constructor initializes a new one-time payment contract.
+     * Sets the total amount from the parent class's TOTAL_AMOUNT constant.
+     */
     public OneTimePaymentContract() {
         this.totalAmount = super.TOTAL_AMOUNT;
     }
 
+    /**
+     * Generates the complete contract text in German language.
+     * The contract includes sections about:
+     * - Subject of the agreement
+     * - Payment amount and modalities
+     * - Payment terms
+     * - Cancellation policy
+     * - Health requirements and approvals
+     * - Data protection
+     * - Miscellaneous legal provisions
+     *
+     * @return A formatted string containing the complete contract text with
+     *         automatically inserted current date, total amount (twice) and payment method
+     */
     public String getContractText() {
 
         LocalDateTime now = LocalDateTime.now();

@@ -9,18 +9,30 @@ import com.atdit.booking.backend.financialdata.financial_information.SchufaOverv
 
 import java.sql.*;
 
-
-
+/**
+ * Service class for handling all database operations related to customer data.
+ * Manages connections to SQLite database and provides CRUD operations for customer information.
+ */
 public class DatabaseService {
 
+    /** URL for the SQLite database connection */
     private static final String DB_URL = "jdbc:sqlite:database/customers.db";
+
+    /** Encrypter instance for handling encryption/decryption of sensitive data */
     private static final Encrypter encrypter = new Encrypter();
+
+    /** Active database connection */
     private final Connection connection;
+
+    /** Currently active customer being processed */
     private Customer currentCustomer;
 
-
+    /**
+     * Constructs a new DatabaseService and establishes database connection.
+     *
+     * @throws SQLException if database connection fails
+     */
     public DatabaseService() throws SQLException {
-
         try{
             this.connection = DriverManager.getConnection(DB_URL);
         } catch (SQLException e) {
@@ -28,13 +40,23 @@ public class DatabaseService {
         }
     }
 
+    /**
+     * Sets the current customer for database operations.
+     *
+     * @param currentCustomer the customer to be set as current
+     */
     public void setCurrentCustomer(Customer currentCustomer) {
         this.currentCustomer = currentCustomer;
     }
 
-
+    /**
+     * Inserts income proof information into the database.
+     * Creates a new record in the income_proofs table with the current customer's income information.
+     *
+     * @return generated ID of the inserted income proof, or 0 if no proof exists
+     * @throws SQLException if database operation fails
+     */
     private long insertIncomeProof() throws SQLException {
-
         IncomeProof proof = this.currentCustomer.getFinancialInformation().getProofOfIncome();
 
         if (proof == null) {
@@ -42,7 +64,7 @@ public class DatabaseService {
         }
 
         String sql = """
-        INSERT INTO income_proofs (monthlyNetIncome, employer, employmentType, 
+        INSERT INTO income_proofs (monthlyNetIncome, employer, employmentType,
         employmentDurationMonths, dateIssued)
         VALUES (?, ?, ?, ?, ?)
         """;
@@ -64,11 +86,16 @@ public class DatabaseService {
         }
 
         throw new SQLException("Failed to save proof of income");
-
     }
 
+    /**
+     * Inserts liquid assets proof into the database.
+     * Creates a new record in the liquid_assets table with the current customer's asset information.
+     *
+     * @return generated ID of the inserted assets proof
+     * @throws SQLException if database operation fails
+     */
     private long insertAssetsProof() throws SQLException {
-
         String sql = """
         INSERT INTO liquid_assets (iban, description, balance, dateIssued)
         VALUES (?, ?, ?, ?)
@@ -91,11 +118,16 @@ public class DatabaseService {
         }
 
         throw new SQLException("Failed to save proof of liquid assets");
-
     }
 
+    /**
+     * Inserts SCHUFA record into the database.
+     * Creates a new record in the schufa_overview table with the current customer's SCHUFA information.
+     *
+     * @return generated ID of the inserted SCHUFA record
+     * @throws SQLException if database operation fails
+     */
     private long insertSchufaRecord() throws SQLException {
-
         SchufaOverview schufa = this.currentCustomer.getFinancialInformation().getSchufa();
 
         String sql = """
@@ -126,9 +158,17 @@ public class DatabaseService {
         throw new SQLException("Failed to save schufa overview");
     }
 
-
+    /**
+     * Inserts customer personal data into the database.
+     * Creates a new record in the customers table with encrypted personal information.
+     *
+     * @param financialInfoId ID of the associated financial information
+     * @param password customer's password for encryption
+     * @throws SQLException if database operation fails
+     * @throws EncryptionException if data encryption fails
+     * @throws HashingException if email hashing fails
+     */
     private void insertCustomerData(long financialInfoId, String password) throws SQLException, EncryptionException, HashingException {
-
         String email = this.currentCustomer.getEmail();
 
         String sql = """
@@ -136,24 +176,30 @@ public class DatabaseService {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """;
 
-
-            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, encrypter.hashString(email));
-            pstmt.setString(2, encrypter.encrypt(email, email, password));
-            pstmt.setString(3, encrypter.encrypt(this.currentCustomer.getTitle(), email, password));
-            pstmt.setString(4, encrypter.encrypt(this.currentCustomer.getFirstName(), email, password));
-            pstmt.setString(5, encrypter.encrypt(this.currentCustomer.getName(), email, password));
-            pstmt.setString(6, encrypter.encrypt(this.currentCustomer.getCountry(), email, password));
-            pstmt.setString(7, encrypter.encrypt(this.currentCustomer.getBirthdate(), email, password));
-            pstmt.setString(8, encrypter.encrypt(this.currentCustomer.getAddress(), email, password));
-            pstmt.setLong(9, financialInfoId);
-            pstmt.executeUpdate();
-
-
+        PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pstmt.setString(1, encrypter.hashString(email));
+        pstmt.setString(2, encrypter.encrypt(email, email, password));
+        pstmt.setString(3, encrypter.encrypt(this.currentCustomer.getTitle(), email, password));
+        pstmt.setString(4, encrypter.encrypt(this.currentCustomer.getFirstName(), email, password));
+        pstmt.setString(5, encrypter.encrypt(this.currentCustomer.getName(), email, password));
+        pstmt.setString(6, encrypter.encrypt(this.currentCustomer.getCountry(), email, password));
+        pstmt.setString(7, encrypter.encrypt(this.currentCustomer.getBirthdate(), email, password));
+        pstmt.setString(8, encrypter.encrypt(this.currentCustomer.getAddress(), email, password));
+        pstmt.setLong(9, financialInfoId);
+        pstmt.executeUpdate();
     }
 
+    /**
+     * Inserts financial information into the database.
+     * Creates a new record in the financial_information table linking all financial proofs.
+     *
+     * @param incomeProofId ID of the associated income proof
+     * @param assetsProofId ID of the associated assets proof
+     * @param schufaId ID of the associated SCHUFA record
+     * @return generated ID of the inserted financial information
+     * @throws SQLException if database operation fails
+     */
     private long insertFinancialData(long incomeProofId, long assetsProofId, long schufaId) throws SQLException {
-
         FinancialInformation financialInfo = this.currentCustomer.getFinancialInformation();
 
         System.out.println("Financial Info: " + financialInfo);
@@ -190,9 +236,15 @@ public class DatabaseService {
         throw new SQLException("Failed to save financial information");
     }
 
-
+    /**
+     * Saves complete customer information in the database.
+     * Coordinates the insertion of all customer-related data including financial proofs.
+     *
+     * @param password customer's password for encryption
+     * @throws SQLException if database operation fails
+     * @throws RuntimeException if encryption/hashing fails
+     */
     public void saveCustomerInDatabase(String password) throws SQLException, RuntimeException {
-
         long incomeProofId = insertIncomeProof();
         long assetsProofId = insertAssetsProof();
         long schufaId = insertSchufaRecord();
@@ -208,9 +260,14 @@ public class DatabaseService {
         closeConnection();
     }
 
+    /**
+     * Checks if a customer with given email already exists in database.
+     *
+     * @param email email to check
+     * @throws RuntimeException if check fails
+     * @throws IllegalArgumentException if customer already exists
+     */
     public void checkIfCustomerIsInDatabase(String email) throws RuntimeException {
-
-
         String sql = "Select * FROM customers WHERE email_hashed = ?";
 
         try{
@@ -225,11 +282,18 @@ public class DatabaseService {
         catch(SQLException | HashingException ex){
             throw new IllegalArgumentException("Fehler beim abrufen der Daten.");
         }
-
     }
 
+    /**
+     * Retrieves customer and their financial information by email.
+     *
+     * @param email customer's email
+     * @param password customer's password for decryption
+     * @return Customer object with associated data
+     * @throws IllegalArgumentException if credentials are invalid
+     * @throws SQLException if database operation fails
+     */
     public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws IllegalArgumentException, SQLException {
-
         if (email.isEmpty() || password.isEmpty()) {
             throw new IllegalArgumentException("Email- oder Passwortfeld ist leer.");
         }
@@ -248,7 +312,6 @@ public class DatabaseService {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-
                 Customer customer = extractCustomerFromResultSet(rs, email, password);
                 customer.setFinancialInformation(null);
 
@@ -263,11 +326,19 @@ public class DatabaseService {
         catch (CryptographyException ex) {
             throw new CryptographyException("Entschlüsslung der Daten ist fehlgeschlagen");
         }
-
     }
 
+    /**
+     * Extracts customer information from database result set.
+     *
+     * @param rs ResultSet containing customer data
+     * @param email customer's email for decryption
+     * @param password customer's password for decryption
+     * @return populated Customer object
+     * @throws SQLException if data extraction fails
+     * @throws DecryptionException if data decryption fails
+     */
     private Customer extractCustomerFromResultSet(ResultSet rs, String email, String password) throws SQLException, DecryptionException {
-
         Customer customer = new Customer();
 
         customer.setEmail(email);
@@ -281,9 +352,14 @@ public class DatabaseService {
         return customer;
     }
 
-
+    /**
+     * Extracts financial information from database result set.
+     *
+     * @param rs ResultSet containing financial data
+     * @return populated FinancialInformation object
+     * @throws SQLException if data extraction fails
+     */
     private FinancialInformation extractFinancialInfoFromResultSet(ResultSet rs) throws SQLException {
-
         FinancialInformation financialInfo = new FinancialInformation();
 
         financialInfo.setAvgNetIncome(rs.getInt("avgNetIncome"));
@@ -295,9 +371,14 @@ public class DatabaseService {
         return financialInfo;
     }
 
-
+    /**
+     * Extracts income proof from database result set.
+     *
+     * @param rs ResultSet containing income proof data
+     * @return populated IncomeProof object or null if no data
+     * @throws SQLException if data extraction fails
+     */
     private IncomeProof extractIncomeProofFromResultSet(ResultSet rs) throws SQLException {
-
         if (rs.wasNull()) {
             return null;
         }
@@ -310,9 +391,14 @@ public class DatabaseService {
         );
     }
 
-
+    /**
+     * Extracts liquid asset information from database result set.
+     *
+     * @param rs ResultSet containing liquid asset data
+     * @return populated LiquidAsset object or null if no data
+     * @throws SQLException if data extraction fails
+     */
     private LiquidAsset extractLiquidAssetFromResultSet(ResultSet rs) throws SQLException {
-
         if (rs.wasNull()) {
             return null;
         }
@@ -324,9 +410,14 @@ public class DatabaseService {
         );
     }
 
-
+    /**
+     * Extracts SCHUFA overview from database result set.
+     *
+     * @param rs ResultSet containing SCHUFA data
+     * @return populated SchufaOverview object or null if no data
+     * @throws SQLException if data extraction fails
+     */
     private SchufaOverview extractSchufaOverviewFromResultSet(ResultSet rs) throws SQLException {
-
         if (rs.wasNull()) {
             return null;
         }
@@ -341,7 +432,11 @@ public class DatabaseService {
         );
     }
 
-
+    /**
+     * Closes the database connection.
+     *
+     * @throws RuntimeException if closing connection fails
+     */
     public void closeConnection() {
         try {
             if (connection != null) {
@@ -352,8 +447,12 @@ public class DatabaseService {
         }
     }
 
-
-
+    /**
+     * Creates all necessary database tables if they don't exist.
+     * Initializes the database schema with required tables for storing customer and financial data.
+     *
+     * @throws SQLException if table creation fails
+     */
     private void createTables() throws SQLException {
         String[] tables = {
                 """
@@ -420,7 +519,7 @@ public class DatabaseService {
             FOREIGN KEY (schufa_id) REFERENCES schufa_overview(id)
         )""",
 
-        """
+                """
         CREATE TABLE IF NOT EXISTS customer_progress (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             FOREIGN KEY (customer_id) REFERENCES customers(id),
@@ -436,8 +535,16 @@ public class DatabaseService {
         }
     }
 
+    /**
+     * Validates password against security requirements.
+     * Checks if password meets minimum length, contains uppercase, lowercase,
+     * digits and special characters, and matches confirmation.
+     *
+     * @param password password to validate
+     * @param confirm password confirmation to match
+     * @throws ValidationException if password requirements are not met
+     */
     public void validatePasswords(String password, String confirm) throws ValidationException{
-
         boolean isValid = password.equals(confirm) &&
                 password.length() >= 8 &&
                 password.matches(".*[A-Z].*") &&
@@ -449,5 +556,4 @@ public class DatabaseService {
             throw new ValidationException("Passwort erfüllt nicht die Anforderungen");
         }
     }
-
 }

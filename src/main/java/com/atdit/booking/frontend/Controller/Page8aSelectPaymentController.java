@@ -12,20 +12,45 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the payment selection page.
+ * Handles the selection between one-time payment and financing options.
+ * Implements Initializable for JavaFX initialization and Navigatable for scene navigation.
+ */
 public class Page8aSelectPaymentController extends Controller implements Initializable, Navigatable {
+    /** Radio button for one-time payment selection */
     @FXML private RadioButton oneTimePaymentRadio;
+
+    /** Radio button for financing selection */
     @FXML private RadioButton financingRadio;
+
+    /** Toggle group to ensure only one payment method can be selected */
     @FXML private ToggleGroup paymentMethodGroup;
+
+    /** Static variable to store the selected payment method */
     public static String selectedPayment;
 
+    /** Static variable to store the contract based on the selected payment method */
     public static Contract contract;
 
-
+    /**
+     * Initializes the controller.
+     * This method is called automatically after the FXML file has been loaded.
+     *
+     * @param url The location used to resolve relative paths for the root object
+     * @param resourceBundle The resources used to localize the root object
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
+    /**
+     * Handles the navigation to the next page based on the selected payment method.
+     * Creates appropriate contract type and loads corresponding scene.
+     *
+     * @param e The mouse event that triggered this method
+     */
     @FXML
     public void nextPage(MouseEvent e) {
 
@@ -42,6 +67,11 @@ public class Page8aSelectPaymentController extends Controller implements Initial
 
     }
 
+    /**
+     * Handles navigation to the previous page (customer login).
+     *
+     * @param e The mouse event that triggered this method
+     */
     @FXML
     public void previousPage(MouseEvent e) {
         loadScene(e, "customer_login.fxml", "Page 6");

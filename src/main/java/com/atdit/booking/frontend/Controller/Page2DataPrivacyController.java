@@ -10,16 +10,29 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller class for the data privacy page (page 2) of the booking application.
+ * This class handles the display and interaction with the data privacy agreement.
+ * Implements Initializable for JavaFX initialization and Navigatable for navigation functionality.
+ */
 public class Page2DataPrivacyController extends Controller implements Initializable, Navigatable {
 
+    /** Radio button for accepting the data privacy agreement */
     @FXML private RadioButton acceptButton;
+
+    /** Button to continue to the next page */
     @FXML private Button continueButton;
+
+    /** Text area containing the data privacy agreement */
     @FXML private TextArea contractTextArea;
 
-
-
-
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     * Sets up the data privacy agreement text in the text area.
+     *
+     * @param url The location used to resolve relative paths for the root object
+     * @param resourceBundle The resources used to localize the root object
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -82,25 +95,36 @@ public class Page2DataPrivacyController extends Controller implements Initializa
                 """);
     }
 
+    /**
+     * Handles navigation to the next page when the continue button is clicked.
+     * Only proceeds if the user has accepted the data privacy agreement.
+     *
+     * @param e The mouse event that triggered this method
+     */
     @FXML
     public void nextPage(MouseEvent e){
-
         if(acceptButton.isSelected()){
-
             loadScene(e,"page_3.fxml", "Persönliche Informationen");
         }
     }
 
-
+    /**
+     * Handles navigation to the previous page.
+     *
+     * @param e The mouse event that triggered this method
+     */
     public void previousPage(MouseEvent e){
-
         loadScene(e,"page_1.fxml", "Willkommen");
     }
 
+    /**
+     * Updates the state of the continue button based on whether the user has accepted the agreement.
+     * The continue button is enabled only when the agreement is accepted.
+     *
+     * @param e The mouse event that triggered this method
+     */
     @FXML
     public void acceptAgreement(MouseEvent e) {
-
         continueButton.setDisable(!acceptButton.isSelected());
     }
-
 }

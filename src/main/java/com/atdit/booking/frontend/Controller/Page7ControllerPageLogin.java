@@ -1,6 +1,5 @@
 package com.atdit.booking.frontend.Controller;
 
-
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.database.DatabaseService;
 import javafx.fxml.FXML;
@@ -15,19 +14,39 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the login page of the application.
+ * This class handles user authentication and database interactions for the login process.
+ */
 public class Page7ControllerPageLogin extends Controller implements Initializable {
 
+    /** TextField for user email input */
     @FXML private TextField emailField;
+
+    /** PasswordField for user password input */
     @FXML private PasswordField passwordField;
+
+    /** Label to display error messages */
     @FXML private Label errorLabel;
+
+    /** Button to trigger the login process */
     @FXML private Button loginButton;
 
+    /** Database service instance for database operations */
     private DatabaseService db;
+
+    /** Static reference to store the currently logged-in customer */
     public static Customer currentCustomer;
 
+    /**
+     * Initializes the controller class.
+     * Sets up the database connection when the page is loaded.
+     *
+     * @param url The location used to resolve relative paths for the root object
+     * @param resourceBundle The resources used to localize the root object
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         try {
             db = new DatabaseService();
         }
@@ -36,9 +55,14 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
         }
     }
 
+    /**
+     * Handles the login button click event.
+     * Authenticates the user credentials and loads the payment selection page upon successful login.
+     *
+     * @param e The MouseEvent triggered by clicking the login button
+     */
     @FXML
     public void handleLogin(MouseEvent e) {
-
         String email = emailField.getText();
         String password = passwordField.getText();
 
@@ -48,12 +72,10 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
         catch (SQLException ex) {
             showError("Anmeldefehler", "Anmeldedaten konnten nicht überprüft werden.", ex.getMessage());
             return;
-
         } catch (IllegalArgumentException ex) {
             errorLabel.setText(ex.getMessage());
         }
 
         loadScene(e, "payment_selection_page.fxml", "Zahlungsart auswählen");
     }
-
 }
