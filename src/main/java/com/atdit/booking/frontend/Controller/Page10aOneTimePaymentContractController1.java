@@ -30,8 +30,6 @@ public class Page10aOneTimePaymentContractController1 extends Controller impleme
     @FXML private RadioButton signatureCheckbox;
     @FXML private Button continueButton;
 
-    /** Fixed total amount for the contract */
-    private static final int TOTAL_AMOUNT = 5000;
     /** Current contract instance from previous payment selection */
     public static OneTimePaymentContract contract = (OneTimePaymentContract) Page8aSelectPaymentController.contract;
     /** Current customer instance from login */
@@ -50,7 +48,7 @@ public class Page10aOneTimePaymentContractController1 extends Controller impleme
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());
         paymentMethodLabel.setText(contract.getPaymentMethod());
-        totalAmountLabel.setText(String.format("€%.2f", (double) TOTAL_AMOUNT));
+        totalAmountLabel.setText(String.format("€%.2f", contract.TOTAL_AMOUNT));
         contractTextArea.setText(contract.getContractText());
     }
 

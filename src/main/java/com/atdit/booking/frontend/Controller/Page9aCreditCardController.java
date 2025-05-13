@@ -38,6 +38,9 @@ public class Page9aCreditCardController extends Controller implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        System.out.println(contract);
+        System.out.println(selectedPayment);
+
         if(selectedPayment.equals("One-Time")){
             backButton.setDisable(true);
 
