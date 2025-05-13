@@ -74,7 +74,8 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
             showError("Anmeldefehler", "Anmeldedaten konnten nicht überprüft werden.", ex.getMessage());
             return;
         } catch (IllegalArgumentException ex) {
-            errorLabel.setText(ex.getMessage());
+            showError("Anmeldefehler", "Anmeldung konnte nicht durchgeführt werden", ex.getMessage());
+            return;
         }
 
         loadScene(e, "payment_selection_page.fxml", "Zahlungsart auswählen");
