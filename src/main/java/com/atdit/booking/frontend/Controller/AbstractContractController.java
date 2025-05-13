@@ -1,10 +1,7 @@
 package com.atdit.booking.frontend.Controller;
 
-import com.atdit.booking.backend.financialdata.contracts.BuyNowPayLaterContract;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
-import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
 import com.atdit.booking.backend.customer.Customer;
-import com.atdit.booking.backend.financialdata.contracts.OneTimePaymentContract;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -26,24 +23,10 @@ public abstract class AbstractContractController extends Controller implements I
     @FXML protected RadioButton signatureCheckbox;
     @FXML protected Button continueButton;
 
-
-
-    @FXML private Label paymentPlanLabel;
-    @FXML private Label monthlyPaymentLabel;
-    @FXML private Label downPaymentLabel;
-
-
-
     public static Contract contract;
     public static Customer currentCustomer;
 
-    /**
-     * Initializes the controller after FXML loading.
-     * Populates the UI elements with customer and contract information.
-     *
-     * @param url The location used to resolve relative paths for the root object
-     * @param resourceBundle The resources used to localize the root object
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

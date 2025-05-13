@@ -114,6 +114,7 @@ public class Page3PersonalInformationController extends Controller implements In
         loadScene(e, "page_2_data_privacy_form.fxml", "Datenschutzerklärung");
     }
 
+
     @FXML
     public void goToOneTimePayment(MouseEvent e){
 
