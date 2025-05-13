@@ -2,7 +2,7 @@ package com.atdit.booking.frontend.Controller;
 
 import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
-import com.atdit.booking.backend.financialdata.contracts.OneTimePaymentContract;
+import com.atdit.booking.backend.financialdata.contracts.BuyNowPayLaterContract;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
@@ -55,8 +55,8 @@ public class Page8aSelectPaymentController extends Controller implements Initial
     public void nextPage(MouseEvent e) {
 
         if (oneTimePaymentRadio.isSelected()) {
-            selectedPayment = "One-Time";
-            contract = new OneTimePaymentContract();
+            selectedPayment = "BuyNowPayLater";
+            contract = new BuyNowPayLaterContract();
             loadScene(e, "creditcard.fxml", "Zahlungsmethode auswählen");
 
         } else {

@@ -64,7 +64,8 @@ public class FinancialInformationEvaluator {
             throw new IllegalArgumentException("Ihre liquiden Mittel sind zu niedrig. Sie benötigen mindestens 20% des Reisepreises.");
         }
 
-        if(financialInfo.getMonthlyAvailableMoney() < MIN_MONTHLY_MONEY && financialInfo.getLiquidAssets() < 0.3 * journeyDetails.TOTAL_AMOUNT){
+        if(financialInfo.getMonthlyAvailableMoney() < MIN_MONTHLY_MONEY
+                && financialInfo.getLiquidAssets() < 0.3 * journeyDetails.TOTAL_AMOUNT){
             throw new IllegalArgumentException("Ihr monatliches verfügbares Geld ist zu niedrig. Sie benötigen mindestens " + MIN_MONTHLY_MONEY +"€.");
         }
     }
@@ -80,7 +81,9 @@ public class FinancialInformationEvaluator {
             return true;
         }
 
-        return ((double) (financialInfo.getProofOfIncome().monthlyNetIncome() / financialInfo.getAvgNetIncome()) > (1-MAX_DEVIATION));
+        double monthlyNeIncome = financialInfo.getProofOfIncome().monthlyNetIncome();
+
+        return (monthlyNeIncome / financialInfo.getAvgNetIncome()) > (1-MAX_DEVIATION);
     }
 
     /**
@@ -90,7 +93,9 @@ public class FinancialInformationEvaluator {
      */
     private boolean evaluateLiquidAssets() {
 
-        return ((double) (financialInfo.getProofOfLiquidAssets().balance() / financialInfo.getLiquidAssets()) > (1-MAX_DEVIATION));
+        double accountBalance = financialInfo.getProofOfLiquidAssets().balance();
+
+        return (accountBalance / financialInfo.getLiquidAssets()) > (1-MAX_DEVIATION);
 
     }
 
@@ -100,7 +105,7 @@ public class FinancialInformationEvaluator {
      *
      * @throws EvaluationException if any evaluation criteria are not met
      */
-    public void evaluateUploads() throws EvaluationException{
+    public void evaluateUploads() throws EvaluationException {
 
         String errorMessage = "Folgende Probleme sind aufgetaucht:\n";
         boolean isValid = true;
@@ -206,9 +211,10 @@ public class FinancialInformationEvaluator {
                     LocalDate docDate = LocalDate.parse(dateStr);
                     LocalDate now = LocalDate.now();
                     long daysBetween = ChronoUnit.DAYS.between(docDate, now);
-                    if(daysBetween <= MAX_DOCUMENT_AGE_DAYS) {
+                    if(daysBetween > MAX_DOCUMENT_AGE_DAYS) {
                         throw new EvaluationException("Dokument zu alt (maximal " + FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " Tage alt)");
                     }
+                    return;
 
                 } catch (DateTimeParseException e) {
                     throw new ValidationException("Invalides Datumsformat: " + dateStr);

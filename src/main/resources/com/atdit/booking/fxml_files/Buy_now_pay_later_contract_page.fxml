@@ -6,7 +6,7 @@
 <AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.atdit.booking.frontend.Controller.Page10aOneTimePaymentContractController1"
+            fx:controller="com.atdit.booking.frontend.Controller.Page10aOneTimePaymentContractController"
             stylesheets="@style.css">
 
     <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"

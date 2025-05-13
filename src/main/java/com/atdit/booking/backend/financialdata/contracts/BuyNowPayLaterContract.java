@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  * This class extends the base Contract class and implements specific functionality
  * for contracts where the total amount is paid in a single transaction.
  */
-public class OneTimePaymentContract extends Contract {
+public class BuyNowPayLaterContract extends Contract {
 
     /**
      * Generates the complete contract text in German language.
@@ -35,19 +35,19 @@ public class OneTimePaymentContract extends Contract {
 
 Der Kunde beabsichtigt, eine kommerzielle Weltraumreise gemäß dem Angebot des Anbieters vom %s in Anspruch zu nehmen. Der Gesamtpreis der Reise beträgt %.2f €.
 
-Diese Vereinbarung regelt die einmalige Zahlung des vollständigen Betrags.
+Diese Vereinbarung regelt den Kauf der Reise auf Rechnung.
 
 §2 Zahlungssumme und Zahlungsmodalitäten
 
 Der zu zahlende Gesamtbetrag beträgt %.2f €.
 
-Die Zahlung erfolgt als Einmalzahlung und ist sofort fällig.
+Die Zahlung erfolgt auf Rechnung. Der Rechnungsbetrag ist innerhalb von 30 Tagen nach Rechnungsstellung ohne Abzug fällig.
 
 §3 Zahlungsbedingungen
 
 Die Zahlung erfolgt per %s auf das Konto des Anbieters.
 
-Bei Zahlungsverzug fallen Verzugszinsen in gesetzlicher Höhe sowie ggf. Mahngebühren an.
+Bei Zahlungsverzug werden Verzugszinsen in gesetzlicher Höhe sowie ggf. Mahngebühren fällig.
 
 §4 Rücktritt und Stornierung
 
@@ -79,5 +79,6 @@ Es gilt das Recht der Bundesrepublik Deutschland. Gerichtsstand ist Berlin.
                 super.getPaymentMethod()
         );
     }
+
 
 }

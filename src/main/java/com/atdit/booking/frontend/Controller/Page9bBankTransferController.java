@@ -7,6 +7,7 @@ import com.atdit.booking.backend.financialdata.financial_information.PaymentMeth
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -33,6 +34,8 @@ public class Page9bBankTransferController extends Controller implements Initiali
     /** TextField for entering BIC/SWIFT code */
     @FXML private TextField bicField;
 
+    @FXML private Button backButton;
+
     /** Selected payment type from previous page */
     public static String selectedPayment = Page8aSelectPaymentController.selectedPayment;
     /** Contract object containing payment information */
@@ -51,6 +54,11 @@ public class Page9bBankTransferController extends Controller implements Initiali
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if(selectedPayment.equals("One-Time")){
+            backButton.setDisable(true);
+
+        }
 
         evaluator = new PaymentMethodEvaluator();
         evaluator.setBankTransferDetails(bankTransferDetails);
@@ -138,8 +146,9 @@ public class Page9bBankTransferController extends Controller implements Initiali
         }
 
         switch (selectedPayment) {
-            case "One-Time" -> loadScene(e, "one_time_payment_contract_page.fxml", "Vertragsdetails");
+            case "BuyNowPayLater" -> loadScene(e, "Buy_now_pay_later_contract_page.fxml", "Vertragsdetails");
             case "Financing" -> loadScene(e, "financing_contract_page.fxml", "Vertragsdetails");
+            case "One-Time" -> loadScene(e, "one_time_payment_contract_page.fxml", "Vertragsdetails");
         }
     }
 }

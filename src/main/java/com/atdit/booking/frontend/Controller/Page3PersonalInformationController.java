@@ -4,6 +4,7 @@ import com.atdit.booking.Main;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.customer.CustomerEvaluator;
 import com.atdit.booking.backend.exceptions.ValidationException;
+import com.atdit.booking.backend.financialdata.contracts.OneTimePaymentContract;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,6 +51,9 @@ public class Page3PersonalInformationController extends Controller implements In
     @FXML private Button continueButton;
     /** Button to return to the previous page */
     @FXML private Button backButton;
+    /** Button to return to the previous page */
+    @FXML private Button oneTimePaymentButton;
+
     /** Reference to the current customer object */
     private Customer currentCustomer ;
     /** Customer validator instance */
@@ -106,6 +110,13 @@ public class Page3PersonalInformationController extends Controller implements In
 
         cacheData();
         loadScene(e, "page_2.fxml", "Datenschutzerklärung");
+    }
+
+    @FXML
+    public void goToOneTimePayment(MouseEvent e){
+        Page8aSelectPaymentController.contract = new OneTimePaymentContract();
+        Page9aCreditCardController.selectedPayment = "One-Time";
+        loadScene(e, "credit_card.fxml", "Zahlungsmethode auswählen");
     }
 
     /**

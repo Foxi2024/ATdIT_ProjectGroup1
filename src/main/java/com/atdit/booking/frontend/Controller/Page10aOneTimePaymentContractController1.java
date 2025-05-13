@@ -2,6 +2,7 @@ package com.atdit.booking.frontend.Controller;
 
 import com.atdit.booking.backend.financialdata.contracts.BuyNowPayLaterContract;
 import com.atdit.booking.backend.customer.Customer;
+import com.atdit.booking.backend.financialdata.contracts.OneTimePaymentContract;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -18,7 +19,7 @@ import java.util.ResourceBundle;
  * This class manages the display and interaction with contract details, customer information,
  * and payment information.
  */
-public class Page10aOneTimePaymentContractController extends Controller implements Initializable, Navigatable {
+public class Page10aOneTimePaymentContractController1 extends Controller implements Initializable, Navigatable {
 
     /** FXML injected UI elements */
     @FXML private Label customerNameLabel;
@@ -32,7 +33,7 @@ public class Page10aOneTimePaymentContractController extends Controller implemen
     /** Fixed total amount for the contract */
     private static final int TOTAL_AMOUNT = 5000;
     /** Current contract instance from previous payment selection */
-    public static BuyNowPayLaterContract contract = (BuyNowPayLaterContract) Page8aSelectPaymentController.contract;
+    public static OneTimePaymentContract contract = (OneTimePaymentContract) Page8aSelectPaymentController.contract;
     /** Current customer instance from login */
     public static Customer currentCustomer = Page7ControllerPageLogin.currentCustomer;
 

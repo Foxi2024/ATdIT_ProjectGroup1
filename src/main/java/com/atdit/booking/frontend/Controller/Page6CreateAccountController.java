@@ -52,9 +52,9 @@ public class Page6CreateAccountController extends Controller implements Initiali
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         emailLabel.setText(currentCustomer.getEmail());
+        createAccountButton.setDisable(true);
 
-        String password = passwordField.getText();
-        String confirm = confirmPasswordField.getText();
+
 
         try {
             db = new DatabaseService();
@@ -63,25 +63,30 @@ public class Page6CreateAccountController extends Controller implements Initiali
             showError("Datenbankfehler", "Ein Fehler ist beim Speichern ihrer Daten aufgetreten.", ex.getMessage());
         }
 
-        passwordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton(password, confirm));
-        confirmPasswordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton(password, confirm));
+        passwordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton());
+        confirmPasswordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton());
     }
 
     /**
      * Toggles the create account button based on password validation.
      * Disables the button if passwords don't match validation criteria.
      *
-     * @param password The entered password
-     * @param confirm The confirmation password
      */
-    private void toggleCreateButton(String password, String confirm) {
+    private void toggleCreateButton() {
+
+        String password = passwordField.getText();
+        String confirm = confirmPasswordField.getText();
 
         try{
             db.validatePasswords(password, confirm);
+            createAccountButton.setDisable(false);
         }
         catch(ValidationException ex){
             createAccountButton.setDisable(true);
         }
+
+
+
     }
 
     /**

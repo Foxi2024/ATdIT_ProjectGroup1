@@ -31,7 +31,7 @@
             <HBox spacing="15" alignment="CENTER">
                 <VBox spacing="10" alignment="CENTER" minWidth="300">
                     <Button fx:id="incomeProofButton" text="Einkommensnachweis hochladen"/>
-                    <Label fx:id="incomeStatusLabel" text="Nicht hochgeladen"/>
+                    <Label fx:id="incomeStatusLabel" text="Nicht hochgeladen" styleClass="info-text"/>
                 </VBox>
                 <VBox styleClass="info-box" minWidth="250">
                     <Text wrappingWidth="230" styleClass="info-text">
@@ -43,7 +43,7 @@
             <HBox spacing="15" alignment="CENTER">
                 <VBox spacing="10" alignment="CENTER" minWidth="300">
                     <Button fx:id="liquidAssetsProofButton" text="Liquiditätsnachweis hochladen"/>
-                    <Label fx:id="liquidAssetsStatusLabel" text="Nicht hochgeladen"/>
+                    <Label fx:id="liquidAssetsStatusLabel" text="Nicht hochgeladen" styleClass="info-text"/>
                 </VBox>
                 <VBox styleClass="info-box" minWidth="250">
                     <Text wrappingWidth="230" styleClass="info-text">
@@ -55,7 +55,7 @@
             <HBox spacing="15" alignment="CENTER">
                 <VBox spacing="10" alignment="CENTER" minWidth="300">
                     <Button fx:id="schufaButton" text="Schufaauskunft hochladen"/>
-                    <Label fx:id="schufaStatusLabel" text="Nicht hochladen"/>
+                    <Label fx:id="schufaStatusLabel" text="Nicht hochgeladen" styleClass="info-text"/>
                 </VBox>
                 <VBox styleClass="info-box" minWidth="250">
                     <Text wrappingWidth="230" styleClass="info-text">

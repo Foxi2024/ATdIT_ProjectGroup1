@@ -56,13 +56,11 @@ public class Page10bFinancingContractController extends Controller implements In
 
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());
-
         paymentMethodLabel.setText(financingContract.getPaymentMethod());
         downPaymentLabel.setText(String.format("%.2f€", financingContract.getDownPayment()));
         totalAmountLabel.setText(String.format("%.2f€", financingContract.getAmountWithInterest()));
         paymentPlanLabel.setText(String.format("%d Monate", financingContract.getMonths()));
         monthlyPaymentLabel.setText(String.format("%.2f€", financingContract.getMonthlyPayment()));
-
         contractTextArea.setText(financingContract.getContractText());
     }
 

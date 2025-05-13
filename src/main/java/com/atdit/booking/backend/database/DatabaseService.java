@@ -294,6 +294,7 @@ public class DatabaseService {
      * @throws SQLException if database operation fails
      */
     public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws IllegalArgumentException, SQLException {
+
         if (email.isEmpty() || password.isEmpty()) {
             throw new IllegalArgumentException("Email- oder Passwortfeld ist leer.");
         }
@@ -544,7 +545,11 @@ public class DatabaseService {
      * @param confirm password confirmation to match
      * @throws ValidationException if password requirements are not met
      */
-    public void validatePasswords(String password, String confirm) throws ValidationException{
+    public void validatePasswords(String password, String confirm) throws ValidationException {
+
+        System.out.println(password);
+        System.out.println(confirm);
+
         boolean isValid = password.equals(confirm) &&
                 password.length() >= 8 &&
                 password.matches(".*[A-Z].*") &&

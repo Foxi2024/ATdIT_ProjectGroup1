@@ -124,7 +124,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
                     }
 
                     label.setText("Nicht hochgeladen");
-                    label.setStyle("-fx-text-fill: black;");
+                    label.setStyle("-fx-text-fill: #f9e79f;");
                 }
         );
     }
