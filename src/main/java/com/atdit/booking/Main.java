@@ -30,6 +30,7 @@ public class Main {
         customer = new Customer();
 
         CustomerRegistrationProcess.main(args);
+        PaymentProcess.main(args);
     }
 }
 

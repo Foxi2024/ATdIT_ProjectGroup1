@@ -102,7 +102,7 @@ public class Page2DataPrivacyController extends Controller implements Initializa
     @FXML
     public void nextPage(MouseEvent e){
         if(acceptButton.isSelected()){
-            loadScene(e,"page_3.fxml", "Persönliche Informationen");
+            loadScene(e,"page_3_personal_info_form.fxml", "Persönliche Informationen");
         }
     }
 
@@ -112,7 +112,7 @@ public class Page2DataPrivacyController extends Controller implements Initializa
      * @param e The mouse event that triggered this method
      */
     public void previousPage(MouseEvent e){
-        loadScene(e,"page_1.fxml", "Willkommen");
+        loadScene(e,"page_1_start_payment_process.fxml", "Willkommen");
     }
 
     /**

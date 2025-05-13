@@ -96,7 +96,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
             return;
         }
 
-        loadScene(e, "page_6.fxml", "Account erstellen");
+        loadScene(e, "page_6_create_account.fxml", "Account erstellen");
     }
 
     /**
@@ -107,7 +107,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
     @FXML
     public void previousPage(MouseEvent e) {
 
-        loadScene(e, "page_4.fxml", "Nachweis finanzieller Angaben");
+        loadScene(e, "page_4_financial_info_declaration.fxml", "Nachweis finanzieller Angaben");
     }
 
     /**

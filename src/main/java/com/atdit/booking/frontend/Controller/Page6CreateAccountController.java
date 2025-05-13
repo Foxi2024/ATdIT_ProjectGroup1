@@ -97,7 +97,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
     @FXML
     public void previousPage(MouseEvent e) {
 
-        loadScene(e, "page_5.fxml", "");
+        loadScene(e, "page_5_proof_of_financial_info.fxml", "");
     }
 
     /**

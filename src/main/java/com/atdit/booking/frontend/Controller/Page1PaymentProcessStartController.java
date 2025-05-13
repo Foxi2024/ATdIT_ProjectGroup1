@@ -15,7 +15,7 @@ public class Page1PaymentProcessStartController extends Controller {
      * @param e The MouseEvent that triggered this action, typically a button click
      */
     public void start_payment_process(MouseEvent e) {
-        loadScene(e,"page_2.fxml", "Datenschutzerklärung");
+        loadScene(e,"page_2_data_privacy_form.fxml", "Datenschutzerklärung");
     }
 
 }
