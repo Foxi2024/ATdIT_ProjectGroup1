@@ -1,6 +1,8 @@
 package com.atdit.booking.frontend.Controller;
 
 import com.atdit.booking.backend.financialdata.contracts.BuyNowPayLaterContract;
+import com.atdit.booking.backend.financialdata.contracts.Contract;
+import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.financialdata.contracts.OneTimePaymentContract;
 import javafx.fxml.FXML;
@@ -14,25 +16,25 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Controller class for handling one-time payment contracts in the booking frontend.
- * This class manages the display and interaction with contract details, customer information,
- * and payment information.
- */
-public class Page10aOneTimePaymentContractController1 extends Controller implements Initializable, Navigatable {
+public abstract class AbstractContractController extends Controller implements Initializable {
 
-    /** FXML injected UI elements */
-    @FXML private Label customerNameLabel;
-    @FXML private Label emailLabel;
-    @FXML private Label totalAmountLabel;
-    @FXML private Label paymentMethodLabel;
-    @FXML private TextArea contractTextArea;
-    @FXML private RadioButton signatureCheckbox;
-    @FXML private Button continueButton;
+    @FXML protected Label customerNameLabel;
+    @FXML protected Label emailLabel;
+    @FXML protected Label totalAmountLabel;
+    @FXML protected Label paymentMethodLabel;
+    @FXML protected TextArea contractTextArea;
+    @FXML protected RadioButton signatureCheckbox;
+    @FXML protected Button continueButton;
 
-    /** Current contract instance from previous payment selection */
-    public static OneTimePaymentContract contract;
-    /** Current customer instance from login */
+
+
+    @FXML private Label paymentPlanLabel;
+    @FXML private Label monthlyPaymentLabel;
+    @FXML private Label downPaymentLabel;
+
+
+
+    public static Contract contract;
     public static Customer currentCustomer;
 
     /**
@@ -45,8 +47,10 @@ public class Page10aOneTimePaymentContractController1 extends Controller impleme
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        contract = (OneTimePaymentContract) Page8aSelectPaymentController.contract;
-        currentCustomer  = Page7ControllerPageLogin.currentCustomer;
+        currentCustomer = Page7ControllerPageLogin.currentCustomer;
+        contract = Page8aSelectPaymentController.contract;
+
+        initializeParameters();
 
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());
@@ -55,12 +59,9 @@ public class Page10aOneTimePaymentContractController1 extends Controller impleme
         contractTextArea.setText(contract.getContractText());
     }
 
-    /**
-     * Handles the contract signature checkbox event.
-     * Enables/disables the continue button based on checkbox selection.
-     *
-     * @param e The mouse event that triggered this method
-     */
+    protected abstract void initializeParameters();
+
+
     @FXML
     public void signContract(MouseEvent e) {
 
@@ -72,11 +73,7 @@ public class Page10aOneTimePaymentContractController1 extends Controller impleme
         continueButton.setDisable(true);
     }
 
-    /**
-     * Navigates to the previous page based on the selected payment method.
-     *
-     * @param e The mouse event that triggered this method
-     */
+
     @FXML
     public void previousPage(MouseEvent e) {
 
@@ -87,13 +84,10 @@ public class Page10aOneTimePaymentContractController1 extends Controller impleme
         }
     }
 
-    /**
-     * Navigates to the confirmation page.
-     *
-     * @param e The mouse event that triggered this method
-     */
+
     @FXML
     public void nextPage(MouseEvent e) {
         loadScene(e, "confirmation_page.fxml", "Confirmation");
     }
 }
+

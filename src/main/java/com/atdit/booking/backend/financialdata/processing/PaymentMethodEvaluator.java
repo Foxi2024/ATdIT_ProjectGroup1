@@ -1,6 +1,9 @@
-package com.atdit.booking.backend.financialdata.financial_information;
+package com.atdit.booking.backend.financialdata.processing;
 
 import com.atdit.booking.backend.exceptions.ValidationException;
+import com.atdit.booking.backend.financialdata.financial_information.BankTransferDetails;
+import com.atdit.booking.backend.financialdata.financial_information.CreditCardDetails;
+
 /**
  * This class evaluates and validates payment method details for both bank transfers and credit cards.
  * It contains validation logic for bank account information and credit card data.

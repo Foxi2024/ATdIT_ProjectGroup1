@@ -3,7 +3,7 @@ package com.atdit.booking.frontend.Controller;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.financialdata.financial_information.BankTransferDetails;
-import com.atdit.booking.backend.financialdata.financial_information.PaymentMethodEvaluator;
+import com.atdit.booking.backend.financialdata.processing.PaymentMethodEvaluator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -41,7 +41,7 @@ public class Page9bBankTransferController extends Controller implements Initiali
     /** Contract object containing payment information */
     public static Contract contract;
     /** Object storing bank transfer details */
-    public static BankTransferDetails bankTransferDetails;
+    public static BankTransferDetails bankTransferDetails = new BankTransferDetails();
     /** Evaluator for payment method validation */
     public static PaymentMethodEvaluator evaluator;
 
@@ -57,7 +57,6 @@ public class Page9bBankTransferController extends Controller implements Initiali
 
         selectedPayment = Page8aSelectPaymentController.selectedPayment;
         contract = Page8aSelectPaymentController.contract;
-        bankTransferDetails = new BankTransferDetails();
         evaluator = new PaymentMethodEvaluator();
         evaluator.setBankTransferDetails(bankTransferDetails);
 

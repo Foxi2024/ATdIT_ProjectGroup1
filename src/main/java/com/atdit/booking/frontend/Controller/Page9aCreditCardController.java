@@ -3,7 +3,7 @@ package com.atdit.booking.frontend.Controller;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.financialdata.financial_information.CreditCardDetails;
-import com.atdit.booking.backend.financialdata.financial_information.PaymentMethodEvaluator;
+import com.atdit.booking.backend.financialdata.processing.PaymentMethodEvaluator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,7 +31,7 @@ public class Page9aCreditCardController extends Controller implements Initializa
 
     public static String selectedPayment;
     public static Contract contract;
-    public static CreditCardDetails creditCardDetails;
+    public static CreditCardDetails creditCardDetails = new CreditCardDetails();
     public static PaymentMethodEvaluator evaluator;
 
 
@@ -40,7 +40,6 @@ public class Page9aCreditCardController extends Controller implements Initializa
 
         selectedPayment = Page8aSelectPaymentController.selectedPayment;
         contract  = Page8aSelectPaymentController.contract;
-        creditCardDetails = new CreditCardDetails();
         evaluator = new PaymentMethodEvaluator();
         evaluator.setCreditCardDetails(creditCardDetails);
 

@@ -29,7 +29,7 @@ public class Main {
 
         customer = new Customer();
 
-        CustomerRegistrationProcess.main(args);
+        //CustomerRegistrationProcess.main(args);
         PaymentProcess.main(args);
     }
 }
