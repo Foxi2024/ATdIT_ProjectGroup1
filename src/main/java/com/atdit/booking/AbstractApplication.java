@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public abstract class AbstractApplication extends Application {
 
-    protected String filename;
+    protected static String filename;
 
     /**
      * Initializes and starts the main application window.

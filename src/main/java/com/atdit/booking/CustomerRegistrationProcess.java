@@ -10,9 +10,9 @@ import java.io.IOException;
 
 public class CustomerRegistrationProcess extends AbstractApplication {
 
-    protected String filename = "page_1_start_payment_process.fxml";
 
     public static void main(String[] args) {
+        filename = "page_1_start_payment_process.fxml";
         launch();
     }
 }
