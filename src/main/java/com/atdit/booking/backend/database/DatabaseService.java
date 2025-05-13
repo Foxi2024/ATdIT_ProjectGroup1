@@ -550,7 +550,8 @@ public class DatabaseService {
         System.out.println(password);
         System.out.println(confirm);
 
-        boolean isValid = password.equals(confirm) &&
+    boolean isValid = password != null &&
+                password.equals(confirm) &&
                 password.length() >= 8 &&
                 password.matches(".*[A-Z].*") &&
                 password.matches(".*[a-z].*") &&

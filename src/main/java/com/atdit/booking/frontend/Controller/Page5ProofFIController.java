@@ -88,11 +88,11 @@ public class Page5ProofFIController extends Controller implements Initializable,
             evaluator.evaluateUploads();
         }
         catch (ValidationException ex) {
-            showError("Validierung fehlgeschlagen", "Die Validierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
+            showConfirmation("Validierung fehlgeschlagen", "Die Validierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
             return;
         }
         catch (EvaluationException ex) {
-            showError("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
+            showConfirmation("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 
