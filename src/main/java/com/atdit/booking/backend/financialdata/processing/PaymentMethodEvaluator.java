@@ -61,7 +61,7 @@ public class PaymentMethodEvaluator {
 
             String bic = this.bankTransferDetails.getBicSwift();
 
-            if (bic == null || !bic.matches("^[A-Z0-9]{8}$") || !bic.matches("^[A-Z0-9]{11}$")) {
+            if (bic == null || !bic.matches("^[A-Z0-9]{8}$") && !bic.matches("^[A-Z0-9]{11}$")) {
                 errorMessage.append("- Ungültiger BIC/SWIFT Code (8 oder 11 Zeichen)\n");
                 isValid = false;
             }

@@ -23,7 +23,7 @@ public class CustomerRegistrationProcess extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CustomerRegistrationProcess.class.getResource("fxml_files/page_3_personal_info_form.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(CustomerRegistrationProcess.class.getResource("fxml_files/customer_login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.getIcons().add(new Image(CustomerRegistrationProcess.class.getResourceAsStream("style/images/icon.png")));
         stage.setTitle("Main");
