@@ -101,6 +101,7 @@ public class Page2DataPrivacyController extends Controller implements Initializa
      */
     @FXML
     public void nextPage(MouseEvent e){
+
         if(acceptButton.isSelected()){
             loadScene(e,"page_3_personal_info_form.fxml", "Persönliche Informationen");
         }
