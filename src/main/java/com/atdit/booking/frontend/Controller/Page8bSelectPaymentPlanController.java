@@ -39,7 +39,7 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
     @FXML private Label downPaymentLabel;
 
     /** Static reference to the financing contract from the previous page */
-    public static FinancingContract financingContract = (FinancingContract) Page8aSelectPaymentController.contract;
+    public static FinancingContract financingContract;
 
     /**
      * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
@@ -50,6 +50,8 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        financingContract = (FinancingContract) Page8aSelectPaymentController.contract;
 
         monthsCombo.getItems().addAll(12, 24, 36, 48, 60);
         monthsCombo.setValue(12);

@@ -29,25 +29,25 @@ public class Page9aCreditCardController extends Controller implements Initializa
     @FXML private Button backButton;
    
 
-    public static String selectedPayment = Page8aSelectPaymentController.selectedPayment;
-    public static Contract contract = Page8aSelectPaymentController.contract;
-    public static CreditCardDetails creditCardDetails = new CreditCardDetails();
+    public static String selectedPayment;
+    public static Contract contract;
+    public static CreditCardDetails creditCardDetails;
     public static PaymentMethodEvaluator evaluator;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        System.out.println(contract);
-        System.out.println(selectedPayment);
+        selectedPayment = Page8aSelectPaymentController.selectedPayment;
+        contract  = Page8aSelectPaymentController.contract;
+        creditCardDetails = new CreditCardDetails();
+        evaluator = new PaymentMethodEvaluator();
+        evaluator.setCreditCardDetails(creditCardDetails);
 
         if(selectedPayment.equals("One-Time")){
             backButton.setDisable(true);
 
         }
-
-        evaluator = new PaymentMethodEvaluator();
-        evaluator.setCreditCardDetails(creditCardDetails);
 
         paymentMethodCombo.getItems().addAll(
                 "Kreditkarte",

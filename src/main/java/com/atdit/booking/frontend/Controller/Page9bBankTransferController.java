@@ -37,11 +37,11 @@ public class Page9bBankTransferController extends Controller implements Initiali
     @FXML private Button backButton;
 
     /** Selected payment type from previous page */
-    public static String selectedPayment = Page8aSelectPaymentController.selectedPayment;
+    public static String selectedPayment;
     /** Contract object containing payment information */
-    public static Contract contract = Page8aSelectPaymentController.contract;
+    public static Contract contract;
     /** Object storing bank transfer details */
-    public static BankTransferDetails bankTransferDetails = new BankTransferDetails();
+    public static BankTransferDetails bankTransferDetails;
     /** Evaluator for payment method validation */
     public static PaymentMethodEvaluator evaluator;
 
@@ -55,13 +55,15 @@ public class Page9bBankTransferController extends Controller implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        if(selectedPayment.equals("One-Time")){
-            backButton.setDisable(true);
-
-        }
-
+        selectedPayment = Page8aSelectPaymentController.selectedPayment;
+        contract = Page8aSelectPaymentController.contract;
+        bankTransferDetails = new BankTransferDetails();
         evaluator = new PaymentMethodEvaluator();
         evaluator.setBankTransferDetails(bankTransferDetails);
+
+        if(selectedPayment.equals("One-Time")){
+            backButton.setDisable(true);
+        }
 
         paymentMethodCombo.getItems().addAll(
                 "Kreditkarte",
