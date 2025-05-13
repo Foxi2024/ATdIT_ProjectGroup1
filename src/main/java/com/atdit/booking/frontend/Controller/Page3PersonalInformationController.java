@@ -114,9 +114,21 @@ public class Page3PersonalInformationController extends Controller implements In
 
     @FXML
     public void goToOneTimePayment(MouseEvent e){
+
+        cacheData();
+
+        try {
+            evaluator.evaluateCustomerInfo();
+        }
+        catch (ValidationException ex) {
+            showError("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
+            return;
+        }
+
         Page8aSelectPaymentController.contract = new OneTimePaymentContract();
         Page9aCreditCardController.selectedPayment = "One-Time";
-        loadScene(e, "credit_card.fxml", "Zahlungsmethode auswählen");
+        Page7ControllerPageLogin.currentCustomer = currentCustomer;
+        loadScene(e, "creditcard.fxml", "Zahlungsmethode auswählen");
     }
 
     /**

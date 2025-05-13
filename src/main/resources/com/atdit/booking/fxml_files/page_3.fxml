@@ -81,7 +81,7 @@
                     Zahlen Sie den vollen Betrag von 1.000.000€ sofort und umgehen Sie den Finanzierungsprozess.
                     Diese Option ist ideal für eine schnelle und unkomplizierte Abwicklung Ihrer Weltraumreise.
                 </Text>
-                <Button fx:id="oneTimePaymentButton" text="Jetzt komplett bezahlen" styleClass="button"/>
+                <Button fx:id="oneTimePaymentButton" onMouseClicked="#goToOneTimePayment" text="Jetzt komplett bezahlen" styleClass="button"/>
             </VBox>
         </HBox>
 

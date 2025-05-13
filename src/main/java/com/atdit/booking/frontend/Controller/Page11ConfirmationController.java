@@ -24,7 +24,7 @@ public class Page11ConfirmationController implements Initializable {
     @FXML private Label emailText;
 
     /** Reference to the current customer, obtained from the login page */
-    private static final Customer currentCustomer = Page7ControllerPageLogin.currentCustomer;
+    public static Customer currentCustomer;
 
     /**
      * Initializes the confirmation page by setting up the confirmation message,
@@ -35,6 +35,8 @@ public class Page11ConfirmationController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        currentCustomer = Page7ControllerPageLogin.currentCustomer;
 
         confirmationText.setText("Ihre Buchung wurde erfolgreich abgeschlossen! Wir danken Ihnen für Ihr Vertrauen.");
         addressText.setText("Ihre Tickets werden gesendet an: " + currentCustomer.getAddress());

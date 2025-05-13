@@ -29,12 +29,10 @@ public class Page10aOneTimePaymentContractController extends Controller implemen
     @FXML private RadioButton signatureCheckbox;
     @FXML private Button continueButton;
 
-    /** Fixed total amount for the contract */
-    private static final int TOTAL_AMOUNT = 5000;
     /** Current contract instance from previous payment selection */
-    public static BuyNowPayLaterContract contract = (BuyNowPayLaterContract) Page8aSelectPaymentController.contract;
+    public static BuyNowPayLaterContract contract;
     /** Current customer instance from login */
-    public static Customer currentCustomer = Page7ControllerPageLogin.currentCustomer;
+    public static Customer currentCustomer;
 
     /**
      * Initializes the controller after FXML loading.
@@ -46,10 +44,13 @@ public class Page10aOneTimePaymentContractController extends Controller implemen
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        contract  = (BuyNowPayLaterContract) Page8aSelectPaymentController.contract;
+        currentCustomer  = Page7ControllerPageLogin.currentCustomer;
+
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());
         paymentMethodLabel.setText(contract.getPaymentMethod());
-        totalAmountLabel.setText(String.format("€%.2f", (double) TOTAL_AMOUNT));
+        totalAmountLabel.setText(String.format("€%.2f", contract.TOTAL_AMOUNT));
         contractTextArea.setText(contract.getContractText());
     }
 
