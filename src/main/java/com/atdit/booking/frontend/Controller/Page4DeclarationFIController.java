@@ -40,7 +40,7 @@ public class Page4DeclarationFIController extends Controller implements Initiali
     /** Reference to the customer's financial information */
     private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
     /** Evaluator for validating financial information */
-    private static final FinancialInformationEvaluator financialInformationEvaluator = new FinancialInformationEvaluator(financialInfo);
+    private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator(financialInfo);
 
     /**
      * Initializes the controller by restoring previously saved data.
@@ -49,6 +49,9 @@ public class Page4DeclarationFIController extends Controller implements Initiali
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        evaluator.setCurrentCustomer(currentCustomer);
+
         restoreData();
     }
 
@@ -63,8 +66,8 @@ public class Page4DeclarationFIController extends Controller implements Initiali
 
         try {
             cacheData();
-            financialInformationEvaluator.validateDeclaredFinancialInfo();
-            financialInformationEvaluator.evaluateDeclaredFinancialInfo();
+            evaluator.validateDeclaredFinancialInfo();
+            evaluator.evaluateDeclaredFinancialInfo();
         }
         catch (NumberFormatException ex) {
             showError("Fehlerhafte Eingaben", "Sie haben fehlerhafte Angaben gemacht.", ex.getMessage());

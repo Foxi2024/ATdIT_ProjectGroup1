@@ -57,6 +57,8 @@ public class Page5ProofFIController extends Controller implements Initializable,
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        evaluator.setCurrentCustomer(currentCustomer);
+
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt")
         );
