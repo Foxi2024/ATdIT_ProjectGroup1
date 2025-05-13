@@ -11,16 +11,32 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Page7Controller login functionality.
+ * Tests the database operations related to customer authentication and retrieval.
+ */
 class Page7ControllerPageLoginTest {
     private DatabaseService databaseService;
     private static final String TEST_EMAIL = "test@example.com";
     private static final String TEST_PASSWORD = "Test123!@#";
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes a new DatabaseService instance.
+     *
+     * @throws SQLException if database connection fails
+     */
     @BeforeEach
     void setUp() throws SQLException {
         databaseService = new DatabaseService();
     }
 
+    /**
+     * Creates a mock Customer object with predefined test data.
+     * Includes personal information, financial data, liquid assets, and SCHUFA information.
+     *
+     * @return Customer object populated with mock data
+     */
     private Customer createMockCustomer() {
         Customer customer = new Customer();
         customer.setEmail(TEST_EMAIL);
@@ -45,7 +61,7 @@ class Page7ControllerPageLoginTest {
         );
         financialInfo.setProofOfLiquidAssets(liquidAsset);
 
-        // Erstelle SchufaOverview mit Setter-Methoden
+        // Create SchufaOverview using setter methods
         SchufaOverview schufa = new SchufaOverview();
         schufa.setFirstName("Max");
         schufa.setLastName("Mustermann");
@@ -63,6 +79,12 @@ class Page7ControllerPageLoginTest {
         return customer;
     }
 
+    /**
+     * Tests customer retrieval with valid credentials.
+     * Verifies that the correct customer data is returned when valid email and password are provided.
+     *
+     * @throws SQLException if database operation fails
+     */
     @Test
     void getCustomerWithFinancialInfoByEmail_ValidCredentials_ReturnsCustomer() throws SQLException {
         // Arrange
@@ -87,6 +109,9 @@ class Page7ControllerPageLoginTest {
         assertEquals("Mustermann", retrievedCustomer.getName());
     }
 
+    /**
+     * Tests that an empty email address throws an IllegalArgumentException.
+     */
     @Test
     void getCustomerWithFinancialInfoByEmail_EmptyEmail_ThrowsException() {
         // Assert
@@ -95,6 +120,9 @@ class Page7ControllerPageLoginTest {
         );
     }
 
+    /**
+     * Tests that an empty password throws an IllegalArgumentException.
+     */
     @Test
     void getCustomerWithFinancialInfoByEmail_EmptyPassword_ThrowsException() {
         // Assert
@@ -103,6 +131,9 @@ class Page7ControllerPageLoginTest {
         );
     }
 
+    /**
+     * Tests that using a non-existent email address throws an IllegalArgumentException.
+     */
     @Test
     void getCustomerWithFinancialInfoByEmail_NonexistentEmail_ThrowsException() {
         // Assert
@@ -111,6 +142,10 @@ class Page7ControllerPageLoginTest {
         );
     }
 
+    /**
+     * Cleans up resources after each test.
+     * Closes the database connection.
+     */
     @AfterEach
     void tearDown() {
         databaseService.closeConnection();

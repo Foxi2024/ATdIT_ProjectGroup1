@@ -7,10 +7,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for validating financial information declarations in Page 4 of the booking process.
+ * Tests various scenarios and edge cases for financial data validation.
+ */
 class Page4DeclarationFIControllerTest {
     private FinancialInformationEvaluator evaluator;
     private FinancialInformation financialInfo;
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes a FinancialInformation object with default test values and creates an evaluator.
+     */
     @BeforeEach
     void setUp() {
         financialInfo = new FinancialInformation();
@@ -23,6 +31,10 @@ class Page4DeclarationFIControllerTest {
         evaluator = new FinancialInformationEvaluator(financialInfo);
     }
 
+    /**
+     * Tests validation of negative financial values.
+     * Verifies that appropriate exceptions are thrown for invalid negative inputs.
+     */
     @Test
     void testNegativeFinancialValues() {
         assertThrows(IllegalArgumentException.class, () -> financialInfo.setAvgNetIncome(-1000));
@@ -36,12 +48,20 @@ class Page4DeclarationFIControllerTest {
         assertThrows(ValidationException.class, () -> evaluator.validateDeclaredFinancialInfo());
     }
 
+    /**
+     * Tests scenarios with insufficient liquid assets.
+     * Verifies that appropriate exceptions are thrown when liquid assets are too low.
+     */
     @Test
     void testInsufficientLiquidAssets() {
         financialInfo.setLiquidAssets(100);
         assertThrows(IllegalArgumentException.class, () -> evaluator.evaluateDeclaredFinancialInfo());
     }
 
+    /**
+     * Tests scenarios with insufficient monthly available money.
+     * Verifies that appropriate exceptions are thrown when monthly available money is too low.
+     */
     @Test
     void testInsufficientMonthlyMoney() {
         financialInfo.setMonthlyAvailableMoney(100);
@@ -49,65 +69,85 @@ class Page4DeclarationFIControllerTest {
         assertThrows(IllegalArgumentException.class, () -> evaluator.evaluateDeclaredFinancialInfo());
     }
 
+    /**
+     * Tests validation of extreme financial values.
+     * Verifies handling of very high income and monthly fixed costs.
+     */
     @Test
     void testExtremeFinancialValues() {
-        // Test mit sehr hohem Einkommen
+        // Test with very high income
         financialInfo.setAvgNetIncome(100000);
         assertDoesNotThrow(() -> evaluator.validateDeclaredFinancialInfo());
 
-        // Test mit sehr hohen monatlichen Fixkosten
+        // Test with very high monthly fixed costs
         financialInfo.setMonthlyFixCost(50000);
         assertThrows(IllegalArgumentException.class,
                 () -> evaluator.evaluateDeclaredFinancialInfo());
     }
 
+    /**
+     * Tests the calculation of monthly available money.
+     * Verifies that the calculation (income - fixed costs - minimum cost of living) is correct.
+     */
     @Test
     void testMonthlyAvailableMoneyCalculation() {
         financialInfo.setAvgNetIncome(3000);
         financialInfo.setMonthlyFixCost(1000);
         financialInfo.setMinCostOfLiving(800);
 
-        // Verfügbares Geld sollte 1200 sein (3000 - 1000 - 800)
+        // Available money should be 1200 (3000 - 1000 - 800)
         assertEquals(1200, financialInfo.getMonthlyAvailableMoney());
     }
 
+    /**
+     * Tests the minimum requirements for financial validation.
+     * Verifies basic validation and liquid assets requirements.
+     */
     @Test
     void testMinimumRequirements() {
-        // Test der grundlegenden Validierung
+        // Test basic validation
         financialInfo.setAvgNetIncome(2000);
         financialInfo.setMonthlyFixCost(500);
         financialInfo.setMinCostOfLiving(500);
         assertDoesNotThrow(() -> evaluator.validateDeclaredFinancialInfo());
 
-        // Test der liquiden Mittel separat
+        // Test liquid assets separately
         assertThrows(IllegalArgumentException.class,
                 () -> evaluator.evaluateDeclaredFinancialInfo(),
-                "Sollte fehlschlagen, wenn liquide Mittel unter 20% des Reisepreises liegen");
+                "Should fail if liquid assets are below 20% of travel price");
     }
 
+    /**
+     * Tests the requirements for liquid assets with high values.
+     * Verifies that validation passes with sufficient financial means.
+     */
     @Test
     void testLiquidAssetsRequirement() {
-        // Separate Methode für den Test der liquiden Mittel
-        financialInfo.setAvgNetIncome(15000);           // Erhöht auf 15.000€
-        financialInfo.setMonthlyFixCost(2000);          // Reduziert auf 2.000€
-        financialInfo.setMinCostOfLiving(1500);         // Reduziert auf 1.500€
-        financialInfo.setLiquidAssets(200000);          // Sehr hoher Wert für liquide Mittel
-        // Verfügbares Geld = 15000 - 2000 - 1500 = 11500€
+        // Separate method for testing liquid assets
+        financialInfo.setAvgNetIncome(15000);           // Increased to 15,000€
+        financialInfo.setMonthlyFixCost(2000);          // Reduced to 2,000€
+        financialInfo.setMinCostOfLiving(1500);         // Reduced to 1,500€
+        financialInfo.setLiquidAssets(200000);          // Very high value for liquid assets
+        // Available money = 15000 - 2000 - 1500 = 11500€
 
         assertDoesNotThrow(() -> evaluator.validateDeclaredFinancialInfo());
         assertDoesNotThrow(() -> evaluator.evaluateDeclaredFinancialInfo());
     }
 
+    /**
+     * Tests invalid financial ratios.
+     * Verifies that appropriate exceptions are thrown when financial ratios are invalid.
+     */
     @Test
     void testInvalidRatios() {
-        // Fixkosten höher als Einkommen
+        // Fixed costs higher than income
         financialInfo.setAvgNetIncome(2000);
         financialInfo.setMonthlyFixCost(2500);
 
         assertThrows(IllegalArgumentException.class,
                 () -> evaluator.evaluateDeclaredFinancialInfo());
 
-        // Lebenshaltungskosten höher als verfügbares Geld
+        // Cost of living higher than available money
         financialInfo.setMonthlyFixCost(1000);
         financialInfo.setMinCostOfLiving(1500);
 
@@ -115,14 +155,18 @@ class Page4DeclarationFIControllerTest {
                 () -> evaluator.evaluateDeclaredFinancialInfo());
     }
 
+    /**
+     * Tests validation with zero values.
+     * Verifies handling of zero values for income and fixed costs.
+     */
     @Test
     void testZeroValues() {
-        // Test mit Nullwert für Einkommen
+        // Test with zero value for income
         financialInfo.setAvgNetIncome(0);
         assertThrows(IllegalArgumentException.class,
                 () -> evaluator.evaluateDeclaredFinancialInfo());
 
-        // Test mit gültigem Einkommen und 0 Fixkosten
+        // Test with valid income and zero fixed costs
         financialInfo.setAvgNetIncome(3000);
         financialInfo.setMonthlyFixCost(0);
         assertDoesNotThrow(() -> evaluator.validateDeclaredFinancialInfo());

@@ -21,6 +21,10 @@ class Page5ProofFIControllerTest {
     private SchufaOverview schufa;
     private Customer customer;
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes financial information, customer data, and required documents.
+     */
     @BeforeEach
     void setUp() {
         // Customer und FinancialInfo zuerst erstellen
@@ -31,10 +35,8 @@ class Page5ProofFIControllerTest {
         financialInfo.setLiquidAssets(10000);
         financialInfo.setMonthlyAvailableMoney(1200);
 
-        // Evaluator erstellen - currentCustomer ist noch null
         evaluator = new FinancialInformationEvaluator(financialInfo);
 
-        // Restliche Objekte initialisieren
         proofOfLiquidAssets = new LiquidAsset(
                 "DE89370400440532013000",
                 "Gehaltskonto",
@@ -77,6 +79,9 @@ class Page5ProofFIControllerTest {
         }
     }
 
+    /**
+     * Tests if income evaluation fails when the declared income deviates too much from the proof.
+     */
     @Test
     void testIncomeDeviationTooHigh() {
         proofOfIncome = new IncomeProof(
@@ -90,6 +95,9 @@ class Page5ProofFIControllerTest {
         assertFalse(evaluator.evaluateIncome());
     }
 
+    /**
+     * Tests if evaluation throws an exception when liquid assets deviate too much from the declared amount.
+     */
     @Test
     void testLiquidAssetsDeviationTooHigh() {
         proofOfLiquidAssets = new LiquidAsset(
@@ -102,6 +110,9 @@ class Page5ProofFIControllerTest {
         assertThrows(EvaluationException.class, () -> evaluator.evaluateUploads());
     }
 
+    /**
+     * Tests if validation fails when required documents are missing.
+     */
     @Test
     void testMissingDocuments() {
         financialInfo.setProofOfLiquidAssets(null);
@@ -111,6 +122,9 @@ class Page5ProofFIControllerTest {
         assertThrows(ValidationException.class, () -> evaluator.validateUploads());
     }
 
+    /**
+     * Tests if evaluation fails when SCHUFA name doesn't match customer name.
+     */
     @Test
     void testNameMismatchInSchufa() {
         schufa = new SchufaOverview();
@@ -127,6 +141,9 @@ class Page5ProofFIControllerTest {
         assertThrows(EvaluationException.class, () -> evaluator.evaluateUploads());
     }
 
+    /**
+     * Tests if evaluation fails when SCHUFA shows too high monthly rates.
+     */
     @Test
     void testTotalMonthlyRateTooHigh() {
         schufa = new SchufaOverview();
@@ -143,6 +160,9 @@ class Page5ProofFIControllerTest {
         assertThrows(EvaluationException.class, () -> evaluator.evaluateUploads());
     }
 
+    /**
+     * Tests if validation fails when document format is invalid.
+     */
     @Test
     void testInvalidDocumentFormat() {
         String invalidIncomeDoc = """
@@ -156,6 +176,9 @@ class Page5ProofFIControllerTest {
                 () -> evaluator.validateDocumentFormat(invalidIncomeDoc, "income"));
     }
 
+    /**
+     * Tests if evaluation fails when document is too old.
+     */
     @Test
     void testDocumentTooOld() {
         String oldDocument = """
@@ -170,6 +193,9 @@ class Page5ProofFIControllerTest {
                 () -> evaluator.validateDocumentDate(oldDocument));
     }
 
+    /**
+     * Tests if validation fails when date format is invalid.
+     */
     @Test
     void testInvalidDateFormat() {
         String invalidDateDoc = """
@@ -184,6 +210,9 @@ class Page5ProofFIControllerTest {
                 () -> evaluator.validateDocumentDate(invalidDateDoc));
     }
 
+    /**
+     * Tests if validation fails when financial values are negative.
+     */
     @Test
     void testNegativeFinancialValues() {
         try {
@@ -214,6 +243,9 @@ class Page5ProofFIControllerTest {
         }
     }
 
+    /**
+     * Tests if validation fails when document date is missing.
+     */
     @Test
     void testMissingDateInDocument() {
         String noDateDoc = """
@@ -227,6 +259,9 @@ class Page5ProofFIControllerTest {
                 () -> evaluator.validateDocumentDate(noDateDoc));
     }
 
+    /**
+     * Tests if income evaluation succeeds with valid income proof.
+     */
     @Test
     void testValidIncome() {
         proofOfIncome = new IncomeProof(
