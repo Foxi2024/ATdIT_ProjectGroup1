@@ -47,6 +47,7 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         try {
             db = new DatabaseService();
         }

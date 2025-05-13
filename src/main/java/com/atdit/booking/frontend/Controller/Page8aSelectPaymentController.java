@@ -74,7 +74,7 @@ public class Page8aSelectPaymentController extends Controller implements Initial
      */
     @FXML
     public void previousPage(MouseEvent e) {
-        loadScene(e, "customer_login.fxml", "Page 6");
+        loadScene(e, "customer_login.fxml", "Anmeldung");
     }
 
 }
