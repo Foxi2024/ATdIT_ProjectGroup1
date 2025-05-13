@@ -31,9 +31,9 @@ public class Page10aOneTimePaymentContractController1 extends Controller impleme
     @FXML private Button continueButton;
 
     /** Current contract instance from previous payment selection */
-    public static OneTimePaymentContract contract = (OneTimePaymentContract) Page8aSelectPaymentController.contract;
+    public static OneTimePaymentContract contract;
     /** Current customer instance from login */
-    public static Customer currentCustomer = Page7ControllerPageLogin.currentCustomer;
+    public static Customer currentCustomer;
 
     /**
      * Initializes the controller after FXML loading.
@@ -44,6 +44,9 @@ public class Page10aOneTimePaymentContractController1 extends Controller impleme
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        contract = (OneTimePaymentContract) Page8aSelectPaymentController.contract;
+        currentCustomer  = Page7ControllerPageLogin.currentCustomer;
 
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());

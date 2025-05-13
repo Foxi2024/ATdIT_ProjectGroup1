@@ -41,9 +41,9 @@ public class Page10bFinancingContractController extends Controller implements In
     @FXML private Label downPaymentLabel;
 
     /** The current financing contract instance */
-    public static FinancingContract financingContract = (FinancingContract) Page8aSelectPaymentController.contract;
+    public static FinancingContract financingContract;
     /** The current customer instance */
-    public static Customer currentCustomer = Page7ControllerPageLogin.currentCustomer;
+    public static Customer currentCustomer;
 
     /**
      * Initializes the controller and populates all fields with the current contract and customer data.
@@ -53,6 +53,9 @@ public class Page10bFinancingContractController extends Controller implements In
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        currentCustomer = Page7ControllerPageLogin.currentCustomer;
+        financingContract = (FinancingContract) Page8aSelectPaymentController.contract;
 
         customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());
