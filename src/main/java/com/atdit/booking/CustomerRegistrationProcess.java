@@ -25,7 +25,7 @@ public class CustomerRegistrationProcess extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CustomerRegistrationProcess.class.getResource("fxml_files/page_3.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.getIcons().add(new Image(CustomerRegistrationProcess.class.getResourceAsStream("images/icon.png")));
+        stage.getIcons().add(new Image(CustomerRegistrationProcess.class.getResourceAsStream("style/images/icon.png")));
         stage.setTitle("Main");
         stage.setScene(scene);
         stage.show();

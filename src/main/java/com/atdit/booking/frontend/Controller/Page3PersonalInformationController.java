@@ -126,7 +126,7 @@ public class Page3PersonalInformationController extends Controller implements In
         }
 
         Page8aSelectPaymentController.contract = new OneTimePaymentContract();
-        Page9aCreditCardController.selectedPayment = "One-Time";
+        Page8aSelectPaymentController.selectedPayment = "One-Time";
         Page7ControllerPageLogin.currentCustomer = currentCustomer;
         loadScene(e, "creditcard.fxml", "Zahlungsmethode auswählen");
     }

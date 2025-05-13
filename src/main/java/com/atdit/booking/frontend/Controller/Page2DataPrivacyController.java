@@ -36,8 +36,6 @@ public class Page2DataPrivacyController extends Controller implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
-
         contractTextArea.setText("""
                 Datenschutzerklärung für NEXSTAR TRAVEL – Raumfahrttourismus \s
                 Stand: Mai 2025

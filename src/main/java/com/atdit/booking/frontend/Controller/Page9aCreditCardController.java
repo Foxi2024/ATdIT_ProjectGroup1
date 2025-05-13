@@ -46,7 +46,6 @@ public class Page9aCreditCardController extends Controller implements Initializa
 
         if(selectedPayment.equals("One-Time")){
             backButton.setDisable(true);
-
         }
 
         paymentMethodCombo.getItems().addAll(
