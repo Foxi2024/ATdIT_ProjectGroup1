@@ -6,7 +6,7 @@ import com.atdit.booking.backend.financialdata.processing.PaymentMethodEvaluator
 import com.atdit.booking.frontend.super_controller.Cacheable;
 import com.atdit.booking.frontend.super_controller.Controller;
 import com.atdit.booking.frontend.super_controller.Navigatable;
-import com.atdit.booking.frontend.payment_process.Page2aSelectPaymentController;
+import com.atdit.booking.frontend.payment_process.controllers.Page2aSelectPaymentController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

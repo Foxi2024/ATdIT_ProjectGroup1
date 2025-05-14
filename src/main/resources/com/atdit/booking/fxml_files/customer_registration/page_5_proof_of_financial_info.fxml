@@ -6,7 +6,7 @@
 <AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.atdit.booking.frontend.customer_registration.Page5ProofFIController"
+            fx:controller="com.atdit.booking.frontend.customer_registration.controllers.Page5ProofFIController"
             stylesheets="@../../style/style.css">
 
     <VBox spacing="20" alignment="TOP_CENTER"

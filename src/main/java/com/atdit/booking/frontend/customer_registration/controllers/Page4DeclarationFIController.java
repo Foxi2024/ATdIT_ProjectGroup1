@@ -1,4 +1,4 @@
-package com.atdit.booking.frontend.customer_registration;
+package com.atdit.booking.frontend.customer_registration.controllers;
 
 import com.atdit.booking.Main;
 import com.atdit.booking.backend.customer.Customer;

@@ -22,4 +22,8 @@ module com.atdit.booking {
     opens com.atdit.booking.frontend.payment_process to javafx.fxml;
     exports com.atdit.booking.frontend.payment_process.abstract_controllers;
     opens com.atdit.booking.frontend.payment_process.abstract_controllers to javafx.fxml;
+    exports com.atdit.booking.frontend.payment_process.controllers;
+    opens com.atdit.booking.frontend.payment_process.controllers to javafx.fxml;
+    exports com.atdit.booking.frontend.customer_registration.controllers;
+    opens com.atdit.booking.frontend.customer_registration.controllers to javafx.fxml;
 }

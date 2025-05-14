@@ -6,7 +6,7 @@
 <AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
             xmlns="http://javafx.com/javafx/24.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.atdit.booking.frontend.customer_registration.Page7AccountConfirmationController"
+            fx:controller="com.atdit.booking.frontend.customer_registration.controllers.Page7AccountConfirmationController"
             stylesheets="@../../style/style.css">
 
     <VBox spacing="30" alignment="CENTER" styleClass="confirmation-box"

@@ -1,4 +1,4 @@
-package com.atdit.booking.frontend.payment_process;
+package com.atdit.booking.frontend.payment_process.controllers;
 
 import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
 import com.atdit.booking.frontend.super_controller.Controller;

@@ -1,4 +1,4 @@
-package com.atdit.booking.frontend.customer_registration;
+package com.atdit.booking.frontend.customer_registration.controllers;
 
 import com.atdit.booking.Main;
 import com.atdit.booking.backend.customer.Customer;
@@ -6,8 +6,8 @@ import com.atdit.booking.backend.customer.CustomerEvaluator;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.contracts.OneTimePaymentContract;
 import com.atdit.booking.frontend.super_controller.*;
-import com.atdit.booking.frontend.payment_process.Page1ControllerPageLogin;
-import com.atdit.booking.frontend.payment_process.Page2aSelectPaymentController;
+import com.atdit.booking.frontend.payment_process.controllers.Page1ControllerPageLogin;
+import com.atdit.booking.frontend.payment_process.controllers.Page2aSelectPaymentController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

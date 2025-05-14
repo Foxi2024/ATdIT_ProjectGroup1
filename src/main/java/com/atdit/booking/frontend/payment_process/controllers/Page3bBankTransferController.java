@@ -1,4 +1,4 @@
-package com.atdit.booking.frontend.payment_process;
+package com.atdit.booking.frontend.payment_process.controllers;
 
 import com.atdit.booking.backend.financialdata.financial_information.BankTransferDetails;
 import com.atdit.booking.frontend.payment_process.abstract_controllers.AbstractPaymentMethodController;
