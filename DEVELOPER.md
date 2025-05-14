@@ -80,44 +80,192 @@ Testing Dependencies:
 - mockito-junit-jupiter:5.11.0
 ```
 
-## Class Structure
+## Detailed Class Structure
+
+### Core Domain Model
 
 ```mermaid
 classDiagram
-    class AbstractApplication {
-        +initialize()
-        +start()
-        +stop()
+    class Customer {
+        -String title
+        -String firstName
+        -String name
+        -String country
+        -String birthdate
+        -String address
+        -String email
+        -FinancialInformation financialInformation
+        +setTitle(String)
+        +setFirstName(String)
+        +setName(String)
+        +setCountry(String)
+        +setBirthdate(String)
+        +setAddress(String)
+        +setEmail(String)
+        +setFinancialInformation(FinancialInformation)
+        +getters()
     }
-    
-    class Main {
-        +main()
+
+    class FinancialInformation {
+        -int avgNetIncome
+        -int liquidAssets
+        -int monthlyFixCost
+        -int minCostOfLiving
+        -int monthlyAvailableMoney
+        -IncomeProof proofOfIncome
+        -LiquidAsset proofOfLiquidAssets
+        -SchufaOverview schufa
+        +setters()
+        +getters()
     }
-    
-    class PaymentProcess {
-        +processPayment()
+
+    class SchufaOverview {
+        -String firstName
+        -String lastName
+        -double score
+        -int totalCredits
+        -int totalCreditSum
+        -int totalAmountPayed
+        -int totalAmountOwed
+        -int totalMonthlyRate
+        -String dateIssued
+        +setters()
+        +getters()
     }
-    
-    class CustomerRegistrationProcess {
-        +registerCustomer()
+
+    class LiquidAsset {
+        -String iban
+        -String description
+        -int balance
+        -String dateIssued
+        +LiquidAsset(String, String, int, String)
+        +setters()
+        +getters()
     }
-    
-    AbstractApplication <|-- Main
-    Main --> PaymentProcess
-    Main --> CustomerRegistrationProcess
+
+    Customer "1" *-- "1" FinancialInformation
+    FinancialInformation "1" *-- "1" SchufaOverview
+    FinancialInformation "1" *-- "1" LiquidAsset
 ```
 
-## Security and Encryption
+### Service Layer
 
-### Database Security
-- SQLite database with secure connection handling
-- Hibernate ORM for secure data access and manipulation
-- Prepared statements to prevent SQL injection
+```mermaid
+classDiagram
+    class DatabaseService {
+        -String DB_URL
+        -Encrypter encrypter
+        -Connection connection
+        -Customer currentCustomer
+        +setCurrentCustomer(Customer)
+        +saveCustomerInDatabase(String)
+        +checkIfCustomerIsInDatabase(String)
+        +getCustomerWithFinancialInfoByEmail(String, String)
+        -createTables()
+        -insertCustomerData()
+        -insertFinancialData()
+        -insertSchufaRecord()
+        -extractCustomerFromResultSet()
+    }
 
-### Authentication & Authorization
-- User authentication system
-- Role-based access control
-- Session management
+    class CustomerEvaluator {
+        +Customer customer
+        +evaluateCustomerInfo()
+        -appendError()
+        +checkFirstName(String)
+        +checkName(String)
+        +checkBirthdate(String)
+        +checkCountry(String)
+        +checkAddress(String)
+        +checkEmail(String)
+    }
+
+    class FinancialInformationEvaluator {
+        -double MAX_DEVIATION
+        -int MAX_DOCUMENT_AGE_DAYS
+        -FinancingContract journeyDetails
+        -double MIN_MONTHLY_MONEY
+        -FinancialInformation financialInfo
+        -Customer currentCustomer
+        +setCurrentCustomer(Customer)
+        +evaluateFinancialInfo()
+        -validateDocumentDates()
+        -validateFinancialData()
+    }
+
+    DatabaseService -- Customer
+    CustomerEvaluator -- Customer
+    FinancialInformationEvaluator -- Customer
+    FinancialInformationEvaluator -- FinancialInformation
+```
+
+### Frontend Controllers
+
+```mermaid
+classDiagram
+    class Controller {
+        <<abstract>>
+        +handleNavigation()
+    }
+
+    class Navigatable {
+        <<interface>>
+        +navigateToNextPage()
+        +navigateToPreviousPage()
+    }
+
+    class Cacheable {
+        <<interface>>
+        +cacheData()
+        +restoreData()
+    }
+
+    class Page3PersonalInformationController {
+        -ComboBox titleField
+        -TextField nameField
+        -TextField firstNameField
+        -DatePicker birthDatePicker
+        -TextField countryField
+        -TextField addressField
+        -TextField emailField
+        -Button continueButton
+        -Button backButton
+        -Customer currentCustomer
+        -CustomerEvaluator evaluator
+        +initialize()
+        +cacheData()
+        +restoreData()
+    }
+
+    Controller <|-- Page3PersonalInformationController
+    Navigatable <|.. Page3PersonalInformationController
+    Cacheable <|.. Page3PersonalInformationController
+```
+
+### Security and Encryption
+
+```mermaid
+classDiagram
+    class Encrypter {
+        +encrypt(String, String, String)
+        +decrypt(String, String, String)
+        +hashString(String)
+    }
+
+    class CryptographyException {
+        +String message
+    }
+
+    class ValidationException {
+        +String message
+    }
+
+    CryptographyException <|-- EncryptionException
+    CryptographyException <|-- DecryptionException
+    CryptographyException <|-- HashingException
+
+    DatabaseService --> Encrypter
+```
 
 ## Build and Deployment
 
