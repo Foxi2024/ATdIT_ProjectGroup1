@@ -1,6 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.CustomerRegistrationApplication;
+import com.atdit.booking.CustomerRegistrationApplicationStarter;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.exceptions.EvaluationException;
 import com.atdit.booking.backend.exceptions.ValidationException;
@@ -45,7 +45,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
     /**
      * Static fields for customer data and financial information processing
      */
-    private static final Customer currentCustomer = CustomerRegistrationApplication.customer;
+    private static final Customer currentCustomer = CustomerRegistrationApplicationStarter.customer;
     private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
     private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator(financialInfo);
     private static final FinancialInformationParser parser = new FinancialInformationParser();

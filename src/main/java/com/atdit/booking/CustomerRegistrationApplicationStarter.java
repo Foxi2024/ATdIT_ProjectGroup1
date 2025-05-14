@@ -8,7 +8,7 @@ import com.atdit.booking.backend.customer.Customer;
  * Main class for the booking application.
  * This class serves as the entry point for the application and manages the customer registration process.
  */
-public class CustomerRegistrationApplication {
+public class CustomerRegistrationApplicationStarter {
 
     /**
      * Static customer instance used throughout the application.

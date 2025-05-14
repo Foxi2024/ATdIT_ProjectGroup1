@@ -1,6 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.CustomerRegistrationApplication;
+import com.atdit.booking.CustomerRegistrationApplicationStarter;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.database.DatabaseService;
 import com.atdit.booking.backend.exceptions.ValidationException;
@@ -36,7 +36,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
     @FXML private Button createAccountButton;
 
     /** Reference to the current customer being created */
-    private static final Customer currentCustomer = CustomerRegistrationApplication.customer;
+    private static final Customer currentCustomer = CustomerRegistrationApplicationStarter.customer;
 
     /** Database service instance for handling database operations */
     private DatabaseService db;

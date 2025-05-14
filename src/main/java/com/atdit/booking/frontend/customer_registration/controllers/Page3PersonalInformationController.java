@@ -1,6 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.CustomerRegistrationApplication;
+import com.atdit.booking.CustomerRegistrationApplicationStarter;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.customer.CustomerEvaluator;
 import com.atdit.booking.backend.exceptions.ValidationException;
@@ -72,7 +72,7 @@ public class Page3PersonalInformationController extends Controller implements In
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        this.currentCustomer = CustomerRegistrationApplication.customer;
+        this.currentCustomer = CustomerRegistrationApplicationStarter.customer;
         this.evaluator = new CustomerEvaluator(currentCustomer);
 
         restoreData();
@@ -90,6 +90,9 @@ public class Page3PersonalInformationController extends Controller implements In
     @FXML
     @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
+
+        cacheData();
+
         try {
             evaluator.evaluateCustomerInfo();
         }
@@ -122,7 +125,7 @@ public class Page3PersonalInformationController extends Controller implements In
             evaluator.evaluateCustomerInfo();
         }
         catch (ValidationException ex) {
-            showConfirmation("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
+            showError("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 
@@ -164,7 +167,7 @@ public class Page3PersonalInformationController extends Controller implements In
         firstNameField.setText(currentCustomer.getFirstName());
         countryField.setText(currentCustomer.getCountry());
         addressField.setText(currentCustomer.getAddress());
-        emailField.setText(CustomerRegistrationApplication.customer.getEmail());
+        emailField.setText(CustomerRegistrationApplicationStarter.customer.getEmail());
 
         if (currentCustomer.getBirthdate() != null && !currentCustomer.getBirthdate().isEmpty()) {
             birthDatePicker.setValue(java.time.LocalDate.parse(currentCustomer.getBirthdate()));

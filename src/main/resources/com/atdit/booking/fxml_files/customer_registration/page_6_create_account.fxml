@@ -82,7 +82,7 @@
 
         <HBox spacing="15" alignment="CENTER_RIGHT">
             <Button fx:id="backButton" text="Zurück" onMouseClicked="#previousPage"/>
-            <Button fx:id="createAccountButton" text="Account erstellen" onMouseClicked="#handleCreateAccount"/>
+            <Button fx:id="createAccountButton" text="Account erstellen" onMouseClicked="#createAccount"/>
         </HBox>
     </VBox>
 </AnchorPane>

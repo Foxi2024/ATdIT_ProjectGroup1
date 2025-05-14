@@ -131,7 +131,7 @@ public class Page2DataPrivacyController extends Controller implements Initializa
      */
     @FXML
     @SuppressWarnings("unused")
-    public void handleAcceptance(MouseEvent e) {
+    public void acceptAgreement(MouseEvent e) {
         continueButton.setDisable(!acceptButton.isSelected());
     }
 }
