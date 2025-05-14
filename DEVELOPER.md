@@ -316,60 +316,6 @@ mvn test
    - Database operations
    - External service integrations
 
-## Development Guidelines
-
-### Code Style
-- Follow Java naming conventions
-- Use meaningful variable and method names
-- Document public APIs and complex logic
-- Keep methods focused and single-responsibility
-
-### Version Control
-- Use feature branches for new development
-- Write meaningful commit messages
-- Review code before merging to main branch
-
-### Best Practices
-1. Error Handling
-   - Use appropriate exception handling
-   - Log errors with sufficient context
-   - Implement graceful degradation
-
-2. Performance
-   - Use connection pooling for database operations
-   - Implement caching where appropriate
-   - Optimize UI rendering
-
-3. Maintainability
-   - Follow SOLID principles
-   - Write clean, self-documenting code
-   - Maintain proper documentation
-
-## Troubleshooting
-
-### Common Issues
-1. Database Connection
-   - Verify SQLite file permissions
-   - Check connection string
-   - Ensure proper Hibernate configuration
-
-2. UI Issues
-   - Verify FXML file locations
-   - Check scene graph hierarchy
-   - Validate event handlers
-
-### Logging
-- Implement comprehensive logging
-- Use appropriate log levels
-- Include relevant context in log messages
-
-## Future Improvements
-1. Consider implementing:
-   - Caching layer for improved performance
-   - Additional security measures
-   - API documentation generation
-   - Containerization support
-
 ## Test Coverage
 
 ### Overview
@@ -508,3 +454,58 @@ mvn test -Dtest=Page7ControllerPageLoginTest
 # Run with coverage report
 mvn verify
 ``` 
+
+## Development Guidelines
+
+### Code Style
+- Follow Java naming conventions
+- Use meaningful variable and method names
+- Document public APIs and complex logic
+- Keep methods focused and single-responsibility
+
+### Version Control
+- Use feature branches for new development
+- Write meaningful commit messages
+- Review code before merging to main branch
+
+### Best Practices
+1. Error Handling
+   - Use appropriate exception handling
+   - Log errors with sufficient context
+   - Implement graceful degradation
+
+2. Performance
+   - Use connection pooling for database operations
+   - Implement caching where appropriate
+   - Optimize UI rendering
+
+3. Maintainability
+   - Follow SOLID principles
+   - Write clean, self-documenting code
+   - Maintain proper documentation
+
+## Troubleshooting
+
+### Common Issues
+1. Database Connection
+   - Verify SQLite file permissions
+   - Check connection string
+   - Ensure proper Hibernate configuration
+
+2. UI Issues
+   - Verify FXML file locations
+   - Check scene graph hierarchy
+   - Validate event handlers
+
+### Logging
+- Implement comprehensive logging
+- Use appropriate log levels
+- Include relevant context in log messages
+
+## Future Improvements
+1. Consider implementing:
+   - Caching layer for improved performance
+   - Additional security measures
+   - API documentation generation
+   - Containerization support
+
