@@ -144,9 +144,11 @@ public class FinancialDocumentsGenerator {
         try {
             generator.generateProofOfIncome(new IncomeProof(32_000, "ABC Corp", "Full-time", 24, "2025-01-01"), "proof_of_income");
             generator.generateProofOfLiquidAssets(new LiquidAsset("DE12345678901234567890", "Savings Account", 1_000_000, "2025-01-01"), "proof_of_liquid_assets");
-            generator.generateSchufa(new Schufaauskunft("Anton", "Beton", 0.75f, new ArrayList<Credit>(), "2023-01-01"), "schufa_report");
-        } catch (IOException e) {
+            generator.generateSchufa(new Schufaauskunft("Anton", "Beton", 0.75f, new ArrayList<Credit>(), "2025-01-01"), "schufa_report");
+        }
+        catch (IOException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
