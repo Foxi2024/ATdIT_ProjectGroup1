@@ -67,16 +67,10 @@ class Page5ProofFIControllerTest {
         financialInfo.setProofOfLiquidAssets(proofOfLiquidAssets);
         financialInfo.setSchufa(schufa);
 
-        try {
-            java.lang.reflect.Field customerField = FinancialInformationEvaluator.class.getDeclaredField("currentCustomer");
-            customerField.setAccessible(true);
-            Customer customer = new Customer();
-            customer.setFirstName("Max");
-            customer.setName("Mustermann");
-            customerField.set(evaluator, customer);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Customer customer = new Customer();
+        customer.setFirstName("Max");
+        customer.setName("Mustermann");
+        evaluator.setCurrentCustomer(customer);
     }
 
     /**

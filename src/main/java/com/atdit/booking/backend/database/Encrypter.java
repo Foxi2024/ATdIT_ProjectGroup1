@@ -20,25 +20,44 @@ import java.util.Arrays;
 import java.util.Base64;
 
 /**
- * Class for handling encryption, decryption and hashing operations.
- * Uses AES encryption with CBC mode and PKCS5 padding.
+ * A utility class that provides encryption, decryption and hashing functionality for secure data handling.
+ * This implementation uses AES (Advanced Encryption Standard) with CBC (Cipher Block Chaining) mode
+ * and PKCS5 padding for encryption/decryption operations.
+ *
+ * Security features:
+ * - 256-bit AES encryption
+ * - Secure key derivation using PBKDF2WithHmacSHA256
+ * - Random IV (Initialization Vector) generation for each encryption
+ * - SHA-256 hashing capability
+ *
+ * Note: This class is designed to be thread-safe and can be used across multiple threads.
  */
 public class Encrypter {
-    /** Algorithm used for encryption/decryption */
+    /**
+     * The encryption algorithm specification string.
+     * AES: Advanced Encryption Standard
+     * CBC: Cipher Block Chaining mode
+     * PKCS5Padding: Padding scheme used
+     */
     private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
-    /** Key size in bits for the encryption */
+
+    /**
+     * The key size in bits for the AES encryption.
+     * 256-bit keys provide a very high level of security.
+     */
     private static final int KEY_SIZE = 256;
 
     /**
-     * Derives an encryption key from email and password using PBKDF2.
+     * Derives an encryption key from the user's email and password using PBKDF2 (Password-Based Key Derivation Function 2).
+     * The method uses a fixed salt and 65536 iterations for key derivation to ensure consistent key generation.
+     * The password is first hashed before being used in the key derivation process.
      *
-     * @param email User's email address
-     * @param password User's password
-     * @return SecretKey for encryption/decryption
-     * @throws CryptographyException if key derivation fails
+     * @param email User's email address used as part of the key derivation input
+     * @param password User's password that will be hashed and used for key derivation
+     * @return SecretKey A 256-bit AES key for encryption/decryption operations
+     * @throws CryptographyException If any error occurs during the key derivation process
      */
     private SecretKey deriveKey(String email, String password) throws CryptographyException {
-
         try{
             String salt = "1.FC Kaiserslautern";
             password = hashString(password);
@@ -52,17 +71,21 @@ public class Encrypter {
     }
 
     /**
-     * Encrypts a string value using AES encryption.
-     * Uses a randomly generated IV for each encryption.
+     * Encrypts a string value using AES encryption in CBC mode with PKCS5 padding.
+     * The process includes:
+     * 1. Generating a random 16-byte IV
+     * 2. Deriving the encryption key from email and password
+     * 3. Encrypting the data with the generated IV
+     * 4. Combining the IV and encrypted data
+     * 5. Encoding the result in Base64
      *
-     * @param value String to encrypt
-     * @param email User's email for key derivation
-     * @param password User's password for key derivation
-     * @return Base64 encoded encrypted string with IV prepended
-     * @throws EncryptionException if encryption fails
+     * @param value The string to be encrypted
+     * @param email User's email used for key derivation
+     * @param password User's password used for key derivation
+     * @return String A Base64 encoded string containing the IV and encrypted data
+     * @throws EncryptionException If any error occurs during the encryption process
      */
     public String encrypt(String value, String email, String password) throws EncryptionException {
-
         try{
             SecretKey key = deriveKey(email, password);
             Cipher cipher = Cipher.getInstance(ALGORITHM);
@@ -78,21 +101,23 @@ public class Encrypter {
         catch(Exception e){
             throw new EncryptionException("Fehler beim Verschlüsseln");
         }
-
     }
 
     /**
-     * Decrypts an encrypted string using AES decryption.
-     * Extracts the IV from the first 16 bytes of the decoded string.
+     * Decrypts an encrypted string using AES decryption in CBC mode with PKCS5 padding.
+     * The process includes:
+     * 1. Decoding the Base64 input
+     * 2. Extracting the IV from the first 16 bytes
+     * 3. Deriving the decryption key from email and password
+     * 4. Decrypting the data using the extracted IV
      *
-     * @param encrypted Base64 encoded encrypted string with IV
-     * @param email User's email for key derivation
-     * @param password User's password for key derivation
-     * @return Decrypted string
-     * @throws DecryptionException if decryption fails
+     * @param encrypted The Base64 encoded string containing IV and encrypted data
+     * @param email User's email used for key derivation
+     * @param password User's password used for key derivation
+     * @return String The decrypted original string
+     * @throws DecryptionException If any error occurs during the decryption process
      */
     public String decrypt(String encrypted, String email, String password) throws DecryptionException {
-
         try {
             SecretKey key = deriveKey(email, password);
             Cipher cipher = Cipher.getInstance(ALGORITHM);
@@ -104,20 +129,19 @@ public class Encrypter {
         } catch (Exception e) {
             throw new DecryptionException("Fehler beim Entschlüsseln");
         }
-
-
     }
 
     /**
-     * Creates a SHA-256 hash of the input string.
-     * The hash is returned as a hexadecimal string.
+     * Creates a SHA-256 (Secure Hash Algorithm 256-bit) hash of the input string.
+     * The resulting hash is converted to a hexadecimal string representation.
+     * This method is used internally for password hashing in the key derivation process
+     * and can also be used independently for general string hashing.
      *
-     * @param stringToHash String to be hashed
-     * @return Hexadecimal string representation of the hash
-     * @throws HashingException if hashing fails
+     * @param stringToHash The input string to be hashed
+     * @return String A hexadecimal string representation of the SHA-256 hash
+     * @throws HashingException If any error occurs during the hashing process
      */
     public String hashString(String stringToHash) throws HashingException {
-
         try{
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(stringToHash.getBytes());
@@ -127,7 +151,5 @@ public class Encrypter {
         catch (Exception e) {
             throw new HashingException("Error hashing string");
         }
-
-
     }
 }

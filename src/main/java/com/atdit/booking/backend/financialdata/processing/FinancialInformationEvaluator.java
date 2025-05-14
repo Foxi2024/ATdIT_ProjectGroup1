@@ -47,7 +47,14 @@ public class FinancialInformationEvaluator {
         this.journeyDetails.setMonths(60);
         MIN_MONTHLY_MONEY = journeyDetails.getMonthlyPayment() * 0.8;
     }
-
+    /**
+     * Sets the current customer for financial evaluation.
+     * The current customer is required for validating personal information against documents,
+     * particularly for Schufa score verification where names must match.
+     *
+     * @param currentCustomer The Customer object representing the current user whose financial
+     *                       information is being evaluated
+     */
     public void setCurrentCustomer(Customer currentCustomer) {
         this.currentCustomer = currentCustomer;
     }
