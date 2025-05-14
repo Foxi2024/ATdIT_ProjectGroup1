@@ -370,9 +370,9 @@ mvn test
 
 ### Test Coverage Metrics
 
-| Component                    | Branch Coverage | Statement Coverage |
-|-----------------------------|-----------------|-----------------|
-| Backend        | 80%            | 90%            |
+| Component                    | Class Coverage | Method Coverage | Line Coverage | Branch Coverage |
+|-----------------------------|----------------|-----------------|---------------|-----------------|
+| Backend        | 57%            | 64%             | 46%           | 56%             |
 
 
 ### Running Tests

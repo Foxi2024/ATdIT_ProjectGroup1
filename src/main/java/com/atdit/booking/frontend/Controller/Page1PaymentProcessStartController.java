@@ -1,5 +1,6 @@
 package com.atdit.booking.frontend.Controller;
 
+import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
 /**
