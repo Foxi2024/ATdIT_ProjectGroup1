@@ -35,7 +35,7 @@ public abstract class AbstractContractController extends Controller implements I
 
         initializeParameters();
 
-        customerNameLabel.setText(currentCustomer.getFirstName() + " " + currentCustomer.getName());
+        customerNameLabel.setText(currentCustomer.getTitle() + " " + currentCustomer.getFirstName() + " " + currentCustomer.getName());
         emailLabel.setText(currentCustomer.getEmail());
         paymentMethodLabel.setText(contract.getPaymentMethod());
         totalAmountLabel.setText(String.format("€%.2f", contract.TOTAL_AMOUNT));

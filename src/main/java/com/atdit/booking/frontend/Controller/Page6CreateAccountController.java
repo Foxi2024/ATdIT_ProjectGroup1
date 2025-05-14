@@ -54,8 +54,6 @@ public class Page6CreateAccountController extends Controller implements Initiali
         emailLabel.setText(currentCustomer.getEmail());
         createAccountButton.setDisable(true);
 
-
-
         try {
             db = new DatabaseService();
         }
@@ -110,9 +108,12 @@ public class Page6CreateAccountController extends Controller implements Initiali
     @FXML
     @SuppressWarnings("unused")
     public void createAccount(MouseEvent e) {
+
+        String password = passwordField.getText();
+
         try {
-            validatePasswords();
-            saveCustomerToDatabase();
+            db.setCurrentCustomer(currentCustomer);
+            db.saveCustomerInDatabase(password);
         }
         catch (ValidationException ex) {
             showError("Validierung fehlgeschlagen", "Die Validierung der Passwörter ist fehlgeschlagen.", ex.getMessage());

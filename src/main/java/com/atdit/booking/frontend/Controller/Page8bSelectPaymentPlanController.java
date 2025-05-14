@@ -110,12 +110,7 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
     @FXML
     @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
-        loadScene(e, "page_10c_financing_contract.fxml", "Vertrag");
+        loadScene(e, "creditcard.fxml", "Vertrag");
     }
-
-    @FXML
-    @SuppressWarnings("unused")
-    public void handleMonthSelection(ActionEvent e) {
-        updateCalculations();
-    }
+    
 }

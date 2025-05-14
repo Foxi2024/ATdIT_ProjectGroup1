@@ -88,7 +88,7 @@ public class Page3PersonalInformationController extends Controller implements In
     @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
         try {
-            evaluator.validatePersonalInformation();
+            evaluator.evaluateCustomerInfo();
         }
         catch (ValidationException ex) {
             showError("Validierung fehlgeschlagen", "Die Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());

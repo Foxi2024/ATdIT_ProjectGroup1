@@ -17,6 +17,7 @@ class Page4DeclarationFIControllerTest {
 
     /**
      * Sets up the test environment before each test.
+     * The price for a journey will be 1,000,000 €.
      * Initializes a FinancialInformation object with default test values and creates an evaluator.
      */
     @BeforeEach
