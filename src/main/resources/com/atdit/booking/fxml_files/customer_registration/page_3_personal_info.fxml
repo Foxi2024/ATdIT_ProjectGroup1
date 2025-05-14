@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.frontend.customer_registration.Page3PersonalInformationController"
+            stylesheets="@../../style/style.css">
+
+    <VBox spacing="30" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+
+        <!-- Progress Bar -->
+        <HBox fx:id="processStepBar1" alignment="CENTER" spacing="15" styleClass="step-bar">
+            <Label fx:id="step1Label" text="Datenschutzerklärung" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step2Label" text="Persönliche Informationen" styleClass="step-label-active"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step3Label" text="Finanzielle Informationen" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step4Label" text="Nachweise" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step5Label" text="Konto erstellen" styleClass="step-label"/>
+        </HBox>
+
+        <!-- Main Content -->
+        <VBox spacing="20">
+            <HBox alignment="CENTER">
+                <Text text="Persönliche Informationen" styleClass="headline" textAlignment="CENTER"/>
+            </HBox>
+
+            <HBox spacing="40" alignment="CENTER">
+                <!-- Form Fields -->
+                <GridPane hgap="15" vgap="15">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100"/>
+                        <ColumnConstraints minWidth="200"/>
+                    </columnConstraints>
+
+                    <Label text="Anrede:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+                    <Label text="Nachname:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="nameField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Vorname:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="firstNameField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Geburtstag:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <DatePicker fx:id="birthDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                                maxWidth="Infinity"/>
+
+                    <Label text="Land:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="countryField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label text="Adresse:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <TextField fx:id="addressField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <Label text="E-Mail:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <TextField fx:id="emailField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <!-- Info Box -->
+                <VBox styleClass="info-box" maxWidth="300">
+                    <Label text="Hinweis" styleClass="sub-headline"/>
+                    <Text wrappingWidth="280" styleClass="info-text">
+                        Nur noch ein paar Details, bevor Ihr Weg zu den Sternen beginnen kann.
+                        Ihre Angaben helfen uns, Ihre Reise einzigartig zu gestalten – sicher und individuell.
+                    </Text>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Payment Option -->
+        <HBox alignment="CENTER">
+            <VBox styleClass="info-box" maxWidth="600" alignment="CENTER" spacing="15">
+                <Label text="Sofortzahlung" styleClass="sub-headline"/>
+                <Text styleClass="info-text" wrappingWidth="550" textAlignment="CENTER">
+                    Zahlen Sie den vollen Betrag von 1.000.000€ sofort und umgehen Sie den Finanzierungsprozess.
+                    Diese Option ist ideal für eine schnelle und unkomplizierte Abwicklung Ihrer Weltraumreise.
+                </Text>
+                <Button fx:id="oneTimePaymentButton" onMouseClicked="#goToOneTimePayment" text="Jetzt komplett bezahlen" styleClass="button"/>
+            </VBox>
+        </HBox>
+
+
+        <HBox spacing="15" alignment="CENTER_RIGHT">
+            <Button fx:id="backButton" text="Zurück" onMouseClicked="#previousPage"/>
+            <Button fx:id="continueButton" text="Weiter" onMouseClicked="#nextPage"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

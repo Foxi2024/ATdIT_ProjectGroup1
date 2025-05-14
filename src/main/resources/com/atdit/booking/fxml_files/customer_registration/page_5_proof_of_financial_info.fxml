@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.frontend.customer_registration.Page5ProofFIController"
+            stylesheets="@../../style/style.css">
+
+    <VBox spacing="20" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+        <HBox fx:id="processStepBar1" alignment="CENTER" spacing="15" styleClass="step-bar">
+            <Label fx:id="step1Label" text="Datenschutzerklärung" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step2Label" text="Persönliche Informationen" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step3Label" text="Finanzielle Informationen" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step4Label" text="Nachweise" styleClass="step-label-active"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step5Label" text="Konto erstellen" styleClass="step-label"/>
+        </HBox>
+
+        <Label text="Laden Sie Nachweise über Ihre finanziellen Angaben hoch" styleClass="headline"/>
+
+        <VBox spacing="30" alignment="CENTER" VBox.vgrow="ALWAYS">
+            <HBox spacing="15" alignment="CENTER">
+                <VBox spacing="10" alignment="CENTER" minWidth="300">
+                    <Button fx:id="incomeProofButton" text="Einkommensnachweis hochladen"/>
+                    <Label fx:id="incomeStatusLabel" text="Nicht hochgeladen" styleClass="info-text"/>
+                </VBox>
+                <VBox styleClass="info-box" minWidth="250">
+                    <Text wrappingWidth="230" styleClass="info-text">
+                        Gehaltsabrechnung (optional): Diese hilft uns, Ihre Einkommenssituation besser einzuschätzen.
+                    </Text>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="15" alignment="CENTER">
+                <VBox spacing="10" alignment="CENTER" minWidth="300">
+                    <Button fx:id="liquidAssetsProofButton" text="Liquiditätsnachweis hochladen"/>
+                    <Label fx:id="liquidAssetsStatusLabel" text="Nicht hochgeladen" styleClass="info-text"/>
+                </VBox>
+                <VBox styleClass="info-box" minWidth="250">
+                    <Text wrappingWidth="230" styleClass="info-text">
+                        Bankauszug oder Liquiditätsnachweis (Pflicht): Ein aktueller Bankauszug ist erforderlich, um Ihre finanzielle Stabilität zu bestätigen.
+                    </Text>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="15" alignment="CENTER">
+                <VBox spacing="10" alignment="CENTER" minWidth="300">
+                    <Button fx:id="schufaButton" text="Schufaauskunft hochladen"/>
+                    <Label fx:id="schufaStatusLabel" text="Nicht hochgeladen" styleClass="info-text"/>
+                </VBox>
+                <VBox styleClass="info-box" minWidth="250">
+                    <Text wrappingWidth="230" styleClass="info-text">
+                        Schufa-Auskunft (Pflicht): Diese ist notwendig, um Ihre Bonität zu überprüfen.
+                    </Text>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="backButton" text="Zurück" onMouseClicked="#previousPage"/>
+            <Button fx:id="continueButton" text="Weiter" onMouseClicked="#nextPage"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

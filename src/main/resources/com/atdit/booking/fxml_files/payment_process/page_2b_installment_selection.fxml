@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.frontend.payment_process.Page2bSelectPaymentPlanController"
+            stylesheets="@../../style/style.css">
+
+    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+        <HBox fx:id="processStepBar" alignment="CENTER" spacing="15" styleClass="step-bar">
+            <Label fx:id="paymentSelectionLabel" text="Zahlungsart" styleClass="step-label-active"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="paymentMethodLabel" text="Zahlungsmethode" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="contractLabel" text="Kaufvertrag" styleClass="step-label"/>
+        </HBox>
+
+        <Label text="Finanzierungsoptionen" styleClass="headline"/>
+
+        <HBox spacing="20">
+            <VBox spacing="15" styleClass="section-box">
+                <GridPane hgap="10" vgap="10">
+
+                    <Label text="Anzahlung (20%):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="downPaymentLabel" text="0,00 €" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Zu finanzierender Betrag:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label fx:id="totalAmountLabel" text="0,00 €" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Laufzeit in Monaten:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="monthsCombo" onAction="#chooseMonths" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Monatliche Rate:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label fx:id="monthlyPaymentLabel" text="0,00 €" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Effektiver Jahreszins:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Label fx:id="interestRateLabel" text="0,0%" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label text="Gesamtkosten:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <Label fx:id="totalCostLabel" text="0,00 €" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                </GridPane>
+            </VBox>
+
+            <VBox spacing="15" styleClass="info-box">
+                <Text wrappingWidth="250" styleClass="info-text">
+                    Für unsere flexiblen Ratenzahlungsmodelle ist eine Anzahlung von 20 % des Reisepreises erforderlich. Diese Zahlung dient der Absicherung Ihrer Reservierung und ermöglicht es uns, Ihre Reise professionell und verbindlich vorzubereiten.
+                </Text>
+            </VBox>
+        </HBox>
+
+        <VBox spacing="10" VBox.vgrow="ALWAYS"/>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="backButton" text="Zurück" onMouseClicked="#previousPage"/>
+            <Button fx:id="continueButton" text="Weiter" onMouseClicked="#nextPage"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

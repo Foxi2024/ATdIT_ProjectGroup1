@@ -292,8 +292,9 @@ public class DatabaseService {
      * @return Customer object with associated data
      * @throws IllegalArgumentException if credentials are invalid
      * @throws SQLException if database operation fails
+     * @throws CryptographyException if decryption fails
      */
-    public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws IllegalArgumentException, SQLException {
+    public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws IllegalArgumentException, SQLException, CryptographyException {
 
         if (email.isEmpty() || password.isEmpty()) {
             throw new IllegalArgumentException("Email- oder Passwortfeld ist leer.");

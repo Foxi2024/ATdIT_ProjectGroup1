@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.frontend.payment_process.Page4aOneTimePaymentContractController"
+            stylesheets="@../../style/style.css">
+
+    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+        <HBox fx:id="processStepBar" alignment="CENTER" spacing="15" styleClass="step-bar">
+            <Label fx:id="paymentSelectionLabel1" text="Zahlungsart" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="paymentMethodLabel1" text="Zahlungsmethode" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="contractLabel" text="Kaufvertrag" styleClass="step-label-active"/>
+        </HBox>
+
+        <Label text="Kaufvertrag" styleClass="headline"/>
+
+        <VBox spacing="15" styleClass="section-box">
+            <Label text="Contract Summary" styleClass="sub-headline"/>
+
+            <GridPane vgap="15" hgap="20">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="150" prefWidth="200"/>
+                    <ColumnConstraints minWidth="200" prefWidth="300"/>
+                </columnConstraints>
+
+                <Label text="Customer Name:" styleClass="label-bold" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label fx:id="customerNameLabel" text="-" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Email:" styleClass="label-bold" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label fx:id="emailLabel" text="-" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Total Amount:" styleClass="label-bold" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label fx:id="totalAmountLabel" text="€0.00" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Payment Method:" styleClass="label-bold" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <Label fx:id="paymentMethodLabel" text="-" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </GridPane>
+        </VBox>
+
+        <VBox spacing="15" VBox.vgrow="ALWAYS" styleClass="section-box">
+            <TextArea fx:id="contractTextArea" wrapText="true" editable="false"
+                      VBox.vgrow="ALWAYS" styleClass="contract-text" prefRowCount="15"/>
+        </VBox>
+
+        <VBox spacing="10">
+            <RadioButton fx:id="signatureCheckbox" onMouseClicked="#signContract"
+                         text="I have read and agree to the terms and conditions"/>
+        </VBox>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Back" onMouseClicked="#previousPage"/>
+            <Button fx:id="continueButton" text="Sign Contract and Pay Now" onMouseClicked="#nextPage" disable="true"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

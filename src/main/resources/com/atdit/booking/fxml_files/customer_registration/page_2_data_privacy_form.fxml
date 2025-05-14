@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<AnchorPane styleClass="root" prefWidth="1200.0" prefHeight="800.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.atdit.booking.frontend.customer_registration.Page2DataPrivacyController"
+            stylesheets="@../../style/style.css">
+
+    <VBox spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+        <HBox fx:id="processStepBar1" alignment="CENTER" spacing="15" styleClass="step-bar">
+            <Label fx:id="step1Label" text="Datenschutzerklärung" styleClass="step-label-active"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step2Label" text="Persönliche Informationen" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step3Label" text="Finanzielle Informationen" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step4Label" text="Nachweise" styleClass="step-label"/>
+            <Text text="→" styleClass="step-arrow"/>
+            <Label fx:id="step5Label" text="Konto erstellen" styleClass="step-label"/>
+        </HBox>
+
+        <Label text="Datenschutzerklärung" styleClass="sub-headline"/>
+
+        <VBox spacing="15" VBox.vgrow="ALWAYS" styleClass="section-box">
+            <TextArea fx:id="contractTextArea" wrapText="true" editable="false"
+                      VBox.vgrow="ALWAYS" styleClass="contract-text" prefRowCount="15"/>
+        </VBox>
+
+        <VBox spacing="10" alignment="CENTER">
+            <RadioButton fx:id="acceptButton" text="Akzeptieren" onMouseClicked="#acceptAgreement"/>
+        </VBox>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="backButton" text="Zurück" onMouseClicked="#previousPage"/>
+            <Button fx:id="continueButton" text="Weiter" disable="true" onMouseClicked="#nextPage"/>
+        </HBox>
+    </VBox>
+</AnchorPane>
