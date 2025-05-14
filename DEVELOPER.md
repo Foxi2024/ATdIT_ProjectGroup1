@@ -117,6 +117,17 @@ classDiagram
         -SchufaOverview schufa
         +setters()
         +getters()
+        -updateMonthlyAvailableMoney()
+    }
+
+    class IncomeProof {
+        <<record>>
+        +int monthlyNetIncome
+        +String employer
+        +String employmentType
+        +int employmentDurationMonths
+        +String dateIssued
+        +IncomeProof(int, String, String, int, String)
     }
 
     class SchufaOverview {
@@ -146,6 +157,7 @@ classDiagram
     Customer "1" *-- "1" FinancialInformation
     FinancialInformation "1" *-- "1" SchufaOverview
     FinancialInformation "1" *-- "1" LiquidAsset
+    FinancialInformation "1" *-- "1" IncomeProof
 ```
 
 ### Service Layer
@@ -220,7 +232,7 @@ classDiagram
         +restoreData()
     }
 
-    class Page3PersonalInformationController {
+    class Example: Page3PersonalInformationController {
         -ComboBox titleField
         -TextField nameField
         -TextField firstNameField
