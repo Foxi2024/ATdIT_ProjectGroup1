@@ -50,6 +50,7 @@ public class Page11ConfirmationController implements Initializable {
      * @param event The mouse event that triggered the closing action
      */
     @FXML
+    @SuppressWarnings("unused")
     public void closeApplication(MouseEvent event) {
         Platform.exit();
     }
