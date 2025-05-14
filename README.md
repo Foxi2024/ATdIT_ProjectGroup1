@@ -79,6 +79,8 @@ Erfahren Sie mehr über unser Unternehmen, unsere Partnerstrategie und die zugru
 ---
 
 **Nexstar Travel** – Wir machen Raumfahrt buchbar.  
-© 2025 Nexstar Travel. All rights reserved.
+**Disclaimer:**
+Dieses Projekt ist ein Schulprojekt und dient ausschließlich zu Bildungszwecken. NexStar Travel ist kein echtes Unternehmen und alle in diesem Projekt dargestellten Inhalte, Namen, Logos und Marken sind rein fiktiv und dienen keinem (privaten oder sonstigen) kommerziellen Zweck. Jegliche Ähnlichkeiten mit bestehenden Unternehmen sind rein zufällig und nicht beabsichtigt. 
+
 
 
