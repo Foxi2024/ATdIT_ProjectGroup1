@@ -318,7 +318,7 @@ mvn test
 
 ### Test Coverage Metrics
 
-| Component                    | Branch Coverage | Method Coverage |
+| Component                    | Branch Coverage | Statement Coverage |
 |-----------------------------|-----------------|-----------------|
 | Frontend Controllers        | 80%            | 90%            |
 | Database Operations        | 70%            | 85%            |
