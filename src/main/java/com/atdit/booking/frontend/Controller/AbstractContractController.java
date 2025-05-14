@@ -46,6 +46,7 @@ public abstract class AbstractContractController extends Controller implements I
 
 
     @FXML
+    @SuppressWarnings("unused")
     public void signContract(MouseEvent e) {
 
         if (signatureCheckbox.isSelected()) {

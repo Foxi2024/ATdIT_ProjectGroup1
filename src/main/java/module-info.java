@@ -4,7 +4,6 @@ module com.atdit.booking {
     requires jakarta.persistence;
     requires java.desktop;
 
-
     opens com.atdit.booking to javafx.fxml;
     exports com.atdit.booking;
     exports com.atdit.booking.backend.customer;

@@ -14,12 +14,6 @@ public class Main {
     public static Customer customer;
 
     /**
-     * Constant defining the minimum monthly money amount.
-     * Used as a validation threshold for customer financial data.
-     */
-    public static final int MIN_MONTHLY_MONEY = 1;
-
-    /**
      * The main method that starts the application.
      * Initializes a new customer instance and starts the customer registration process.
      *
