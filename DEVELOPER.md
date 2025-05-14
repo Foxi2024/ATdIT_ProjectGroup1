@@ -232,7 +232,7 @@ classDiagram
         +restoreData()
     }
 
-    class Example: Page3PersonalInformationController {
+    class e.g. Page3PersonalInformationController {
         -ComboBox titleField
         -TextField nameField
         -TextField firstNameField
