@@ -43,7 +43,7 @@ public abstract class Controller {
             Scene scene = new Scene(loader.load());
             stage.setTitle(title);
             stage.setScene(scene);
-            stage.getIcons().add(new Image(CustomerRegistration.class.getResourceAsStream("images/icon.png")));
+            stage.getIcons().add(new Image(CustomerRegistration.class.getResourceAsStream("/com/atdit/booking/style/images/icon.png")));
 
             stage.sizeToScene();
 

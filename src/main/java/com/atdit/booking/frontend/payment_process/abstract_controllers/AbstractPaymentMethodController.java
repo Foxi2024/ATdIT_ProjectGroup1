@@ -64,10 +64,15 @@ public abstract class AbstractPaymentMethodController extends Controller impleme
 
         String selected = paymentMethodCombo.getValue();
 
-        if (!selected.equals(paymentMethod)) {
-
-            loadScene(e, otherPage, "Zahlungsmethode auswählen");
+        if(selected.equals(paymentMethod)){
+            return;
         }
+
+        switch (selected) {
+            case "Kreditkarte" -> loadScene(e, "payment_process/page_3a_creditcard.fxml", "Zahlungsmethode auswählen");
+            case "Überweisung" -> loadScene(e, "payment_process/page_3b_banktransfer.fxml", "Zahlungsmethode auswählen");
+        }
+
     }
 
     @FXML

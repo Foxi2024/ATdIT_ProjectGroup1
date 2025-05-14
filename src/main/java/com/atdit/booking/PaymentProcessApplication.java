@@ -1,7 +1,6 @@
 package com.atdit.booking;
 
-
-import com.atdit.booking.applications.CustomerRegistration;
+import com.atdit.booking.applications.PaymentProcess;
 import com.atdit.booking.backend.customer.Customer;
 
 /**
@@ -25,6 +24,6 @@ public class PaymentProcessApplication {
 
         customer = new Customer();
 
-        CustomerRegistration.main(args);
+        PaymentProcess.main(args);
     }
 }

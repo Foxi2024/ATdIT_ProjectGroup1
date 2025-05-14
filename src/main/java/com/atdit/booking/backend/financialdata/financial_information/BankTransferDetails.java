@@ -36,7 +36,11 @@ public class BankTransferDetails {
      * @param bicSwift the BIC/SWIFT code to set
      */
     public void setBicSwift(String bicSwift) {
-        this.bicSwift = bicSwift.toUpperCase();
+
+        if(bicSwift != null) {
+            this.bicSwift = bicSwift.toUpperCase();
+        }
+
     }
 
     /**
@@ -59,12 +63,15 @@ public class BankTransferDetails {
 
     /**
      * Sets the IBAN of the bank account.
-     * The IBAN is automatically converted to uppercase.
+     * Automatically converted to all uppercase.
      *
      * @param iban the IBAN to set
      */
     public void setIban(String iban) {
-        this.iban = iban.toUpperCase();
+        if(iban != null){
+            this.iban = iban.toUpperCase();
+        }
+
     }
 
     /**

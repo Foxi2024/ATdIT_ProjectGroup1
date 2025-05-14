@@ -77,7 +77,7 @@ public class PaymentMethodEvaluator {
 
             String bankName = this.bankTransferDetails.getBankName();
 
-            if (bankName.length() < 2) {
+            if (bankName == null || bankName.length() < 2) {
                 errorMessage.append("- Ungültiger Bankname (mindestens 2 Zeichen)\n");
                 isValid = false;
             }
