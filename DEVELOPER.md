@@ -368,7 +368,7 @@ mvn test
    - Database operations
    - External service integrations
 
-### Test Coverage Metrics
+### Test Coverage Report
 
 | Component                    | Class Coverage | Method Coverage | Line Coverage | Branch Coverage |
 |-----------------------------|----------------|-----------------|---------------|-----------------|
