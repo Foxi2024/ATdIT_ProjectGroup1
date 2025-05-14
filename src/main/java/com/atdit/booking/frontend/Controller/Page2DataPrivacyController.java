@@ -100,11 +100,14 @@ public class Page2DataPrivacyController extends Controller implements Initializa
      * @param e The mouse event that triggered this method
      */
     @FXML
-    public void nextPage(MouseEvent e){
-
-        if(acceptButton.isSelected()){
-            loadScene(e,"page_3_personal_info_form.fxml", "Persönliche Informationen");
+    @SuppressWarnings("unused")
+    public void nextPage(MouseEvent e) {
+        if (!acceptButton.isSelected()) {
+            showError("Fehler", "Datenschutzerklärung nicht akzeptiert", "Bitte akzeptieren Sie die Datenschutzerklärung um fortzufahren.");
+            return;
         }
+
+        loadScene(e, "page_3_personal_information.fxml", "Persönliche Informationen");
     }
 
     /**
@@ -112,8 +115,10 @@ public class Page2DataPrivacyController extends Controller implements Initializa
      *
      * @param e The mouse event that triggered this method
      */
-    public void previousPage(MouseEvent e){
-        loadScene(e,"page_1_start_payment_process.fxml", "Willkommen");
+    @FXML
+    @SuppressWarnings("unused")
+    public void previousPage(MouseEvent e) {
+        loadScene(e, "page_1_start_payment_process.fxml", "Start");
     }
 
     /**
@@ -123,7 +128,8 @@ public class Page2DataPrivacyController extends Controller implements Initializa
      * @param e The mouse event that triggered this method
      */
     @FXML
-    public void acceptAgreement(MouseEvent e) {
+    @SuppressWarnings("unused")
+    public void handleAcceptance(MouseEvent e) {
         continueButton.setDisable(!acceptButton.isSelected());
     }
 }

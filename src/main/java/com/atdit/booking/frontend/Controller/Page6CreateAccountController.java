@@ -95,9 +95,9 @@ public class Page6CreateAccountController extends Controller implements Initiali
      * @param e The mouse event that triggered the action
      */
     @FXML
+    @SuppressWarnings("unused")
     public void previousPage(MouseEvent e) {
-
-        loadScene(e, "page_5_proof_of_financial_info.fxml", "");
+        loadScene(e, "page_5_proof_financial_info.fxml", "Nachweis finanzieller Angaben");
     }
 
     /**
@@ -108,20 +108,21 @@ public class Page6CreateAccountController extends Controller implements Initiali
      * @param e The mouse event that triggered the action
      */
     @FXML
-    public void handleCreateAccount(MouseEvent e) {
-
-        String password = passwordField.getText();
-
+    @SuppressWarnings("unused")
+    public void createAccount(MouseEvent e) {
         try {
-            db.setCurrentCustomer(currentCustomer);
-            db.saveCustomerInDatabase(password);
+            validatePasswords();
+            saveCustomerToDatabase();
         }
-        catch (SQLException | RuntimeException ex) {
-            showError("Datenbankfehler", "Ein Fehler ist beim Speichern ihrer Daten aufgetreten.", ex.getMessage());
+        catch (ValidationException ex) {
+            showError("Validierung fehlgeschlagen", "Die Validierung der Passwörter ist fehlgeschlagen.", ex.getMessage());
+            return;
+        }
+        catch (SQLException ex) {
+            showError("Datenbankfehler", "Kunde konnte nicht in der Datenbank gespeichert werden.", ex.getMessage());
             return;
         }
 
-        loadScene(e, "account_created.fxml", "Vielen Dank");
-
+        loadScene(e, "account_confirmation.fxml", "Account erstellt");
     }
 }

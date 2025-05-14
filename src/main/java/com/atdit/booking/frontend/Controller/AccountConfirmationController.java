@@ -48,6 +48,7 @@ public class AccountConfirmationController extends Controller implements Initial
      * @param event The MouseEvent that triggered this action.
      */
     @FXML
+    @SuppressWarnings("unused")
     public void closeApplication(MouseEvent event) {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.close();

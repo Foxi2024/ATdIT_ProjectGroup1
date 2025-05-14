@@ -81,18 +81,18 @@ public class Page5ProofFIController extends Controller implements Initializable,
      * @param e MouseEvent that triggered the navigation
      */
     @FXML
+    @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
-
         try {
             evaluator.validateUploads();
             evaluator.evaluateUploads();
         }
         catch (ValidationException ex) {
-            showConfirmation("Validierung fehlgeschlagen", "Die Validierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
+            showError("Validierung fehlgeschlagen", "Die Validierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
             return;
         }
         catch (EvaluationException ex) {
-            showConfirmation("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
+            showError("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 
@@ -105,9 +105,9 @@ public class Page5ProofFIController extends Controller implements Initializable,
      * @param e MouseEvent that triggered the navigation
      */
     @FXML
+    @SuppressWarnings("unused")
     public void previousPage(MouseEvent e) {
-
-        loadScene(e, "page_4_financial_info_declaration.fxml", "Nachweis finanzieller Angaben");
+        loadScene(e, "page_4_financial_info_declaration.fxml", "Finanzielle Angaben");
     }
 
     /**

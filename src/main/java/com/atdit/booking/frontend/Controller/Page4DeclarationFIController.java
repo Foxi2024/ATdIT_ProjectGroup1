@@ -62,6 +62,7 @@ public class Page4DeclarationFIController extends Controller implements Initiali
      * @param e MouseEvent triggered by clicking the continue button
      */
     @FXML
+    @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
 
         try {
@@ -90,6 +91,7 @@ public class Page4DeclarationFIController extends Controller implements Initiali
      * @param e MouseEvent triggered by clicking the back button
      */
     @FXML
+    @SuppressWarnings("unused")
     public void previousPage(MouseEvent e) {
 
         cacheData();

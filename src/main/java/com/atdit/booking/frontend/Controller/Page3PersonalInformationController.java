@@ -85,15 +85,13 @@ public class Page3PersonalInformationController extends Controller implements In
      * @param e The MouseEvent that triggered the action
      */
     @FXML
+    @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
-
-        cacheData();
-
         try {
-            evaluator.evaluateCustomerInfo();
+            evaluator.validatePersonalInformation();
         }
         catch (ValidationException ex) {
-            showConfirmation("Validierung fehlgeschlagen", "Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
+            showError("Validierung fehlgeschlagen", "Die Validierung Ihrer persönlichen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
 
@@ -105,17 +103,14 @@ public class Page3PersonalInformationController extends Controller implements In
      *
      * @param e The MouseEvent that triggered the action
      */
-
-
     @FXML
+    @SuppressWarnings("unused")
     public void previousPage(MouseEvent e) {
-
-        cacheData();
         loadScene(e, "page_2_data_privacy_form.fxml", "Datenschutzerklärung");
     }
 
-
     @FXML
+    @SuppressWarnings("unused")
     public void goToOneTimePayment(MouseEvent e){
 
         cacheData();

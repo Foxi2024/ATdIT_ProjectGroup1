@@ -63,6 +63,7 @@ public class Page7ControllerPageLogin extends Controller implements Initializabl
      * @param e The MouseEvent triggered by clicking the login button
      */
     @FXML
+    @SuppressWarnings("unused")
     public void handleLogin(MouseEvent e) {
         String email = emailField.getText();
         String password = passwordField.getText();

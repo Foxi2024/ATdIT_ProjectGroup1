@@ -52,19 +52,17 @@ public class Page8aSelectPaymentController extends Controller implements Initial
      * @param e The mouse event that triggered this method
      */
     @FXML
+    @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
-
         if (oneTimePaymentRadio.isSelected()) {
             selectedPayment = "BuyNowPayLater";
             contract = new BuyNowPayLaterContract();
             loadScene(e, "creditcard.fxml", "Zahlungsmethode auswählen");
-
         } else {
             selectedPayment = "Financing";
             contract = new FinancingContract();
             loadScene(e, "financing_plan_selection_page.fxml", "Finanzierung auswählen");
         }
-
     }
 
     /**
@@ -73,6 +71,7 @@ public class Page8aSelectPaymentController extends Controller implements Initial
      * @param e The mouse event that triggered this method
      */
     @FXML
+    @SuppressWarnings("unused")
     public void previousPage(MouseEvent e) {
         loadScene(e, "customer_login.fxml", "Anmeldung");
     }

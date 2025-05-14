@@ -66,6 +66,7 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
      * @param e The action event triggered by selecting a new value in the months ComboBox
      */
     @FXML
+    @SuppressWarnings("unused")
     public void chooseMonths(ActionEvent e) {
 
         updateCalculations();
@@ -96,8 +97,9 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
      * @param e The mouse event that triggered the navigation
      */
     @FXML
+    @SuppressWarnings("unused")
     public void previousPage(MouseEvent e) {
-        loadScene(e, "payment_selection_page.fxml", "Zahlungsart auswählen");
+        loadScene(e, "page_8a_select_payment.fxml", "Zahlungsart auswählen");
     }
 
     /**
@@ -106,7 +108,14 @@ public class Page8bSelectPaymentPlanController extends Controller implements Ini
      * @param e The mouse event that triggered the navigation
      */
     @FXML
+    @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
-        loadScene(e, "creditcard.fxml", "Zahlungsmethode auswählen");
+        loadScene(e, "page_10c_financing_contract.fxml", "Vertrag");
+    }
+
+    @FXML
+    @SuppressWarnings("unused")
+    public void handleMonthSelection(ActionEvent e) {
+        updateCalculations();
     }
 }
