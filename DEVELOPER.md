@@ -393,110 +393,69 @@ mvn verify
 
 ### Layer Assignment
 
+#### Frontend Layer
 ```mermaid
 classDiagram
-    %% Frontend Layer
-    class Controller {
+    Controller <|-- AbstractApplication
+    Controller <|-- PageController
+    PageController <|-- Page3PersonalInformationController
+    PageController <|-- Page4DeclarationFIController
+    PageController <|-- Page5ProofFIController
+    
+    class Controller{
         <<abstract>>
         +handleNavigation()
     }
-    class Navigatable {
-        <<interface>>
-        +navigateToNextPage()
-        +navigateToPreviousPage()
-    }
-    class Cacheable {
-        <<interface>>
-        +cacheData()
-        +restoreData()
-    }
-    class AbstractApplication {
+    class PageController{
+        <<abstract>>
         +initialize()
+    }
+    class AbstractApplication{
         +start()
         +stop()
     }
-    class UIController {
-        <<interface>>
-        +initialize()
-    }
+```
 
-    %% Business Logic Layer
-    class Customer {
+#### Business Logic Layer
+```mermaid
+classDiagram
+    Customer *-- FinancialInformation
+    FinancialInformation *-- IncomeProof
+    FinancialInformation *-- LiquidAsset
+    FinancialInformation *-- SchufaOverview
+    
+    class Customer{
         -String title
         -String firstName
         -String name
-        -FinancialInformation info
-        +setters()
-        +getters()
+        +setFinancialInfo()
     }
-    class CustomerEvaluator {
-        -Customer customer
-        +evaluateCustomerInfo()
-        +checkValidations()
-    }
-    class FinancialInformation {
+    class FinancialInformation{
         -int avgNetIncome
-        -IncomeProof proofOfIncome
-        -LiquidAsset assets
-        +setters()
-        +getters()
+        -int liquidAssets
+        +evaluate()
     }
-    class FinancialInformationEvaluator {
-        -FinancialInformation info
-        +evaluateUploads()
-        +validateDocuments()
+    class IncomeProof{
+        -int monthlyIncome
+        -String employer
     }
+```
 
-    %% Data Access Layer
-    class DatabaseService {
-        -Connection connection
+#### Data Access Layer
+```mermaid
+classDiagram
+    DatabaseService --> Encrypter
+    DatabaseService --> Customer
+    
+    class DatabaseService{
+        -Connection conn
         +saveCustomer()
         +loadCustomer()
     }
-    class Encrypter {
+    class Encrypter{
         +encrypt()
         +decrypt()
-        +hash()
     }
-
-    %% Layer Relationships
-    Controller <|-- AbstractApplication
-    Controller <|.. UIController
-    UIController <|.. "Frontend Controllers"
-
-    Customer -- CustomerEvaluator
-    FinancialInformation -- FinancialInformationEvaluator
-    Customer *-- FinancialInformation
-
-    DatabaseService -- Encrypter
-    CustomerEvaluator ..> DatabaseService
-    FinancialInformationEvaluator ..> DatabaseService
-
-    %% Layer Labels
-    class FrontendLayer {
-        <<Layer>>
-    }
-    class BusinessLayer {
-        <<Layer>>
-    }
-    class DataLayer {
-        <<Layer>>
-    }
-
-    %% Group components by layer
-    FrontendLayer .. Controller
-    FrontendLayer .. Navigatable
-    FrontendLayer .. Cacheable
-    FrontendLayer .. AbstractApplication
-    FrontendLayer .. UIController
-
-    BusinessLayer .. Customer
-    BusinessLayer .. CustomerEvaluator
-    BusinessLayer .. FinancialInformation
-    BusinessLayer .. FinancialInformationEvaluator
-
-    DataLayer .. DatabaseService
-    DataLayer .. Encrypter
 ```
 
 ### Layer Details
