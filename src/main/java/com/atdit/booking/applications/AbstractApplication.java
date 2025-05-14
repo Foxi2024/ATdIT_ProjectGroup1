@@ -26,9 +26,9 @@ public abstract class AbstractApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CustomerRegistration.class.getResource("fxml_files/" + filename));
+        FXMLLoader fxmlLoader = new FXMLLoader(CustomerRegistration.class.getResource("/com/atdit/booking/fxml_files/" + filename));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.getIcons().add(new Image(CustomerRegistration.class.getResourceAsStream("style/images/icon.png")));
+        stage.getIcons().add(new Image(CustomerRegistration.class.getResourceAsStream("/com/atdit/booking/style/images/icon.png")));
         stage.setTitle("Main");
         stage.setScene(scene);
         stage.show();
