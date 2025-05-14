@@ -395,50 +395,108 @@ mvn verify
 
 ```mermaid
 classDiagram
-    namespace Frontend {
-        class AbstractApplication
-        class Controller {
-            <<abstract>>
-        }
-        class Navigatable {
-            <<interface>>
-        }
-        class Cacheable {
-            <<interface>>
-        }
-        class Page3PersonalInformationController
-        class Page4DeclarationFIController
-        class Page5ProofFIController
-        class Page6CreateAccountController
-        class Page7ControllerPageLogin
-        class Page9aCreditCardController
-        class Page9bBankTransferController
+    %% Frontend Layer
+    class Controller {
+        <<abstract>>
+        +handleNavigation()
+    }
+    class Navigatable {
+        <<interface>>
+        +navigateToNextPage()
+        +navigateToPreviousPage()
+    }
+    class Cacheable {
+        <<interface>>
+        +cacheData()
+        +restoreData()
+    }
+    class AbstractApplication {
+        +initialize()
+        +start()
+        +stop()
+    }
+    class UIController {
+        <<interface>>
+        +initialize()
     }
 
-    namespace BusinessLogic {
-        class Customer
-        class CustomerEvaluator
-        class FinancialInformation
-        class FinancialInformationEvaluator
-        class IncomeProof
-        class LiquidAsset
-        class SchufaOverview
-        class FinancialInformationParser
-        class FinancialDocumentsGenerator
-        class PaymentProcess
-        class CustomerRegistrationProcess
+    %% Business Logic Layer
+    class Customer {
+        -String title
+        -String firstName
+        -String name
+        -FinancialInformation info
+        +setters()
+        +getters()
+    }
+    class CustomerEvaluator {
+        -Customer customer
+        +evaluateCustomerInfo()
+        +checkValidations()
+    }
+    class FinancialInformation {
+        -int avgNetIncome
+        -IncomeProof proofOfIncome
+        -LiquidAsset assets
+        +setters()
+        +getters()
+    }
+    class FinancialInformationEvaluator {
+        -FinancialInformation info
+        +evaluateUploads()
+        +validateDocuments()
     }
 
-    namespace DataAccess {
-        class DatabaseService
-        class Encrypter
-        class CryptographyException
-        class ValidationException
+    %% Data Access Layer
+    class DatabaseService {
+        -Connection connection
+        +saveCustomer()
+        +loadCustomer()
+    }
+    class Encrypter {
+        +encrypt()
+        +decrypt()
+        +hash()
     }
 
-    %% Layer Dependencies
-    Frontend ..> BusinessLogic
-    BusinessLogic ..> DataAccess
+    %% Layer Relationships
+    Controller <|-- AbstractApplication
+    Controller <|.. UIController
+    UIController <|.. "Frontend Controllers"
+
+    Customer -- CustomerEvaluator
+    FinancialInformation -- FinancialInformationEvaluator
+    Customer *-- FinancialInformation
+
+    DatabaseService -- Encrypter
+    CustomerEvaluator ..> DatabaseService
+    FinancialInformationEvaluator ..> DatabaseService
+
+    %% Layer Labels
+    class FrontendLayer {
+        <<Layer>>
+    }
+    class BusinessLayer {
+        <<Layer>>
+    }
+    class DataLayer {
+        <<Layer>>
+    }
+
+    %% Group components by layer
+    FrontendLayer .. Controller
+    FrontendLayer .. Navigatable
+    FrontendLayer .. Cacheable
+    FrontendLayer .. AbstractApplication
+    FrontendLayer .. UIController
+
+    BusinessLayer .. Customer
+    BusinessLayer .. CustomerEvaluator
+    BusinessLayer .. FinancialInformation
+    BusinessLayer .. FinancialInformationEvaluator
+
+    DataLayer .. DatabaseService
+    DataLayer .. Encrypter
 ```
 
 ### Layer Details
