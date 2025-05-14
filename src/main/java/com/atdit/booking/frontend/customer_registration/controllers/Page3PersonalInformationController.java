@@ -1,6 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.Main;
+import com.atdit.booking.CustomerRegistrationApplication;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.customer.CustomerEvaluator;
 import com.atdit.booking.backend.exceptions.ValidationException;
@@ -72,7 +72,7 @@ public class Page3PersonalInformationController extends Controller implements In
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        this.currentCustomer = Main.customer;
+        this.currentCustomer = CustomerRegistrationApplication.customer;
         this.evaluator = new CustomerEvaluator(currentCustomer);
 
         restoreData();
@@ -164,7 +164,7 @@ public class Page3PersonalInformationController extends Controller implements In
         firstNameField.setText(currentCustomer.getFirstName());
         countryField.setText(currentCustomer.getCountry());
         addressField.setText(currentCustomer.getAddress());
-        emailField.setText(Main.customer.getEmail());
+        emailField.setText(CustomerRegistrationApplication.customer.getEmail());
 
         if (currentCustomer.getBirthdate() != null && !currentCustomer.getBirthdate().isEmpty()) {
             birthDatePicker.setValue(java.time.LocalDate.parse(currentCustomer.getBirthdate()));

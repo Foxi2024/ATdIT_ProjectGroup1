@@ -1,4 +1,4 @@
-package com.atdit.booking;
+package com.atdit.booking.applications;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +26,9 @@ public abstract class AbstractApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CustomerRegistrationProcess.class.getResource("fxml_files/" + filename));
+        FXMLLoader fxmlLoader = new FXMLLoader(CustomerRegistration.class.getResource("fxml_files/" + filename));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.getIcons().add(new Image(CustomerRegistrationProcess.class.getResourceAsStream("style/images/icon.png")));
+        stage.getIcons().add(new Image(CustomerRegistration.class.getResourceAsStream("style/images/icon.png")));
         stage.setTitle("Main");
         stage.setScene(scene);
         stage.show();

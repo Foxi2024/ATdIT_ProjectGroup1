@@ -1,4 +1,4 @@
-package com.atdit.booking.frontend.controller;
+package com.atdit.booking.frontend.controllers.payment_process;
 
 /**
  * Test class for validating bank transfer information through PaymentMethodEvaluator.
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class Page9bBankTransferControllerTest {
+class Page3bBankTransferControllerTest {
 
     private PaymentMethodEvaluator evaluator;
     private BankTransferDetails bankDetails;

@@ -1,4 +1,4 @@
-package com.atdit.booking;
+package com.atdit.booking.applications;
 
 public class PaymentProcess extends AbstractApplication {
 

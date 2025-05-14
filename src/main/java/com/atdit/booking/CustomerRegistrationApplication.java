@@ -1,12 +1,14 @@
 package com.atdit.booking;
 
+import com.atdit.booking.applications.CustomerRegistration;
+
 import com.atdit.booking.backend.customer.Customer;
 
 /**
  * Main class for the booking application.
  * This class serves as the entry point for the application and manages the customer registration process.
  */
-public class Main {
+public class CustomerRegistrationApplication {
 
     /**
      * Static customer instance used throughout the application.
@@ -23,16 +25,6 @@ public class Main {
 
         customer = new Customer();
 
-        //CustomerRegistrationProcess.main(args);
-        PaymentProcess.main(args);
+        CustomerRegistration.main(args);
     }
 }
-
-
-/*
-
-
-
-
-
- */

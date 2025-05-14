@@ -1,7 +1,7 @@
 package com.atdit.booking.frontend.super_controller;
 
 
-import com.atdit.booking.CustomerRegistrationProcess;
+import com.atdit.booking.applications.CustomerRegistration;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +43,7 @@ public abstract class Controller {
             Scene scene = new Scene(loader.load());
             stage.setTitle(title);
             stage.setScene(scene);
-            stage.getIcons().add(new Image(CustomerRegistrationProcess.class.getResourceAsStream("images/icon.png")));
+            stage.getIcons().add(new Image(CustomerRegistration.class.getResourceAsStream("images/icon.png")));
 
             stage.sizeToScene();
 

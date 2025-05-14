@@ -1,4 +1,4 @@
-package com.atdit.booking.frontend.controller;
+package com.atdit.booking.frontend.controllers.payment_process;
 
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.financial_information.CreditCardDetails;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for validating credit card information processing.
  * This class tests various scenarios of credit card validation using the PaymentMethodEvaluator.
  */
-class Page9aCreditCardControllerTest {
+class Page3aCreditCardControllerTest {
 
     private PaymentMethodEvaluator evaluator;
     private CreditCardDetails creditCardDetails;

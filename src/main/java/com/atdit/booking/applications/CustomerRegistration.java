@@ -1,6 +1,6 @@
-package com.atdit.booking;
+package com.atdit.booking.applications;
 
-public class CustomerRegistrationProcess extends AbstractApplication {
+public class CustomerRegistration extends AbstractApplication {
 
     public static void main(String[] args) {
         filename = "customer_registration/page_1_start_payment_process.fxml";

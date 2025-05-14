@@ -1,6 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.Main;
+import com.atdit.booking.CustomerRegistrationApplication;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.frontend.super_controller.Controller;
 import javafx.fxml.FXML;
@@ -28,7 +28,7 @@ public class Page7AccountConfirmationController extends Controller implements In
     /**
      * Static reference to the current customer, initialized from the main application.
      */
-    public static Customer currentCustomer = Main.customer;
+    public static Customer currentCustomer = CustomerRegistrationApplication.customer;
 
     /**
      * Initializes the controller and sets up the confirmation message.

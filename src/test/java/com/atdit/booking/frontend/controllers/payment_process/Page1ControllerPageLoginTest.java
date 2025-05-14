@@ -1,4 +1,4 @@
-package com.atdit.booking.frontend.controller;
+package com.atdit.booking.frontend.controllers.payment_process;
 
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.database.DatabaseService;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for Page7Controller login functionality.
  * Tests the database operations related to customer authentication and retrieval.
  */
-class Page7ControllerPageLoginTest {
+class Page1ControllerPageLoginTest {
     private DatabaseService databaseService;
     private static final String TEST_EMAIL = "test@example.com";
     private static final String TEST_PASSWORD = "Test123!@#";
