@@ -13,15 +13,67 @@ The application follows a layered architecture with the following main component
    - FXML-based UI layouts
    - MVC (Model-View-Controller) pattern implementation
 
+- **Location**: `src/main/java/com/atdit/booking/frontend/`
+- **Primary Responsibilities**: User interface, input handling, view management
+- **Key Classes**:
+  ```
+  ├── Controller/
+  │   ├── AbstractApplication
+  │   ├── Controller (abstract)
+  │   ├── Page3PersonalInformationController
+  │   ├── Page4DeclarationFIController
+  │   ├── Page5ProofFIController
+  │   ├── Page6CreateAccountController
+  │   ├── Page7ControllerPageLogin
+  │   ├── Page9aCreditCardController
+  │   └── Page9bBankTransferController
+  ```
+- **Interfaces**:
+  - `Navigatable`: Navigation between pages
+  - `Cacheable`: Data persistence between views
+
 2. **Business Logic Layer**
    - Core business logic implementation
    - Process handling (Payment, Customer Registration)
    - Abstract application framework
 
+- **Location**: `src/main/java/com/atdit/booking/backend/`
+- **Primary Responsibilities**: Business rules, data validation, process management
+- **Key Classes**:
+  ```
+  ├── customer/
+  │   ├── Customer
+  │   └── CustomerEvaluator
+  ├── financialdata/
+  │   ├── financial_information/
+  │   │   ├── FinancialInformation
+  │   │   ├── IncomeProof
+  │   │   ├── LiquidAsset
+  │   │   └── SchufaOverview
+  │   └── processing/
+  │       ├── FinancialInformationEvaluator
+  │       ├── FinancialInformationParser
+  │       └── FinancialDocumentsGenerator
+  ├── PaymentProcess
+  └── CustomerRegistrationProcess
+  ```
+
 3. **Data Access Layer**
    - Hibernate ORM integration
    - SQLite database connectivity
    - Entity management and persistence
+
+- **Location**: `src/main/java/com/atdit/booking/backend/database/`
+- **Primary Responsibilities**: Database operations, data encryption, persistence
+- **Key Classes**:
+  ```
+  ├── database/
+  │   ├── DatabaseService
+  │   └── Encrypter
+  └── exceptions/
+      ├── CryptographyException
+      └── ValidationException
+  ```
 
 ```mermaid
 graph TD
@@ -389,154 +441,6 @@ mvn verify
    - API documentation generation
    - Containerization support
 
-## Layered Architecture
 
-### Layer Assignment
 
-#### Frontend Layer
-```mermaid
-classDiagram
-    Controller <|-- AbstractApplication
-    Controller <|-- PageController
-    PageController <|-- Page3PersonalInformationController
-    PageController <|-- Page4DeclarationFIController
-    PageController <|-- Page5ProofFIController
-    
-    class Controller{
-        <<abstract>>
-        +handleNavigation()
-    }
-    class PageController{
-        <<abstract>>
-        +initialize()
-    }
-    class AbstractApplication{
-        +start()
-        +stop()
-    }
-```
-
-#### Business Logic Layer
-```mermaid
-classDiagram
-    Customer *-- FinancialInformation
-    FinancialInformation *-- IncomeProof
-    FinancialInformation *-- LiquidAsset
-    FinancialInformation *-- SchufaOverview
-    
-    class Customer{
-        -String title
-        -String firstName
-        -String name
-        +setFinancialInfo()
-    }
-    class FinancialInformation{
-        -int avgNetIncome
-        -int liquidAssets
-        +evaluate()
-    }
-    class IncomeProof{
-        -int monthlyIncome
-        -String employer
-    }
-```
-
-#### Data Access Layer
-```mermaid
-classDiagram
-    DatabaseService --> Encrypter
-    DatabaseService --> Customer
-    
-    class DatabaseService{
-        -Connection conn
-        +saveCustomer()
-        +loadCustomer()
-    }
-    class Encrypter{
-        +encrypt()
-        +decrypt()
-    }
-```
-
-### Layer Details
-
-#### 1. Frontend Layer (Presentation)
-- **Location**: `src/main/java/com/atdit/booking/frontend/`
-- **Primary Responsibilities**: User interface, input handling, view management
-- **Key Classes**:
-  ```
-  ├── Controller/
-  │   ├── AbstractApplication
-  │   ├── Controller (abstract)
-  │   ├── Page3PersonalInformationController
-  │   ├── Page4DeclarationFIController
-  │   ├── Page5ProofFIController
-  │   ├── Page6CreateAccountController
-  │   ├── Page7ControllerPageLogin
-  │   ├── Page9aCreditCardController
-  │   └── Page9bBankTransferController
-  ```
-- **Interfaces**:
-  - `Navigatable`: Navigation between pages
-  - `Cacheable`: Data persistence between views
-
-#### 2. Business Logic Layer
-- **Location**: `src/main/java/com/atdit/booking/backend/`
-- **Primary Responsibilities**: Business rules, data validation, process management
-- **Key Classes**:
-  ```
-  ├── customer/
-  │   ├── Customer
-  │   └── CustomerEvaluator
-  ├── financialdata/
-  │   ├── financial_information/
-  │   │   ├── FinancialInformation
-  │   │   ├── IncomeProof
-  │   │   ├── LiquidAsset
-  │   │   └── SchufaOverview
-  │   └── processing/
-  │       ├── FinancialInformationEvaluator
-  │       ├── FinancialInformationParser
-  │       └── FinancialDocumentsGenerator
-  ├── PaymentProcess
-  └── CustomerRegistrationProcess
-  ```
-
-#### 3. Data Access Layer
-- **Location**: `src/main/java/com/atdit/booking/backend/database/`
-- **Primary Responsibilities**: Database operations, data encryption, persistence
-- **Key Classes**:
-  ```
-  ├── database/
-  │   ├── DatabaseService
-  │   └── Encrypter
-  └── exceptions/
-      ├── CryptographyException
-      └── ValidationException
-  ```
-
-### Layer Interactions
-
-1. **Frontend → Business Logic**
-   - Controllers use Customer and FinancialInformation for data management
-   - Form data validation through Evaluator classes
-   - Document processing through FinancialInformationParser
-
-2. **Business Logic → Data Access**
-   - Customer data persistence through DatabaseService
-   - Secure data handling through Encrypter
-   - Exception handling for database and validation errors
-
-3. **Cross-Cutting Concerns**
-   - Security (encryption, validation)
-   - Exception handling
-   - Logging
-   - Configuration management
-
-### Design Principles
-- **Separation of Concerns**: Each layer has distinct responsibilities
-- **Dependency Direction**: Dependencies flow downward
-- **Interface Segregation**: Clean interfaces between layers
-- **Single Responsibility**: Classes have focused purposes
-- **Open/Closed**: Extensible through inheritance and interfaces
 
