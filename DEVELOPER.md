@@ -320,10 +320,8 @@ mvn test
 
 | Component                    | Branch Coverage | Statement Coverage |
 |-----------------------------|-----------------|-----------------|
-| Frontend Controllers        | 80%            | 90%            |
-| Database Operations        | 70%            | 85%            |
-| Business Logic            | 75%            | 88%            |
-| Security & Encryption     | 85%            | 95%            |
+| Backend        | 80%            | 90%            |
+
 
 ### Running Tests
 ```bash
@@ -390,4 +388,138 @@ mvn verify
    - Additional security measures
    - API documentation generation
    - Containerization support
+
+## Layered Architecture
+
+### Layer Assignment
+
+```mermaid
+classDiagram
+    namespace Frontend {
+        class AbstractApplication
+        class Controller {
+            <<abstract>>
+        }
+        class Navigatable {
+            <<interface>>
+        }
+        class Cacheable {
+            <<interface>>
+        }
+        class Page3PersonalInformationController
+        class Page4DeclarationFIController
+        class Page5ProofFIController
+        class Page6CreateAccountController
+        class Page7ControllerPageLogin
+        class Page9aCreditCardController
+        class Page9bBankTransferController
+    }
+
+    namespace BusinessLogic {
+        class Customer
+        class CustomerEvaluator
+        class FinancialInformation
+        class FinancialInformationEvaluator
+        class IncomeProof
+        class LiquidAsset
+        class SchufaOverview
+        class FinancialInformationParser
+        class FinancialDocumentsGenerator
+        class PaymentProcess
+        class CustomerRegistrationProcess
+    }
+
+    namespace DataAccess {
+        class DatabaseService
+        class Encrypter
+        class CryptographyException
+        class ValidationException
+    }
+
+    %% Layer Dependencies
+    Frontend ..> BusinessLogic
+    BusinessLogic ..> DataAccess
+```
+
+### Layer Details
+
+#### 1. Frontend Layer (Presentation)
+- **Location**: `src/main/java/com/atdit/booking/frontend/`
+- **Primary Responsibilities**: User interface, input handling, view management
+- **Key Classes**:
+  ```
+  ├── Controller/
+  │   ├── AbstractApplication
+  │   ├── Controller (abstract)
+  │   ├── Page3PersonalInformationController
+  │   ├── Page4DeclarationFIController
+  │   ├── Page5ProofFIController
+  │   ├── Page6CreateAccountController
+  │   ├── Page7ControllerPageLogin
+  │   ├── Page9aCreditCardController
+  │   └── Page9bBankTransferController
+  ```
+- **Interfaces**:
+  - `Navigatable`: Navigation between pages
+  - `Cacheable`: Data persistence between views
+
+#### 2. Business Logic Layer
+- **Location**: `src/main/java/com/atdit/booking/backend/`
+- **Primary Responsibilities**: Business rules, data validation, process management
+- **Key Classes**:
+  ```
+  ├── customer/
+  │   ├── Customer
+  │   └── CustomerEvaluator
+  ├── financialdata/
+  │   ├── financial_information/
+  │   │   ├── FinancialInformation
+  │   │   ├── IncomeProof
+  │   │   ├── LiquidAsset
+  │   │   └── SchufaOverview
+  │   └── processing/
+  │       ├── FinancialInformationEvaluator
+  │       ├── FinancialInformationParser
+  │       └── FinancialDocumentsGenerator
+  ├── PaymentProcess
+  └── CustomerRegistrationProcess
+  ```
+
+#### 3. Data Access Layer
+- **Location**: `src/main/java/com/atdit/booking/backend/database/`
+- **Primary Responsibilities**: Database operations, data encryption, persistence
+- **Key Classes**:
+  ```
+  ├── database/
+  │   ├── DatabaseService
+  │   └── Encrypter
+  └── exceptions/
+      ├── CryptographyException
+      └── ValidationException
+  ```
+
+### Layer Interactions
+
+1. **Frontend → Business Logic**
+   - Controllers use Customer and FinancialInformation for data management
+   - Form data validation through Evaluator classes
+   - Document processing through FinancialInformationParser
+
+2. **Business Logic → Data Access**
+   - Customer data persistence through DatabaseService
+   - Secure data handling through Encrypter
+   - Exception handling for database and validation errors
+
+3. **Cross-Cutting Concerns**
+   - Security (encryption, validation)
+   - Exception handling
+   - Logging
+   - Configuration management
+
+### Design Principles
+- **Separation of Concerns**: Each layer has distinct responsibilities
+- **Dependency Direction**: Dependencies flow downward
+- **Interface Segregation**: Clean interfaces between layers
+- **Single Responsibility**: Classes have focused purposes
+- **Open/Closed**: Extensible through inheritance and interfaces
 
