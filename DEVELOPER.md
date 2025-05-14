@@ -249,9 +249,9 @@ classDiagram
         +restoreData()
     }
 
-    Controller <|-- Page3PersonalInformationController
-    Navigatable <|.. Page3PersonalInformationController
-    Cacheable <|.. Page3PersonalInformationController
+    Controller <|-- e.g. Page3PersonalInformationController
+    Navigatable <|.. e.g. Page3PersonalInformationController
+    Cacheable <|.. e.g. Page3PersonalInformationController
 ```
 
 ### Security and Encryption
