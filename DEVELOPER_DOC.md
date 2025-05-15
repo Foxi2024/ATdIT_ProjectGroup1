@@ -415,7 +415,7 @@ Tests are located in the `src/test/java` directory, mirroring the package struct
 
 | Component                    | Class Coverage | Method Coverage | Line Coverage | Branch Coverage |
 |-----------------------------|----------------|-----------------|---------------|-----------------|
-| Backend        | 57%            | 64%             | 46%           | 56%             |
+| Backend        | 57%            | 64%             | 44%           | 55%             |
 
 
 ### Running Tests
