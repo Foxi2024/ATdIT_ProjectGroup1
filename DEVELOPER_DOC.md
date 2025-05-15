@@ -341,6 +341,14 @@ classDiagram
 
 ### Security and Encryption
 
+The application employs robust security measures for data protection, focusing on encryption of sensitive customer data and secure password handling.
+
+- **Encryption Algorithm**: AES (Advanced Encryption Standard) with a 256-bit key size is used for encrypting sensitive data. The specific mode of operation is CBC (Cipher Block Chaining) with PKCS5Padding.
+- **Key Derivation**: Encryption keys are derived from the user's email and password using PBKDF2WithHmacSHA256. This process incorporates a fixed salt ("1.FC Kaiserslautern") and 65536 iterations to enhance key strength and resistance against brute-force attacks. The user's password is first hashed using SHA-256 before being used in the key derivation.
+- **Initialization Vector (IV)**: A random 16-byte Initialization Vector (IV) is generated for each encryption operation. This IV is prepended to the encrypted data and is crucial for ensuring that identical plaintexts encrypt to different ciphertexts.
+- **Hashing**: SHA-256 (Secure Hash Algorithm 256-bit) is used for hashing passwords and other sensitive information where one-way transformation is required.
+- **Data Storage**: The `Encrypter` class handles the encryption and decryption of data. The `DatabaseService` utilizes the `Encrypter` to ensure that sensitive information stored in the SQLite database is encrypted.
+
 ```mermaid
 classDiagram
     class Encrypter {
@@ -379,12 +387,14 @@ mvn clean install
 
 # Run the application
 mvn clean javafx:run
-
-# Run tests
-mvn test
 ```
 
 ## Testing
+
+The project utilizes JUnit Jupiter for unit testing and Mockito for creating mock objects to isolate units of code. Integration tests are also present, particularly for database operations.
+
+### Test Directory Structure
+Tests are located in the `src/test/java` directory, mirroring the package structure of the main source code (`src/main/java`). For example, tests for frontend controllers can be found under `src/test/java/com/atdit/booking/frontend/controllers/`, with subdirectories for different processes like `payment_process` and `customer_registration`.
 
 ### Testing Framework
 - JUnit Jupiter for unit testing
