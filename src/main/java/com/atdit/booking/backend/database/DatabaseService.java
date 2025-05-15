@@ -15,13 +15,19 @@ import java.sql.*;
  */
 public class DatabaseService {
 
-    /** URL for the SQLite database connection */
+    /**
+     * URL for the SQLite database connection
+     */
     private static final String DB_URL = "jdbc:sqlite:database/customers.db";
 
-    /** Encrypter instance for handling encryption/decryption of sensitive data */
+    /**
+     * Encrypter instance for handling encryption/decryption of sensitive data
+     */
     private static final Encrypter encrypter = new Encrypter();
 
-    /** Currently active customer being processed */
+    /**
+     * Currently active customer being processed
+     */
     private Customer currentCustomer;
 
     /**
@@ -30,8 +36,8 @@ public class DatabaseService {
      * @throws SQLException if database connection fails
      */
 
-    private Connection getConnection() throws SQLException{
-        try{
+    private Connection getConnection() throws SQLException {
+        try {
             return DriverManager.getConnection(DB_URL);
         } catch (SQLException e) {
             throw new SQLException("Verbindung zur Datenbank fehlgeschlagen.", e);
@@ -56,23 +62,24 @@ public class DatabaseService {
      */
     private long insertIncomeProof() throws SQLException {
 
-        Connection connection = getConnection();
+        Connection connection = null;
 
         IncomeProof proof = this.currentCustomer.getFinancialInformation().getProofOfIncome();
 
         if (proof == null) {
-            closeConnection(connection);
             return 0;
         }
 
         String sql = """
-        INSERT INTO income_proofs (monthlyNetIncome, employer, employmentType,
-        employmentDurationMonths, dateIssued)
-        VALUES (?, ?, ?, ?, ?)
-        """;
+                INSERT INTO income_proofs (monthlyNetIncome, employer, employmentType,
+                employmentDurationMonths, dateIssued)
+                VALUES (?, ?, ?, ?, ?)
+                """;
 
 
         try {
+            connection = getConnection();
+
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setInt(1, proof.monthlyNetIncome());
@@ -85,15 +92,13 @@ public class DatabaseService {
 
             ResultSet rs = pstmt.getGeneratedKeys();
 
-            if (rs.next()){
+            if (rs.next()) {
                 return rs.getLong(1);
             }
             throw new SQLException("Failed to save proof of income, no generated key found");
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new SQLException("Failed to save proof of income: " + ex.getMessage(), ex);
-        }
-        finally {
+        } finally {
             closeConnection(connection);
         }
 
@@ -108,12 +113,17 @@ public class DatabaseService {
      * @throws SQLException if database operation fails
      */
     private long insertAssetsProof() throws SQLException {
-        Connection connection = getConnection();
+
+
+        Connection connection = null;
+
+        String sql = """
+                INSERT INTO liquid_assets (iban, description, balance, dateIssued)
+                VALUES (?, ?, ?, ?)
+                """;
+
         try {
-            String sql = """
-        INSERT INTO liquid_assets (iban, description, balance, dateIssued)
-        VALUES (?, ?, ?, ?)
-        """;
+            connection = getConnection();
 
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -145,16 +155,20 @@ public class DatabaseService {
      * @throws SQLException if database operation fails
      */
     private long insertSchufaRecord() throws SQLException {
-        Connection connection = getConnection();
+
+        Connection connection = null;
+
+        SchufaOverview schufa = this.currentCustomer.getFinancialInformation().getSchufa();
+
+        String sql = """
+                INSERT INTO schufa_overview (firstName, lastName, score, totalCredits,
+                totalCreditSum, totalAmountPayed, totalAmountOwed, totalMonthlyRate, dateIssued)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
+
         try {
-            SchufaOverview schufa = this.currentCustomer.getFinancialInformation().getSchufa();
 
-            String sql = """
-        INSERT INTO schufa_overview (firstName, lastName, score, totalCredits,
-        totalCreditSum, totalAmountPayed, totalAmountOwed, totalMonthlyRate, dateIssued)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """;
-
+            connection = getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setString(1, schufa.getFirstName());
@@ -185,21 +199,22 @@ public class DatabaseService {
      * Creates a new record in the customers table with encrypted personal information.
      *
      * @param financialInfoId ID of the associated financial information
-     * @param password customer's password for encryption
-     * @throws SQLException if database operation fails
+     * @param password        customer's password for encryption
+     * @throws SQLException        if database operation fails
      * @throws EncryptionException if data encryption fails
-     * @throws HashingException if email hashing fails
+     * @throws HashingException    if email hashing fails
      */
     private void insertCustomerData(long financialInfoId, String password) throws SQLException, EncryptionException, HashingException {
-        Connection connection = getConnection();
+        Connection connection = null;
+
+        String email = this.currentCustomer.getEmail();
+
+        String sql = """
+                INSERT INTO customers (email_hashed, email, title, firstName, name, country, birthdate, address, financial_info_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
         try {
-            String email = this.currentCustomer.getEmail();
-
-            String sql = """
-    INSERT INTO customers (email_hashed, email, title, firstName, name, country, birthdate, address, financial_info_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """;
-
+            connection = getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, encrypter.hashString(email));
             pstmt.setString(2, encrypter.encrypt(email, email, password));
@@ -222,24 +237,24 @@ public class DatabaseService {
      *
      * @param incomeProofId ID of the associated income proof
      * @param assetsProofId ID of the associated assets proof
-     * @param schufaId ID of the associated SCHUFA record
+     * @param schufaId      ID of the associated SCHUFA record
      * @return generated ID of the inserted financial information
      * @throws SQLException if database operation fails
      */
     private long insertFinancialData(long incomeProofId, long assetsProofId, long schufaId) throws SQLException {
-        Connection connection = getConnection();
+
+        Connection connection = null;
+
+        FinancialInformation financialInfo = this.currentCustomer.getFinancialInformation();
+
+        String sql = """
+                INSERT INTO financial_information
+                (avgNetIncome, liquidAssets, monthlyFixCost, minCostOfLiving,
+                monthlyAvailableMoney, proof_of_income_id, proof_of_liquid_assets_id, schufa_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """;
         try {
-            FinancialInformation financialInfo = this.currentCustomer.getFinancialInformation();
-
-            System.out.println("Financial Info: " + financialInfo);
-
-            String sql = """
-        INSERT INTO financial_information
-        (avgNetIncome, liquidAssets, monthlyFixCost, minCostOfLiving,
-        monthlyAvailableMoney, proof_of_income_id, proof_of_liquid_assets_id, schufa_id)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """;
-
+            connection = getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setInt(1, financialInfo.getAvgNetIncome());
@@ -273,7 +288,7 @@ public class DatabaseService {
      * Coordinates the insertion of all customer-related data including financial proofs.
      *
      * @param password customer's password for encryption
-     * @throws SQLException if database operation fails
+     * @throws SQLException     if database operation fails
      * @throws RuntimeException if encryption/hashing fails
      */
     public void saveCustomerInDatabase(String password) throws SQLException, RuntimeException {
@@ -282,10 +297,9 @@ public class DatabaseService {
         long schufaId = insertSchufaRecord();
         long financialInfoId = insertFinancialData(incomeProofId, assetsProofId, schufaId);
 
-        try{
+        try {
             insertCustomerData(financialInfoId, password);
-        }
-        catch(EncryptionException | HashingException e){
+        } catch (EncryptionException | HashingException e) {
             throw new RuntimeException("Failed to encrypt customer data", e);
         }
     }
@@ -294,46 +308,37 @@ public class DatabaseService {
      * Checks if a customer with given email already exists in database.
      *
      * @param email email to check
-     * @throws RuntimeException if check fails
+     * @throws RuntimeException         if check fails
      * @throws IllegalArgumentException if customer already exists
      */
-    public void checkIfCustomerIsInDatabase(String email) throws RuntimeException {
+    public void checkIfCustomerIsInDatabase(String email) throws SQLException, IllegalArgumentException {
         Connection connection = null;
-        try{
+        try {
             connection = getConnection();
             String sql = "Select * FROM customers WHERE email_hashed = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, encrypter.hashString(email));
             ResultSet rs = pstmt.executeQuery();
 
-            if(rs.next()){
+            if (rs.next()) {
                 throw new IllegalArgumentException("Es existiert bereits ein Konto mit der angegebenen E-Mail-Adresse.");
             }
-        }
-        catch(SQLException | HashingException ex){
+        } catch (SQLException | HashingException ex) {
             throw new IllegalArgumentException("Fehler beim abrufen der Daten.");
-        }
-        finally {
-            if (connection != null) {
-                try {
-                    closeConnection(connection);
-                } catch (SQLException e) {
-                    // Log or handle the exception on closing connection if necessary
-                    System.err.println("Error closing connection: " + e.getMessage());
-                }
-            }
+        } finally {
+            closeConnection(connection);
         }
     }
 
     /**
      * Retrieves customer and their financial information by email.
      *
-     * @param email customer's email
+     * @param email    customer's email
      * @param password customer's password for decryption
      * @return Customer object with associated data
      * @throws IllegalArgumentException if credentials are invalid
-     * @throws SQLException if database operation fails
-     * @throws CryptographyException if decryption fails
+     * @throws SQLException             if database operation fails
+     * @throws CryptographyException    if decryption fails
      */
     public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws IllegalArgumentException, SQLException, CryptographyException {
         Connection connection = null;
@@ -381,32 +386,23 @@ public class DatabaseService {
             }
 
             throw new IllegalArgumentException("E-Mail oder Passwort falsch.");
-        }
-        catch (SQLException ex) {
-            throw new SQLException("Fehler beim Verbindungsaufbau mit der Datenbank.", ex);
-        }
-        catch (HashingException | DecryptionException ex) {
-            throw new CryptographyException("Entschlüsslung oder Hashing der Daten ist fehlgeschlagen: " + ex.getMessage(), ex);
-        }
-        finally {
-            if (connection != null) {
-                try {
-                    closeConnection(connection);
-                } catch (SQLException e) {
-                    System.err.println("Error closing connection: " + e.getMessage());
-                }
-            }
+        } catch (SQLException ex) {
+            throw new SQLException("Fehler beim Verbindungsaufbau mit der Datenbank.");
+        } catch (HashingException | DecryptionException ex) {
+            throw new CryptographyException("Entschlüsslung oder Hashing der Daten ist fehlgeschlagen.");
+        } finally {
+            closeConnection(connection);
         }
     }
 
     /**
      * Extracts customer information from database result set.
      *
-     * @param rs ResultSet containing customer data
-     * @param email customer's email for decryption
+     * @param rs       ResultSet containing customer data
+     * @param email    customer's email for decryption
      * @param password customer's password for decryption
      * @return populated Customer object
-     * @throws SQLException if data extraction fails
+     * @throws SQLException        if data extraction fails
      * @throws DecryptionException if data decryption fails
      */
     private Customer extractCustomerFromResultSet(ResultSet rs, String email, String password) throws SQLException, DecryptionException {
@@ -508,13 +504,12 @@ public class DatabaseService {
      *
      * @throws RuntimeException if closing connection fails
      */
-    public void closeConnection(Connection connection) throws SQLException{
+    public void closeConnection(Connection connection) throws SQLException {
         try {
             if (connection != null) {
                 connection.close();
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Datenbankverbindung konnte nicht geschlossen werden.", e);
         }
     }
@@ -610,9 +605,7 @@ public class DatabaseService {
                 }
             }
         } finally {
-            if (connection != null) {
-                closeConnection(connection);
-            }
+            closeConnection(connection);
         }
     }
 
@@ -622,7 +615,7 @@ public class DatabaseService {
      * digits and special characters, and matches confirmation.
      *
      * @param password password to validate
-     * @param confirm password confirmation to match
+     * @param confirm  password confirmation to match
      * @throws ValidationException if password requirements are not met
      */
     public void validatePasswords(String password, String confirm) throws ValidationException {
@@ -630,7 +623,7 @@ public class DatabaseService {
         System.out.println(password);
         System.out.println(confirm);
 
-    boolean isValid = password != null &&
+        boolean isValid = password != null &&
                 password.equals(confirm) &&
                 password.length() >= 8 &&
                 password.matches(".*[A-Z].*") &&
@@ -638,7 +631,7 @@ public class DatabaseService {
                 password.matches(".*\\d.*") &&
                 password.matches(".*[!@#$%^&*()\\-_=+\\\\|\\[{\\]};:'\",<.>/?].*");
 
-        if(!isValid){
+        if (!isValid) {
             throw new ValidationException("Passwort erfüllt nicht die Anforderungen");
         }
     }
