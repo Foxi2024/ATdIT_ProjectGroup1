@@ -59,6 +59,8 @@ public class FinancialDocumentsGenerator {
      */
     public void generateProofOfIncome(IncomeProof incomeProof, String filename) throws IOException {
 
+        // Construct the content string for the proof of income document
+        // Each piece of information is on a new line, formatted as "Label: Value"
         String content = "Monthly Net Income: " + incomeProof.monthlyNetIncome() + "\n" +
                          "Employer: " + incomeProof.employer() + "\n" +
                          "Employment Type: " + incomeProof.employmentType() + "\n" +
@@ -77,6 +79,8 @@ public class FinancialDocumentsGenerator {
      */
     public void generateProofOfLiquidAssets(LiquidAsset liquidAsset, String filename) throws IOException {
 
+        // Construct the content string for the proof of liquid assets document
+        // Each piece of information is on a new line, formatted as "Label: Value"
         String content = "Bank Account Balance: " + liquidAsset.balance() + "\n" +
                          "IBAN: " + liquidAsset.iban() + "\n" +
                          "Description: " + liquidAsset.description() + "\n" +
@@ -96,6 +100,8 @@ public class FinancialDocumentsGenerator {
 
         SchufaOverview schufaOverview = new SchufaOverview(schufa);
 
+        // Construct the content string for the Schufa report
+        // Each piece of information is on a new line, formatted as "Label: Value"
         String content = "First Name: " + schufaOverview.getFirstName() + "\n" +
                          "Last Name: " + schufaOverview.getLastName() + "\n" +
                          "Schufa Score: " + schufaOverview.getScore() + "\n" +
@@ -138,18 +144,25 @@ public class FinancialDocumentsGenerator {
 
         FinancialDocumentsGenerator generator = new FinancialDocumentsGenerator("financial_proofs");
 
-
+        // Example data for generating financial documents
+        // This section demonstrates how to create instances of IncomeProof, LiquidAsset,
+        // and Schufaauskunft (optionally with Credit details) to generate the respective files
         // example to optionally generate schufaoverview with credits
         Credit c1 = new Credit("Car Loan", 50_000, 5.0f, 500, 10000);
         Credit c2 = new Credit("Home Loan", 500_000, 3.5f, 1500, 250000);
 
         try {
+            // Generate proof of income document
             generator.generateProofOfIncome(new IncomeProof(32_000, "ABC Corp", "Full-time", 24, "2025-01-01"), "proof_of_income");
+            // Generate proof of liquid assets document
             generator.generateProofOfLiquidAssets(new LiquidAsset("DE12345678901234567890", "Savings Account", 1_000_000, "2025-01-01"), "proof_of_liquid_assets");
+            // Generate Schufa report document
             generator.generateSchufa(new Schufaauskunft("Anton", "Beton", 0.75f, new ArrayList<Credit>(), "2025-01-01"), "schufa_report");
         }
         catch (IOException e) {
-            // since this is only to generate documents the we can just give out the exception to the console
+            // Basic error handling for the main method
+            // Since this method is for demonstration and document generation,
+            // exceptions are printed to the console since this is only to generate documents
             e.printStackTrace();
             System.out.println(e.getMessage());
         }

@@ -66,14 +66,19 @@ public class FinancialInformationEvaluator {
      */
     public void evaluateDeclaredFinancialInfo() throws IllegalArgumentException {
 
+        // If liquid assets are more than 120% of the total amount, no further checks are needed for declared info
+        // This implies the customer has significant funds, potentially covering the entire amount
         if(financialInfo.getLiquidAssets() > 1.2 * journeyDetails.TOTAL_AMOUNT){
             return;
         }
 
+        // Check if liquid assets are sufficient for the down payment (at least 20% of the travel price)
         if(this.financialInfo.getLiquidAssets() < journeyDetails.getDownPayment()){
             throw new IllegalArgumentException("Ihre liquiden Mittel sind zu niedrig. Sie benötigen mindestens 20% des Reisepreises.");
         }
 
+        // Check if the monthly available money meets the minimum requirement
+        // MIN_MONTHLY_MONEY is calculated as 80% of the monthly payment
         if(financialInfo.getMonthlyAvailableMoney() < MIN_MONTHLY_MONEY){
             throw new IllegalArgumentException("Ihr monatliches verfügbares Geld ist zu niedrig. Sie benötigen mindestens " + MIN_MONTHLY_MONEY +"€.");
         }
@@ -129,16 +134,20 @@ public class FinancialInformationEvaluator {
             isValid = false;
         }
 
+        // Check if the Schufa score meets the minimum requirement (95%)
         if(financialInfo.getSchufa().getScore() < 0.95) {
             errorMessage += "- Ihre Schufapunktzahl ist zu niedrig.\n";
             isValid = false;
         }
 
+        // Check if the total monthly rate of all credits exceeds the customer's monthly fixed costs
+        // This could indicate an unsustainable debt burden
         if(financialInfo.getSchufa().getTotalMonthlyRate() > financialInfo.getMonthlyFixCost()) {
             errorMessage += "- Die Monatliche Rate aller Kredite ist größer als ihre monatlichen Fixkosten.\n";
             isValid = false;
         }
 
+        // Verify that the first and last names on the Schufa document match the current customer's details
         if(!financialInfo.getSchufa().getFirstName().equals(currentCustomer.getFirstName()) ||
                 !financialInfo.getSchufa().getLastName().equals(currentCustomer.getLastName())) {
             errorMessage += "- Name im Schufa Dokument stimmt nicht mit Ihrem Namen überein\n";
@@ -162,6 +171,7 @@ public class FinancialInformationEvaluator {
         String[] lines = content.split("\n");
         boolean hasRequiredFields = switch (documentType) {
 
+            // Validate income document: must have 5 lines and contain specific keywords
             case "income" -> lines.length == 5
                     && content.contains("Monthly Net Income:")
                     && content.contains("Employment Type:")
@@ -169,12 +179,14 @@ public class FinancialInformationEvaluator {
                     && content.contains("Employment Duration:")
                     && content.contains("Date Issued:");
 
+            // Validate liquid assets document: must have 4 lines and contain specific keywords
             case "liquidAssets" -> lines.length == 4
                     && content.contains("Bank Account Balance:")
                     && content.contains("IBAN:")
                     && content.contains("Description:")
                     && content.contains("Date Issued:");
 
+            // Validate Schufa document: must have 9 lines and contain specific keywords
             case "schufa" -> lines.length == 9
                     && content.contains("First Name:")
                     && content.contains("Last Name:")
@@ -186,7 +198,7 @@ public class FinancialInformationEvaluator {
                     && content.contains("Total Monthly Rate:")
                     && content.contains("Date Issued:");
 
-            default -> false;
+            default -> false; // Unknown document type
         };
 
         if(!hasRequiredFields){
@@ -238,24 +250,25 @@ public class FinancialInformationEvaluator {
         String errorMessage = "Folgende Probleme sind aufgetaucht:\n";
         boolean isValid = true;
 
+            // Validate that average net income is not negative
             if (this.financialInfo.getAvgNetIncome() < 0) {
                 errorMessage += "- Einkommen darf nicht negativ sein\n";
                 isValid = false;
             }
 
-
+            // Validate that monthly fixed costs are not negative
             if (this.financialInfo.getMonthlyFixCost() < 0) {
                 errorMessage += "- Fixkosten dürfen nicht negativ sein\n";
                 isValid = false;
             }
 
-
+            // Validate that minimum cost of living is not negative
             if (this.financialInfo.getMinCostOfLiving() < 0) {
                 errorMessage += "- Min. Lebenserhaltungskosten dürfen nicht negativ sein\n";
                 isValid = false;
             }
 
-
+            // Validate that liquid assets are not negative
             if (this.financialInfo.getLiquidAssets() < 0) {
                 errorMessage += "- Liquide Mittel dürfen nicht negativ sein\n";
                 isValid = false;
@@ -277,12 +290,14 @@ public class FinancialInformationEvaluator {
         String errorMessage = "Bitte laden sie folgende Dokumente hoch:\n";
         boolean isValid = true;
 
+        // Check if proof of liquid assets has been uploaded
         if(financialInfo.getProofOfLiquidAssets() == null) {
 
             errorMessage += "- Kontoauszug\n";
             isValid = false;
         }
 
+        // Check if Schufa document has been uploaded
         if(financialInfo.getSchufa() == null) {
 
             errorMessage += "- Schufaunterlagen\n";

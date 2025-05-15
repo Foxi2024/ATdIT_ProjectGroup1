@@ -9,12 +9,21 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Main application class for the customer registration process.
- * This class extends JavaFX Application to create and display the main window.
+ * Abstract base class for JavaFX applications in the booking system
+ * This class provides common setup for loading FXML files, setting icons, and displaying the main stage
+ * Subclasses must provide the specific FXML filename and window title
  */
 public abstract class AbstractApplication extends Application {
 
+    /**
+     * The name of the FXML file (without path) to be loaded for the application's main scene
+     * This should be set by a subclass before `launch()` is called
+     */
     protected static String filename;
+    /**
+     * The title for the application window
+     * This should be set by a subclass before `launch()` is called
+     */
     protected static String title;
 
     /**

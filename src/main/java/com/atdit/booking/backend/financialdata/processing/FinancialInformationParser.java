@@ -49,8 +49,6 @@ public class FinancialInformationParser {
      */
     public LiquidAsset parseLiquidAssetsDocument(String content) throws IllegalArgumentException {
 
-        System.out.println(1);
-
         String[] lines = content.split("\n");
         int balance = 0;
         String iban = "";

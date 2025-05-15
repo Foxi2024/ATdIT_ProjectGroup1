@@ -31,11 +31,21 @@ public class DatabaseService {
     private Customer currentCustomer;
 
     /**
-     * Constructs a new DatabaseService and establishes database connection.
+     * Constructs a new DatabaseService
+     * Initializes the service, note that database tables are created on demand if they don't exist
+     * when other methods like `saveCustomerInDatabase` are called, which internally call `createTables`
+     */
+    public DatabaseService() {
+        // Constructor can be used to initialize any specific settings if needed in the future
+        // Table creation is handled by createTables() method, called when data operations are performed
+    }
+
+    /**
+     * Establishes and returns a connection to the SQLite database
      *
+     * @return A Connection object to the database
      * @throws SQLException if database connection fails
      */
-
     private Connection getConnection() throws SQLException {
         try {
             return DriverManager.getConnection(DB_URL);
@@ -274,8 +284,6 @@ public class DatabaseService {
 
             if (rs.next()) {
                 long id = rs.getLong(1);
-
-                System.out.println(id);
                 return id;
             }
 
@@ -528,21 +536,24 @@ public class DatabaseService {
         try {
             connection = getConnection();
             String[] tables = {
+                    // Stores main customer details, with sensitive information encrypted
+                    // Links to financial_information table
                     """
         CREATE TABLE IF NOT EXISTS customers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             email TEXT ,
-            email_hashed TEXT,
-            title TEXT,
-            firstName TEXT,
-            name TEXT,
-            country TEXT,
-            birthdate TEXT,
-            address TEXT,
+            email_hashed TEXT,            -- Hashed email for quick lookups without decryption
+            title TEXT,                   -- Encrypted
+            firstName TEXT,               -- Encrypted
+            name TEXT,                    -- Encrypted (Last Name)
+            country TEXT,                 -- Encrypted
+            birthdate TEXT,               -- Encrypted
+            address TEXT,                 -- Encrypted
             financial_info_id INTEGER,
             FOREIGN KEY (financial_info_id) REFERENCES financial_information(id)
         )""",
 
+                    // Stores details from the income proof document
                     """
         CREATE TABLE IF NOT EXISTS income_proofs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -553,6 +564,7 @@ public class DatabaseService {
             dateIssued TEXT
         )""",
 
+                    // Stores details from the liquid assets proof document
                     """
         CREATE TABLE IF NOT EXISTS liquid_assets (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -562,6 +574,7 @@ public class DatabaseService {
             dateIssued TEXT
         )""",
 
+                    // Stores overview data from the Schufa report
                     """
         CREATE TABLE IF NOT EXISTS schufa_overview (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -576,6 +589,7 @@ public class DatabaseService {
             dateIssued TEXT
         )""",
 
+                    // Central table linking customer to their various financial proofs and summary data
                     """
         CREATE TABLE IF NOT EXISTS financial_information (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -592,6 +606,7 @@ public class DatabaseService {
             FOREIGN KEY (schufa_id) REFERENCES schufa_overview(id)
         )""",
 
+                    // Could be used to track customer progress through a multi-step process (e.g., registration)
                     """
         CREATE TABLE IF NOT EXISTS customer_progress (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -623,15 +638,17 @@ public class DatabaseService {
      */
     public void validatePasswords(String password, String confirm) throws ValidationException {
 
-        System.out.println(password);
-        System.out.println(confirm);
+        // System.out.println(password); // Debug statement removed
+        // System.out.println(confirm);  // Debug statement removed
 
         boolean isValid = password != null &&
                 password.equals(confirm) &&
-                password.length() >= 8 &&
-                password.matches(".*[A-Z].*") &&
-                password.matches(".*[a-z].*") &&
-                password.matches(".*\\d.*") &&
+                password.length() >= 8 && // Check for minimum length (at least 8 characters)
+                password.matches(".*[A-Z].*") && // Check for at least one uppercase letter
+                password.matches(".*[a-z].*") && // Check for at least one lowercase letter
+                password.matches(".*\\d.*") && // Check for at least one digit
+                // Check for at least one special character from the predefined set:
+                // !@#$%^&*()\-_=+|\\[{\\]};:'\",<.>/?
                 password.matches(".*[!@#$%^&*()\\-_=+\\\\|\\[{\\]};:'\",<.>/?].*");
 
         if (!isValid) {

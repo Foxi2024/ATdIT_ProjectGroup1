@@ -31,6 +31,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
 
     /**
      * JavaFX UI elements injected from FXML
+     * These elements are used to interact with the user interface for financial proof uploads
      */
     @FXML private Button incomeProofButton;
     @FXML private Button liquidAssetsProofButton;
@@ -41,11 +42,20 @@ public class Page5ProofFIController extends Controller implements Initializable,
     @FXML private Label schufaStatusLabel;
 
     /**
-     * Static fields for customer data and financial information processing
+     * Holds the customer's financial information
      */
     private FinancialInformation financialInfo;
+    /**
+     * Evaluator for financial information and documents
+     */
     private FinancialInformationEvaluator evaluator;
+    /**
+     * Parser for financial document contents
+     */
     private FinancialInformationParser parser;
+    /**
+     * File chooser for selecting documents from the user's system
+     */
     private  FileChooser fileChooser;
 
     /**
@@ -86,7 +96,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
      * @param e MouseEvent that triggered the navigation
      */
     @FXML
-    @SuppressWarnings("unused")
+    
     public void nextPage(MouseEvent e) {
         try {
             evaluator.validateUploads();
@@ -110,7 +120,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
      * @param e MouseEvent that triggered the navigation
      */
     @FXML
-    @SuppressWarnings("unused")
+    
     public void previousPage(MouseEvent e) {
         loadScene(e, "customer_registration/page_4_financial_info_declaration.fxml", "Finanzielle Angaben");
     }
@@ -121,7 +131,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
      * @param label The status label to configure
      * @param documentType The type of document ("income", "liquidAssets", or "schufa")
      */
-    @SuppressWarnings("unused")
+    
     private void setupStatusLabel(Label label, String documentType) {
 
         label.setOnMouseClicked(e -> {
@@ -144,7 +154,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
      * @param documentType The type of document to upload
      * @param statusLabel The label showing the upload status
      */
-    @SuppressWarnings("unused")
+    
     private void setupUploadButton(Button button, String documentType, Label statusLabel) {
 
         button.setOnAction(e -> {
