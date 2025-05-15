@@ -147,7 +147,7 @@ class Page1ControllerPageLoginTest {
      * Closes the database connection.
      */
     @AfterEach
-    void tearDown() {
-        databaseService.closeConnection();
+    void tearDown() throws SQLException {
+        databaseService.closeConnection(null);
     }
 }
