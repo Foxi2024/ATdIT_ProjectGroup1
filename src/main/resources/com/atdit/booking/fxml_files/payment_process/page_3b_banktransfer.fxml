@@ -23,41 +23,55 @@
 
         <Label text="Payment Details" styleClass="headline"/>
 
-        <VBox spacing="15" styleClass="section-box">
-            <Label text="Überweisung" styleClass="sub-headline"/>
+        <HBox spacing="20" VBox.vgrow="ALWAYS">
+            <VBox spacing="20" HBox.hgrow="ALWAYS">
+                <VBox spacing="15" styleClass="section-box">
+                    <Label text="Überweisung" styleClass="sub-headline"/>
 
-            <VBox spacing="10">
-                <Label text="Zahlungsmethoden auswählen"/>
-                <ComboBox fx:id="paymentMethodCombo" onAction="#selectPaymentMethod" prefWidth="200"/>
+                    <VBox spacing="10">
+                        <Label text="Zahlungsmethoden auswählen"/>
+                        <ComboBox fx:id="paymentMethodCombo" onAction="#selectPaymentMethod" prefWidth="200"/>
+                    </VBox>
+
+                    <VBox spacing="10">
+                        <Label fx:id="ibanLabel" text="IBAN:"/>
+                        <TextField fx:id="ibanField" maxWidth="300" promptText="IBAN eingeben" styleClass="text-field"/>
+                        <Label text="Beispiel: DE89 3704 0044 0532 0130 00" styleClass="hint-label"/>
+                    </VBox>
+
+                    <VBox spacing="10">
+                        <Label text="Kontoinhaber"/>
+                        <TextField fx:id="accountHolderField" maxWidth="300" promptText="Geben sie den Kontoinhaber an" styleClass="text-field"/>
+                    </VBox>
+                </VBox>
+
+                <VBox spacing="15" styleClass="section-box">
+                    <Label text="Name der Bank" styleClass="sub-headline"/>
+
+                    <VBox spacing="10">
+                        <Label text="Bank Name:"/>
+                        <TextField fx:id="bankNameField" maxWidth="300" promptText="Geben Sie den Namen der Bank an" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="10">
+                        <Label text="BIC/SWIFT:"/>
+                        <TextField fx:id="bicField" maxWidth="300" promptText="Geben Sie den BIC/SWIFT code an" styleClass="text-field"/>
+                    </VBox>
+                </VBox>
             </VBox>
 
-            <VBox spacing="10">
-                <Label fx:id="ibanLabel" text="IBAN:"/>
-                <TextField fx:id="ibanField" maxWidth="300" promptText="IBAN eingeben" styleClass="text-field"/>
-                <Label text="Beispiel: DE89 3704 0044 0532 0130 00" styleClass="hint-label"/>
+            <VBox styleClass="info-box" minWidth="250" spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <Label text="Wichtiger Hinweis" styleClass="sub-headline"/>
+                <Text wrappingWidth="230" styleClass="info-text">
+                    Bitte geben Sie hier Ihre eigenen Bankdaten ein. Bei der Zahlung wird der Betrag automatisch von Ihrem Konto abgebucht und auf das Konto von NexStar Travel überwiesen.
+                </Text>
             </VBox>
+        </HBox>
 
-            <VBox spacing="10">
-                <Label text="Kontoinhaber"/>
-                <TextField fx:id="accountHolderField" maxWidth="300" promptText="Geben sie den Kontoinhaber an" styleClass="text-field"/>
-            </VBox>
-        </VBox>
-
-        <VBox spacing="15" styleClass="section-box">
-            <Label text="Name der Bank" styleClass="sub-headline"/>
-
-            <VBox spacing="10">
-                <Label text="Bank Name:"/>
-                <TextField fx:id="bankNameField" maxWidth="300" promptText="Geben Sie den Namen der Bank an" styleClass="text-field"/>
-            </VBox>
-
-            <VBox spacing="10">
-                <Label text="BIC/SWIFT:"/>
-                <TextField fx:id="bicField" maxWidth="300" promptText="Geben Sie den BIC/SWIFT code an" styleClass="text-field"/>
-            </VBox>
-        </VBox>
-
-        <VBox spacing="10" VBox.vgrow="ALWAYS"/>
+        <VBox spacing="10" VBox.vgrow="NEVER"/>
 
         <HBox alignment="CENTER_RIGHT" spacing="10">
             <padding>
