@@ -41,7 +41,6 @@ public class PaymentMethodEvaluator {
      * - BIC/SWIFT code must be 8 or 11 characters
      * - Account holder name must be 2-50 characters, letters only
      * - Bank name must be at least 2 characters
-     *
      * Regex patterns used:
      * - IBAN: "^DE\\d{20}$" - Matches exactly DE followed by 20 digits
      * - BIC: "^[A-Z0-9]{8}$" or "^[A-Z0-9]{11}$" - Matches exactly 8 or 11 alphanumeric characters
@@ -93,7 +92,6 @@ public class PaymentMethodEvaluator {
      * - Card number must be exactly 16 digits
      * - Expiry date must be in MM/YY format and not expired
      * - CVV must be 3-4 digits
-     *
      * Regex patterns used:
      * - Card number: "^\\d{16}$" - Matches exactly 16 digits
      * - Expiry date: "^(0[1-9]|1[0-2])/([0-9]{2})$" - Matches MM/YY format where MM is 01-12

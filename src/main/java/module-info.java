@@ -21,8 +21,8 @@ module com.atdit.booking {
     opens com.atdit.booking.backend.financialdata.contracts to javafx.fxml;
 
     // Frontend
-    exports com.atdit.booking.frontend.super_controller;
-    opens com.atdit.booking.frontend.super_controller to javafx.fxml;
+    exports com.atdit.booking.frontend.abstract_controller;
+    opens com.atdit.booking.frontend.abstract_controller to javafx.fxml;
 
     exports com.atdit.booking.frontend.payment_process.abstract_controllers;
     opens com.atdit.booking.frontend.payment_process.abstract_controllers to javafx.fxml;

@@ -160,41 +160,34 @@ public class FinancialInformationEvaluator {
      */
     public void validateDocumentFormat(String content, String documentType) {
         String[] lines = content.split("\n");
-        boolean hasRequiredFields = false;
+        boolean hasRequiredFields = switch (documentType) {
 
-        switch(documentType) {
+            case "income" -> lines.length == 5
+                    && content.contains("Monthly Net Income:")
+                    && content.contains("Employment Type:")
+                    && content.contains("Employer:")
+                    && content.contains("Employment Duration:")
+                    && content.contains("Date Issued:");
 
-            case "income":
-                hasRequiredFields = lines.length == 5
-                        && content.contains("Monthly Net Income:")
-                        && content.contains("Employment Type:")
-                        && content.contains("Employer:")
-                        && content.contains("Employment Duration:")
-                        && content.contains("Date Issued:");
-                break;
+            case "liquidAssets" -> lines.length == 4
+                    && content.contains("Bank Account Balance:")
+                    && content.contains("IBAN:")
+                    && content.contains("Description:")
+                    && content.contains("Date Issued:");
 
-            case "liquidAssets":
-                hasRequiredFields = lines.length == 4
-                        && content.contains("Bank Account Balance:")
-                        && content.contains("IBAN:")
-                        && content.contains("Description:")
-                        && content.contains("Date Issued:");
-                break;
+            case "schufa" -> lines.length == 9
+                    && content.contains("First Name:")
+                    && content.contains("Last Name:")
+                    && content.contains("Schufa Score:")
+                    && content.contains("Total Credits:")
+                    && content.contains("Total Credit Sum:")
+                    && content.contains("Total Amount Payed:")
+                    && content.contains("Total Amount Owed:")
+                    && content.contains("Total Monthly Rate:")
+                    && content.contains("Date Issued:");
 
-            case "schufa":
-                hasRequiredFields = lines.length == 9
-                        && content.contains("First Name:")
-                        && content.contains("Last Name:")
-                        && content.contains("Schufa Score:")
-                        && content.contains("Total Credits:")
-                        && content.contains("Total Credit Sum:")
-                        && content.contains("Total Amount Payed:")
-                        && content.contains("Total Amount Owed:")
-                        && content.contains("Total Monthly Rate:")
-                        && content.contains("Date Issued:");
-
-                break;
-        }
+            default -> false;
+        };
 
         if(!hasRequiredFields){
             throw new ValidationException("Invalides Format");

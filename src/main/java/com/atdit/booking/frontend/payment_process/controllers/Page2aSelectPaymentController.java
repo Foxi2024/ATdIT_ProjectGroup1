@@ -3,8 +3,8 @@ package com.atdit.booking.frontend.payment_process.controllers;
 import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
 import com.atdit.booking.backend.financialdata.contracts.BuyNowPayLaterContract;
-import com.atdit.booking.frontend.super_controller.Controller;
-import com.atdit.booking.frontend.super_controller.Navigatable;
+import com.atdit.booking.frontend.abstract_controller.Controller;
+import com.atdit.booking.frontend.abstract_controller.Navigatable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
@@ -45,11 +45,14 @@ public class Page2aSelectPaymentController extends Controller implements Initial
     @FXML
     @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
+
         if (oneTimePaymentRadio.isSelected()) {
             Resources.selectedPayment = "BuyNowPayLater";
             Resources.contract = new BuyNowPayLaterContract();
             loadScene(e, "payment_process/page_3a_creditcard.fxml", "Zahlungsmethode auswählen");
-        } else {
+        }
+
+         if (financingRadio.isSelected()) {
             Resources.selectedPayment = "Financing";
             Resources.contract = new FinancingContract();
             loadScene(e, "payment_process/page_2b_installment_selection.fxml", "Finanzierung auswählen");

@@ -8,8 +8,6 @@ import javafx.scene.control.TextField;
 
 public class Page3bBankTransferController extends AbstractPaymentMethodController {
 
-    /** ComboBox for selecting the payment method */
-    @FXML private ComboBox<String> paymentMethodCombo;
     /** TextField for entering IBAN */
     @FXML private TextField ibanField;
     /** TextField for entering account holder name */

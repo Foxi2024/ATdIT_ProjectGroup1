@@ -4,11 +4,9 @@ import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.database.DatabaseService;
 import com.atdit.booking.backend.exceptions.CryptographyException;
-import com.atdit.booking.frontend.super_controller.Controller;
+import com.atdit.booking.frontend.abstract_controller.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -28,12 +26,6 @@ public class Page1ControllerPageLogin extends Controller implements Initializabl
 
     /** PasswordField for user password input */
     @FXML private PasswordField passwordField;
-
-    /** Label to display error messages */
-    @FXML private Label errorLabel;
-
-    /** Button to trigger the login process */
-    @FXML private Button loginButton;
 
     /** Database service instance for database operations */
     private DatabaseService db;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * Record representing a SCHUFA credit report, which contains personal information and credit history.
  * SCHUFA (Schutzgemeinschaft für allgemeine Kreditsicherung) is the main credit bureau in Germany.
+ * Since this is a german application we use this specific document to proof credit score.
  *
  * @param firstName   The first name of the person the report belongs to
  * @param lastName    The last name of the person the report belongs to

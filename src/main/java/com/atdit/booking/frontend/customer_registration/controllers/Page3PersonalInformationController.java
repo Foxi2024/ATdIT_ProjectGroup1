@@ -6,11 +6,10 @@ import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.customer.CustomerEvaluator;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.contracts.OneTimePaymentContract;
-import com.atdit.booking.frontend.super_controller.*;
+import com.atdit.booking.frontend.abstract_controller.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -48,12 +47,6 @@ public class Page3PersonalInformationController extends Controller implements In
     @FXML private TextField addressField;
     /** TextField for the customer's email address */
     @FXML private TextField emailField;
-    /** Button to proceed to the next page */
-    @FXML private Button continueButton;
-    /** Button to return to the previous page */
-    @FXML private Button backButton;
-    /** Button to return to the previous page */
-    @FXML private Button oneTimePaymentButton;
 
     /** Reference to the current customer object */
     private Customer currentCustomer ;

@@ -5,12 +5,11 @@ import com.atdit.booking.backend.exceptions.EvaluationException;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationEvaluator;
-import com.atdit.booking.frontend.super_controller.Cacheable;
-import com.atdit.booking.frontend.super_controller.Controller;
-import com.atdit.booking.frontend.super_controller.Navigatable;
+import com.atdit.booking.frontend.abstract_controller.Cacheable;
+import com.atdit.booking.frontend.abstract_controller.Controller;
+import com.atdit.booking.frontend.abstract_controller.Navigatable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
@@ -32,10 +31,6 @@ public class Page4DeclarationFIController extends Controller implements Initiali
     @FXML private TextField minLivingCostField;
     /** TextField for entering liquid assets */
     @FXML private TextField liquidAssetsField;
-    /** Button to proceed to next page */
-    @FXML private Button continueButton;
-    /** Button to return to previous page */
-    @FXML private Button backButton;
 
     /** Reference to the customer's financial information */
     private static FinancialInformation financialInfo;

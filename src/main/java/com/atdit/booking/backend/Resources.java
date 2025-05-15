@@ -2,8 +2,6 @@ package com.atdit.booking.backend;
 
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
-import com.atdit.booking.backend.financialdata.financial_information.BankTransferDetails;
-import com.atdit.booking.backend.financialdata.financial_information.CreditCardDetails;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationEvaluator;
 
@@ -12,9 +10,6 @@ public class Resources {
     public static Customer currentCustomer;
     public static FinancialInformation financialInformation;
     public static FinancialInformationEvaluator financialInformationEvaluator;
-
-    public static CreditCardDetails creditCardDetails;
-    public static BankTransferDetails bankTransferDetails;
 
     public static Contract contract;
     public static String selectedPayment;

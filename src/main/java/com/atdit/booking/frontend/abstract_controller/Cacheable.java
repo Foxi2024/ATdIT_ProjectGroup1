@@ -1,4 +1,4 @@
-package com.atdit.booking.frontend.super_controller;
+package com.atdit.booking.frontend.abstract_controller;
 
 /**
  * The Cacheable interface defines methods for caching and restoring data.

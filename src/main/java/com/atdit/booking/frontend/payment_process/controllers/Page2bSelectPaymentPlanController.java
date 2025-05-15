@@ -2,8 +2,8 @@ package com.atdit.booking.frontend.payment_process.controllers;
 
 import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
-import com.atdit.booking.frontend.super_controller.Controller;
-import com.atdit.booking.frontend.super_controller.Navigatable;
+import com.atdit.booking.frontend.abstract_controller.Controller;
+import com.atdit.booking.frontend.abstract_controller.Navigatable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

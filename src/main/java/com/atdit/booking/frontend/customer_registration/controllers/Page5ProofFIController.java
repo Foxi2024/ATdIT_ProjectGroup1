@@ -6,9 +6,9 @@ import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationEvaluator;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationParser;
-import com.atdit.booking.frontend.super_controller.Cacheable;
-import com.atdit.booking.frontend.super_controller.Controller;
-import com.atdit.booking.frontend.super_controller.Navigatable;
+import com.atdit.booking.frontend.abstract_controller.Cacheable;
+import com.atdit.booking.frontend.abstract_controller.Controller;
+import com.atdit.booking.frontend.abstract_controller.Navigatable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -36,7 +36,6 @@ public class Page5ProofFIController extends Controller implements Initializable,
     @FXML private Button liquidAssetsProofButton;
     @FXML private Button schufaButton;
     @FXML private Button continueButton;
-    @FXML private Button backButton;
     @FXML private Label incomeStatusLabel;
     @FXML private Label liquidAssetsStatusLabel;
     @FXML private Label schufaStatusLabel;
@@ -122,6 +121,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
      * @param label The status label to configure
      * @param documentType The type of document ("income", "liquidAssets", or "schufa")
      */
+    @SuppressWarnings("unused")
     private void setupStatusLabel(Label label, String documentType) {
 
         label.setOnMouseClicked(e -> {
@@ -144,6 +144,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
      * @param documentType The type of document to upload
      * @param statusLabel The label showing the upload status
      */
+    @SuppressWarnings("unused")
     private void setupUploadButton(Button button, String documentType, Label statusLabel) {
 
         button.setOnAction(e -> {

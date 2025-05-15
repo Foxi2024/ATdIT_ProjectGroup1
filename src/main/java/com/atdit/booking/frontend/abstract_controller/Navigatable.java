@@ -1,4 +1,4 @@
-package com.atdit.booking.frontend.super_controller;
+package com.atdit.booking.frontend.abstract_controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;

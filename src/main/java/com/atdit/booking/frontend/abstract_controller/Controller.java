@@ -1,4 +1,4 @@
-package com.atdit.booking.frontend.super_controller;
+package com.atdit.booking.frontend.abstract_controller;
 
 
 import com.atdit.booking.applications.CustomerRegistration;

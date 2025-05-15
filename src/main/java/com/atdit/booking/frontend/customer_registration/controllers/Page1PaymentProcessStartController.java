@@ -3,7 +3,7 @@ package com.atdit.booking.frontend.customer_registration.controllers;
 import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationEvaluator;
-import com.atdit.booking.frontend.super_controller.Controller;
+import com.atdit.booking.frontend.abstract_controller.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;

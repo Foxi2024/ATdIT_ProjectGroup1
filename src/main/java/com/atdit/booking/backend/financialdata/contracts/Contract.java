@@ -12,7 +12,7 @@ public class Contract {
     private String paymentMethod;
 
     /**
-     * The total amount of the contract, set as a constant value.
+     * The total amount of the contract and our journey, set as a constant value.
      * This value is fixed at 1,000,000 and cannot be modified.
      */
     public final double TOTAL_AMOUNT = 1_000_000;

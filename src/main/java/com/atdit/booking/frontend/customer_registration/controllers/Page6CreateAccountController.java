@@ -4,7 +4,7 @@ import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.database.DatabaseService;
 import com.atdit.booking.backend.exceptions.ValidationException;
-import com.atdit.booking.frontend.super_controller.Controller;
+import com.atdit.booking.frontend.abstract_controller.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -50,6 +50,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
      * @param resourceBundle The resources used to localize the root object
      */
     @Override
+    @SuppressWarnings("unused")
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
          currentCustomer = Resources.currentCustomer;
