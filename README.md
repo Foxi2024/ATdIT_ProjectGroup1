@@ -70,11 +70,19 @@ Der Markt ist jung, die Standards sind noch nicht gesetzt – umso wichtiger ist
 - Technologisch modular, wirtschaftlich skalierbar  
 
 ---
+## Auffinden des Codes und relevanter Dateien
+Der gesamte Quellcode für **NextStar Travel** befindet sich im Ordner [src/main/java/com/atdit/booking/applications](https://github.com/Foxi2024/ATdIT_ProjectGroup1/tree/main/src/main/java/com/atdit/booking/applications). Dort finden Sie die zentralen Klassen der Anwendung, aufgeteilt in Frontend- und Backend-Komponenten.
 
+Die zugehörigen Tests liegen im Ordner [src/test/java/com/atdit/booking/frontend/controllers](https://github.com/Foxi2024/ATdIT_ProjectGroup1/tree/main/src/test/java/com/atdit/booking/frontend/controllers).
+
+Mock-Dokumente, die im Rahmen des Finanzierungsprozesses hochgeladen werden müssen (z. B. Schufa-Auskunft, Einkommensnachweis, Nachweis liquider Mittel), finden Sie unter [financial\_proofs](https://github.com/Foxi2024/ATdIT_ProjectGroup1/tree/main/financial_proofs).
+
+Alle weiteren relevanten Dateien und technischen Dokumente, die auch im Wiki verlinkt sind, werden im Ordner `documents` bereitgestellt.
+
+---
 ## Mehr erfahren
 
-Erfahren Sie mehr über unser Unternehmen, unsere Partnerstrategie und die zugrundeliegende Technologie auf unserer  
-👉 [Wiki-Seite](https://github.com/Foxi2024/ATdIT_ProjectGroup1/wiki)
+Erfahren Sie mehr über unser Unternehmen, unsere Partnerstrategie und die zugrundeliegende Technologie auf unserer  👉 [Wiki-Seite](https://github.com/Foxi2024/ATdIT_ProjectGroup1/wiki)
 
 ---
 
