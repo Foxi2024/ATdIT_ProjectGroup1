@@ -397,11 +397,15 @@ public class DatabaseService {
             }
 
             throw new IllegalArgumentException("E-Mail oder Passwort falsch.");
-        } catch (SQLException ex) {
+
+        }
+        catch (SQLException ex) {
             throw new SQLException("Fehler beim Verbindungsaufbau mit der Datenbank.");
-        } catch (HashingException | DecryptionException ex) {
+        }
+        catch (HashingException | DecryptionException ex) {
             throw new CryptographyException("Entschlüsslung oder Hashing der Daten ist fehlgeschlagen.");
-        } finally {
+        }
+        finally {
             closeConnection(connection);
         }
     }
@@ -655,4 +659,13 @@ public class DatabaseService {
             throw new ValidationException("Passwort erfüllt nicht die Anforderungen");
         }
     }
+
+//    public static void main(String[] args) {
+//        try{
+//            new DatabaseService().createTables();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
 }

@@ -35,7 +35,7 @@ public class Page1ControllerPageLogin extends Controller implements Initializabl
 
     /**
      * Initializes the controller class.
-     * Sets up the database connection when the page is loaded.
+     * Sets up the database service when the page is loaded.
      *
      * @param url The location used to resolve relative paths for the root object
      * @param resourceBundle The resources used to localize the root object
@@ -63,7 +63,8 @@ public class Page1ControllerPageLogin extends Controller implements Initializabl
             Resources.currentCustomer =currentCustomer;
         }
         catch (SQLException | CryptographyException ex) {
-            showError("Anmeldefehler", "Anmeldedaten konnten nicht überprüft werden.", ex.getMessage());
+            //showError("Anmeldefehler", "Anmeldedaten konnten nicht überprüft werden.", ex.getMessage());
+            //System.out.println(ex);
             return;
         } catch (IllegalArgumentException ex) {
             showError("Anmeldefehler", "Anmeldung konnte nicht durchgeführt werden", ex.getMessage());
