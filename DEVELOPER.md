@@ -1,7 +1,7 @@
 # Developer Documentation
 
 ## Project Overview
-This is a booking application built using Java and JavaFX, utilizing a modern tech stack for robust functionality and user experience. The application follows a layered architecture pattern with clear separation between frontend and backend components.
+This is a booking application built using Java and JavaFX, utilizing a modern tech stack for robust functionality and user experience. The application follows a layered architecture pattern with clear separation between frontend and backend components. It features separate entry points for different application flows like Customer Registration and Payment Processing.
 
 ## Architecture
 
@@ -9,7 +9,7 @@ This is a booking application built using Java and JavaFX, utilizing a modern te
 The application follows a layered architecture with the following main components:
 
 1. **Presentation Layer (Frontend)**
-   - Built with JavaFX (version 24.0.1)
+   - Built with JavaFX (version 23.0.2)
    - FXML-based UI layouts
    - MVC (Model-View-Controller) pattern implementation
 
@@ -95,18 +95,28 @@ graph TD
     C --> I[Hibernate ORM]
     C --> J[Entity Models]
     end
+
+    subgraph Application Starters
+    K[CustomerRegistrationApplicationStarter]
+    L[PaymentProcessApplicationStarter]
+    AbstractApplication <|-- K
+    AbstractApplication <|-- L
+    end
+    
+    A ..> K
+    A ..> L
 ```
 
 ## Technology Stack
 
 ### Core Technologies
 1. **Java**
-   - Version: Java 24
+   - Version: Java 24 (as per maven-compiler-plugin release 24)
    - Build System: Maven
    - Compiler Configuration: JDK 1.8 compatible
 
 2. **Frontend Framework**
-   - JavaFX 24.0.1
+   - JavaFX 23.0.2
    - FXML for UI layouts
 
 3. **Database**
@@ -264,46 +274,29 @@ classDiagram
 ```
 
 ### Frontend Controllers
+The `Main.java` class has been refactored into `CustomerRegistrationApplicationStarter.java` and `PaymentProcessApplicationStarter.java`, which extend `AbstractApplication`. These serve as the main entry points.
 
 ```mermaid
 classDiagram
-    class Controller {
-        <<abstract>>
-        +handleNavigation()
-    }
-
-    class Navigatable {
-        <<interface>>
-        +navigateToNextPage()
-        +navigateToPreviousPage()
-    }
-
-    class Cacheable {
-        <<interface>>
-        +cacheData()
-        +restoreData()
-    }
-
-    class e.g. Page3PersonalInformationController {
-        -ComboBox titleField
-        -TextField nameField
-        -TextField firstNameField
-        -DatePicker birthDatePicker
-        -TextField countryField
-        -TextField addressField
-        -TextField emailField
-        -Button continueButton
-        -Button backButton
-        -Customer currentCustomer
-        -CustomerEvaluator evaluator
+    class AbstractApplication {
         +initialize()
-        +cacheData()
-        +restoreData()
+        +start(Stage)
+        +stop()
     }
+    class CustomerRegistrationApplicationStarter {
+        +main(String[])
+        +start(Stage)
+    }
+    class PaymentProcessApplicationStarter {
+        +main(String[])
+        +start(Stage)
+    }
+    Controller <|-- PageController // Assuming PageController exists and is a common base for UI controllers
 
-    Controller <|-- e.g. Page3PersonalInformationController
-    Navigatable <|.. e.g. Page3PersonalInformationController
-    Cacheable <|.. e.g. Page3PersonalInformationController
+    AbstractApplication <|-- CustomerRegistrationApplicationStarter
+    AbstractApplication <|-- PaymentProcessApplicationStarter
+    PageController <|-- Page3PersonalInformationController // Example relationship
+    // Add other PageXController relationships to PageController
 ```
 
 ### Security and Encryption
@@ -335,9 +328,11 @@ classDiagram
 
 ### Build Configuration
 The project uses Maven for build automation. Key plugins:
-- maven-compiler-plugin (3.14.0)
+- maven-compiler-plugin (3.14.0) configured for Java 24 (`<release>24</release>`)
 - maven-surefire-plugin (3.2.5)
 - javafx-maven-plugin (0.0.8)
+  - Main class for Customer Registration: `com.atdit.booking/com.atdit.booking.CustomerRegistrationApplicationStarter`
+  - (Note: Payment Process might have a different run configuration if needed)
 
 ### Build Commands
 ```bash
