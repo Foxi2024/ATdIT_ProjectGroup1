@@ -16,12 +16,6 @@ public class FinancingContract extends Contract {
     /** Required down payment as percentage (20%) of total amount */
     private final double DOWN_PAYMENT_PERCENTAGE = 0.2;
 
-    /** Unique identifier for this contract */
-    private int id;
-
-    /** ID of the customer who signed this contract */
-    private int customerId;
-
     /** Amount that is being financed (total amount minus down payment) */
     private final double financedAmount;
 
@@ -40,11 +34,11 @@ public class FinancingContract extends Contract {
     /** Initial down payment amount */
     private final double downPayment;
 
-    /** Date when contract was signed */
+    /** Date when contract was signed 
+     * Note: This field is declared but not currently initialized or used within the class
+     * For future use
+    */
     private LocalDateTime signedDate;
-
-    /** Full contract text in German */
-    private String contractText;
 
     /**
      * Constructor initializes a new financing contract with default 12 months duration.
@@ -99,6 +93,8 @@ public class FinancingContract extends Contract {
      * Base rate is 5.0% with 0.5% increase per year after first year.
      */
     public void calculateInterestRate() {
+
+
         this.interestRate = INTEREST_RATE + ((this.months / 12) - 1) * 0.5;
     }
 

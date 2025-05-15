@@ -37,11 +37,13 @@ public class Contract {
 
     /**
      * Retrieves the contract text content.
-     * returns an empty string.
+     * This base implementation returns an empty string.
+     * Subclasses should override this method to provide specific contract text.
      *
-     * @return an empty String
+     * @return an empty String in this base implementation
      */
     public String getContractText(){
+        // This method is intended to be overridden by subclasses to provide actual contract text.
         return "";
 
     }

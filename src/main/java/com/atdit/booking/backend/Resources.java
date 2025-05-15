@@ -5,15 +5,39 @@ import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationEvaluator;
 
+/**
+ * A utility class for holding shared resources and data across the application
+ * This class provides static fields for globally accessible objects like the current customer,
+ * financial information, evaluators, and other relevant data like a data privacy text
+ */
 public class Resources {
 
+    /**
+     * The currently active customer in the application context
+     */
     public static Customer currentCustomer;
+    /**
+     * The financial information associated with the current customer or process
+     */
     public static FinancialInformation financialInformation;
+    /**
+     * An evaluator instance for processing financial information
+     */
     public static FinancialInformationEvaluator financialInformationEvaluator;
 
+    /**
+     * The contract details relevant to the current booking or payment process
+     */
     public static Contract contract;
+    /**
+     * Stores the currently selected payment method as a string
+     */
     public static String selectedPayment;
 
+    /**
+     * A constant string containing the fictional data privacy policy text for NEXSTAR TRAVEL
+     * This text is displayed to users as part of the terms and conditions or privacy information sections
+     */
     public static final String DATA_PRIVACY_TEXT = """
                 Datenschutzerklärung für NEXSTAR TRAVEL – Raumfahrttourismus \s
                 Stand: Mai 2025

@@ -14,7 +14,7 @@ package com.atdit.booking.backend.financialdata.financial_information;
 public record Credit(String description, int amount, double interestRate, int monthlyPayment, int remainingSum) {
 
     /**
-     * Calculates the amount that has already been paid back for this credit.
+     * Calculates the amount that has already been paid back for this credit
      *
      * @return The difference between the total amount and the remaining sum in currency units
      */

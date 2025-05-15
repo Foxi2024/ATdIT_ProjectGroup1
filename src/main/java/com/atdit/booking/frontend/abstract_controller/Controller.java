@@ -73,6 +73,14 @@ public abstract class Controller {
         alert.showAndWait();
     }
 
+    /**
+     * Displays a confirmation dialog with options to correct information or cancel the process.
+     * If the user chooses to cancel, the application will exit.
+     *
+     * @param title   The title of the confirmation dialog window
+     * @param header  The header text shown in the confirmation dialog
+     * @param content The detailed message or question to be displayed
+     */
     public void showConfirmation(String title, String header, String content) {
         ButtonType correctButton = new ButtonType("Korrigieren");
         ButtonType cancelButton = new ButtonType("Prozess abbrechen");

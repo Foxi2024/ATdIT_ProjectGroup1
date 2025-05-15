@@ -19,9 +19,8 @@ public class PaymentMethodEvaluator {
      * Sets the bank transfer details for validation.
      *
      * @param bankTransferDetails The bank transfer details to be set
-     * @throws ValidationException If the provided details are invalid
      */
-    public void setBankTransferDetails(BankTransferDetails bankTransferDetails) throws ValidationException{
+    public void setBankTransferDetails(BankTransferDetails bankTransferDetails) {
         this.bankTransferDetails = bankTransferDetails;
     }
 

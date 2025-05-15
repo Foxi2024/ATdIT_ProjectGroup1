@@ -10,7 +10,7 @@ public class PaymentProcessApplicationStarter {
 
     /**
      * The main method that starts the application.
-     * Starts the customer registration process.
+     * Starts the payment process.
      *
      * @param args Command line arguments passed to the application
      */

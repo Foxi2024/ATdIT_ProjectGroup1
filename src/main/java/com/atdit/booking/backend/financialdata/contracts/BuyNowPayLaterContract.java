@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Represents a one-time payment contract for space travel bookings.
- * This class extends the base Contract class and implements specific functionality
- * for contracts where the total amount is paid in a single transaction.
+ * Represents a Buy Now, Pay Later (BNPL) contract for space travel bookings.
+ * This class extends the base Contract class and provides the specific contract text
+ * for arrangements where payment is due at a later date (e.g., within 30 days of invoicing).
  */
 public class BuyNowPayLaterContract extends Contract {
 
