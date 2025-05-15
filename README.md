@@ -71,7 +71,7 @@ Der Markt ist jung, die Standards sind noch nicht gesetzt – umso wichtiger ist
 
 ---
 ## Auffinden des Codes und relevanter Dateien
-Der gesamte Quellcode für **NextStar Travel** befindet sich im Ordner [src/main/java/com/atdit/booking/applications](https://github.com/Foxi2024/ATdIT_ProjectGroup1/tree/main/src/main/java/com/atdit/booking/applications). Dort finden Sie die zentralen Klassen der Anwendung, aufgeteilt in Frontend- und Backend-Komponenten.
+Der gesamte Quellcode für **NextStar Travel** befindet sich im Ordner [src/main](https://github.com/Foxi2024/ATdIT_ProjectGroup1/tree/main/src/main). Dort finden Sie die zentralen Klassen der Anwendung, aufgeteilt in Frontend- und Backend-Komponenten.
 
 Die zugehörigen Tests liegen im Ordner [src/test/java/com/atdit/booking/frontend/controllers](https://github.com/Foxi2024/ATdIT_ProjectGroup1/tree/main/src/test/java/com/atdit/booking/frontend/controllers).
 
