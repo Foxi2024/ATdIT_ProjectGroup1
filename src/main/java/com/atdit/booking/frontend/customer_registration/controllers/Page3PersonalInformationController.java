@@ -167,7 +167,7 @@ public class Page3PersonalInformationController extends Controller implements In
         firstNameField.setText(currentCustomer.getFirstName());
         countryField.setText(currentCustomer.getCountry());
         addressField.setText(currentCustomer.getAddress());
-        emailField.setText(CustomerRegistrationApplicationStarter.customer.getEmail());
+        emailField.setText(currentCustomer.getEmail());
 
         if (currentCustomer.getBirthdate() != null && !currentCustomer.getBirthdate().isEmpty()) {
             birthDatePicker.setValue(java.time.LocalDate.parse(currentCustomer.getBirthdate()));
