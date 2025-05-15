@@ -1,8 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.CustomerRegistrationApplicationStarter;
-import com.atdit.booking.backend.Ressources;
-import com.atdit.booking.backend.customer.Customer;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.exceptions.EvaluationException;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
@@ -52,8 +50,9 @@ public class Page4DeclarationFIController extends Controller implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        financialInfo = Ressources.currentCustomer.getFinancialInformation();
-        evaluator = Ressources.financialInformationEvaluator;
+        financialInfo = Resources.currentCustomer.getFinancialInformation();
+        evaluator = Resources.financialInformationEvaluator;
+        evaluator.setCurrentCustomer(Resources.currentCustomer);
 
         restoreData();
     }

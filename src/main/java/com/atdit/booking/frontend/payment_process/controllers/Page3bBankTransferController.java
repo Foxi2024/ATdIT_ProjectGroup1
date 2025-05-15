@@ -19,7 +19,7 @@ public class Page3bBankTransferController extends AbstractPaymentMethodControlle
     /** TextField for entering BIC/SWIFT code */
     @FXML private TextField bicField;
 
-    public static BankTransferDetails bankTransferDetails = new BankTransferDetails();
+    public static final BankTransferDetails bankTransferDetails = new BankTransferDetails();
 
     @Override
     protected void initializeParameters() {

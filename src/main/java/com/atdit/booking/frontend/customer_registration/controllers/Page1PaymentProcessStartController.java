@@ -1,6 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.backend.Ressources;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationEvaluator;
 import com.atdit.booking.frontend.super_controller.Controller;
@@ -22,9 +22,9 @@ public class Page1PaymentProcessStartController extends Controller implements In
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Ressources.currentCustomer = new Customer();
-        Ressources.financialInformation = Ressources.currentCustomer.getFinancialInformation();
-        Ressources.financialInformationEvaluator = new FinancialInformationEvaluator(Ressources.currentCustomer.getFinancialInformation());
+        Resources.currentCustomer = new Customer();
+        Resources.financialInformation = Resources.currentCustomer.getFinancialInformation();
+        Resources.financialInformationEvaluator = new FinancialInformationEvaluator(Resources.currentCustomer.getFinancialInformation());
 
     }
 

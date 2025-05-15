@@ -140,7 +140,7 @@ public class FinancialInformationEvaluator {
         }
 
         if(!financialInfo.getSchufa().getFirstName().equals(currentCustomer.getFirstName()) ||
-                !financialInfo.getSchufa().getLastName().equals(currentCustomer.getName())) {
+                !financialInfo.getSchufa().getLastName().equals(currentCustomer.getLastName())) {
             errorMessage += "- Name im Schufa Dokument stimmt nicht mit Ihrem Namen überein\n";
             isValid = false;
         }

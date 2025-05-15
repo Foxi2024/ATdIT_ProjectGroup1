@@ -1,7 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.CustomerRegistrationApplicationStarter;
-import com.atdit.booking.backend.Ressources;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.database.DatabaseService;
 import com.atdit.booking.backend.exceptions.ValidationException;
@@ -53,7 +52,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-         currentCustomer = Ressources.currentCustomer;
+         currentCustomer = Resources.currentCustomer;
 
         emailLabel.setText(currentCustomer.getEmail());
         createAccountButton.setDisable(true);
@@ -120,6 +119,6 @@ public class Page6CreateAccountController extends Controller implements Initiali
             return;
         }
 
-        loadScene(e, "customer_registration/account_confirmation.fxml", "Account erstellt");
+        loadScene(e, "customer_registration/page_7_account_confirmation.fxml", "Account erstellt");
     }
 }

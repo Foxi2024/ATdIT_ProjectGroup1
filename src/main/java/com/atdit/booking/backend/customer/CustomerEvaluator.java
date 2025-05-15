@@ -37,7 +37,7 @@ public class CustomerEvaluator {
         boolean hasError = false;
 
         hasError |= appendError(errorMessage, () -> checkFirstName(customer.getFirstName()));
-        hasError |= appendError(errorMessage, () -> checkName(customer.getName()));
+        hasError |= appendError(errorMessage, () -> checkName(customer.getLastName()));
         hasError |= appendError(errorMessage, () -> checkBirthdate(customer.getBirthdate()));
         hasError |= appendError(errorMessage, () -> checkCountry(customer.getCountry()));
         hasError |= appendError(errorMessage, () -> checkAddress(customer.getAddress()));
@@ -197,8 +197,15 @@ public class CustomerEvaluator {
         try {
             DatabaseService db = new DatabaseService();
             db.checkIfCustomerIsInDatabase(email);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException(ex.getMessage());
+        }
+        catch (RuntimeException ex) {
+
+            // in this case okay, because there is no logical error message for the customer if the check fails
+            // just proceed then
+           ex.printStackTrace();
         }
     }
 }

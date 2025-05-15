@@ -49,7 +49,7 @@ public class Encrypter {
 
     /**
      * Derives an encryption key from the user's email and password using PBKDF2 (Password-Based Key Derivation Function 2).
-     * The method uses a fixed salt and 65536 iterations for key derivation to ensure consistent key generation.
+     * The method uses the hashed email as salt and 65536 iterations for key derivation to ensure consistent key generation.
      * The password is first hashed before being used in the key derivation process.
      *
      * @param email User's email address used as part of the key derivation input
@@ -59,7 +59,7 @@ public class Encrypter {
      */
     private SecretKey deriveKey(String email, String password) throws CryptographyException {
         try{
-            String salt = "1.FC Kaiserslautern";
+            String salt = hashString(email);
             password = hashString(password);
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, KEY_SIZE);

@@ -1,8 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.CustomerRegistrationApplicationStarter;
-import com.atdit.booking.backend.Ressources;
-import com.atdit.booking.backend.customer.Customer;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.exceptions.EvaluationException;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
@@ -60,8 +58,9 @@ public class Page5ProofFIController extends Controller implements Initializable,
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        financialInfo = Ressources.financialInformation;
-        evaluator = Ressources.financialInformationEvaluator;
+        financialInfo = Resources.financialInformation;
+        evaluator = Resources.financialInformationEvaluator;
+
         parser = new FinancialInformationParser();
         fileChooser = new FileChooser();
 

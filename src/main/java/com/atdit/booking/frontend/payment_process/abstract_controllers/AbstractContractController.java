@@ -1,10 +1,9 @@
 package com.atdit.booking.frontend.payment_process.abstract_controllers;
 
-import com.atdit.booking.backend.Ressources;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.frontend.super_controller.Controller;
-import com.atdit.booking.frontend.payment_process.controllers.Page2aSelectPaymentController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -33,14 +32,14 @@ public abstract class AbstractContractController extends Controller implements I
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        currentCustomer = Ressources.currentCustomer;
-        contract = Ressources.contract;
+        currentCustomer = Resources.currentCustomer;
+        contract = Resources.contract;
 
         initializeParameters();
 
         // for better readability
 
-        String customerText = currentCustomer.getTitle() + " " + currentCustomer.getFirstName() + " " + currentCustomer.getName();
+        String customerText = currentCustomer.getTitle() + " " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName();
 
         customerNameLabel.setText(customerText);
         emailLabel.setText(currentCustomer.getEmail());

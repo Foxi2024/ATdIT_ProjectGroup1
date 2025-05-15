@@ -1,6 +1,6 @@
 package com.atdit.booking.frontend.payment_process.controllers;
 
-import com.atdit.booking.backend.Ressources;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.database.DatabaseService;
 import com.atdit.booking.backend.exceptions.CryptographyException;
@@ -68,7 +68,7 @@ public class Page1ControllerPageLogin extends Controller implements Initializabl
 
         try {
             currentCustomer = db.getCustomerWithFinancialInfoByEmail(email, password);
-            Ressources.currentCustomer =currentCustomer;
+            Resources.currentCustomer =currentCustomer;
         }
         catch (SQLException | CryptographyException ex) {
             showError("Anmeldefehler", "Anmeldedaten konnten nicht überprüft werden.", ex.getMessage());

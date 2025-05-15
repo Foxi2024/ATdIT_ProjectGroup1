@@ -1,7 +1,7 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
 
-import com.atdit.booking.backend.Ressources;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.customer.CustomerEvaluator;
 import com.atdit.booking.backend.exceptions.ValidationException;
@@ -70,7 +70,7 @@ public class Page3PersonalInformationController extends Controller implements In
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        currentCustomer = Ressources.currentCustomer;
+        currentCustomer = Resources.currentCustomer;
         evaluator = new CustomerEvaluator(currentCustomer);
 
         restoreData();
@@ -127,8 +127,8 @@ public class Page3PersonalInformationController extends Controller implements In
             return;
         }
 
-        Ressources.contract = new OneTimePaymentContract();
-        Ressources.selectedPayment = "One-Time";
+        Resources.contract = new OneTimePaymentContract();
+        Resources.selectedPayment = "One-Time";
         loadScene(e, "payment_process/page_3a_creditcard.fxml", "Zahlungsmethode auswählen");
     }
 
@@ -139,7 +139,7 @@ public class Page3PersonalInformationController extends Controller implements In
     public void cacheData() {
 
         currentCustomer.setTitle(titleField.getValue());
-        currentCustomer.setName(nameField.getText());
+        currentCustomer.setLastName(nameField.getText());
         currentCustomer.setFirstName(firstNameField.getText());
         currentCustomer.setCountry(countryField.getText());
         currentCustomer.setAddress(addressField.getText());
@@ -160,7 +160,7 @@ public class Page3PersonalInformationController extends Controller implements In
     public void restoreData() {
 
         titleField.setValue(currentCustomer.getTitle());
-        nameField.setText(currentCustomer.getName());
+        nameField.setText(currentCustomer.getLastName());
         firstNameField.setText(currentCustomer.getFirstName());
         countryField.setText(currentCustomer.getCountry());
         addressField.setText(currentCustomer.getAddress());

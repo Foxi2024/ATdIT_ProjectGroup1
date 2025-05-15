@@ -1,7 +1,6 @@
 package com.atdit.booking.frontend.payment_process.controllers;
 
-import com.atdit.booking.backend.Ressources;
-import com.atdit.booking.backend.financialdata.contracts.Contract;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
 import com.atdit.booking.backend.financialdata.contracts.BuyNowPayLaterContract;
 import com.atdit.booking.frontend.super_controller.Controller;
@@ -9,7 +8,6 @@ import com.atdit.booking.frontend.super_controller.Navigatable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -48,12 +46,12 @@ public class Page2aSelectPaymentController extends Controller implements Initial
     @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
         if (oneTimePaymentRadio.isSelected()) {
-            Ressources.selectedPayment = "BuyNowPayLater";
-            Ressources.contract = new BuyNowPayLaterContract();
+            Resources.selectedPayment = "BuyNowPayLater";
+            Resources.contract = new BuyNowPayLaterContract();
             loadScene(e, "payment_process/page_3a_creditcard.fxml", "Zahlungsmethode auswählen");
         } else {
-            Ressources.selectedPayment = "Financing";
-            Ressources.contract = new FinancingContract();
+            Resources.selectedPayment = "Financing";
+            Resources.contract = new FinancingContract();
             loadScene(e, "payment_process/page_2b_installment_selection.fxml", "Finanzierung auswählen");
         }
     }

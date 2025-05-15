@@ -7,7 +7,7 @@ import com.atdit.booking.backend.financialdata.financial_information.CreditCardD
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
 import com.atdit.booking.backend.financialdata.processing.FinancialInformationEvaluator;
 
-public class Ressources {
+public class Resources {
 
     public static Customer currentCustomer;
     public static FinancialInformation financialInformation;

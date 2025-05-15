@@ -39,7 +39,8 @@ public class DatabaseService {
     private Connection getConnection() throws SQLException {
         try {
             return DriverManager.getConnection(DB_URL);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new SQLException("Verbindung zur Datenbank fehlgeschlagen.", e);
         }
     }
@@ -220,7 +221,7 @@ public class DatabaseService {
             pstmt.setString(2, encrypter.encrypt(email, email, password));
             pstmt.setString(3, encrypter.encrypt(this.currentCustomer.getTitle(), email, password));
             pstmt.setString(4, encrypter.encrypt(this.currentCustomer.getFirstName(), email, password));
-            pstmt.setString(5, encrypter.encrypt(this.currentCustomer.getName(), email, password));
+            pstmt.setString(5, encrypter.encrypt(this.currentCustomer.getLastName(), email, password));
             pstmt.setString(6, encrypter.encrypt(this.currentCustomer.getCountry(), email, password));
             pstmt.setString(7, encrypter.encrypt(this.currentCustomer.getBirthdate(), email, password));
             pstmt.setString(8, encrypter.encrypt(this.currentCustomer.getAddress(), email, password));
@@ -312,7 +313,7 @@ public class DatabaseService {
      * @throws RuntimeException         if check fails
      * @throws IllegalArgumentException if customer already exists
      */
-    public void checkIfCustomerIsInDatabase(String email) throws SQLException, IllegalArgumentException {
+    public void checkIfCustomerIsInDatabase(String email) throws RuntimeException, IllegalArgumentException {
         Connection connection = null;
         try {
             connection = getConnection();
@@ -325,8 +326,9 @@ public class DatabaseService {
                 throw new IllegalArgumentException("Es existiert bereits ein Konto mit der angegebenen E-Mail-Adresse.");
             }
         } catch (SQLException | HashingException ex) {
-            throw new IllegalArgumentException("Fehler beim abrufen der Daten.");
-        } finally {
+            throw new RuntimeException("Fehler beim abrufen der Daten.");
+        }
+        finally {
             closeConnection(connection);
         }
     }
@@ -412,7 +414,7 @@ public class DatabaseService {
         customer.setEmail(email);
         customer.setTitle(encrypter.decrypt(rs.getString("title"), email, password));
         customer.setFirstName(encrypter.decrypt(rs.getString("firstName"), email, password));
-        customer.setName(encrypter.decrypt(rs.getString("name"), email, password));
+        customer.setLastName(encrypter.decrypt(rs.getString("name"), email, password));
         customer.setCountry(encrypter.decrypt(rs.getString("country"), email, password));
         customer.setBirthdate(encrypter.decrypt(rs.getString("birthdate"), email, password));
         customer.setAddress(encrypter.decrypt(rs.getString("address"), email, password));
@@ -505,13 +507,13 @@ public class DatabaseService {
      *
      * @throws RuntimeException if closing connection fails
      */
-    public void closeConnection(Connection connection) throws SQLException {
+    public void closeConnection(Connection connection) throws RuntimeException {
         try {
             if (connection != null) {
                 connection.close();
             }
         } catch (SQLException e) {
-            throw new SQLException("Datenbankverbindung konnte nicht geschlossen werden.", e);
+            throw new RuntimeException("Datenbankverbindung konnte nicht geschlossen werden.", e);
         }
     }
 

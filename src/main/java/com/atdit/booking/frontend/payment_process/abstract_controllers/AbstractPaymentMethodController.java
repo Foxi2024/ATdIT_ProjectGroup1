@@ -1,13 +1,12 @@
 package com.atdit.booking.frontend.payment_process.abstract_controllers;
 
-import com.atdit.booking.backend.Ressources;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.financialdata.processing.PaymentMethodEvaluator;
 import com.atdit.booking.frontend.super_controller.Cacheable;
 import com.atdit.booking.frontend.super_controller.Controller;
 import com.atdit.booking.frontend.super_controller.Navigatable;
-import com.atdit.booking.frontend.payment_process.controllers.Page2aSelectPaymentController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +27,6 @@ public abstract class AbstractPaymentMethodController extends Controller impleme
     public static PaymentMethodEvaluator evaluator;
 
     protected String paymentMethod;
-    protected String otherPage;
 
     @FXML protected Button backButton;
     @FXML protected ComboBox<String> paymentMethodCombo;
@@ -36,8 +34,8 @@ public abstract class AbstractPaymentMethodController extends Controller impleme
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        selectedPayment = Ressources.selectedPayment;
-        contract = Ressources.contract;
+        selectedPayment = Resources.selectedPayment;
+        contract = Resources.contract;
         evaluator = new PaymentMethodEvaluator();
 
         initializeParameters();

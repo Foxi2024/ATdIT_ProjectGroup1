@@ -32,7 +32,7 @@ public class Page3PersonalInformationControllerTest {
     void setUp() {
         validCustomer = new Customer();
         validCustomer.setFirstName("Max");
-        validCustomer.setName("Mustermann");
+        validCustomer.setLastName("Mustermann");
         validCustomer.setBirthdate("1990-01-01");
         validCustomer.setCountry("Deutschland");
         validCustomer.setAddress("Musterstr. 1");
@@ -256,7 +256,7 @@ public class Page3PersonalInformationControllerTest {
     void evaluateCustomerInfo_ShouldThrowException_WhenFirstNameIsInvalid() {
         Customer customer = new Customer();
         customer.setFirstName("Max123");
-        customer.setName("Mustermann");
+        customer.setLastName("Mustermann");
         customer.setBirthdate("1990-01-01");
         customer.setCountry("Deutschland");
         customer.setAddress("Musterstr. 1");
@@ -277,7 +277,7 @@ public class Page3PersonalInformationControllerTest {
     void evaluateCustomerInfo_ShouldThrowException_WhenLastNameIsInvalid() {
         Customer customer = new Customer();
         customer.setFirstName("Max");
-        customer.setName("Mustermann123!");
+        customer.setLastName("Mustermann123!");
         customer.setBirthdate("1990-01-01");
         customer.setCountry("Deutschland");
         customer.setAddress("Musterstr. 1");
@@ -298,7 +298,7 @@ public class Page3PersonalInformationControllerTest {
     void evaluateCustomerInfo_ShouldThrowException_WhenBirthdateIsInvalid() {
         Customer customer = new Customer();
         customer.setFirstName("Max");
-        customer.setName("Mustermann");
+        customer.setLastName("Mustermann");
         customer.setBirthdate(LocalDate.now().minusYears(17).toString());
         customer.setCountry("Deutschland");
         customer.setAddress("Musterstr. 1");
@@ -319,7 +319,7 @@ public class Page3PersonalInformationControllerTest {
     void evaluateCustomerInfo_ShouldThrowException_WhenCountryIsInvalid() {
         Customer customer = new Customer();
         customer.setFirstName("Max");
-        customer.setName("Mustermann");
+        customer.setLastName("Mustermann");
         customer.setBirthdate("1990-01-01");
         customer.setCountry("Deutschland123!");
         customer.setAddress("Musterstr. 1");
@@ -340,7 +340,7 @@ public class Page3PersonalInformationControllerTest {
     void evaluateCustomerInfo_ShouldThrowException_WhenEmailIsInvalid() {
         Customer customer = new Customer();
         customer.setFirstName("Max");
-        customer.setName("Mustermann");
+        customer.setLastName("Mustermann");
         customer.setBirthdate("1990-01-01");
         customer.setCountry("Deutschland");
         customer.setAddress("Musterstr. 1");
@@ -361,7 +361,7 @@ public class Page3PersonalInformationControllerTest {
     void evaluateCustomerInfo_ShouldThrowException_WhenMultipleFieldsAreInvalid() {
         Customer customer = new Customer();
         customer.setFirstName("Max123");
-        customer.setName("Mustermann!");
+        customer.setLastName("Mustermann!");
         customer.setBirthdate(LocalDate.now().minusYears(17).toString());
         customer.setCountry("Deutschland123");
         customer.setAddress("");

@@ -19,14 +19,14 @@ public class Customer {
     private String title;
 
     /**
-     * The first name of the customer.
+     * The first lastName of the customer.
      */
     private String firstName;
 
     /**
-     * The last name of the customer.
+     * The last lastName of the customer.
      */
-    private String name;
+    private String lastName;
 
     /**
      * The country where the customer resides.
@@ -63,7 +63,7 @@ public class Customer {
 
         this.title = "";
         this.firstName = "";
-        this.name = "";
+        this.lastName = "";
         this.birthdate = "";
         this.country = "";
         this.address = "";
@@ -79,18 +79,18 @@ public class Customer {
     public void setTitle(String title) { this.title = title; }
 
     /**
-     * Sets the first name of the customer.
+     * Sets the first lastName of the customer.
      *
-     * @param firstName The first name of the customer.
+     * @param firstName The first lastName of the customer.
      */
     public void setFirstName(String firstName) { this.firstName = firstName; }
 
     /**
-     * Sets the last name of the customer.
+     * Sets the last lastName of the customer.
      *
-     * @param name The last name of the customer.
+     * @param lastName The last lastName of the customer.
      */
-    public void setName(String name) { this.name = name; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
     /**
      * Sets the country of the customer.
@@ -135,18 +135,18 @@ public class Customer {
     public String getTitle() { return title; }
 
     /**
-     * Returns the first name of the customer.
+     * Returns the first lastName of the customer.
      *
-     * @return The first name of the customer.
+     * @return The first lastName of the customer.
      */
     public String getFirstName() { return firstName; }
 
     /**
-     * Returns the last name of the customer.
+     * Returns the last lastName of the customer.
      *
-     * @return The last name of the customer.
+     * @return The last lastName of the customer.
      */
-    public String getName() { return name; }
+    public String getLastName() { return lastName; }
 
     /**
      * Returns the birthdate of the customer.
@@ -196,7 +196,7 @@ public class Customer {
                 ", address='" + address + '\'' +
                 ", birthdate='" + birthdate + '\'' +
                 ", country='" + country + '\'' +
-                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", title='" + title + '\'' +
                 '}';

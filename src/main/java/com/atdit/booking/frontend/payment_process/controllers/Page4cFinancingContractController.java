@@ -1,6 +1,6 @@
 package com.atdit.booking.frontend.payment_process.controllers;
 
-import com.atdit.booking.backend.Ressources;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
 import com.atdit.booking.frontend.payment_process.abstract_controllers.AbstractContractController;
 import javafx.fxml.FXML;
@@ -18,7 +18,7 @@ public class Page4cFinancingContractController extends AbstractContractControlle
     @Override
     protected void initializeParameters() {
 
-        financingContract = (FinancingContract) Ressources.contract;
+        financingContract = (FinancingContract) Resources.contract;
 
         paymentPlanLabel.setText(String.format("%d Monate", financingContract.getMonths()));
         monthlyPaymentLabel.setText(String.format("%.2f€", financingContract.getMonthlyPayment()));

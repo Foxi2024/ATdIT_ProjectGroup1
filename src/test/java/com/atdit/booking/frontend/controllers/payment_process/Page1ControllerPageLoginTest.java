@@ -42,7 +42,7 @@ class Page1ControllerPageLoginTest {
         customer.setEmail(TEST_EMAIL);
         customer.setTitle("Herr");
         customer.setFirstName("Max");
-        customer.setName("Mustermann");
+        customer.setLastName("Mustermann");
         customer.setCountry("Deutschland");
         customer.setBirthdate("1990-01-01");
         customer.setAddress("Musterstraße 1, 12345 Berlin");
@@ -106,7 +106,7 @@ class Page1ControllerPageLoginTest {
         assertNotNull(retrievedCustomer);
         assertEquals(TEST_EMAIL, retrievedCustomer.getEmail());
         assertEquals("Max", retrievedCustomer.getFirstName());
-        assertEquals("Mustermann", retrievedCustomer.getName());
+        assertEquals("Mustermann", retrievedCustomer.getLastName());
     }
 
     /**

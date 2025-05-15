@@ -1,7 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.CustomerRegistrationApplicationStarter;
-import com.atdit.booking.backend.Ressources;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.frontend.super_controller.Controller;
 import javafx.fxml.FXML;
@@ -41,7 +40,7 @@ public class Page7AccountConfirmationController extends Controller implements In
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        currentCustomer = Ressources.currentCustomer;
+        currentCustomer = Resources.currentCustomer;
         emailLabel.setText("Eine Bestätigung wird an " + currentCustomer.getEmail() + " gesendet.");
     }
 

@@ -69,7 +69,7 @@ class Page5ProofFIControllerTest {
 
         Customer customer = new Customer();
         customer.setFirstName("Max");
-        customer.setName("Mustermann");
+        customer.setLastName("Mustermann");
         evaluator.setCurrentCustomer(customer);
     }
 

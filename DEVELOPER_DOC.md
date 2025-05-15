@@ -174,7 +174,7 @@ classDiagram
     class Customer {
         -String title
         -String firstName
-        -String name
+        -String lastName
         -String country
         -String birthdate
         -String address

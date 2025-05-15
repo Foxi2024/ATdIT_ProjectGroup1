@@ -1,6 +1,6 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.backend.Ressources;
+import com.atdit.booking.backend.Resources;
 import com.atdit.booking.frontend.super_controller.Controller;
 import com.atdit.booking.frontend.super_controller.Navigatable;
 import javafx.fxml.FXML;
@@ -39,7 +39,7 @@ public class Page2DataPrivacyController extends Controller implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        contractTextArea.setText(Ressources.DATA_PRIVACY_TEXT);
+        contractTextArea.setText(Resources.DATA_PRIVACY_TEXT);
     }
 
     /**

@@ -1,9 +1,9 @@
-First Name: Anton
-Last Name: Beton
-Schufa Score: 0.75
+First Name: Felix
+Last Name: Raffel
+Schufa Score: 0.96
 Total Credits: 0
 Total Credit Sum: 0
 Total Amount Payed: 0
 Total Amount Owed: 0
 Total Monthly Rate: 0
-Date Issued: 2023-01-01
+Date Issued: 2025-01-01
