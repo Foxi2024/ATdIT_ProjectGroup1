@@ -77,34 +77,23 @@ The application follows a layered architecture with the following main component
 
 ```mermaid
 graph TD
-    A[Frontend Layer] --> B[Business Logic Layer]
-    B --> C[Data Access Layer]
-    C --> D[(SQLite Database)]
-    
-    subgraph Frontend
-    A --> E[JavaFX UI]
-    A --> F[FXML Controllers]
-    end
-    
-    subgraph Business Logic
-    B --> G[Process Handlers]
-    B --> H[Service Layer]
-    end
-    
-    subgraph Data Access
-    C --> I[Hibernate ORM]
-    C --> J[Entity Models]
-    end
+    UI_Components --> FXML_Controllers
+    FXML_Controllers --> ApplicationStarters
+    ApplicationStarters --> BusinessLogicServices
+    BusinessLogicServices --> DataAccessObjects
+    DataAccessObjects --> Database[(SQLite Database)]
 
-    subgraph Application Starters
-    K[CustomerRegistrationApplicationStarter]
-    L[PaymentProcessApplicationStarter]
-    AbstractApplication <|-- K
-    AbstractApplication <|-- L
+    subgraph Frontend
+        UI_Components
+        FXML_Controllers
+        ApplicationStarters
     end
-    
-    A ..> K
-    A ..> L
+    subgraph BusinessLogic
+        BusinessLogicServices
+    end
+    subgraph DataAccess
+        DataAccessObjects
+    end
 ```
 
 ## Technology Stack
@@ -148,78 +137,16 @@ Testing Dependencies:
 
 ```mermaid
 classDiagram
-    class Customer {
-        -String title
-        -String firstName
-        -String name
-        -String country
-        -String birthdate
-        -String address
-        -String email
-        -FinancialInformation financialInformation
-        +setTitle(String)
-        +setFirstName(String)
-        +setName(String)
-        +setCountry(String)
-        +setBirthdate(String)
-        +setAddress(String)
-        +setEmail(String)
-        +setFinancialInformation(FinancialInformation)
-        +getters()
-    }
+    Customer *-- FinancialInformation
+    FinancialInformation *-- IncomeProof
+    FinancialInformation *-- LiquidAsset
+    FinancialInformation *-- SchufaOverview
 
-    class FinancialInformation {
-        -int avgNetIncome
-        -int liquidAssets
-        -int monthlyFixCost
-        -int minCostOfLiving
-        -int monthlyAvailableMoney
-        -IncomeProof proofOfIncome
-        -LiquidAsset proofOfLiquidAssets
-        -SchufaOverview schufa
-        +setters()
-        +getters()
-        -updateMonthlyAvailableMoney()
-    }
-
-    class IncomeProof {
-        <<record>>
-        +int monthlyNetIncome
-        +String employer
-        +String employmentType
-        +int employmentDurationMonths
-        +String dateIssued
-        +IncomeProof(int, String, String, int, String)
-    }
-
-    class SchufaOverview {
-        -String firstName
-        -String lastName
-        -double score
-        -int totalCredits
-        -int totalCreditSum
-        -int totalAmountPayed
-        -int totalAmountOwed
-        -int totalMonthlyRate
-        -String dateIssued
-        +setters()
-        +getters()
-    }
-
-    class LiquidAsset {
-        -String iban
-        -String description
-        -int balance
-        -String dateIssued
-        +LiquidAsset(String, String, int, String)
-        +setters()
-        +getters()
-    }
-
-    Customer "1" *-- "1" FinancialInformation
-    FinancialInformation "1" *-- "1" SchufaOverview
-    FinancialInformation "1" *-- "1" LiquidAsset
-    FinancialInformation "1" *-- "1" IncomeProof
+    class Customer
+    class FinancialInformation
+    class IncomeProof
+    class SchufaOverview
+    class LiquidAsset
 ```
 
 ### Service Layer
