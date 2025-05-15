@@ -120,7 +120,7 @@ public class Page2DataPrivacyController extends Controller implements Initializa
     @FXML
     @SuppressWarnings("unused")
     public void previousPage(MouseEvent e) {
-        loadScene(e, "customer_registration/page_1_start_payment_process.fxml", "Start");
+        loadScene(e, "customer_registration/page_1_start_customer_registration.fxml", "Start");
     }
 
     /**

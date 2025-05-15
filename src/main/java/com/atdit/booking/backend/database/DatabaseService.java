@@ -226,6 +226,7 @@ public class DatabaseService {
             pstmt.setString(8, encrypter.encrypt(this.currentCustomer.getAddress(), email, password));
             pstmt.setLong(9, financialInfoId);
             pstmt.executeUpdate();
+
         } finally {
             closeConnection(connection);
         }
