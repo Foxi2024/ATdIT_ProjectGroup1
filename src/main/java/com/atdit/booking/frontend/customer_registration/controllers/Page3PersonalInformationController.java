@@ -1,14 +1,12 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
-import com.atdit.booking.CustomerRegistrationApplicationStarter;
+
 import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.customer.CustomerEvaluator;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.contracts.OneTimePaymentContract;
 import com.atdit.booking.frontend.super_controller.*;
-import com.atdit.booking.frontend.payment_process.controllers.Page1ControllerPageLogin;
-import com.atdit.booking.frontend.payment_process.controllers.Page2aSelectPaymentController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,8 +25,7 @@ import java.util.ResourceBundle;
  * - First and last name
  * - Birth date
  * - Country and address
- * - Email address
- *
+ * - Email address*
  * The controller provides functionality for:
  * - Initializing form fields
  * - Data validation before proceeding
@@ -43,7 +40,7 @@ public class Page3PersonalInformationController extends Controller implements In
     @FXML private TextField nameField;
     /** TextField for the customer's first name */
     @FXML private TextField firstNameField;
-    /** DatePicker for selecting the customer's birth date */
+    /** DatePicker for selecting the customer's birthdate */
     @FXML private DatePicker birthDatePicker;
     /** TextField for the customer's country */
     @FXML private TextField countryField;

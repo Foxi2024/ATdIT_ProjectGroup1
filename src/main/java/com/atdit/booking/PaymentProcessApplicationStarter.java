@@ -1,7 +1,6 @@
 package com.atdit.booking;
 
 import com.atdit.booking.applications.PaymentProcess;
-import com.atdit.booking.backend.customer.Customer;
 
 /**
  * Main class for the booking application.
@@ -10,19 +9,12 @@ import com.atdit.booking.backend.customer.Customer;
 public class PaymentProcessApplicationStarter {
 
     /**
-     * Static customer instance used throughout the application.
-     */
-    public static Customer customer;
-
-    /**
      * The main method that starts the application.
-     * Initializes a new customer instance and starts the customer registration process.
+     * Starts the customer registration process.
      *
      * @param args Command line arguments passed to the application
      */
     public static void main(String[] args) {
-
-        customer = new Customer();
 
         PaymentProcess.main(args);
     }

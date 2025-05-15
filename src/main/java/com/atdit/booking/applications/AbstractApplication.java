@@ -15,6 +15,7 @@ import java.io.IOException;
 public abstract class AbstractApplication extends Application {
 
     protected static String filename;
+    protected static String title;
 
     /**
      * Initializes and starts the main application window.
@@ -29,7 +30,7 @@ public abstract class AbstractApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(CustomerRegistration.class.getResource("/com/atdit/booking/fxml_files/" + filename));
         Scene scene = new Scene(fxmlLoader.load());
         stage.getIcons().add(new Image(CustomerRegistration.class.getResourceAsStream("/com/atdit/booking/style/images/icon.png")));
-        stage.setTitle("Main");
+        stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
     }
