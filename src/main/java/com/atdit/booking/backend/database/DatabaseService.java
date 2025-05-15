@@ -61,6 +61,7 @@ public class DatabaseService {
         IncomeProof proof = this.currentCustomer.getFinancialInformation().getProofOfIncome();
 
         if (proof == null) {
+            closeConnection(connection);
             return 0;
         }
 
@@ -87,9 +88,10 @@ public class DatabaseService {
             if (rs.next()){
                 return rs.getLong(1);
             }
+            throw new SQLException("Failed to save proof of income, no generated key found");
         }
         catch (SQLException ex) {
-            throw new SQLException("Failed to save proof of income");
+            throw new SQLException("Failed to save proof of income: " + ex.getMessage(), ex);
         }
         finally {
             closeConnection(connection);
@@ -106,28 +108,33 @@ public class DatabaseService {
      * @throws SQLException if database operation fails
      */
     private long insertAssetsProof() throws SQLException {
-        String sql = """
+        Connection connection = getConnection();
+        try {
+            String sql = """
         INSERT INTO liquid_assets (iban, description, balance, dateIssued)
         VALUES (?, ?, ?, ?)
         """;
 
-        PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-        LiquidAsset proof = this.currentCustomer.getFinancialInformation().getProofOfLiquidAssets();
-        pstmt.setString(1, proof.iban());
-        pstmt.setString(2, proof.description());
-        pstmt.setInt(3, proof.balance());
-        pstmt.setString(4, proof.dateIssued());
+            LiquidAsset proof = this.currentCustomer.getFinancialInformation().getProofOfLiquidAssets();
+            pstmt.setString(1, proof.iban());
+            pstmt.setString(2, proof.description());
+            pstmt.setInt(3, proof.balance());
+            pstmt.setString(4, proof.dateIssued());
 
-        pstmt.executeUpdate();
+            pstmt.executeUpdate();
 
-        ResultSet rs = pstmt.getGeneratedKeys();
+            ResultSet rs = pstmt.getGeneratedKeys();
 
-        if (rs.next()) {
-            return rs.getLong(1);
+            if (rs.next()) {
+                return rs.getLong(1);
+            }
+
+            throw new SQLException("Failed to save proof of liquid assets");
+        } finally {
+            closeConnection(connection);
         }
-
-        throw new SQLException("Failed to save proof of liquid assets");
     }
 
     /**
@@ -138,34 +145,39 @@ public class DatabaseService {
      * @throws SQLException if database operation fails
      */
     private long insertSchufaRecord() throws SQLException {
-        SchufaOverview schufa = this.currentCustomer.getFinancialInformation().getSchufa();
+        Connection connection = getConnection();
+        try {
+            SchufaOverview schufa = this.currentCustomer.getFinancialInformation().getSchufa();
 
-        String sql = """
+            String sql = """
         INSERT INTO schufa_overview (firstName, lastName, score, totalCredits,
         totalCreditSum, totalAmountPayed, totalAmountOwed, totalMonthlyRate, dateIssued)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-        PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-        pstmt.setString(1, schufa.getFirstName());
-        pstmt.setString(2, schufa.getLastName());
-        pstmt.setDouble(3, schufa.getScore());
-        pstmt.setInt(4, schufa.getTotalCredits());
-        pstmt.setInt(5, schufa.getTotalCreditSum());
-        pstmt.setInt(6, schufa.getTotalAmountPayed());
-        pstmt.setInt(7, schufa.getTotalAmountOwed());
-        pstmt.setInt(8, schufa.getTotalMonthlyRate());
-        pstmt.setString(9, schufa.getDateIssued());
+            pstmt.setString(1, schufa.getFirstName());
+            pstmt.setString(2, schufa.getLastName());
+            pstmt.setDouble(3, schufa.getScore());
+            pstmt.setInt(4, schufa.getTotalCredits());
+            pstmt.setInt(5, schufa.getTotalCreditSum());
+            pstmt.setInt(6, schufa.getTotalAmountPayed());
+            pstmt.setInt(7, schufa.getTotalAmountOwed());
+            pstmt.setInt(8, schufa.getTotalMonthlyRate());
+            pstmt.setString(9, schufa.getDateIssued());
 
-        pstmt.executeUpdate();
+            pstmt.executeUpdate();
 
-        ResultSet rs = pstmt.getGeneratedKeys();
+            ResultSet rs = pstmt.getGeneratedKeys();
 
-        if (rs.next()) {
-            return rs.getLong(1);
+            if (rs.next()) {
+                return rs.getLong(1);
+            }
+            throw new SQLException("Failed to save schufa overview");
+        } finally {
+            closeConnection(connection);
         }
-        throw new SQLException("Failed to save schufa overview");
     }
 
     /**
@@ -179,24 +191,29 @@ public class DatabaseService {
      * @throws HashingException if email hashing fails
      */
     private void insertCustomerData(long financialInfoId, String password) throws SQLException, EncryptionException, HashingException {
-        String email = this.currentCustomer.getEmail();
+        Connection connection = getConnection();
+        try {
+            String email = this.currentCustomer.getEmail();
 
-        String sql = """
+            String sql = """
     INSERT INTO customers (email_hashed, email, title, firstName, name, country, birthdate, address, financial_info_id)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """;
 
-        PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        pstmt.setString(1, encrypter.hashString(email));
-        pstmt.setString(2, encrypter.encrypt(email, email, password));
-        pstmt.setString(3, encrypter.encrypt(this.currentCustomer.getTitle(), email, password));
-        pstmt.setString(4, encrypter.encrypt(this.currentCustomer.getFirstName(), email, password));
-        pstmt.setString(5, encrypter.encrypt(this.currentCustomer.getName(), email, password));
-        pstmt.setString(6, encrypter.encrypt(this.currentCustomer.getCountry(), email, password));
-        pstmt.setString(7, encrypter.encrypt(this.currentCustomer.getBirthdate(), email, password));
-        pstmt.setString(8, encrypter.encrypt(this.currentCustomer.getAddress(), email, password));
-        pstmt.setLong(9, financialInfoId);
-        pstmt.executeUpdate();
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, encrypter.hashString(email));
+            pstmt.setString(2, encrypter.encrypt(email, email, password));
+            pstmt.setString(3, encrypter.encrypt(this.currentCustomer.getTitle(), email, password));
+            pstmt.setString(4, encrypter.encrypt(this.currentCustomer.getFirstName(), email, password));
+            pstmt.setString(5, encrypter.encrypt(this.currentCustomer.getName(), email, password));
+            pstmt.setString(6, encrypter.encrypt(this.currentCustomer.getCountry(), email, password));
+            pstmt.setString(7, encrypter.encrypt(this.currentCustomer.getBirthdate(), email, password));
+            pstmt.setString(8, encrypter.encrypt(this.currentCustomer.getAddress(), email, password));
+            pstmt.setLong(9, financialInfoId);
+            pstmt.executeUpdate();
+        } finally {
+            closeConnection(connection);
+        }
     }
 
     /**
@@ -210,40 +227,45 @@ public class DatabaseService {
      * @throws SQLException if database operation fails
      */
     private long insertFinancialData(long incomeProofId, long assetsProofId, long schufaId) throws SQLException {
-        FinancialInformation financialInfo = this.currentCustomer.getFinancialInformation();
+        Connection connection = getConnection();
+        try {
+            FinancialInformation financialInfo = this.currentCustomer.getFinancialInformation();
 
-        System.out.println("Financial Info: " + financialInfo);
+            System.out.println("Financial Info: " + financialInfo);
 
-        String sql = """
+            String sql = """
         INSERT INTO financial_information
         (avgNetIncome, liquidAssets, monthlyFixCost, minCostOfLiving,
         monthlyAvailableMoney, proof_of_income_id, proof_of_liquid_assets_id, schufa_id)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-        PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-        pstmt.setInt(1, financialInfo.getAvgNetIncome());
-        pstmt.setInt(2, financialInfo.getLiquidAssets());
-        pstmt.setInt(3, financialInfo.getMonthlyFixCost());
-        pstmt.setInt(4, financialInfo.getMinCostOfLiving());
-        pstmt.setInt(5, financialInfo.getMonthlyAvailableMoney());
-        pstmt.setLong(6, incomeProofId);
-        pstmt.setLong(7, assetsProofId);
-        pstmt.setLong(8, schufaId);
+            pstmt.setInt(1, financialInfo.getAvgNetIncome());
+            pstmt.setInt(2, financialInfo.getLiquidAssets());
+            pstmt.setInt(3, financialInfo.getMonthlyFixCost());
+            pstmt.setInt(4, financialInfo.getMinCostOfLiving());
+            pstmt.setInt(5, financialInfo.getMonthlyAvailableMoney());
+            pstmt.setLong(6, incomeProofId);
+            pstmt.setLong(7, assetsProofId);
+            pstmt.setLong(8, schufaId);
 
-        pstmt.executeUpdate();
+            pstmt.executeUpdate();
 
-        ResultSet rs = pstmt.getGeneratedKeys();
+            ResultSet rs = pstmt.getGeneratedKeys();
 
-        if (rs.next()) {
-            long id = rs.getLong(1);
+            if (rs.next()) {
+                long id = rs.getLong(1);
 
-            System.out.println(id);
-            return id;
+                System.out.println(id);
+                return id;
+            }
+
+            throw new SQLException("Failed to save financial information");
+        } finally {
+            closeConnection(connection);
         }
-
-        throw new SQLException("Failed to save financial information");
     }
 
     /**
@@ -266,8 +288,6 @@ public class DatabaseService {
         catch(EncryptionException | HashingException e){
             throw new RuntimeException("Failed to encrypt customer data", e);
         }
-
-        closeConnection();
     }
 
     /**
@@ -278,9 +298,10 @@ public class DatabaseService {
      * @throws IllegalArgumentException if customer already exists
      */
     public void checkIfCustomerIsInDatabase(String email) throws RuntimeException {
-        String sql = "Select * FROM customers WHERE email_hashed = ?";
-
+        Connection connection = null;
         try{
+            connection = getConnection();
+            String sql = "Select * FROM customers WHERE email_hashed = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, encrypter.hashString(email));
             ResultSet rs = pstmt.executeQuery();
@@ -291,6 +312,16 @@ public class DatabaseService {
         }
         catch(SQLException | HashingException ex){
             throw new IllegalArgumentException("Fehler beim abrufen der Daten.");
+        }
+        finally {
+            if (connection != null) {
+                try {
+                    closeConnection(connection);
+                } catch (SQLException e) {
+                    // Log or handle the exception on closing connection if necessary
+                    System.err.println("Error closing connection: " + e.getMessage());
+                }
+            }
         }
     }
 
@@ -305,6 +336,7 @@ public class DatabaseService {
      * @throws CryptographyException if decryption fails
      */
     public Customer getCustomerWithFinancialInfoByEmail(String email, String password) throws IllegalArgumentException, SQLException, CryptographyException {
+        Connection connection = null;
 
         if (email.isEmpty() || password.isEmpty()) {
             throw new IllegalArgumentException("Email- oder Passwortfeld ist leer.");
@@ -319,13 +351,31 @@ public class DatabaseService {
                 "WHERE c.email_hashed = ?";
 
         try {
+            connection = getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, encrypter.hashString(email));
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 Customer customer = extractCustomerFromResultSet(rs, email, password);
-                customer.setFinancialInformation(null);
+                FinancialInformation financialInfo = extractFinancialInfoFromResultSet(rs);
+
+                long incomeProofId = rs.getLong("proof_of_income_id");
+                if (!rs.wasNull()) {
+                    financialInfo.setProofOfIncome(extractIncomeProofFromResultSet(rs));
+                }
+
+                long liquidAssetsProofId = rs.getLong("proof_of_liquid_assets_id");
+                if (!rs.wasNull()) {
+                    financialInfo.setProofOfLiquidAssets(extractLiquidAssetFromResultSet(rs));
+                }
+
+                long schufaId = rs.getLong("schufa_id");
+                if (!rs.wasNull()) {
+                    financialInfo.setSchufa(extractSchufaOverviewFromResultSet(rs));
+                }
+
+                customer.setFinancialInformation(financialInfo);
 
                 return customer;
             }
@@ -333,10 +383,19 @@ public class DatabaseService {
             throw new IllegalArgumentException("E-Mail oder Passwort falsch.");
         }
         catch (SQLException ex) {
-            throw new SQLException("Fehler beim Verbindungsaufbau mit der Datenbank.");
+            throw new SQLException("Fehler beim Verbindungsaufbau mit der Datenbank.", ex);
         }
-        catch (CryptographyException ex) {
-            throw new CryptographyException("Entschlüsslung der Daten ist fehlgeschlagen");
+        catch (HashingException | DecryptionException ex) {
+            throw new CryptographyException("Entschlüsslung oder Hashing der Daten ist fehlgeschlagen: " + ex.getMessage(), ex);
+        }
+        finally {
+            if (connection != null) {
+                try {
+                    closeConnection(connection);
+                } catch (SQLException e) {
+                    System.err.println("Error closing connection: " + e.getMessage());
+                }
+            }
         }
     }
 
@@ -467,8 +526,11 @@ public class DatabaseService {
      * @throws SQLException if table creation fails
      */
     private void createTables() throws SQLException {
-        String[] tables = {
-                """
+        Connection connection = null;
+        try {
+            connection = getConnection();
+            String[] tables = {
+                    """
         CREATE TABLE IF NOT EXISTS customers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             email TEXT ,
@@ -483,7 +545,7 @@ public class DatabaseService {
             FOREIGN KEY (financial_info_id) REFERENCES financial_information(id)
         )""",
 
-                """
+                    """
         CREATE TABLE IF NOT EXISTS income_proofs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             monthlyNetIncome INTEGER,
@@ -493,7 +555,7 @@ public class DatabaseService {
             dateIssued TEXT
         )""",
 
-                """
+                    """
         CREATE TABLE IF NOT EXISTS liquid_assets (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             iban TEXT,
@@ -502,7 +564,7 @@ public class DatabaseService {
             dateIssued TEXT
         )""",
 
-                """
+                    """
         CREATE TABLE IF NOT EXISTS schufa_overview (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             firstName TEXT,
@@ -516,7 +578,7 @@ public class DatabaseService {
             dateIssued TEXT
         )""",
 
-                """
+                    """
         CREATE TABLE IF NOT EXISTS financial_information (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             avgNetIncome INTEGER,
@@ -532,18 +594,24 @@ public class DatabaseService {
             FOREIGN KEY (schufa_id) REFERENCES schufa_overview(id)
         )""",
 
-                """
+                    """
         CREATE TABLE IF NOT EXISTS customer_progress (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            customer_id INTEGER,
             FOREIGN KEY (customer_id) REFERENCES customers(id),
             current_step TEXT
         )
         """
-        };
+            };
 
-        try (Statement stmt = connection.createStatement()) {
-            for (String sql : tables) {
-                stmt.execute(sql);
+            try (Statement stmt = connection.createStatement()) {
+                for (String sql : tables) {
+                    stmt.execute(sql);
+                }
+            }
+        } finally {
+            if (connection != null) {
+                closeConnection(connection);
             }
         }
     }
