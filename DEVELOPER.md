@@ -153,51 +153,14 @@ classDiagram
 
 ```mermaid
 classDiagram
-    class DatabaseService {
-        -String DB_URL
-        -Encrypter encrypter
-        -Connection connection
-        -Customer currentCustomer
-        +setCurrentCustomer(Customer)
-        +saveCustomerInDatabase(String)
-        +checkIfCustomerIsInDatabase(String)
-        +getCustomerWithFinancialInfoByEmail(String, String)
-        -createTables()
-        -insertCustomerData()
-        -insertFinancialData()
-        -insertSchufaRecord()
-        -extractCustomerFromResultSet()
-    }
-
-    class CustomerEvaluator {
-        +Customer customer
-        +evaluateCustomerInfo()
-        -appendError()
-        +checkFirstName(String)
-        +checkName(String)
-        +checkBirthdate(String)
-        +checkCountry(String)
-        +checkAddress(String)
-        +checkEmail(String)
-    }
-
-    class FinancialInformationEvaluator {
-        -double MAX_DEVIATION
-        -int MAX_DOCUMENT_AGE_DAYS
-        -FinancingContract journeyDetails
-        -double MIN_MONTHLY_MONEY
-        -FinancialInformation financialInfo
-        -Customer currentCustomer
-        +setCurrentCustomer(Customer)
-        +evaluateFinancialInfo()
-        -validateDocumentDates()
-        -validateFinancialData()
-    }
-
     DatabaseService -- Customer
     CustomerEvaluator -- Customer
     FinancialInformationEvaluator -- Customer
     FinancialInformationEvaluator -- FinancialInformation
+
+    class DatabaseService
+    class CustomerEvaluator
+    class FinancialInformationEvaluator
 ```
 
 ### Frontend Controllers
@@ -205,50 +168,34 @@ The `Main.java` class has been refactored into `CustomerRegistrationApplicationS
 
 ```mermaid
 classDiagram
-    class AbstractApplication {
-        +initialize()
-        +start(Stage)
-        +stop()
-    }
-    class CustomerRegistrationApplicationStarter {
-        +main(String[])
-        +start(Stage)
-    }
-    class PaymentProcessApplicationStarter {
-        +main(String[])
-        +start(Stage)
-    }
-    Controller <|-- PageController // Assuming PageController exists and is a common base for UI controllers
-
     AbstractApplication <|-- CustomerRegistrationApplicationStarter
     AbstractApplication <|-- PaymentProcessApplicationStarter
-    PageController <|-- Page3PersonalInformationController // Example relationship
-    // Add other PageXController relationships to PageController
+    PageController <|-- Page3PersonalInformationController
+
+    class AbstractApplication
+    class CustomerRegistrationApplicationStarter
+    class PaymentProcessApplicationStarter
+    class PageController
+    class Page3PersonalInformationController
+    // Add other PageXController inheritance from PageController if applicable
 ```
 
 ### Security and Encryption
 
 ```mermaid
 classDiagram
-    class Encrypter {
-        +encrypt(String, String, String)
-        +decrypt(String, String, String)
-        +hashString(String)
-    }
-
-    class CryptographyException {
-        +String message
-    }
-
-    class ValidationException {
-        +String message
-    }
-
     CryptographyException <|-- EncryptionException
     CryptographyException <|-- DecryptionException
     CryptographyException <|-- HashingException
-
     DatabaseService --> Encrypter
+
+    class Encrypter
+    class CryptographyException
+    class ValidationException
+    class EncryptionException
+    class DecryptionException
+    class HashingException
+    class DatabaseService
 ```
 
 ## Build and Deployment
