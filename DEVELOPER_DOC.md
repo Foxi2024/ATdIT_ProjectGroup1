@@ -9,7 +9,7 @@ This is a booking application built using Java and JavaFX, utilizing a modern te
 The application follows a layered architecture with the following main components:
 
 1. **Presentation Layer (Frontend)**
-    - Built with JavaFX (version 24.0.1)
+    - Built with JavaFX (version 23.0.2)
     - FXML-based UI layouts
     - MVC (Model-View-Controller) pattern implementation
 
@@ -17,22 +17,45 @@ The application follows a layered architecture with the following main component
 - **Primary Responsibilities**: User interface, input handling, view management
 - **Key Classes**:
   ```
-  ├── Controller/
-  │   ├── AbstractApplication
-  │   ├── Controller (abstract)
-  │   ├── Page3PersonalInformationController
-  │   ├── Page4DeclarationFIController
-  │   ├── Page5ProofFIController
-  │   ├── Page6CreateAccountController
-  │   ├── Page7ControllerPageLogin
-  │   ├── Page9aCreditCardController
-  │   └── Page9bBankTransferController
+  ├── customer_registration/
+  │   └── controllers/
+  │       ├── Page1PaymentProcessStartController
+  │       ├── Page2DataPrivacyController
+  │       ├── Page3PersonalInformationController
+  │       ├── Page4DeclarationFIController
+  │       ├── Page5ProofFIController
+  │       ├── Page6CreateAccountController
+  │       └── Page7AccountConfirmationController
+  ├── payment_process/
+  │   ├── abstract_controllers/
+  │   └── controllers/
+  │       ├── Page1ControllerPageLogin
+  │       ├── Page2aSelectPaymentController
+  │       ├── Page2bSelectPaymentPlanController
+  │       ├── Page3aCreditCardController
+  │       ├── Page3bBankTransferController
+  │       ├── Page4aOneTimePaymentContractController
+  │       ├── Page4bBuyNowPayLaterContractPage
+  │       ├── Page4cFinancingContractController
+  │       └── Page5ConfirmationController
+  └── super_controller/
+      (*Contains abstract controllers and interfaces like Navigatable, Cacheable*)
   ```
-- **Interfaces**:
-    - `Navigatable`: Navigation between pages
-    - `Cacheable`: Data persistence between views
 
-2. **Business Logic Layer**
+2. **Application Layer**
+    - Manages application lifecycle and startup
+    - Coordinates between different processes
+
+- **Location**: `src/main/java/com/atdit/booking/applications/`
+- **Primary Responsibilities**: Application entry points, process initialization.
+- **Key Classes**:
+  ```
+  ├── AbstractApplication (abstract)
+  ├── CustomerRegistration
+  └── PaymentProcess
+  ```
+
+3. **Business Logic Layer**
     - Core business logic implementation
     - Process handling (Payment, Customer Registration)
     - Abstract application framework
@@ -46,19 +69,25 @@ The application follows a layered architecture with the following main component
   │   └── CustomerEvaluator
   ├── financialdata/
   │   ├── financial_information/
+  │   │   ├── BankTransferDetails
+  │   │   ├── Credit
+  │   │   ├── CreditCardDetails
   │   │   ├── FinancialInformation
   │   │   ├── IncomeProof
   │   │   ├── LiquidAsset
+  │   │   ├── Schufaauskunft
   │   │   └── SchufaOverview
-  │   └── processing/
-  │       ├── FinancialInformationEvaluator
-  │       ├── FinancialInformationParser
-  │       └── FinancialDocumentsGenerator
-  ├── PaymentProcess
-  └── CustomerRegistrationProcess
+  │   ├── processing/
+  │   │   ├── FinancialDocumentsGenerator
+  │   │   ├── FinancialInformationEvaluator
+  │   │   ├── FinancialInformationParser
+  │   │   └── PaymentMethodEvaluator
+  │   └── contracts/
+  (*Contains contract related classes*)
+  (*Missing: PaymentProcess and CustomerRegistrationProcess classes directly under backend - these seem to be Application Starter classes now at src/main/java/com/atdit/booking/*)
   ```
 
-3. **Data Access Layer**
+4. **Data Access Layer**
     - Hibernate ORM integration
     - SQLite database connectivity
     - Entity management and persistence
@@ -70,9 +99,13 @@ The application follows a layered architecture with the following main component
   ├── database/
   │   ├── DatabaseService
   │   └── Encrypter
-  └── exceptions/
-      ├── CryptographyException
-      └── ValidationException
+  ├── exceptions/
+  │   ├── CryptographyException
+  │   ├── DecryptionException
+  │   ├── EncryptionException
+  │   ├── EvaluationException
+  │   ├── HashingException
+  │   └── ValidationException
   ```
 
 ```mermaid
