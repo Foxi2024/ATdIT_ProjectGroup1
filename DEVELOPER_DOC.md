@@ -134,16 +134,16 @@ graph TD
 
 ### Core Technologies
 1. **Java**
-    - Version: Java 24
+    - Version: Java 23 
     - Build System: Maven
-    - Compiler Configuration: JDK 1.8 compatible
+    - Compiler Configuration: Targets Java 23. 
 
 2. **Frontend Framework**
-    - JavaFX 24.0.1
+    - JavaFX 23.0.2
     - FXML for UI layouts
 
 3. **Database**
-    - SQLite 3.49.1
+    - SQLite 3.49.1.0 (via `sqlite-jdbc`)
     - Hibernate ORM 6.6.13.Final for data persistence
 
 4. **Testing Framework**
@@ -153,8 +153,8 @@ graph TD
 ### Dependencies
 ```xml
 Core Dependencies:
-- javafx-controls:24.0.1
-- javafx-fxml:24.0.1
+- javafx-controls:23.0.2
+- javafx-fxml:23.0.2
 - hibernate-core:6.6.13.Final
 - sqlite-jdbc:3.49.1.0
 

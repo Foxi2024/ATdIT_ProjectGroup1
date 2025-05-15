@@ -64,7 +64,6 @@
             <version>3.49.1.0</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -72,7 +71,7 @@
              <artifactId>maven-compiler-plugin</artifactId>
              <version>3.14.0</version>
              <configuration>
-               <release>24</release>
+               <release>23</release>
              </configuration>
             </plugin>
             <plugin>
