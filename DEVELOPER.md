@@ -1,7 +1,7 @@
 # Developer Documentation
 
 ## Project Overview
-This is a booking application built using Java and JavaFX, utilizing a modern tech stack for robust functionality and user experience. The application follows a layered architecture pattern with clear separation between frontend and backend components.
+This is a booking application built using Java and JavaFX, utilizing a modern tech stack for robust functionality and user experience. The application follows a layered architecture pattern with clear separation between frontend and backend components. It features separate entry points for different application flows like Customer Registration and Payment Processing.
 
 ## Architecture
 
@@ -9,7 +9,7 @@ This is a booking application built using Java and JavaFX, utilizing a modern te
 The application follows a layered architecture with the following main components:
 
 1. **Presentation Layer (Frontend)**
-   - Built with JavaFX (version 24.0.1)
+   - Built with JavaFX (version 23.0.2)
    - FXML-based UI layouts
    - MVC (Model-View-Controller) pattern implementation
 
@@ -77,23 +77,22 @@ The application follows a layered architecture with the following main component
 
 ```mermaid
 graph TD
-    A[Frontend Layer] --> B[Business Logic Layer]
-    B --> C[Data Access Layer]
-    C --> D[(SQLite Database)]
-    
+    UI_Components --> FXML_Controllers
+    FXML_Controllers --> ApplicationStarters
+    ApplicationStarters --> BusinessLogicServices
+    BusinessLogicServices --> DataAccessObjects
+    DataAccessObjects --> Database[(SQLite Database)]
+
     subgraph Frontend
-    A --> E[JavaFX UI]
-    A --> F[FXML Controllers]
+        UI_Components
+        FXML_Controllers
+        ApplicationStarters
     end
-    
-    subgraph Business Logic
-    B --> G[Process Handlers]
-    B --> H[Service Layer]
+    subgraph BusinessLogic
+        BusinessLogicServices
     end
-    
-    subgraph Data Access
-    C --> I[Hibernate ORM]
-    C --> J[Entity Models]
+    subgraph DataAccess
+        DataAccessObjects
     end
 ```
 
@@ -101,12 +100,12 @@ graph TD
 
 ### Core Technologies
 1. **Java**
-   - Version: Java 24
+   - Version: Java 24 (as per maven-compiler-plugin release 24)
    - Build System: Maven
    - Compiler Configuration: JDK 1.8 compatible
 
 2. **Frontend Framework**
-   - JavaFX 24.0.1
+   - JavaFX 23.0.2
    - FXML for UI layouts
 
 3. **Database**
@@ -138,206 +137,76 @@ Testing Dependencies:
 
 ```mermaid
 classDiagram
-    class Customer {
-        -String title
-        -String firstName
-        -String name
-        -String country
-        -String birthdate
-        -String address
-        -String email
-        -FinancialInformation financialInformation
-        +setTitle(String)
-        +setFirstName(String)
-        +setName(String)
-        +setCountry(String)
-        +setBirthdate(String)
-        +setAddress(String)
-        +setEmail(String)
-        +setFinancialInformation(FinancialInformation)
-        +getters()
-    }
+    Customer *-- FinancialInformation
+    FinancialInformation *-- IncomeProof
+    FinancialInformation *-- LiquidAsset
+    FinancialInformation *-- SchufaOverview
 
-    class FinancialInformation {
-        -int avgNetIncome
-        -int liquidAssets
-        -int monthlyFixCost
-        -int minCostOfLiving
-        -int monthlyAvailableMoney
-        -IncomeProof proofOfIncome
-        -LiquidAsset proofOfLiquidAssets
-        -SchufaOverview schufa
-        +setters()
-        +getters()
-        -updateMonthlyAvailableMoney()
-    }
-
-    class IncomeProof {
-        <<record>>
-        +int monthlyNetIncome
-        +String employer
-        +String employmentType
-        +int employmentDurationMonths
-        +String dateIssued
-        +IncomeProof(int, String, String, int, String)
-    }
-
-    class SchufaOverview {
-        -String firstName
-        -String lastName
-        -double score
-        -int totalCredits
-        -int totalCreditSum
-        -int totalAmountPayed
-        -int totalAmountOwed
-        -int totalMonthlyRate
-        -String dateIssued
-        +setters()
-        +getters()
-    }
-
-    class LiquidAsset {
-        -String iban
-        -String description
-        -int balance
-        -String dateIssued
-        +LiquidAsset(String, String, int, String)
-        +setters()
-        +getters()
-    }
-
-    Customer "1" *-- "1" FinancialInformation
-    FinancialInformation "1" *-- "1" SchufaOverview
-    FinancialInformation "1" *-- "1" LiquidAsset
-    FinancialInformation "1" *-- "1" IncomeProof
+    class Customer
+    class FinancialInformation
+    class IncomeProof
+    class SchufaOverview
+    class LiquidAsset
 ```
 
 ### Service Layer
 
 ```mermaid
 classDiagram
-    class DatabaseService {
-        -String DB_URL
-        -Encrypter encrypter
-        -Connection connection
-        -Customer currentCustomer
-        +setCurrentCustomer(Customer)
-        +saveCustomerInDatabase(String)
-        +checkIfCustomerIsInDatabase(String)
-        +getCustomerWithFinancialInfoByEmail(String, String)
-        -createTables()
-        -insertCustomerData()
-        -insertFinancialData()
-        -insertSchufaRecord()
-        -extractCustomerFromResultSet()
-    }
-
-    class CustomerEvaluator {
-        +Customer customer
-        +evaluateCustomerInfo()
-        -appendError()
-        +checkFirstName(String)
-        +checkName(String)
-        +checkBirthdate(String)
-        +checkCountry(String)
-        +checkAddress(String)
-        +checkEmail(String)
-    }
-
-    class FinancialInformationEvaluator {
-        -double MAX_DEVIATION
-        -int MAX_DOCUMENT_AGE_DAYS
-        -FinancingContract journeyDetails
-        -double MIN_MONTHLY_MONEY
-        -FinancialInformation financialInfo
-        -Customer currentCustomer
-        +setCurrentCustomer(Customer)
-        +evaluateFinancialInfo()
-        -validateDocumentDates()
-        -validateFinancialData()
-    }
-
     DatabaseService -- Customer
     CustomerEvaluator -- Customer
     FinancialInformationEvaluator -- Customer
     FinancialInformationEvaluator -- FinancialInformation
+
+    class DatabaseService
+    class CustomerEvaluator
+    class FinancialInformationEvaluator
 ```
 
 ### Frontend Controllers
+The `Main.java` class has been refactored into `CustomerRegistrationApplicationStarter.java` and `PaymentProcessApplicationStarter.java`, which extend `AbstractApplication`. These serve as the main entry points.
 
 ```mermaid
 classDiagram
-    class Controller {
-        <<abstract>>
-        +handleNavigation()
-    }
+    AbstractApplication <|-- CustomerRegistrationApplicationStarter
+    AbstractApplication <|-- PaymentProcessApplicationStarter
+    PageController <|-- Page3PersonalInformationController
 
-    class Navigatable {
-        <<interface>>
-        +navigateToNextPage()
-        +navigateToPreviousPage()
-    }
-
-    class Cacheable {
-        <<interface>>
-        +cacheData()
-        +restoreData()
-    }
-
-    class e.g. Page3PersonalInformationController {
-        -ComboBox titleField
-        -TextField nameField
-        -TextField firstNameField
-        -DatePicker birthDatePicker
-        -TextField countryField
-        -TextField addressField
-        -TextField emailField
-        -Button continueButton
-        -Button backButton
-        -Customer currentCustomer
-        -CustomerEvaluator evaluator
-        +initialize()
-        +cacheData()
-        +restoreData()
-    }
-
-    Controller <|-- e.g. Page3PersonalInformationController
-    Navigatable <|.. e.g. Page3PersonalInformationController
-    Cacheable <|.. e.g. Page3PersonalInformationController
+    class AbstractApplication
+    class CustomerRegistrationApplicationStarter
+    class PaymentProcessApplicationStarter
+    class PageController
+    class Page3PersonalInformationController
+    // Add other PageXController inheritance from PageController if applicable
 ```
 
 ### Security and Encryption
 
 ```mermaid
 classDiagram
-    class Encrypter {
-        +encrypt(String, String, String)
-        +decrypt(String, String, String)
-        +hashString(String)
-    }
-
-    class CryptographyException {
-        +String message
-    }
-
-    class ValidationException {
-        +String message
-    }
-
     CryptographyException <|-- EncryptionException
     CryptographyException <|-- DecryptionException
     CryptographyException <|-- HashingException
-
     DatabaseService --> Encrypter
+
+    class Encrypter
+    class CryptographyException
+    class ValidationException
+    class EncryptionException
+    class DecryptionException
+    class HashingException
+    class DatabaseService
 ```
 
 ## Build and Deployment
 
 ### Build Configuration
 The project uses Maven for build automation. Key plugins:
-- maven-compiler-plugin (3.14.0)
+- maven-compiler-plugin (3.14.0) configured for Java 24 (`<release>24</release>`)
 - maven-surefire-plugin (3.2.5)
 - javafx-maven-plugin (0.0.8)
+  - Main class for Customer Registration: `com.atdit.booking/com.atdit.booking.CustomerRegistrationApplicationStarter`
+  - (Note: Payment Process might have a different run configuration if needed)
 
 ### Build Commands
 ```bash
