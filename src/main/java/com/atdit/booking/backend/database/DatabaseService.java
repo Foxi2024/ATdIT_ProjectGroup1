@@ -21,9 +21,6 @@ public class DatabaseService {
     /** Encrypter instance for handling encryption/decryption of sensitive data */
     private static final Encrypter encrypter = new Encrypter();
 
-    /** Active database connection */
-    private final Connection connection;
-
     /** Currently active customer being processed */
     private Customer currentCustomer;
 
@@ -32,11 +29,12 @@ public class DatabaseService {
      *
      * @throws SQLException if database connection fails
      */
-    public DatabaseService() throws SQLException {
+
+    private Connection getConnection() throws SQLException{
         try{
-            this.connection = DriverManager.getConnection(DB_URL);
+            return DriverManager.getConnection(DB_URL);
         } catch (SQLException e) {
-            throw new SQLException("Failed to establish a connection to the database", e);
+            throw new SQLException("Verbindung zur Datenbank fehlgeschlagen.", e);
         }
     }
 
@@ -57,6 +55,9 @@ public class DatabaseService {
      * @throws SQLException if database operation fails
      */
     private long insertIncomeProof() throws SQLException {
+
+        Connection connection = getConnection();
+
         IncomeProof proof = this.currentCustomer.getFinancialInformation().getProofOfIncome();
 
         if (proof == null) {
@@ -69,23 +70,32 @@ public class DatabaseService {
         VALUES (?, ?, ?, ?, ?)
         """;
 
-        PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-        pstmt.setInt(1, proof.monthlyNetIncome());
-        pstmt.setString(2, proof.employer());
-        pstmt.setString(3, proof.employmentType());
-        pstmt.setInt(4, proof.employmentDurationMonths());
-        pstmt.setString(5, proof.dateIssued());
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-        pstmt.executeUpdate();
+            pstmt.setInt(1, proof.monthlyNetIncome());
+            pstmt.setString(2, proof.employer());
+            pstmt.setString(3, proof.employmentType());
+            pstmt.setInt(4, proof.employmentDurationMonths());
+            pstmt.setString(5, proof.dateIssued());
 
-        ResultSet rs = pstmt.getGeneratedKeys();
+            pstmt.executeUpdate();
 
-        if (rs.next()){
-            return rs.getLong(1);
+            ResultSet rs = pstmt.getGeneratedKeys();
+
+            if (rs.next()){
+                return rs.getLong(1);
+            }
+        }
+        catch (SQLException ex) {
+            throw new SQLException("Failed to save proof of income");
+        }
+        finally {
+            closeConnection(connection);
         }
 
-        throw new SQLException("Failed to save proof of income");
+
     }
 
     /**
@@ -439,13 +449,14 @@ public class DatabaseService {
      *
      * @throws RuntimeException if closing connection fails
      */
-    public void closeConnection() {
+    public void closeConnection(Connection connection) throws SQLException{
         try {
             if (connection != null) {
                 connection.close();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error closing database connection", e);
+        }
+        catch (SQLException e) {
+            throw new SQLException("Datenbankverbindung konnte nicht geschlossen werden.", e);
         }
     }
 
