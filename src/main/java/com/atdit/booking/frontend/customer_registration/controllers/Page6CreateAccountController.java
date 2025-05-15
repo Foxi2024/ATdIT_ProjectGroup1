@@ -55,12 +55,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
         emailLabel.setText(currentCustomer.getEmail());
         createAccountButton.setDisable(true);
 
-        try {
-            db = new DatabaseService();
-        }
-        catch (SQLException ex) {
-            showError("Datenbankfehler", "Ein Fehler ist beim Speichern ihrer Daten aufgetreten.", ex.getMessage());
-        }
+        db = new DatabaseService();
 
         passwordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton());
         confirmPasswordField.textProperty().addListener((obs, old, newValue) -> toggleCreateButton());

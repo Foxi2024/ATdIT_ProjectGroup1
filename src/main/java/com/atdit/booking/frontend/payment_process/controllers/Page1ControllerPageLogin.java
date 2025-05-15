@@ -49,14 +49,9 @@ public class Page1ControllerPageLogin extends Controller implements Initializabl
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        try {
-            db = new DatabaseService();
-        }
-        catch (SQLException e) {
-            showError("Datenbankfehler", "Verbindung zur Datenbank ist fehlgeschlagen.", e.getMessage());
-        }
+        db = new DatabaseService();
     }
+
 
     /**
      * Handles the login button click event.
