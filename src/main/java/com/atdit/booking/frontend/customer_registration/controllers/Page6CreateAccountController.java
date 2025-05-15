@@ -1,6 +1,7 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
 import com.atdit.booking.CustomerRegistrationApplicationStarter;
+import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.database.DatabaseService;
 import com.atdit.booking.backend.exceptions.ValidationException;
@@ -36,7 +37,7 @@ public class Page6CreateAccountController extends Controller implements Initiali
     @FXML private Button createAccountButton;
 
     /** Reference to the current customer being created */
-    private static final Customer currentCustomer = CustomerRegistrationApplicationStarter.customer;
+    private Customer currentCustomer;
 
     /** Database service instance for handling database operations */
     private DatabaseService db;
@@ -51,6 +52,8 @@ public class Page6CreateAccountController extends Controller implements Initiali
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+         currentCustomer = Ressources.currentCustomer;
 
         emailLabel.setText(currentCustomer.getEmail());
         createAccountButton.setDisable(true);

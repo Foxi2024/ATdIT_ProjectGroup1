@@ -1,6 +1,7 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
 import com.atdit.booking.CustomerRegistrationApplicationStarter;
+import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.customer.CustomerEvaluator;
 import com.atdit.booking.backend.exceptions.ValidationException;
@@ -72,8 +73,8 @@ public class Page3PersonalInformationController extends Controller implements In
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        this.currentCustomer = CustomerRegistrationApplicationStarter.customer;
-        this.evaluator = new CustomerEvaluator(currentCustomer);
+        currentCustomer = Ressources.currentCustomer;
+        evaluator = new CustomerEvaluator(currentCustomer);
 
         restoreData();
 
@@ -129,9 +130,8 @@ public class Page3PersonalInformationController extends Controller implements In
             return;
         }
 
-        Page2aSelectPaymentController.contract = new OneTimePaymentContract();
-        Page2aSelectPaymentController.selectedPayment = "One-Time";
-        Page1ControllerPageLogin.currentCustomer = currentCustomer;
+        Ressources.contract = new OneTimePaymentContract();
+        Ressources.selectedPayment = "One-Time";
         loadScene(e, "payment_process/page_3a_creditcard.fxml", "Zahlungsmethode auswählen");
     }
 

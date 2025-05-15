@@ -1,6 +1,7 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
 import com.atdit.booking.CustomerRegistrationApplicationStarter;
+import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.exceptions.EvaluationException;
 import com.atdit.booking.backend.exceptions.ValidationException;
@@ -45,11 +46,10 @@ public class Page5ProofFIController extends Controller implements Initializable,
     /**
      * Static fields for customer data and financial information processing
      */
-    private static final Customer currentCustomer = CustomerRegistrationApplicationStarter.customer;
-    private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
-    private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator(financialInfo);
-    private static final FinancialInformationParser parser = new FinancialInformationParser();
-    private final FileChooser fileChooser = new FileChooser();
+    private FinancialInformation financialInfo;
+    private FinancialInformationEvaluator evaluator;
+    private FinancialInformationParser parser;
+    private  FileChooser fileChooser;
 
     /**
      * Initializes the controller. Sets up file chooser, restores data and configures UI elements.
@@ -60,7 +60,11 @@ public class Page5ProofFIController extends Controller implements Initializable,
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        evaluator.setCurrentCustomer(currentCustomer);
+        financialInfo = Ressources.financialInformation;
+        evaluator = Ressources.financialInformationEvaluator;
+        parser = new FinancialInformationParser();
+        fileChooser = new FileChooser();
+
 
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt")

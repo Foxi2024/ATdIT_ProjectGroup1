@@ -1,5 +1,6 @@
 package com.atdit.booking.frontend.payment_process.controllers;
 
+import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
 import com.atdit.booking.frontend.super_controller.Controller;
 import com.atdit.booking.frontend.super_controller.Navigatable;
@@ -53,7 +54,7 @@ public class Page2bSelectPaymentPlanController extends Controller implements Ini
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        financingContract = (FinancingContract) Page2aSelectPaymentController.contract;
+        financingContract = (FinancingContract) Ressources.contract;
 
         monthsCombo.getItems().addAll(12, 24, 36, 48, 60);
         monthsCombo.setValue(12);

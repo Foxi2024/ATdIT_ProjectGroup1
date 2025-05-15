@@ -1,6 +1,7 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
 import com.atdit.booking.CustomerRegistrationApplicationStarter;
+import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.frontend.super_controller.Controller;
 import javafx.fxml.FXML;
@@ -28,7 +29,7 @@ public class Page7AccountConfirmationController extends Controller implements In
     /**
      * Static reference to the current customer, initialized from the main application.
      */
-    public static Customer currentCustomer = CustomerRegistrationApplicationStarter.customer;
+    public Customer currentCustomer;
 
     /**
      * Initializes the controller and sets up the confirmation message.
@@ -39,6 +40,8 @@ public class Page7AccountConfirmationController extends Controller implements In
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        currentCustomer = Ressources.currentCustomer;
         emailLabel.setText("Eine Bestätigung wird an " + currentCustomer.getEmail() + " gesendet.");
     }
 
@@ -53,6 +56,7 @@ public class Page7AccountConfirmationController extends Controller implements In
     public void closeApplication(MouseEvent event) {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.close();
+        //closeStage();
     }
 
 }

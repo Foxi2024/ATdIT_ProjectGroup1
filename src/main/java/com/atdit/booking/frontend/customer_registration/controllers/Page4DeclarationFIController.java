@@ -1,6 +1,7 @@
 package com.atdit.booking.frontend.customer_registration.controllers;
 
 import com.atdit.booking.CustomerRegistrationApplicationStarter;
+import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.backend.exceptions.EvaluationException;
 import com.atdit.booking.backend.exceptions.ValidationException;
@@ -38,12 +39,10 @@ public class Page4DeclarationFIController extends Controller implements Initiali
     /** Button to return to previous page */
     @FXML private Button backButton;
 
-    /** Reference to the current customer */
-    private static final Customer currentCustomer = CustomerRegistrationApplicationStarter.customer;
     /** Reference to the customer's financial information */
-    private static final FinancialInformation financialInfo = currentCustomer.getFinancialInformation();
+    private static FinancialInformation financialInfo;
     /** Evaluator for validating financial information */
-    private static final FinancialInformationEvaluator evaluator = new FinancialInformationEvaluator(financialInfo);
+    private static FinancialInformationEvaluator evaluator;
 
     /**
      * Initializes the controller by restoring previously saved data.
@@ -53,7 +52,8 @@ public class Page4DeclarationFIController extends Controller implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        evaluator.setCurrentCustomer(currentCustomer);
+        financialInfo = Ressources.currentCustomer.getFinancialInformation();
+        evaluator = Ressources.financialInformationEvaluator;
 
         restoreData();
     }

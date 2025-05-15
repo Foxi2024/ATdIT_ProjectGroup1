@@ -74,8 +74,7 @@ public class FinancialInformationEvaluator {
             throw new IllegalArgumentException("Ihre liquiden Mittel sind zu niedrig. Sie benötigen mindestens 20% des Reisepreises.");
         }
 
-        if(financialInfo.getMonthlyAvailableMoney() < MIN_MONTHLY_MONEY
-                && financialInfo.getLiquidAssets() < 0.3 * journeyDetails.TOTAL_AMOUNT){
+        if(financialInfo.getMonthlyAvailableMoney() < MIN_MONTHLY_MONEY){
             throw new IllegalArgumentException("Ihr monatliches verfügbares Geld ist zu niedrig. Sie benötigen mindestens " + MIN_MONTHLY_MONEY +"€.");
         }
     }

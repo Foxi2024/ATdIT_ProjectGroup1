@@ -12,7 +12,7 @@
           AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
         <VBox spacing="15" VBox.vgrow="ALWAYS" alignment="CENTER">
-            <Button fx:id="startButton" text="Start Payment Process" onMouseClicked="#start_payment_process"/>
+            <Button fx:id="startButton" text="Prozess starten" onMouseClicked="#start_registration"/>
         </VBox>
 
     </VBox>

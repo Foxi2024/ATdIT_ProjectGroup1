@@ -65,7 +65,7 @@ public abstract class Controller {
      * @param header  The header text shown in the error dialog
      * @param content The detailed error message to be displayed
      */
-    static public void showError(String title, String header, String content) {
+    public void showError(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(header);
@@ -73,7 +73,7 @@ public abstract class Controller {
         alert.showAndWait();
     }
 
-    static public void showConfirmation(String title, String header, String content) {
+    public void showConfirmation(String title, String header, String content) {
         ButtonType correctButton = new ButtonType("Korrigieren");
         ButtonType cancelButton = new ButtonType("Prozess abbrechen");
 
@@ -85,9 +85,11 @@ public abstract class Controller {
 
         alert.showAndWait().ifPresent(response -> {
             if (response == cancelButton) {
-                Platform.exit(); // Oder eine andere Abbruch-Logik
+                Platform.exit();
             }
 
         });
     }
+
+
 }

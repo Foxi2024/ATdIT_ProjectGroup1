@@ -1,9 +1,9 @@
 package com.atdit.booking.frontend.payment_process.abstract_controllers;
 
+import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.customer.Customer;
 import com.atdit.booking.frontend.super_controller.Controller;
-import com.atdit.booking.frontend.payment_process.controllers.Page1ControllerPageLogin;
 import com.atdit.booking.frontend.payment_process.controllers.Page2aSelectPaymentController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,8 +33,8 @@ public abstract class AbstractContractController extends Controller implements I
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        currentCustomer = Page1ControllerPageLogin.currentCustomer;
-        contract = Page2aSelectPaymentController.contract;
+        currentCustomer = Ressources.currentCustomer;
+        contract = Ressources.contract;
 
         initializeParameters();
 

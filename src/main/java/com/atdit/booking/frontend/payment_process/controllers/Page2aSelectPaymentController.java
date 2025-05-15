@@ -1,5 +1,6 @@
 package com.atdit.booking.frontend.payment_process.controllers;
 
+import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.financialdata.contracts.FinancingContract;
 import com.atdit.booking.backend.financialdata.contracts.BuyNowPayLaterContract;
@@ -26,15 +27,6 @@ public class Page2aSelectPaymentController extends Controller implements Initial
     /** Radio button for financing selection */
     @FXML private RadioButton financingRadio;
 
-    /** Toggle group to ensure only one payment method can be selected */
-    @FXML private ToggleGroup paymentMethodGroup;
-
-    /** Static variable to store the selected payment method */
-    public static String selectedPayment;
-
-    /** Static variable to store the contract based on the selected payment method */
-    public static Contract contract;
-
     /**
      * Initializes the controller.
      * This method is called automatically after the FXML file has been loaded.
@@ -44,7 +36,6 @@ public class Page2aSelectPaymentController extends Controller implements Initial
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     /**
@@ -57,12 +48,12 @@ public class Page2aSelectPaymentController extends Controller implements Initial
     @SuppressWarnings("unused")
     public void nextPage(MouseEvent e) {
         if (oneTimePaymentRadio.isSelected()) {
-            selectedPayment = "BuyNowPayLater";
-            contract = new BuyNowPayLaterContract();
+            Ressources.selectedPayment = "BuyNowPayLater";
+            Ressources.contract = new BuyNowPayLaterContract();
             loadScene(e, "payment_process/page_3a_creditcard.fxml", "Zahlungsmethode auswählen");
         } else {
-            selectedPayment = "Financing";
-            contract = new FinancingContract();
+            Ressources.selectedPayment = "Financing";
+            Ressources.contract = new FinancingContract();
             loadScene(e, "payment_process/page_2b_installment_selection.fxml", "Finanzierung auswählen");
         }
     }

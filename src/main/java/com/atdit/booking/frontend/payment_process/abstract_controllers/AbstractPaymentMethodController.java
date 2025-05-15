@@ -1,5 +1,6 @@
 package com.atdit.booking.frontend.payment_process.abstract_controllers;
 
+import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.contracts.Contract;
 import com.atdit.booking.backend.financialdata.processing.PaymentMethodEvaluator;
@@ -35,8 +36,8 @@ public abstract class AbstractPaymentMethodController extends Controller impleme
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        selectedPayment = Page2aSelectPaymentController.selectedPayment;
-        contract = Page2aSelectPaymentController.contract;
+        selectedPayment = Ressources.selectedPayment;
+        contract = Ressources.contract;
         evaluator = new PaymentMethodEvaluator();
 
         initializeParameters();

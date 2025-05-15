@@ -26,7 +26,6 @@ public class Page3bBankTransferController extends AbstractPaymentMethodControlle
 
         evaluator.setBankTransferDetails(bankTransferDetails);
         paymentMethod = "Überweisung";
-        otherPage = "page_3a_creditcard.fxml";
     }
 
     @Override

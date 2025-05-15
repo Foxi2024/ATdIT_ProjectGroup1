@@ -20,14 +20,13 @@ public class Page3aCreditCardController extends AbstractPaymentMethodController 
     @FXML private Label cardLabel;
     @FXML private Button backButton;
 
-    public static CreditCardDetails creditCardDetails = new CreditCardDetails();
+    public CreditCardDetails creditCardDetails = new CreditCardDetails();
 
     @Override
     protected void initializeParameters() {
 
         evaluator.setCreditCardDetails(creditCardDetails);
         paymentMethod = "Kreditkarte";
-        otherPage = "page_3b_banktransfer.fxml";
     }
 
     @Override

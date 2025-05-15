@@ -1,5 +1,6 @@
 package com.atdit.booking.frontend.payment_process.controllers;
 
+import com.atdit.booking.backend.Ressources;
 import com.atdit.booking.backend.customer.Customer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -36,7 +37,7 @@ public class Page5ConfirmationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        currentCustomer = Page1ControllerPageLogin.currentCustomer;
+        currentCustomer = Ressources.currentCustomer;
 
         confirmationText.setText("Ihre Buchung wurde erfolgreich abgeschlossen! Wir danken Ihnen für Ihr Vertrauen.");
         addressText.setText("Ihre Tickets werden gesendet an: " + currentCustomer.getAddress());
