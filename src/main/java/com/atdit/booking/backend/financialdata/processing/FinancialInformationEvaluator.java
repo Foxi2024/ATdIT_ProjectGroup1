@@ -62,9 +62,9 @@ public class FinancialInformationEvaluator {
      * Evaluates the declared financial information against basic criteria.
      * Checks if liquid assets are sufficient for down payment and if monthly available money meets minimum requirements.
      *
-     * @throws IllegalArgumentException if the financial criteria are not met
+     * @throws ValidationException if the financial criteria are not met
      */
-    public void evaluateDeclaredFinancialInfo() throws IllegalArgumentException {
+    public void evaluateDeclaredFinancialInfo() throws ValidationException {
 
         // If liquid assets are more than 120% of the total amount, no further checks are needed for declared info
         // This implies the customer has significant funds, potentially covering the entire amount
@@ -74,13 +74,13 @@ public class FinancialInformationEvaluator {
 
         // Check if liquid assets are sufficient for the down payment (at least 20% of the travel price)
         if(this.financialInfo.getLiquidAssets() < journeyDetails.getDownPayment()){
-            throw new IllegalArgumentException("Ihre liquiden Mittel sind zu niedrig. Sie benötigen mindestens 20% des Reisepreises.");
+            throw new ValidationException("Ihre liquiden Mittel sind zu niedrig. Sie benötigen mindestens 20% des Reisepreises.");
         }
 
         // Check if the monthly available money meets the minimum requirement
         // MIN_MONTHLY_MONEY is calculated as 80% of the monthly payment
         if(financialInfo.getMonthlyAvailableMoney() < MIN_MONTHLY_MONEY){
-            throw new IllegalArgumentException("Ihr monatliches verfügbares Geld ist zu niedrig. Sie benötigen mindestens " + MIN_MONTHLY_MONEY +"€.");
+            throw new ValidationException("Ihr monatliches verfügbares Geld ist zu niedrig. Sie benötigen mindestens " + MIN_MONTHLY_MONEY +"€.");
         }
     }
 
@@ -117,9 +117,9 @@ public class FinancialInformationEvaluator {
      * Evaluates all uploaded documents including Schufa score, income verification,
      * and liquid assets verification.
      *
-     * @throws EvaluationException if any evaluation criteria are not met
+     * @throws ValidationException if any evaluation criteria are not met
      */
-    public void evaluateUploads() throws EvaluationException {
+    public void evaluateUploads() throws ValidationException {
 
         String errorMessage = "Folgende Probleme sind aufgetaucht:\n";
         boolean isValid = true;
@@ -155,7 +155,7 @@ public class FinancialInformationEvaluator {
         }
 
         if(!isValid){
-            throw new EvaluationException(errorMessage);
+            throw new ValidationException(errorMessage);
         }
     }
 
@@ -167,7 +167,7 @@ public class FinancialInformationEvaluator {
      * @param documentType The type of document ("income", "liquidAssets", or "schufa")
      * @throws ValidationException if the document format is invalid
      */
-    public void validateDocumentFormat(String content, String documentType) {
+    public void validateDocumentFormat(String content, String documentType) throws ValidationException {
         String[] lines = content.split("\n");
         boolean hasRequiredFields = switch (documentType) {
 
@@ -211,10 +211,9 @@ public class FinancialInformationEvaluator {
      * Validates the issue date of documents to ensure they are not too old.
      *
      * @param content The document content containing the date
-     * @throws ValidationException if the date format is invalid or no date is found
-     * @throws EvaluationException if the document is older than the maximum allowed age
+     * @throws ValidationException if the date format is invalid, no date is found or the document is older than the maximum allowed age
      */
-    public void validateDocumentDate(String content) throws ValidationException, EvaluationException{
+    public void validateDocumentDate(String content) throws ValidationException{
         String[] lines = content.split("\n");
 
         for (String line : lines) {
@@ -226,7 +225,7 @@ public class FinancialInformationEvaluator {
                     LocalDate now = LocalDate.now();
                     long daysBetween = ChronoUnit.DAYS.between(docDate, now);
                     if(daysBetween > MAX_DOCUMENT_AGE_DAYS) {
-                        throw new EvaluationException("Dokument zu alt (maximal " + FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " Tage alt)");
+                        throw new ValidationException("Dokument zu alt (maximal " + FinancialInformationEvaluator.MAX_DOCUMENT_AGE_DAYS + " Tage alt)");
                     }
                     return;
 
@@ -285,7 +284,7 @@ public class FinancialInformationEvaluator {
      *
      * @throws ValidationException if any required documents are missing
      */
-    public void validateUploads() {
+    public void validateUploads() throws ValidationException {
 
         String errorMessage = "Bitte laden sie folgende Dokumente hoch:\n";
         boolean isValid = true;

@@ -106,10 +106,6 @@ public class Page5ProofFIController extends Controller implements Initializable,
             showError("Validierung fehlgeschlagen", "Die Validierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
             return;
         }
-        catch (EvaluationException ex) {
-            showError("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer Dokumente ist fehlgeschlagen.", ex.getMessage());
-            return;
-        }
 
         loadScene(e, "customer_registration/page_6_create_account.fxml", "Account erstellen");
     }
@@ -196,7 +192,7 @@ public class Page5ProofFIController extends Controller implements Initializable,
             evaluator.validateDocumentFormat(content, documentType);
             evaluator.validateDocumentDate(content);
         }
-        catch(ValidationException | EvaluationException ex) {
+        catch(ValidationException ex) {
             statusLabel.setText(ex.getMessage() + " (klicken zum Entfernen");
             statusLabel.setStyle("-fx-text-fill: red; -fx-cursor: hand;");
             return;

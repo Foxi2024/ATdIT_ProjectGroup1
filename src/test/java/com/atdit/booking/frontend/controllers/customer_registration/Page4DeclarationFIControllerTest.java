@@ -56,7 +56,7 @@ class Page4DeclarationFIControllerTest {
     @Test
     void testInsufficientLiquidAssets() {
         financialInfo.setLiquidAssets(100);
-        assertThrows(IllegalArgumentException.class, () -> evaluator.evaluateDeclaredFinancialInfo());
+        assertThrows(ValidationException.class, () -> evaluator.evaluateDeclaredFinancialInfo());
     }
 
     /**
@@ -67,7 +67,7 @@ class Page4DeclarationFIControllerTest {
     void testInsufficientMonthlyMoney() {
         financialInfo.setMonthlyAvailableMoney(100);
         financialInfo.setLiquidAssets(1000);
-        assertThrows(IllegalArgumentException.class, () -> evaluator.evaluateDeclaredFinancialInfo());
+        assertThrows(ValidationException.class, () -> evaluator.evaluateDeclaredFinancialInfo());
     }
 
     /**
@@ -82,7 +82,7 @@ class Page4DeclarationFIControllerTest {
 
         // Test with very high monthly fixed costs
         financialInfo.setMonthlyFixCost(50000);
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(ValidationException.class,
                 () -> evaluator.evaluateDeclaredFinancialInfo());
     }
 
@@ -113,7 +113,7 @@ class Page4DeclarationFIControllerTest {
         assertDoesNotThrow(() -> evaluator.validateDeclaredFinancialInfo());
 
         // Test liquid assets separately
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(ValidationException.class,
                 () -> evaluator.evaluateDeclaredFinancialInfo(),
                 "Should fail if liquid assets are below 20% of travel price");
     }
@@ -145,14 +145,14 @@ class Page4DeclarationFIControllerTest {
         financialInfo.setAvgNetIncome(2000);
         financialInfo.setMonthlyFixCost(2500);
 
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(ValidationException.class,
                 () -> evaluator.evaluateDeclaredFinancialInfo());
 
         // Cost of living higher than available money
         financialInfo.setMonthlyFixCost(1000);
         financialInfo.setMinCostOfLiving(1500);
 
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(ValidationException.class,
                 () -> evaluator.evaluateDeclaredFinancialInfo());
     }
 
@@ -164,7 +164,7 @@ class Page4DeclarationFIControllerTest {
     void testZeroValues() {
         // Test with zero value for income
         financialInfo.setAvgNetIncome(0);
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(ValidationException.class,
                 () -> evaluator.evaluateDeclaredFinancialInfo());
 
         // Test with valid income and zero fixed costs
