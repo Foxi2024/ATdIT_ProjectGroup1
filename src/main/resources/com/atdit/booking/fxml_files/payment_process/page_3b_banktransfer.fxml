@@ -41,7 +41,8 @@
 
                     <VBox spacing="10">
                         <Label text="Kontoinhaber"/>
-                        <TextField fx:id="accountHolderField" maxWidth="300" promptText="Geben sie den Kontoinhaber an" styleClass="text-field"/>
+                        <TextField fx:id="accountHolderField" maxWidth="300" promptText="Geben sie den Kontoinhaber an"
+                                   styleClass="text-field"/>
                     </VBox>
                 </VBox>
 
@@ -50,12 +51,14 @@
 
                     <VBox spacing="10">
                         <Label text="Bank Name:"/>
-                        <TextField fx:id="bankNameField" maxWidth="300" promptText="Geben Sie den Namen der Bank an" styleClass="text-field"/>
+                        <TextField fx:id="bankNameField" maxWidth="300" promptText="Geben Sie den Namen der Bank an"
+                                   styleClass="text-field"/>
                     </VBox>
 
                     <VBox spacing="10">
                         <Label text="BIC/SWIFT:"/>
-                        <TextField fx:id="bicField" maxWidth="300" promptText="Geben Sie den BIC/SWIFT code an" styleClass="text-field"/>
+                        <TextField fx:id="bicField" maxWidth="300" promptText="Geben Sie den BIC/SWIFT code an"
+                                   styleClass="text-field"/>
                     </VBox>
                 </VBox>
             </VBox>
@@ -66,7 +69,8 @@
                 </padding>
                 <Label text="Wichtiger Hinweis" styleClass="sub-headline"/>
                 <Text wrappingWidth="230" styleClass="info-text">
-                    Bitte geben Sie hier Ihre eigenen Bankdaten ein. Bei der Zahlung wird der Betrag automatisch von Ihrem Konto abgebucht und auf das Konto von NexStar Travel überwiesen.
+                    Bitte geben Sie hier Ihre eigenen Bankdaten ein. Bei der Zahlung wird der Betrag automatisch von
+                    Ihrem Konto abgebucht und auf das Konto von NexStar Travel überwiesen.
                 </Text>
             </VBox>
         </HBox>
