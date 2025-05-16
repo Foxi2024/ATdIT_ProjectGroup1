@@ -54,6 +54,7 @@ The application follows a layered architecture with the following main component
   ├── CustomerRegistration
   └── PaymentProcess
   ```
+Hinweis: Die eigentlichen Java-Anwendungsstarter (mit `main`-Methoden, die direkt ausgeführt werden können oder von der `pom.xml` für `javafx:run` referenziert werden) sind `CustomerRegistrationApplicationStarter.java` und `PaymentProcessApplicationStarter.java` im Paket `com.atdit.booking` (eine Ebene über dem `applications`-Paket). Diese rufen die entsprechenden `main`-Methoden der Klassen `CustomerRegistration` und `PaymentProcess` im `com.atdit.booking.applications`-Paket auf. Die in der `pom.xml` konfigurierte `mainClass` für den Befehl `mvn clean javafx:run` ist `com.atdit.booking/com.atdit.booking.CustomerRegistrationApplicationStarter`.
 
 3. **Business Logic Layer**
     - Core business logic implementation
@@ -84,7 +85,6 @@ The application follows a layered architecture with the following main component
   │   │   └── PaymentMethodEvaluator
   │   └── contracts/
   (*Contains contract related classes*)
-  (*Missing: PaymentProcess and CustomerRegistrationProcess classes directly under backend - these seem to be Application Starter classes now at src/main/java/com/atdit/booking/*)
   ```
 
 4. **Data Access Layer**
