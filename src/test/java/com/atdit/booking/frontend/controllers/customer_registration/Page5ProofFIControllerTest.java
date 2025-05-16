@@ -1,7 +1,6 @@
 package com.atdit.booking.frontend.controllers.customer_registration;
 
 import com.atdit.booking.backend.customer.Customer;
-import com.atdit.booking.backend.exceptions.EvaluationException;
 import com.atdit.booking.backend.exceptions.ValidationException;
 import com.atdit.booking.backend.financialdata.financial_information.FinancialInformation;
 import com.atdit.booking.backend.financialdata.financial_information.IncomeProof;
