@@ -77,7 +77,7 @@ Die zugehörigen Tests liegen im Ordner [src/test/java/com/atdit/booking/fronten
 
 Mock-Dokumente, die im Rahmen des Finanzierungsprozesses hochgeladen werden müssen (z. B. Schufa-Auskunft, Einkommensnachweis, Nachweis liquider Mittel), finden Sie unter [financial\_proofs](https://github.com/Foxi2024/ATdIT_ProjectGroup1/tree/main/financial_proofs).
 
-Alle weiteren relevanten Dateien und technischen Dokumente, die auch im Wiki verlinkt sind, werden im Ordner `documents` bereitgestellt.
+Alle weiteren relevanten Dateien und technischen Dokumente, die auch im Wiki verlinkt sind, werden im Ordner [documents](https://github.com/Foxi2024/ATdIT_ProjectGroup1/tree/main/documents).
 
 ---
 ## Mehr erfahren
