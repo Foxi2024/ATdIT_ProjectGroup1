@@ -101,7 +101,7 @@ class Page5ProofFIControllerTest {
                 "2024-03-20"
         );
         financialInfo.setProofOfLiquidAssets(proofOfLiquidAssets);
-        assertThrows(EvaluationException.class, () -> evaluator.evaluateUploads());
+        assertThrows(ValidationException.class, () -> evaluator.evaluateUploads());
     }
 
     /**
@@ -132,7 +132,7 @@ class Page5ProofFIControllerTest {
         schufa.setTotalAmountPayed(10000);
         schufa.setTotalAmountOwed(40000);
         financialInfo.setSchufa(schufa);
-        assertThrows(EvaluationException.class, () -> evaluator.evaluateUploads());
+        assertThrows(ValidationException.class, () -> evaluator.evaluateUploads());
     }
 
     /**
@@ -151,7 +151,7 @@ class Page5ProofFIControllerTest {
         schufa.setTotalAmountPayed(10000);
         schufa.setTotalAmountOwed(40000);
         financialInfo.setSchufa(schufa);
-        assertThrows(EvaluationException.class, () -> evaluator.evaluateUploads());
+        assertThrows(ValidationException.class, () -> evaluator.evaluateUploads());
     }
 
     /**
@@ -183,7 +183,7 @@ class Page5ProofFIControllerTest {
             Date Issued: 2023-01-01
             """;
 
-        assertThrows(EvaluationException.class,
+        assertThrows(ValidationException.class,
                 () -> evaluator.validateDocumentDate(oldDocument));
     }
 

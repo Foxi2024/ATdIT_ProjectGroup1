@@ -75,10 +75,6 @@ public class Page4DeclarationFIController extends Controller implements Initiali
             showConfirmation("Validierung fehlgeschlagen", "Die Validierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());
             return;
         }
-        catch (EvaluationException ex) {
-            showConfirmation("Evaluierung fehlgeschlagen", "Die Evaluierung Ihrer finanziellen Daten ist fehlgeschlagen.", ex.getMessage());
-            return;
-        }
 
         loadScene(e, "customer_registration/page_5_proof_of_financial_info.fxml", "Nachweis finanzieller Angaben");
     }
