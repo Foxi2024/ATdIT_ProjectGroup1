@@ -39,7 +39,7 @@ The application follows a layered architecture with the following main component
   │       ├── Page4cFinancingContractController
   │       └── Page5ConfirmationController
   └── abstract_controller/
-      (*Contains abstract controllers and interfaces like Navigatable, Cacheable*)
+      (*Contains abstract controller and interfaces like Navigatable, Cacheable*)
   ```
 
 2. **Application Layer**
